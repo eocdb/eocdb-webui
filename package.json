@@ -2,7 +2,11 @@
   "name": "eocdb-webui",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
+    "@blueprintjs/core": "^3.4.0",
+    "@blueprintjs/docs-theme": "^3.0.1",
+    "@blueprintjs/table": "^3.1.1",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-scripts-ts": "2.17.0"
@@ -10,8 +14,7 @@
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "test": "react-scripts-ts test --env=jsdom"
   },
   "devDependencies": {
     "@types/jest": "^23.3.1",
