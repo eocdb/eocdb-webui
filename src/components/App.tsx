@@ -7,12 +7,14 @@ import { DataTable } from "./DataTable";
 
 interface AppProps {
     queryString: string;
+    data?: string[][];
+    onQueryMeasurements: (queryString: string) => void;
 }
 
 class App extends React.PureComponent<AppProps> {
 
     handleQueryStringChange = (queryString: string) => {
-        alert(queryString);
+        this.props.onQueryMeasurements(queryString);
     };
 
     public render() {
@@ -30,9 +32,8 @@ class App extends React.PureComponent<AppProps> {
                                  onQueryStringChange={this.handleQueryStringChange}/>
                     <br/>
                     <br/>
-                    <DataTable numRows={100}/>
+                    <DataTable numRows={100} data={this.props.data}/>
                 </div>
-
             </div>
         );
     }
