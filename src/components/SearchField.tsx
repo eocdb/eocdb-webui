@@ -36,7 +36,7 @@ export class SearchField extends React.PureComponent<SearchFieldProps, SearchFie
     handleChange = (event: FormEvent<HTMLInputElement>) => {
         this.setState({
             queryString: (event.target as HTMLInputElement).value
-        }, () => console.log(this.state));
+        });
     };
 
     render() {
