@@ -20,16 +20,19 @@ interface SearchFieldState {
 
 export class SearchField extends React.PureComponent<SearchFieldProps, SearchFieldState> {
 
-
     constructor(props: SearchFieldProps) {
         super(props);
         this.state = {queryString: props.queryString};
     }
 
     handleClick = () => this.props.onQueryStringChange(this.state.queryString);
-    handleEnter = () => {
-        this.props.onQueryStringChange(this.state.queryString);
+
+    handleOnKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+        if (event.keyCode === 13) {
+            this.props.onQueryStringChange(this.state.queryString);
+        }
     }
+
     handleChange = (event: FormEvent<HTMLInputElement>) => {
         this.setState({
             queryString: (event.target as HTMLInputElement).value
@@ -43,7 +46,7 @@ export class SearchField extends React.PureComponent<SearchFieldProps, SearchFie
                 large={true}
                 leftIcon="search"
                 onChange={this.handleChange}
-                onKeyPress={this.handleEnter}
+                onKeyDown={this.handleOnKeyDown}
                 placeholder="query expression"
                 rightElement={<Button className="bp3-button bp3-minimal bp3-intent-primary bp3-icon-arrow-right"
                                       onClick={this.handleClick}/>}
