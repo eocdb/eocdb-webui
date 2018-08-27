@@ -16,7 +16,7 @@ export function mapStateToProps(state: StoreState) {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.EocdbAction>) {
     return {
-        onQueryMeasurements: (queryString: string) => dispatch(actions.queryMeasurements(queryString))
+        onQueryMeasurements: (queryString: string) => dispatch(actions.queryMeasurements(queryString) as any) /* TODO: Fix "as any" */
     }
 }
 

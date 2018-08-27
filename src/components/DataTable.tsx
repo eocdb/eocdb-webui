@@ -2,7 +2,6 @@ import * as React from "react";
 import { Column, Table, Cell } from "@blueprintjs/table";
 import { SelectionModes } from "../../node_modules/@blueprintjs/table/lib/cjs";
 //import { string } from "prop-types";
-
 interface DataTableProps {
     numRows: number;
     data?: string[][];

@@ -4,10 +4,11 @@ import './App.css';
 import logo from './logo.svg';
 import { SearchField } from "./SearchField";
 import { DataTable } from "./DataTable";
+import { MeasurementData } from "../types";
 
 interface AppProps {
     queryString: string;
-    data?: string[][];
+    data?: MeasurementData;
     onQueryMeasurements: (queryString: string) => void;
 }
 
