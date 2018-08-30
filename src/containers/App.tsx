@@ -2,8 +2,9 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
 import App from '../components/App';
-import * as actions from '../actions';
+import { queryMeasurements, EocdbAction } from '../actions';
 import { StoreState } from '../types';
+
 
 
 export function mapStateToProps(state: StoreState) {
@@ -14,10 +15,11 @@ export function mapStateToProps(state: StoreState) {
 }
 
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.EocdbAction>) {
+export function mapDispatchToProps(dispatch: Dispatch<EocdbAction>) {
     return {
-        onQueryMeasurements: (queryString: string) => dispatch(actions.queryMeasurements(queryString) as any) /* TODO: Fix "as any" */
-    }
+        onQueryMeasurements: (queryString: string) => dispatch(queryMeasurements(queryString) as any) /* TODO: Fix "as any" */
+    };
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(App as any);

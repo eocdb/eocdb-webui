@@ -2,6 +2,7 @@ import { EocdbAction } from './actions';
 import { StoreState } from './types';
 import { QUERY_MEASUREMENTS, MEASUREMENT_RESULTS } from './constants';
 
+
 export function reduceStoreState(state: StoreState, action: EocdbAction): StoreState {
     switch (action.type) {
         case QUERY_MEASUREMENTS:

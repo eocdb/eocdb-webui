@@ -3,6 +3,7 @@ import { Column, Table, Cell } from "@blueprintjs/table";
 import { SelectionModes } from "../../node_modules/@blueprintjs/table/lib/cjs";
 import { MeasurementData } from "../types";
 //import { string } from "prop-types";
+
 interface DataTableProps {
     numRows: number;
     data?: MeasurementData;

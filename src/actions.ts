@@ -1,7 +1,9 @@
-import * as constants from './constants'
-import { ThunkAction } from "redux-thunk";
-import { MeasurementData, StoreState } from "./types";
+import { MeasurementData } from "./types";
 import { Dispatch } from "redux";
+import * as constants from './constants';
+import * as types from './types'
+import 'cross-fetch/polyfill'
+
 
 export interface QueryMeasurements {
     type: constants.QUERY_MEASUREMENTS;
@@ -30,11 +32,12 @@ export function setMeasurementResults(data: MeasurementData): MeasurementResults
     }
 }
 
-export function queryMeasurements(queryString: string): ThunkAction<void, StoreState, undefined, QueryMeasurements> {
-    return (dispatch: Dispatch, getState: () => StoreState) => {
+
+export function queryMeasurements(queryString: string) {
+    return (dispatch: Dispatch, getState: () => types.StoreState) => {
         dispatch(_queryMeasurements(queryString));
         console.log("getState().queryString:", getState().queryString);
-        fetch(`http://localhost:4000/eocdb/api/measurements?query=${encodeURIComponent(queryString)}`)
+        return fetch(`http://localhost:4000/eocdb/api/measurements?query=${encodeURIComponent(queryString)}`)
             .then(
                 value => {
                     return value.json();

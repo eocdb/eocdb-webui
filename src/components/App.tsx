@@ -1,9 +1,10 @@
 import * as React from 'react';
 import './App.css';
 
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import { SearchField } from "./SearchField";
 import { DataTable } from "./DataTable";
+import { Navigation } from "./Navigation";
 import { MeasurementData } from "../types";
 
 interface AppProps {
@@ -11,6 +12,7 @@ interface AppProps {
     data?: MeasurementData;
     onQueryMeasurements: (queryString: string) => void;
 }
+
 
 class App extends React.PureComponent<AppProps> {
 
@@ -22,11 +24,10 @@ class App extends React.PureComponent<AppProps> {
         return (
             <div className="App">
                 <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
-                    <h1 className="App-title">Welcome to React</h1>
+                    <Navigation numRows={3}/>
                 </header>
                 <p className="App-intro">
-                    To get started, edit <code>src/App.tsx</code> and save to reload.
+                    OC-DB Database Search
                 </p>
                 <div className="App-main">
                     <SearchField queryString={this.props.queryString}
