@@ -4,12 +4,15 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
+    "@babel/core": "^7.0.0",
     "@blueprintjs/core": "^3.4.0",
     "@blueprintjs/docs-theme": "^3.0.1",
     "@blueprintjs/table": "^3.1.1",
     "@types/react-redux": "^6.0.6",
     "@types/react-table": "^6.7.12",
     "@types/redux-logger": "^3.0.6",
+    "jest": "^23.5.0",
+    "jest-css-modules": "^1.1.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-pagination-table": "^2.0.2",
@@ -18,19 +21,39 @@
     "react-table": "^6.8.6",
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "ts-jest": "^23.1.4"
   },
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
+    "test": "jest",
     "compile": "tsc"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.0.0",
     "@types/jest": "^23.3.1",
     "@types/node": "^10.7.1",
     "@types/react": "^16.4.11",
     "@types/react-dom": "^16.0.7",
     "typescript": "^3.0.1"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "moduleNameMapper": {
+      "\\.(css)$": "<rootDir>/node_modules/jest-css-modules",
+      "\\.(css|jpg|png|svg)$": "<rootDir>/src/empty-module.js"
+    }
   }
 }
