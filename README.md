@@ -1,7 +1,51 @@
 # EUMETSAT Ocean Colour Database (OCDB) Web Application
 
+## Project generation
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+
+
+## Project Configuration
+
+__testing with jest:__
+
+We use [jestio](https://jestjs.io/) for testing react redux components. Jestio expects by default plain javascript 
+and can't therefore handle file formats like typescript, css, or images.
+
+In order to handle these file formats we have added teh following yarn packages:
+
+```
+js_test, jest-css-modules
+```
+
+Image files use an empty load module ([recipe used](https://diessi.ca/blog/how-to-exclude-css-images-anything-from-unit-tests/))
+
+The following has been added to the package.json file for using tpyescript ([recipe used](https://basarat.gitbooks.io/typescript/docs/testing/jest.html)):
+
+```json
+"jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "moduleNameMapper": {
+      "\\.(css)$": "<rootDir>/node_modules/jest-css-modules",
+      "\\.(jpg|png|svg)$": "<rootDir>/src/empty-module.js"
+    }
+  }
+```
+
+
+## References
+
 
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
