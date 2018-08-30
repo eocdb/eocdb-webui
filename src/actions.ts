@@ -16,7 +16,7 @@ export interface MeasurementResults {
 
 export type EocdbAction = QueryMeasurements | MeasurementResults;
 
-function _queryMeasurements(queryString: string): QueryMeasurements {
+export function _queryMeasurements(queryString: string): QueryMeasurements {
     return {
         type: constants.QUERY_MEASUREMENTS,
         queryString

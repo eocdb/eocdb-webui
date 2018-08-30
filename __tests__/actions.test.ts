@@ -1,11 +1,11 @@
-import configureMockStore from 'redux-mock-store'
-
-import thunk from 'redux-thunk'
-import  'fetch-mock'
+//import configureMockStore from 'redux-mock-store'
+//import thunk from 'redux-thunk'
+//import  'fetch-mock'
+//import * as fetchMock from "fetch-mock";
 
 import * as actions from '../src/actions'
 import * as types from '../src/constants'
-import * as fetchMock from "fetch-mock";
+
 
 describe('actions', () => {
     it('Should create an action for measurements', () => {
@@ -18,7 +18,7 @@ describe('actions', () => {
     });
 });
 
-
+/*
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
@@ -46,3 +46,4 @@ describe('async actions', () => {
     });
     });
 })
+*/
