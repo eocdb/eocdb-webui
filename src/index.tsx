@@ -24,7 +24,7 @@ const store = createStore(reduceStoreState, {
 
 ReactDOM.render(
     <Provider store={store}>
-        <App/>
+        <App />
     </Provider>,
     document.getElementById('root') as HTMLElement
 );

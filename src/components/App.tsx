@@ -2,19 +2,40 @@ import * as React from 'react';
 import './App.css';
 
 //import logo from './logo.svg';
-import { SearchField } from "./SearchField";
-import { DataTable } from "./DataTable";
+import { AppSearch } from "./AppSearch";
 import { Navigation } from "./Navigation";
 import { MeasurementData } from "../types";
 
-interface AppProps {
+
+export interface AppStateProps{
     queryString: string;
     data?: MeasurementData;
-    onQueryMeasurements: (queryString: string) => void;
 }
 
 
-class App extends React.PureComponent<AppProps> {
+export interface AppDispatchProps{
+    onQueryMeasurements: (queryString: string) => any;
+}
+
+
+export interface AppOwnProps{
+    //id: string;
+}
+
+interface AppState {
+    navTarget: string;
+}
+
+
+type AppProps = AppStateProps & AppDispatchProps & AppOwnProps;
+
+
+export class App extends React.PureComponent<AppProps, AppState> {
+
+    constructor(props: AppProps){
+        super(props);
+        this.state = {navTarget: "home"};
+    }
 
     handleQueryStringChange = (queryString: string) => {
         this.props.onQueryMeasurements(queryString);
@@ -24,17 +45,16 @@ class App extends React.PureComponent<AppProps> {
         return (
             <div className="App">
                 <header className="App-header">
-                    <Navigation numRows={3}/>
+                    <Navigation />
                 </header>
-                <p className="App-intro">
-                    OC-DB Database Search
-                </p>
+
                 <div className="App-main">
-                    <SearchField queryString={this.props.queryString}
-                                 onQueryStringChange={this.handleQueryStringChange}/>
-                    <br/>
-                    <br/>
-                    <DataTable numRows={100} data={this.props.data}/>
+                    <AppSearch id={"app-search"}
+                               queryString={this.props.queryString}
+                               data={this.props.data}
+                               onQueryStringChange={this.handleQueryStringChange}
+                    />
+
                 </div>
             </div>
         );

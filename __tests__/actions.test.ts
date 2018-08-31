@@ -1,15 +1,18 @@
-import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import 'fetch-mock'
+import configureMockStore from 'redux-mock-store'
 import * as fetchMock from "fetch-mock";
-import 'cross-fetch/polyfill';
-
 import * as actions from '../src/actions'
 import * as types from '../src/constants'
 
-// test
+
+// empty data JSON array for testing async redux thunks
+
+const emptyData = JSON.parse('[""]')
+
+
+// test actions
 describe('actions', () => {
-    it('Should create an action for measurements', () => {
+    it('Should create a query measurement action', () => {
         const queryString = "ernie";
         const exp = {
             type: types.QUERY_MEASUREMENTS,
@@ -17,7 +20,23 @@ describe('actions', () => {
         };
         expect(actions._queryMeasurements('ernie')).toEqual(exp);
     });
+    it('Should create a set measurement action', () => {
+        const exp = {
+            type: types.MEASUREMENT_RESULTS,
+            data: emptyData
+        };
+        expect(actions.setMeasurementResults(emptyData)).toEqual(exp);
+    });
+    it('Should create a measurement fail action', () => {
+        const exp = {
+            type: types.MEASUREMENT_FAIL,
+            error: 'ERROR'
+        };
+        expect(actions.reportMeasurementFail("ERROR")).toEqual(exp);
+    });
 });
+
+
 
 
 const middlewares = [thunk];
@@ -25,30 +44,31 @@ const mockStore = configureMockStore(middlewares);
 
 describe('async actions', () => {
     afterEach(() => {
-        fetchMock.reset()
-        fetchMock.restore()
+        fetchMock.reset();
+        fetchMock.restore();
     });
 
     it('creates FETCH_TODOS_SUCCESS when fetching todos has been done', () => {
-        fetchMock.getOnce("http://localhost:4000/eocdb/api/measurements?query=ernie",
-            {body: {queryString: "ernie"}, headers: {'content-type': 'application/json'}})
 
-        const data = JSON.parse('{"id": [1,2,3,4,5],"lon": [58.1,58.4,58.5,58.2,58.9],"lat": [11.1,11.4,10.9,10.8,11.2],"chl": [0.3,0.2,0.7,0.2,0.1]}');
-        const expectedActions = [
+        fetchMock.getOnce(
+            'http://localhost:4000/eocdb/api/measurements?query=ernie',
             {
-                type: types.QUERY_MEASUREMENTS,
-                queryString: "ernie"
-            },
-            {
-                type: types.MEASUREMENT_RESULTS,
-                data
+                body: { id: ['ernie'] },
+                headers: { 'content-type': 'application/json' }
             }
+        );
+
+        const expectedActions = [
+            {type: types.QUERY_MEASUREMENTS, queryString: "ernie"},
+            {type: types.MEASUREMENT_RESULTS , data: {id: ["ernie"]}}
         ];
 
-        const store = mockStore({queryString: "ernie", data})
-​
-        //store.dispatch(actions.queryMeasurements("ernie"));
-        // return of async actions
-        expect(store.getActions()).toEqual(expectedActions);
+        const store = mockStore({queryString: "ernie", data: {id: ["ernie"]}});
+
+        return store.dispatch(actions.queryMeasurements("ernie") as any).then(() => { /* TODO: Fix "as any" */
+            // return of async actions
+            expect(store.getActions()).toEqual(expectedActions)
+        });
     });
-})
+});
+
