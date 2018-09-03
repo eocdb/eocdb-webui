@@ -22,9 +22,9 @@ export class AppSearch extends React.PureComponent<AppSearchProps> {
             <div>
                 <SearchField queryString={this.props.queryString}
                              onQueryStringChange={this.props.onQueryStringChange}/>
-                < br/>
-                < br/>
-                < DataTable
+                <br />
+                <br />
+                <DataTable
                     numRows={100}
                     data={this.props.data}
                 />

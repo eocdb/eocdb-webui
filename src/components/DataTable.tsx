@@ -1,16 +1,17 @@
 import * as React from "react";
 import { Column, Table, Cell } from "@blueprintjs/table";
-import { SelectionModes } from "../../node_modules/@blueprintjs/table/lib/cjs";
 import { MeasurementData } from "../types";
-//import { string } from "prop-types";
+
 
 interface DataTableProps {
     numRows: number;
     data?: MeasurementData;
 }
 
+
 export class DataTable extends React.PureComponent<DataTableProps> {
-    cellRendererDollars = (rowIndex: number, columnIndex: number) => {
+    //cellRendererDollars = (rowIndex: number, columnIndex: number) => {
+    cellRendererDollars = () => {
         let value = "";
         if (this.props.data) {
             value = JSON.stringify(this.props.data);
@@ -40,7 +41,7 @@ export class DataTable extends React.PureComponent<DataTableProps> {
         }
 
         return (
-            <Table selectionModes={SelectionModes.ALL} numRows={numRows}>
+            <Table numRows={numRows}>
                 {cols}
             </Table>
         );

@@ -1,19 +1,19 @@
 import * as React from "react";
 
-interface AppListProps {
+interface AppHelpProps {
     id: string;
 }
 
 
-export class AppList extends React.PureComponent<AppListProps>{
-    constructor(props: AppListProps){
+export class AppHelp extends React.PureComponent<AppHelpProps>{
+    constructor(props: AppHelpProps){
         super(props);
     }
 
     render(){
         return(
             <div>
-                Lists
+                Help
             </div>
         );
     }

@@ -669,6 +669,17 @@
     camelcase "^5.0.0"
     prettier "^1.13.7"
 
+"@mapbox/mapbox-gl-style-spec@^9.0.1":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@mapbox/mapbox-gl-style-spec/-/mapbox-gl-style-spec-9.0.1.tgz#b9cab82d2356741e6ad9c9dcf9572e445aacb059"
+  dependencies:
+    csscolorparser "~1.0.2"
+    jsonlint-lines-primitives "~1.6.0"
+    lodash.isequal "^3.0.4"
+    minimist "0.0.8"
+    rw "^1.3.3"
+    sort-object "^0.3.2"
+
 "@octokit/rest@^15.2.6":
   version "15.10.0"
   resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-15.10.0.tgz#9baf7430e55edf1a1024c35ae72ed2f5fc6e90e9"
@@ -712,6 +723,10 @@
     "@types/events" "*"
     "@types/minimatch" "*"
     "@types/node" "*"
+
+"@types/googlemaps@^3.26.4":
+  version "3.30.12"
+  resolved "https://registry.yarnpkg.com/@types/googlemaps/-/googlemaps-3.30.12.tgz#14d62bd8da288a25e9f8c939f5c326fadd58a628"
 
 "@types/handlebars@4.0.36":
   version "4.0.36"
@@ -800,6 +815,10 @@
   dependencies:
     "@types/glob" "*"
     "@types/node" "*"
+
+"JSV@>= 4.0.x":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/JSV/-/JSV-4.0.2.tgz#d077f6825571f82132f9dffaed587b4029feff57"
 
 a-sync-waterfall@^1.0.0:
   version "1.0.0"
@@ -962,6 +981,10 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
   dependencies:
     color-convert "^1.9.0"
+
+ansi-styles@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-1.0.0.tgz#cb102df1c56f5123eab8b67cd7b98027a0279178"
 
 ansicolors@^0.3.2:
   version "0.3.2"
@@ -2327,6 +2350,14 @@ chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.0, chalk@^2.4.1:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
+chalk@~0.4.0:
+  version "0.4.0"
+  resolved "http://registry.npmjs.org/chalk/-/chalk-0.4.0.tgz#5199a3ddcd0c1efe23bc08c1b027b06176e0c64f"
+  dependencies:
+    ansi-styles "~1.0.0"
+    has-color "~0.1.0"
+    strip-ansi "~0.1.0"
+
 chardet@^0.4.0:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.4.2.tgz#b5473b33dc97c424e5d98dc87d55d4d8a29c8bf2"
@@ -2854,6 +2885,10 @@ css-selector-tokenizer@^0.7.0:
 css-what@2.1:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/css-what/-/css-what-2.1.0.tgz#9467d032c38cfaefb9f2d79501253062f87fa1bd"
+
+csscolorparser@~1.0.2:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/csscolorparser/-/csscolorparser-1.0.3.tgz#b34f391eea4da8f3e98231e2ccd8df9c041f171b"
 
 cssesc@^0.1.0:
   version "0.1.0"
@@ -4458,6 +4493,10 @@ globby@^6.1.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
+google-maps@^3.2.1:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/google-maps/-/google-maps-3.3.0.tgz#4432b4715406bc15268ad35b1dd1b04d974956a6"
+
 got@^6.7.1:
   version "6.7.1"
   resolved "https://registry.yarnpkg.com/got/-/got-6.7.1.tgz#240cd05785a9a18e561dc1b44b41c763ef1e8db0"
@@ -4547,6 +4586,10 @@ has-ansi@^2.0.0:
   resolved "https://registry.yarnpkg.com/has-ansi/-/has-ansi-2.0.0.tgz#34f5049ce1ecdf2b0649af3ef24e45ed35416d91"
   dependencies:
     ansi-regex "^2.0.0"
+
+has-color@~0.1.0:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/has-color/-/has-color-0.1.7.tgz#67144a5260c34fc3cca677d041daf52fe7b78b2f"
 
 has-flag@^1.0.0:
   version "1.0.0"
@@ -4646,6 +4689,10 @@ hmac-drbg@^1.0.0:
     hash.js "^1.0.3"
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
+
+hoist-non-react-statics@^1.0.3:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
 
 hoist-non-react-statics@^2.5.0:
   version "2.5.5"
@@ -5954,6 +6001,10 @@ jest@^23.5.0:
     import-local "^1.0.0"
     jest-cli "^23.5.0"
 
+jquery-param@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/jquery-param/-/jquery-param-0.1.2.tgz#17b1871fd7907e03706464bb6f66485b9b9af293"
+
 js-base64@^2.1.9:
   version "2.4.8"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.8.tgz#57a9b130888f956834aa40c5b165ba59c758f033"
@@ -6124,6 +6175,13 @@ jsonfile@^4.0.0:
 jsonify@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
+
+jsonlint-lines-primitives@~1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/jsonlint-lines-primitives/-/jsonlint-lines-primitives-1.6.0.tgz#bb89f60c8b9b612fd913ddaa236649b840d86611"
+  dependencies:
+    JSV ">= 4.0.x"
+    nomnom ">= 1.5.x"
 
 jsonpointer@^4.0.0:
   version "4.0.1"
@@ -6330,6 +6388,22 @@ lodash-es@^4.17.5, lodash-es@^4.2.1:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.10.tgz#62cd7104cdf5dd87f235a837f0ede0e8e5117e05"
 
+lodash._baseisequal@^3.0.0:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/lodash._baseisequal/-/lodash._baseisequal-3.0.7.tgz#d8025f76339d29342767dcc887ce5cb95a5b51f1"
+  dependencies:
+    lodash.isarray "^3.0.0"
+    lodash.istypedarray "^3.0.0"
+    lodash.keys "^3.0.0"
+
+lodash._bindcallback@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/lodash._bindcallback/-/lodash._bindcallback-3.0.1.tgz#e531c27644cf8b57a99e17ed95b35c748789392e"
+
+lodash._getnative@^3.0.0:
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/lodash._getnative/-/lodash._getnative-3.9.1.tgz#570bc7dede46d61cdcde687d65d3eecbaa3aaff5"
+
 lodash._reinterpolate@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
@@ -6378,6 +6452,21 @@ lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
 
+lodash.isarguments@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/lodash.isarguments/-/lodash.isarguments-3.1.0.tgz#2f573d85c6a24289ff00663b491c1d338ff3458a"
+
+lodash.isarray@^3.0.0:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/lodash.isarray/-/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
+
+lodash.isequal@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-3.0.4.tgz#1c35eb3b6ef0cd1ff51743e3ea3cf7fdffdacb64"
+  dependencies:
+    lodash._baseisequal "^3.0.0"
+    lodash._bindcallback "^3.0.0"
+
 lodash.isequal@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
@@ -6393,6 +6482,18 @@ lodash.isplainobject@^4.0.6:
 lodash.isstring@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/lodash.isstring/-/lodash.isstring-4.0.1.tgz#d527dfb5456eca7cc9bb95d5daeaf88ba54a5451"
+
+lodash.istypedarray@^3.0.0:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/lodash.istypedarray/-/lodash.istypedarray-3.0.6.tgz#c9a477498607501d8e8494d283b87c39281cef62"
+
+lodash.keys@^3.0.0:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/lodash.keys/-/lodash.keys-3.1.2.tgz#4dbc0472b156be50a0b286855d1bd0b0c656098a"
+  dependencies:
+    lodash._getnative "^3.0.0"
+    lodash.isarguments "^3.0.0"
+    lodash.isarray "^3.0.0"
 
 lodash.memoize@^4.1.2:
   version "4.1.2"
@@ -6500,6 +6601,10 @@ map-visit@^1.0.0:
   resolved "https://registry.yarnpkg.com/map-visit/-/map-visit-1.0.0.tgz#ecdca8f13144e660f1b5bd41f12f3479d98dfb8f"
   dependencies:
     object-visit "^1.0.0"
+
+mapbox-to-css-font@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/mapbox-to-css-font/-/mapbox-to-css-font-2.2.0.tgz#9c7ad6d1ec25f8f276282ed31644dbcbecbfb170"
 
 markdown-it@^8.4.1:
   version "8.4.2"
@@ -6941,6 +7046,13 @@ node-releases@^1.0.0-alpha.11:
   dependencies:
     semver "^5.3.0"
 
+"nomnom@>= 1.5.x":
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/nomnom/-/nomnom-1.8.1.tgz#2151f722472ba79e50a76fc125bb8c8f2e4dc2a7"
+  dependencies:
+    chalk "~0.4.0"
+    underscore "~1.6.0"
+
 nomnom@~1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/nomnom/-/nomnom-1.6.2.tgz#84a66a260174408fc5b77a18f888eccc44fb6971"
@@ -7130,6 +7242,14 @@ object.values@^1.0.4:
 obuf@^1.0.0, obuf@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
+
+ol-mapbox-style@^2.1.1:
+  version "2.11.2"
+  resolved "https://registry.yarnpkg.com/ol-mapbox-style/-/ol-mapbox-style-2.11.2.tgz#25b49b1c94906e197bd4b5ed038dd36f50cc3597"
+  dependencies:
+    "@mapbox/mapbox-gl-style-spec" "^9.0.1"
+    mapbox-to-css-font "^2.1.0"
+    webfont-matcher "^1.1.0"
 
 on-finished@~2.3.0:
   version "2.3.0"
@@ -7497,6 +7617,10 @@ pinkie-promise@^2.0.0:
 pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
+
+pinkyswear@^2.2.2:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/pinkyswear/-/pinkyswear-2.2.3.tgz#e589b72c268a09d0e46458861d6b8ccc5c921a3b"
 
 pkg-dir@^1.0.0:
   version "1.0.0"
@@ -8020,6 +8144,13 @@ querystringify@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.0.0.tgz#fa3ed6e68eb15159457c89b37bc6472833195755"
 
+qwest@^4.4.5:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/qwest/-/qwest-4.5.0.tgz#f331743a268c474a93112bbd30d6c58bafa1a5c8"
+  dependencies:
+    jquery-param "^0.1.2"
+    pinkyswear "^2.2.2"
+
 raf@3.4.0, raf@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.0.tgz#a28876881b4bc2ca9117d4138163ddb80f781575"
@@ -8089,6 +8220,18 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-async-loader@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react-async-loader/-/react-async-loader-0.1.2.tgz#8c985381487fd1c126ec90b3a03c759f0c0b9480"
+  dependencies:
+    hoist-non-react-statics "^1.0.3"
+
+react-async-script-loader@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-async-script-loader/-/react-async-script-loader-0.2.2.tgz#70ae44c143539a2f2d4f79aa5f177f244eea8c55"
+  dependencies:
+    hoist-non-react-statics "^1.0.3"
+
 react-dev-utils@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-5.0.1.tgz#1f396e161fe44b595db1b186a40067289bf06613"
@@ -8125,6 +8268,10 @@ react-error-overlay@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-4.0.0.tgz#d198408a85b4070937a98667f500c832f86bd5d4"
 
+react-geo@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/react-geo/-/react-geo-0.0.0.tgz#840ab00fa713e7608b00384d41e1ee0b8d72063a"
+
 react-is@^16.4.2:
   version "16.4.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
@@ -8132,6 +8279,17 @@ react-is@^16.4.2:
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
+
+react-openlayers@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/react-openlayers/-/react-openlayers-0.2.1.tgz#407aecb7d281eea4fbf4eb2d5bc2449f872817bc"
+  dependencies:
+    "@types/googlemaps" "^3.26.4"
+    google-maps "^3.2.1"
+    ol-mapbox-style "^2.1.1"
+    qwest "^4.4.5"
+    react-async-loader "^0.1.2"
+    react-async-script-loader "^0.2.2"
 
 react-pagination-status@^2.0.0:
   version "2.0.0"
@@ -8793,6 +8951,10 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
+rw@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/rw/-/rw-1.3.3.tgz#3f862dfa91ab766b14885ef4d01124bfda074fb4"
+
 rx-lite-aggregates@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/rx-lite-aggregates/-/rx-lite-aggregates-4.0.8.tgz#753b87a89a11c95467c4ac1626c4efc4e05c67be"
@@ -9319,11 +9481,26 @@ socks@^1.1.10:
     ip "^1.1.4"
     smart-buffer "^1.0.13"
 
+sort-asc@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/sort-asc/-/sort-asc-0.1.0.tgz#ab799df61fc73ea0956c79c4b531ed1e9e7727e9"
+
+sort-desc@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/sort-desc/-/sort-desc-0.1.1.tgz#198b8c0cdeb095c463341861e3925d4ee359a9ee"
+
 sort-keys@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/sort-keys/-/sort-keys-1.1.2.tgz#441b6d4d346798f1b4e49e8920adfba0e543f9ad"
   dependencies:
     is-plain-obj "^1.0.0"
+
+sort-object@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/sort-object/-/sort-object-0.3.2.tgz#98e0d199ede40e07c61a84403c61d6c3b290f9e2"
+  dependencies:
+    sort-asc "^0.1.0"
+    sort-desc "^0.1.1"
 
 source-list-map@^2.0.0:
   version "2.0.0"
@@ -9551,6 +9728,10 @@ strip-ansi@^4.0.0:
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-4.0.0.tgz#a8479022eb1ac368a871389b635262c505ee368f"
   dependencies:
     ansi-regex "^3.0.0"
+
+strip-ansi@~0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-0.1.1.tgz#39e8a98d044d150660abe4a6808acf70bb7bc991"
 
 strip-bom@3.0.0, strip-bom@^3.0.0:
   version "3.0.0"
@@ -10108,6 +10289,10 @@ underscore@~1.4.4:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.4.4.tgz#61a6a32010622afa07963bf325203cf12239d604"
 
+underscore@~1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.6.0.tgz#8b38b10cacdef63337b8b24e4ff86d45aea529a8"
+
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/unicode-canonical-property-names-ecmascript/-/unicode-canonical-property-names-ecmascript-1.0.4.tgz#2619800c4c825800efdd8343af7dd9933cbe2818"
@@ -10400,6 +10585,10 @@ wbuf@^1.1.0, wbuf@^1.7.2:
   resolved "https://registry.yarnpkg.com/wbuf/-/wbuf-1.7.3.tgz#c1d8d149316d3ea852848895cb6a0bfe887b87df"
   dependencies:
     minimalistic-assert "^1.0.0"
+
+webfont-matcher@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/webfont-matcher/-/webfont-matcher-1.1.0.tgz#98ce95097b29e31fbe733053e10e571642d1c6c7"
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

@@ -3,66 +3,73 @@ import * as React from "react";
 import {
     Button,
     Classes,
-    Tabs,
-    Tab,
-    TabId,
+    Alignment,
+    Navbar,
+    NavbarDivider,
+    NavbarGroup,
+    NavbarHeading,
     Popover,
+    Position,
     Menu,
-    MenuItem,
     MenuDivider,
-    Position
+    MenuItem
 } from "@blueprintjs/core";
-import { AppHome } from "./AppHome";
 
+import logo from './EUMETSAT.png';
 
 
 interface NavigationProps {
-
+    handleNavigationClick: (event: React.MouseEvent<HTMLElement>, navTarget: string) => void;
 }
 
 
-interface NavigationState  {
-    navbarTabId: TabId;
-};
+interface NavigationState {
+}
 
-export class Navigation extends React.PureComponent<NavigationProps, NavigationState>{
-    constructor(props: NavigationProps){
+
+export class Navigation extends React.PureComponent<NavigationProps, NavigationState> {
+    constructor(props: NavigationProps) {
         super(props);
-
-        this.state = {navbarTabId: "home"};
     }
 
-    private handleNavbarTabChange = (navbarTabId: TabId) => this.setState({ navbarTabId });
-
-    render(){
-        return(
-            <Tabs
-                renderActiveTabPanelOnly={true}
-                onChange={this.handleNavbarTabChange}
-                selectedTabId={this.state.navbarTabId}
-            >
-                <Popover content={
-                    <Menu>
-                        <MenuDivider />
-                        <MenuItem text={"test"}/>
-                    </Menu>
-                } position={Position.BOTTOM_RIGHT}>
-                    <Button className={Classes.MINIMAL} icon="list" text="Menu" />
-                </Popover>
-                <Tab
-                    id="home"
-                    panel={<AppHome />}
-                    title={<Button className={Classes.MINIMAL}
-                                   icon="home"
-                                   text="Home" />}
-                />
-                <Tab id="ingest" title={<Button className={Classes.MINIMAL} icon="add" text="Ingest" />} />
-                <Tab id="lists" title={<Button className={Classes.MINIMAL} icon="document" text="Lists" />} />
-                <Tab id="help" title={<Button className={Classes.MINIMAL} icon="help" text="Help" />} />
-                <Tabs.Expander />
-                <Tab id="login" title={<Button className={Classes.MINIMAL} icon="user" text="Login" />} />
-            </Tabs>
-
+    render() {
+        return (
+            <Navbar>
+                <NavbarGroup align={Alignment.LEFT}>
+                    <NavbarHeading>
+                        <Popover content={
+                            <Menu className={Classes.ELEVATION_1}>
+                                <MenuItem icon="settings" text="Settings"
+                                          onClick={(event: React.MouseEvent<HTMLElement>) => this.props.handleNavigationClick(event, "settings")}
+                                />
+                                <MenuDivider/>
+                                <MenuItem icon="download" text="Test" onClick={
+                                    (event: React.MouseEvent<HTMLElement>) => this.props.handleNavigationClick(event, "test")
+                                }
+                                />
+                                <MenuDivider/>
+                            </Menu>
+                        }
+                                 position={Position.BOTTOM_RIGHT}>
+                            <Button icon="menu" text=""/>
+                        </Popover>
+                    </NavbarHeading>
+                    <NavbarDivider/>
+                    <Button className={Classes.MINIMAL} icon="home" text="Home"
+                            onClick={(event: React.MouseEvent<HTMLElement>) => this.props.handleNavigationClick(event, "home")}/>
+                    <Button className={Classes.MINIMAL} icon="search" text="Search"
+                            onClick={(event: React.MouseEvent<HTMLElement>) => this.props.handleNavigationClick(event, "search")}/>
+                    <Button className={Classes.MINIMAL} icon="document" text="Lists"
+                            onClick={(event: React.MouseEvent<HTMLElement>) => this.props.handleNavigationClick(event, "lists")}/>
+                    <Button className={Classes.MINIMAL} icon="plus" text="Ingestion"
+                            onClick={(event: React.MouseEvent<HTMLElement>) => this.props.handleNavigationClick(event, "ingest")}/>
+                    <Button className={Classes.MINIMAL} icon="help" text="Help"
+                            onClick={(event: React.MouseEvent<HTMLElement>) => this.props.handleNavigationClick(event, "help")}/>
+                </NavbarGroup>
+                <NavbarGroup align={Alignment.RIGHT}>
+                    <img src={logo} className="App-logo" alt="logo" />
+                </NavbarGroup>
+            </Navbar>
         );
     }
 }

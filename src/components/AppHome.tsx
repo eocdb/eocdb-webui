@@ -1,7 +1,7 @@
 import * as React from "react";
 
 interface AppHomeProps {
-
+    id: string;
 }
 
 
@@ -13,7 +13,7 @@ export class AppHome extends React.PureComponent<AppHomeProps>{
     render(){
         return(
           <div>
-              Hello
+              Home
           </div>
         );
     }

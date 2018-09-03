@@ -13,7 +13,7 @@ export class AppIngestion extends React.PureComponent<AppIngestionProps>{
     render(){
         return(
             <div>
-                Hello
+                Ingest
             </div>
         );
     }
