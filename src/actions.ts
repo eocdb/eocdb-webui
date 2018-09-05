@@ -1,7 +1,6 @@
 import { Dispatch } from 'redux';
 import { MeasurementData } from "./types";
 import * as constants from './constants';
-//import * as types from './types'
 
 
 export interface QueryMeasurements{
@@ -24,7 +23,10 @@ export interface MeasurementFail{
 
 export type EocdbAction = QueryMeasurements | MeasurementResults | MeasurementFail ;
 
-//export type Dispatch = (action: EocdbAction) => void;
+
+//type ThunkAction2<R> = ThunkAction<R, StoreState, void, EocdbAction>;
+//export type ThunkActionCreator<R> = (...args: any[]) => ThunkAction2<R>;
+
 
 export function _queryMeasurements(queryString: string): QueryMeasurements {
     return {

@@ -9,7 +9,7 @@ import { AppHome } from "./AppHome";
 import { AppList } from "./AppList";
 import { AppHelp } from "./AppHelp";
 import { AppIngestion } from "./AppIngestion";
-import { Navigation } from "./Navigation";
+import Navigation from "./Navigation";
 import { AppSettings } from "./AppSettings";
 
 
@@ -29,12 +29,12 @@ export interface AppOwnProps {
 }
 
 
-interface AppState {
+export interface AppState {
     navTarget: string;
 }
 
 
-type AppProps = AppStateProps & AppDispatchProps & AppOwnProps;
+export type AppProps = AppStateProps & AppDispatchProps & AppOwnProps;
 
 
 export class App extends React.PureComponent<AppProps, AppState> {

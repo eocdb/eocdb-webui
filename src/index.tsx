@@ -16,7 +16,7 @@ const logger = createLogger({
 });
 
 
-const store = createStore(reduceStoreState, {
+export const store = createStore(reduceStoreState, {
     queryString: "ernie",
     data: JSON.parse("[]")
 },  applyMiddleware(logger, thunk));

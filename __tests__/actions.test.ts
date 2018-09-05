@@ -1,12 +1,13 @@
-import thunk from 'redux-thunk'
+import thunk, { ThunkAction } from 'redux-thunk'
 import configureMockStore from 'redux-mock-store'
 import * as fetchMock from "fetch-mock";
 import * as actions from '../src/actions'
 import * as types from '../src/constants'
+import { EocdbAction } from "../src/actions";
+import { StoreState } from "../src/types";
 
 
 // empty data JSON array for testing async redux thunks
-
 const emptyData = JSON.parse('[""]')
 
 
@@ -37,8 +38,6 @@ describe('actions', () => {
 });
 
 
-
-
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
@@ -65,6 +64,8 @@ describe('async actions', () => {
 
         const store = mockStore({queryString: "ernie", data: {id: ["ernie"]}});
 
+        const act:ThunkAction<Promise<EocdbAction>, StoreState, void, EocdbAction> =  actions.queryMeasurements("ernie");
+        console.log(act);
         return store.dispatch(actions.queryMeasurements("ernie") as any).then(() => { /* TODO: Fix "as any" */
             // return of async actions
             expect(store.getActions()).toEqual(expectedActions)

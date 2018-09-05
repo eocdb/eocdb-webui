@@ -27,7 +27,7 @@ interface NavigationState {
 }
 
 
-export class Navigation extends React.PureComponent<NavigationProps, NavigationState> {
+class Navigation extends React.PureComponent<NavigationProps, NavigationState> {
     constructor(props: NavigationProps) {
         super(props);
     }
@@ -73,3 +73,5 @@ export class Navigation extends React.PureComponent<NavigationProps, NavigationS
         );
     }
 }
+
+export default Navigation;
