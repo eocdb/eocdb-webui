@@ -1,8 +1,8 @@
 import thunk from 'redux-thunk'
 import configureMockStore from 'redux-mock-store'
 import * as fetchMock from "fetch-mock";
-import * as actions from '../src/actions'
-import * as types from '../src/constants'
+import * as actions from './actions'
+import * as types from './constants'
 
 
 // empty data JSON array for testing async redux thunks
