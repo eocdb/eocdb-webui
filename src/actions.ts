@@ -63,13 +63,10 @@ export function queryMeasurements(queryString: string) {
             )
             .then(
                 result => {
-                    console.log(result);
                     dispatch(setMeasurementResults(result));
                     return result;
                 }
             ).catch(error => {
-                console.log("ERROR");
-                console.log(error);
                 dispatch(reportMeasurementFail(error));
                 return error;
             });

@@ -46,33 +46,33 @@ export class App extends React.PureComponent<AppProps, AppState> {
 
     handleQueryStringChange = (queryString: string) => {
         this.props.onQueryMeasurements(queryString);
-    }
+    };
 
     handleNavigationClick = (event: React.MouseEvent<HTMLElement>, navTarget: string) => {
         this.setState({navTarget});
-    }
+    };
 
     public render() {
-        let page = <AppHome id={"home"} />;
+        let panel:JSX.Element = <AppHome id={"home"} />;
 
         if (this.state.navTarget === "search") {
-            page = <AppSearch id={"app-search"}
+            panel = <AppSearch id={"app-search"}
                               queryString={this.props.queryString}
                               data={this.props.data}
                               onQueryStringChange={this.handleQueryStringChange}
             />;
         }
         else if (this.state.navTarget === "lists") {
-            page = <AppList id={"lists"}/>
+            panel = <AppList id={"lists"}/>
         }
         else if (this.state.navTarget === "ingest") {
-            page = <AppIngestion id={"ingest"}/>
+            panel = <AppIngestion id={"ingest"}/>
         }
         else if (this.state.navTarget === "help") {
-            page = <AppHelp id={"help"}/>
+            panel = <AppHelp id={"help"}/>
         }
         else if (this.state.navTarget === "settings") {
-            page = <AppSettings id={"settings"}/>
+            panel = <AppSettings id={"settings"}/>
         }
 
         return (
@@ -82,7 +82,7 @@ export class App extends React.PureComponent<AppProps, AppState> {
                 </header>
 
                 <div className="App-main">
-                    {page}
+                    {panel}
                 </div>
             </div>
         );

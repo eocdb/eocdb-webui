@@ -60,6 +60,7 @@
     "testPathIgnorePatterns": [
       "<rootDir>/build"
     ],
+    "setupTestFrameworkScriptFile": "<rootDir>/src/setupEnzyme.ts",
     "moduleFileExtensions": [
       "ts",
       "tsx",
