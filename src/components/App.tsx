@@ -4,7 +4,6 @@ import { MeasurementData } from "../types";
 import './App.css';
 
 import { AppSearch } from "./AppSearch";
-//import { MapSelect } from "./MapSelect"
 import { AppHome } from "./AppHome";
 import { AppList } from "./AppList";
 import { AppHelp } from "./AppHelp";

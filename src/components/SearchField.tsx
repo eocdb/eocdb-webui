@@ -2,6 +2,7 @@ import * as React from "react";
 import { Button, InputGroup } from "@blueprintjs/core";
 import { FormEvent } from "react";
 
+
 /* TODO
 Handle enter event and focus event
  */
@@ -31,7 +32,7 @@ export class SearchField extends React.PureComponent<SearchFieldProps, SearchFie
         if (event.keyCode === 13) {
             this.props.onQueryStringChange(this.state.queryString);
         }
-    }
+    };
 
     handleChange = (event: FormEvent<HTMLInputElement>) => {
         this.setState({
