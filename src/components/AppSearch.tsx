@@ -1,14 +1,14 @@
 import * as React from "react";
 import { DateInput } from "@blueprintjs/datetime";
-import { Select } from "@blueprintjs/select";
-import { InputGroup, Slider, MenuItem, Button, RadioGroup, Radio, Label, Checkbox } from '@blueprintjs/core';
+import { InputGroup, Slider, Label, Checkbox } from '@blueprintjs/core';
 import { SearchField } from "./SearchField";
 import { DataTable } from "./DataTable";
 import { MeasurementData } from "../types";
 import { RegionSelect } from "./RegionSelect";
-import { DataType, DataTypeItems } from "./SelectItems";
+import SelectInput from "./SelectInput";
+import { DataTypeItems, WaveLengthItems, ProductsItems, ShallowItems, ProductGroupItems } from "./SelectInputItems";
+import MultiSelectInput from "./MultiSelectInput";
 
-const DataTypeSelect = Select.ofType<DataType>();
 
 interface AppSearchProps {
     id: string;
@@ -23,18 +23,7 @@ export class AppSearch extends React.PureComponent<AppSearchProps> {
         super(props);
     }
 
-    handleTest = () => {
-        console.log('Hello');
-    };
-
-    renderItem = (dt: DataType) => {
-        return (
-            <MenuItem key={dt.title} text={dt.title}/>
-        );
-    };
-
     render() {
-
         return (
             <div>
                 <SearchField queryString={this.props.queryString}
@@ -42,7 +31,6 @@ export class AppSearch extends React.PureComponent<AppSearchProps> {
 
                 <br/>
                 <br/>
-
 
                 <DateInput parseDate={str => new Date(str)} formatDate={date => date.toLocaleString()}/>
                 <DateInput parseDate={str => new Date(str)} formatDate={date => date.toLocaleString()}/>
@@ -56,79 +44,46 @@ export class AppSearch extends React.PureComponent<AppSearchProps> {
                 <br/>
                 <br/>
 
-                <DataTypeSelect
-                    items={DataTypeItems}
-                    itemRenderer={this.renderItem}
-                    onItemSelect={this.handleTest}
-                >
-                    <Button
-                        icon="database"
-                        rightIcon="caret-down"
-                        text={"Select Data Type"}
-                    />
-
-                </DataTypeSelect>
+                <SelectInput icon={"database"} label={"Data Type:"} items={DataTypeItems} id={'dt-select'}/>
 
                 <br/>
                 <br/>
 
-                <RadioGroup
-                    label="Wavelength Options:"
-                    onChange={this.handleTest}
-                    inline={true}
-                >
-                    <Radio label="All" value="All" />
-                    <Radio label="Multispectral" value="Multispectral" />
-                    <Radio label="Hyperspectral" value="Hyperspectral" />
-                </RadioGroup>
+                <SelectInput label={"Wavelength Options:"} items={WaveLengthItems} id={'dt-select'}/>
 
                 <br/>
                 <br/>
 
-                <RadioGroup
-                    label="Include Optically Shallow Measurements:"
-                    onChange={this.handleTest}
-                    inline={true}
-                >
-                    <Radio label="Yes" value="No" />
-                    <Radio label="No" value="No" />
-                    <Radio label="Exclusively" value="Exclusively" />
-                </RadioGroup>
+
+                <SelectInput label={"Include Optically Shallow Measurements:"} items={ShallowItems} id={'dt-select'}/>
 
                 <br/>
                 <br/>
 
-                <RadioGroup
-                    label="Products:"
-                    onChange={this.handleTest}
-                    inline={false}
-                >
-                    <Radio label="Find files containing any of the selected products" value="ONe" />
-                    <Radio label="Find files where all the specific products entered below were measured in the same cruise" value="Two" />
-                    <Radio label="Don't filter based on products" value="Three" />
-                </RadioGroup>
+                <SelectInput label={"Products:"} items={ProductsItems} id={'dt-select'}/>
 
                 <br/>
                 <br/>
 
+                <MultiSelectInput id={'grouped-products'} items={ProductGroupItems} label={"Grouped Products:"}/>
                 <Label>Grouped Products:</Label>
-                <Checkbox inline={true} label="AOP" />
-                <Checkbox inline={true} label="PAR" />
-                <Checkbox inline={true} label="Kd" />
-                <Checkbox inline={true} label="a" />
-                <Checkbox inline={true} label="b" />
-                <Checkbox inline={true} label="bb" />
-                <Checkbox inline={true} label="c" />
-                <Checkbox inline={true} label="DC" />
-                <Checkbox inline={true} label="PC" />
-                <Checkbox inline={true} label="SPM" />
-                <Checkbox inline={true} label="AOT" />
-                <Checkbox inline={true} label="nutrients" />
-                <Checkbox inline={true} label="CTD" />
-                <Checkbox inline={true} label="fluoresence" />
-                <Checkbox inline={true} label="productivity" />
-                <Checkbox inline={true} label="Chl" />
-                <Checkbox inline={true} label="HPLC" />
+                <Checkbox checked={true} inline={true} label="AOP"/>
+                <Checkbox inline={true} label="PAR"/>
+                <Checkbox inline={true} label="Kd"/>
+                <Checkbox inline={true} label="a"/>
+                <Checkbox inline={true} label="b"/>
+                <Checkbox inline={true} label="bb"/>
+                <Checkbox inline={true} label="c"/>
+                <Checkbox inline={true} label="DC"/>
+                <Checkbox inline={true} label="PC"/>
+                <Checkbox inline={true} label="SPM"/>
+                <Checkbox inline={true} label="AOT"/>
+                <Checkbox inline={true} label="nutrients"/>
+                <Checkbox inline={true} label="CTD"/>
+                <Checkbox inline={true} label="fluoresence"/>
+                <Checkbox inline={true} label="productivity"/>
+                <Checkbox inline={true} label="Chl"/>
+                <Checkbox inline={true} label="HPLC"/>
 
                 <br/>
                 <br/>
@@ -137,7 +92,7 @@ export class AppSearch extends React.PureComponent<AppSearchProps> {
 
                 <br/>
                 <br/>
-                <DataTable numRows={10}/>
+                <DataTable offset={10} start={1}/>
             </div>
         );
     }

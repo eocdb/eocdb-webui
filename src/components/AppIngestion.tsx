@@ -1,20 +1,28 @@
 import * as React from "react";
+import { FileInput } from "@blueprintjs/core";
+
 
 interface AppIngestionProps {
     id: string;
 }
 
 
-export class AppIngestion extends React.PureComponent<AppIngestionProps>{
-    constructor(props: AppIngestionProps){
+export class AppIngestion extends React.PureComponent<AppIngestionProps> {
+    constructor(props: AppIngestionProps) {
         super(props);
     }
 
-    render(){
-        return(
+    handleInputChange = () => {
+
+    };
+
+    render() {
+        return (
             <div>
-                Ingest
+                <FileInput disabled={false} text="Choose file..." onInputChange={this.handleInputChange}/>
             </div>
         );
     }
 }
+
+export default AppIngestion;

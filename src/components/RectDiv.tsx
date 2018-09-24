@@ -44,7 +44,7 @@ export class RectDiv extends React.PureComponent<RectDivProps> {
         const style = {...RectDiv.RECT_STYLE, left: r.x, top: r.y, width: r.width, height: r.height, opacity: opacity};
 
         return (
-            <div style={style} id={this.props.id}>a</div>
+            <div style={style} id={this.props.id}> </div>
         );
     };
 

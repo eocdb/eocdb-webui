@@ -51,6 +51,7 @@ export function reportMeasurementFail(error: string): MeasurementFail{
     }
 }
 
+
 export function queryMeasurements(queryString: string) {
     return (dispatch: Dispatch) => {
         dispatch(_queryMeasurements(queryString));

@@ -4,7 +4,7 @@ import { FormEvent } from "react";
 
 
 /* TODO
-Handle enter event and focus event
+Handle focus event
  */
 
 
