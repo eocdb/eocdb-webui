@@ -1,25 +1,30 @@
 import * as React from "react";
 import { Column, Table, Cell } from "@blueprintjs/table";
 import { MeasurementData } from "../types";
-import { TablePaginationActions } from "./TablePaginationActions";
+import { ISelectInput } from "./SelectInputItems";
 
 
 interface DataTableProps {
     data?: MeasurementData;
-    offset: number;
-    start: number;
+    selectedOffsetItem?: ISelectInput | undefined;
 }
 
 
 export class DataTable extends React.PureComponent<DataTableProps> {
     //hasPagination: boolean = false;
 
-    //cellRendererDollars = (rowIndex: number, columnIndex: number) => {
-    cellRenderer = () => {
-        let value = "";
+    cellRenderer = (rowIndex: number, columnIndex: number) => {
+        let value = '';
+
         if (this.props.data) {
-            value = JSON.stringify(this.props.data);
+            try {
+                value = JSON.stringify(this.props.data[0]['records'][rowIndex][columnIndex]);
+            }
+            catch (e) {
+
+            }
         }
+
         return (
             <Cell>{value}</Cell>
         )
@@ -30,12 +35,26 @@ export class DataTable extends React.PureComponent<DataTableProps> {
     };
 
     render() {
-        let header = ["empty"];
+        let header = ['empty'];
+
+        try {
+            if (this.props.data) {
+                header = this.props.data[0]['attributes'];
+            }
+        }
+        catch (e) {
+
+        }
+
         let numRows = 1;
-        /*if (this.props.data) {
-            header = this.props.data[0];
-            numRows = 1; //this.props.data.length - 1;
-        }*/
+        try {
+            if (this.props.data) {
+                numRows = this.props.data[0]['records'].length - 1;
+            }
+        }
+        catch (e) {
+
+        }
 
         let cols = [];
         for (let col of header) {
@@ -45,13 +64,9 @@ export class DataTable extends React.PureComponent<DataTableProps> {
         }
 
         return (
-            <div>
-                <Table numRows={numRows}>
-                    {cols}
-                </Table>
-
-                <TablePaginationActions id={'tt'}/>
-            </div>
+            <Table numRows={numRows}>
+                {cols}
+            </Table>
         );
     };
 }

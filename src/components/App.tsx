@@ -15,11 +15,14 @@ import { AppSettings } from "./AppSettings";
 export interface AppStateProps {
     queryString: string;
     data?: MeasurementData;
+    start?: number;
+    offset?: number;
 }
 
 
 export interface AppDispatchProps {
     onQueryMeasurements: (queryString: string) => any;
+    onPageChange: (start: number, offset: number) => any;
 }
 
 
@@ -47,18 +50,24 @@ export class App extends React.PureComponent<AppProps, AppState> {
         this.props.onQueryMeasurements(queryString);
     };
 
+    handlePageChange = (start: number, offset: number) => {
+        console.log(start + '/' + offset);
+        this.props.onPageChange(start, offset);
+    };
+
     handleNavigationClick = (event: React.MouseEvent<HTMLElement>, navTarget: string) => {
         this.setState({navTarget});
     };
 
     public render() {
-        let panel:JSX.Element = <AppHome id={"home"} />;
+        let panel: JSX.Element = <AppHome id={"home"}/>;
 
         if (this.state.navTarget === "search") {
             panel = <AppSearch id={"app-search"}
-                              queryString={this.props.queryString}
-                              data={this.props.data}
-                              onQueryStringChange={this.handleQueryStringChange}
+                               queryString={this.props.queryString}
+                               data={this.props.data}
+                               onQueryStringChange={this.handleQueryStringChange}
+                               onPageChange={this.handlePageChange}
             />;
         }
         else if (this.state.navTarget === "lists") {

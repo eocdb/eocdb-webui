@@ -13,27 +13,15 @@ interface SelectInputProps {
     items: ISelectInput[];
     label: string;
     icon?: IconName;
-}
-
-
-interface SelectInputState {
     selectedItem: ISelectInput | undefined;
+    handleItemSelect: (item: ISelectInput) => void;
 }
 
 
-class SelectInput extends React.PureComponent<SelectInputProps, SelectInputState> {
+class SelectInput extends React.PureComponent<SelectInputProps> {
     constructor(props: SelectInputProps) {
         super(props);
-
-        this.state = {
-            selectedItem: undefined,
-        };
     }
-
-
-    handleItemSelect = (item: ISelectInput) => {
-        this.setState({selectedItem: item})
-    };
 
     renderFilm: ItemRenderer<ISelectInput> = (dt, {handleClick, modifiers, query}) => {
         if (!modifiers.matchesPredicate) {
@@ -51,14 +39,14 @@ class SelectInput extends React.PureComponent<SelectInputProps, SelectInputState
     };
 
     render() {
-        const data_type = this.state.selectedItem;
+        const data_type = this.props.selectedItem;
 
         return (
             <SelectInputCore
                 items={this.props.items}
                 itemRenderer={this.renderFilm}
                 itemPredicate={this.filterDataType}
-                onItemSelect={this.handleItemSelect}
+                onItemSelect={this.props.handleItemSelect}
                 noResults={<MenuItem disabled={true} text="No results."/>}
             >
                 <Button

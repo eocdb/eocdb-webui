@@ -21,10 +21,12 @@ interface MockProps{
     queryString: string;
     data?: MeasurementData;
     onQueryMeasurements: (queryString: string) => any;
+    onPageChange: (start: number, offset: number) => void;
 }
 
 
 function onQueryMeasurements() {}
+function onPageChange() {}
 
 
 describe("AppTest", () => {
@@ -46,6 +48,7 @@ describe("AppTest", () => {
             queryString: "",
             data: undefined,
             onQueryMeasurements: onQueryMeasurements,
+            onPageChange: onPageChange,
         };
 
         mountedAppScreen = undefined;

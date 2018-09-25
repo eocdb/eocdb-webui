@@ -18,7 +18,9 @@ const logger = createLogger({
 
 export const store = createStore(reduceStoreState, {
     queryString: "ernie",
-    data: JSON.parse("[]")
+    data: undefined,
+    start: 1,
+    offset: 10,
 },  applyMiddleware(logger, thunk));
 
 
