@@ -1,11 +1,6 @@
 import * as React from 'react';
+import { Rectangle } from '../types';
 
-export interface Rectangle {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-}
 
 interface RectDivProps {
     id: string;
@@ -44,7 +39,7 @@ export class RectDiv extends React.PureComponent<RectDivProps> {
         const style = {...RectDiv.RECT_STYLE, left: r.x, top: r.y, width: r.width, height: r.height, opacity: opacity};
 
         return (
-            <div style={style} id={this.props.id}> </div>
+            <div style={style} id={this.props.id} className={'rectdiv'}> </div>
         );
     };
 

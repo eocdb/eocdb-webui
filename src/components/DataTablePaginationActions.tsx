@@ -31,7 +31,7 @@ export class DataTablePaginationActions extends React.PureComponent<DataTablePag
 
         this.state = {
             selectedOffset: {label: '10', value: '10'},
-            offset: 20,
+            offset: 10,
             start: 1,
         };
     }

@@ -1,6 +1,6 @@
 import { EocdbAction } from './actions';
 import { StoreState } from './types';
-import { QUERY_MEASUREMENTS, MEASUREMENT_RESULTS, OFFSET_RESULTS, MEASUREMENT_FAIL } from './constants';
+import { QUERY_MEASUREMENTS, MEASUREMENT_RESULTS, OFFSET_RESULTS, MEASUREMENT_FAIL, REGION_SELECT_CHANGE } from './constants';
 
 
 export function reduceStoreState(state: StoreState, action: EocdbAction): StoreState {
@@ -14,6 +14,10 @@ export function reduceStoreState(state: StoreState, action: EocdbAction): StoreS
             const start = action.start;
 
             return {...state, offset, start};
+        case REGION_SELECT_CHANGE:
+            const rectangle = action.rectangle;
+
+            return {...state, rectangle};
         case MEASUREMENT_RESULTS:
             const data = action.data;
 

@@ -1,15 +1,20 @@
 import * as React from 'react';
+import { CSSProperties } from "react";
+
 import { Button, NumericInput } from '@blueprintjs/core';
-import './RegionSelect.css'
-import { RectDiv, Rectangle } from "./RectDiv";
+import { RectDiv } from "./RectDiv";
+import { Rectangle} from "../types";
+import { valBetween } from "./utils";
+
 import map_atlantic from './blue_marble_xs.jpg';
 import map_pacific from './blue_marble_xs_pacific.jpg';
-import { CSSProperties } from "react";
+import './RegionSelect.css'
 
 
 interface RegionSelectProps {
     id: string;
     idRect?: string;
+    onRegionChange: (rectangle: Rectangle)=> void;
 }
 
 
@@ -18,11 +23,7 @@ interface RegionSelectState {
     opacity: number;
     map: string;
     centre: number;
-}
-
-
-function valBetween(v: number, min: number, max: number) {
-    return (Math.min(max, Math.max(min, v)));
+    prevent_send: boolean;
 }
 
 
@@ -55,6 +56,16 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
             opacity: 0,
             map: map_atlantic,
             centre: 0,
+            prevent_send: true,
+        };
+    }
+
+    static getRectangle(x: number, y: number, width: number, height: number): Rectangle{
+        return {
+            x: x,
+            y: y,
+            width: width,
+            height: height,
         };
     }
 
@@ -65,15 +76,36 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
         const x = Math.round(event.clientX - clientRect.left);
         const y = Math.round(event.clientY - clientRect.top);
 
+        const rect = RegionSelect.getRectangle(x, y,0,0);
+
         this.setState({
-            rectangle: {
-                x: x,
-                y: y,
-                width: 0,
-                height: 0,
-                opacity: 0.25,
-            }
+            rectangle: rect,
+            opacity: 0.25,
+            prevent_send: true,
         });
+    };
+
+    handleMouseUp = (event: React.MouseEvent<HTMLDivElement>) => {
+        if(!this.state.prevent_send) {
+            const parentDiv = event.currentTarget;
+            const clientRect = parentDiv.getBoundingClientRect();
+
+            const x = Math.round(event.clientX - clientRect.left);
+            const y = Math.round(event.clientY - clientRect.top);
+
+            const width = Math.round(x - this.state.rectangle.x);
+            const height = Math.round(y - this.state.rectangle.y);
+
+            const rect = RegionSelect.getRectangle(this.state.rectangle.x, this.state.rectangle.y, width, height);
+
+            this.props.onRegionChange(rect);
+
+            this.setState({
+                rectangle: rect,
+                opacity: 0.25,
+                prevent_send: true,
+            });
+        }
     };
 
     handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -87,14 +119,12 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
             const width = Math.round(x - this.state.rectangle.x);
             const height = Math.round(y - this.state.rectangle.y);
 
+            const rect = RegionSelect.getRectangle(this.state.rectangle.x, this.state.rectangle.y,width,height);
+
             this.setState({
-                rectangle: {
-                    x: this.state.rectangle.x,
-                    y: this.state.rectangle.y,
-                    width: width,
-                    height: height,
-                },
+                rectangle: rect,
                 opacity: 0.25,
+                prevent_send: false,
             });
         }
     };
@@ -118,21 +148,30 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
     };
 
     handleOnReset = () => {
+        const rect = RegionSelect.getRectangle(0, 0, 0, 0, );
+
+        this.props.onRegionChange(rect);
+
         this.setState({
-            rectangle: {
-                x: 0,
-                y: 0,
-                width: 0,
-                height: 0,
-            },
+            rectangle: rect,
             opacity: 0,
+            prevent_send: true,
         });
     };
 
     handleLeftChange = (valueAsNumber: number) => {
         const max = 512 - this.state.rectangle.width;
-
         const value = valBetween(Math.round(valueAsNumber), 0, max);
+
+        const rect = RegionSelect.getRectangle(
+            value,
+            this.state.rectangle.y,
+            this.state.rectangle.width,
+            this.state.rectangle.height
+        );
+
+        this.props.onRegionChange(rect);
+
         this.setState({
             rectangle: {
                 x: value,
@@ -146,19 +185,34 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
 
     handleTopChange = (valueAsNumber: number) => {
         const value = Math.round(valueAsNumber);
+
+        const rect = RegionSelect.getRectangle(
+            this.state.rectangle.x,
+            value,
+            this.state.rectangle.width,
+            this.state.rectangle.height
+        );
+
+        this.props.onRegionChange(rect);
+
         this.setState({
-            rectangle: {
-                x: this.state.rectangle.x,
-                y: value,
-                width: this.state.rectangle.width,
-                height: this.state.rectangle.height,
-            },
+            rectangle: rect,
             opacity: 0.25,
         });
     };
 
     handleRightChange = (valueAsNumber: number) => {
         const value = Math.round(valueAsNumber);
+
+        const rect = RegionSelect.getRectangle(
+            this.state.rectangle.x,
+            this.state.rectangle.y,
+            value,
+            this.state.rectangle.height
+        );
+
+        this.props.onRegionChange(rect);
+
         this.setState({
             rectangle: {
                 x: this.state.rectangle.x,
@@ -172,13 +226,18 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
 
     handleBottomChange = (valueAsNumber: number) => {
         const value = Math.round(valueAsNumber);
+
+        const rect = RegionSelect.getRectangle(
+            this.state.rectangle.x,
+            this.state.rectangle.y,
+            this.state.rectangle.width,
+            value,
+        );
+
+        this.props.onRegionChange(rect);
+
         this.setState({
-            rectangle: {
-                x: this.state.rectangle.x,
-                y: this.state.rectangle.y,
-                width: this.state.rectangle.width,
-                height: value,
-            },
+            rectangle: rect,
             opacity: 0.25,
         });
     };
@@ -213,6 +272,7 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
                     id={this.props.id}
                     onMouseDown={this.handleMouseDown}
                     onMouseMove={this.handleMouseMove}
+                    onMouseUp={this.handleMouseUp}
                 >
                     <RectDiv id={idRect} opacity={this.state.opacity} rectangle={this.state.rectangle}/>
                 </div>

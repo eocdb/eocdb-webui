@@ -1,24 +1,26 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { mount, ReactWrapper } from "enzyme";
-import { FileInput } from "@blueprintjs/core";
-
-import AppIngestion from './AppIngestion';
+import { DataTable } from './DataTable';
+import { Cell } from "@blueprintjs/table";
+import { MeasurementData } from "../types";
+import { ISelectInput } from "./SelectInputItems";
 
 
 interface MockProps {
-    id: string
+    data?: MeasurementData;
+    selectedOffsetItem?: ISelectInput | undefined;
 }
 
 
 describe("AppTestIngestion", () => {
     let props: MockProps;
-    let mountedAppScreen: ReactWrapper<MockProps, undefined, AppIngestion> | undefined;
+    let mountedAppScreen: ReactWrapper<MockProps, undefined, DataTable> | undefined;
 
     const appScreen = () => {
         if (!mountedAppScreen) {
             mountedAppScreen = mount(
-                <AppIngestion {...props} />
+                <DataTable {...props} />
             );
         }
 
@@ -27,7 +29,8 @@ describe("AppTestIngestion", () => {
 
     beforeEach(() => {
         props = {
-            id: "test"
+            data: undefined,
+            selectedOffsetItem: undefined,
         };
 
         mountedAppScreen = undefined;
@@ -35,12 +38,12 @@ describe("AppTestIngestion", () => {
 
     it('AppIngestion renders without crashing', () => {
         const div = document.createElement('div');
-        ReactDOM.render(<AppIngestion {...props} />, div);
+        ReactDOM.render(<DataTable {...props} />, div);
         ReactDOM.unmountComponentAtNode(div);
     });
 
     it("AppIngestion always renders a `FileInput`", () => {
-        expect(appScreen().find(FileInput).length).toBe(1);
+        expect(appScreen().find(Cell).length).toBe(1);
     });
 });
 

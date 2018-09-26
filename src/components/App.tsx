@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { MeasurementData } from "../types";
+import { MeasurementData, Rectangle } from "../types";
 import './App.css';
 
 import { AppSearch } from "./AppSearch";
@@ -17,12 +17,14 @@ export interface AppStateProps {
     data?: MeasurementData;
     start?: number;
     offset?: number;
+    rectangle: Rectangle;
 }
 
 
 export interface AppDispatchProps {
     onQueryMeasurements: (queryString: string) => any;
     onPageChange: (start: number, offset: number) => any;
+    onRegionChange: (rectangle: Rectangle) => void;
 }
 
 
@@ -50,6 +52,11 @@ export class App extends React.PureComponent<AppProps, AppState> {
         this.props.onQueryMeasurements(queryString);
     };
 
+    handleRegionSelectChange = (rectangle: Rectangle) => {
+        console.log(rectangle);
+        this.props.onRegionChange(rectangle);
+    };
+
     handlePageChange = (start: number, offset: number) => {
         console.log(start + '/' + offset);
         this.props.onPageChange(start, offset);
@@ -68,6 +75,7 @@ export class App extends React.PureComponent<AppProps, AppState> {
                                data={this.props.data}
                                onQueryStringChange={this.handleQueryStringChange}
                                onPageChange={this.handlePageChange}
+                               onRegionChange={this.handleRegionSelectChange}
             />;
         }
         else if (this.state.navTarget === "lists") {

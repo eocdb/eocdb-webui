@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import App from './App';
 import { mount, ReactWrapper } from "enzyme";
-import { MeasurementData } from "../types";
+import { MeasurementData, Rectangle } from "../types";
 import Navigation from "./Navigation";
 import { Button } from "@blueprintjs/core";
 import { AppHome } from "./AppHome";
@@ -17,16 +17,24 @@ interface MockState {
 }
 
 
-interface MockProps{
+interface MockProps {
     queryString: string;
+    rectangle: Rectangle,
     data?: MeasurementData;
     onQueryMeasurements: (queryString: string) => any;
     onPageChange: (start: number, offset: number) => void;
+    onRegionChange: (rectangle: Rectangle) => void;
 }
 
 
-function onQueryMeasurements() {}
-function onPageChange() {}
+function onQueryMeasurements() {
+}
+
+function onPageChange() {
+}
+
+function onRegionChange() {
+}
 
 
 describe("AppTest", () => {
@@ -47,8 +55,15 @@ describe("AppTest", () => {
         props = {
             queryString: "",
             data: undefined,
+            rectangle: {
+                x: 0,
+                y: 0,
+                width: 0,
+                height: 0,
+            },
             onQueryMeasurements: onQueryMeasurements,
             onPageChange: onPageChange,
+            onRegionChange: onRegionChange,
         };
 
         mountedAppScreen = undefined;

@@ -5,7 +5,7 @@ import { Button, MenuItem, IconName } from "@blueprintjs/core";
 import { highlightText } from "./utils";
 
 
-const SelectInputCore = Select.ofType<ISelectInput>();
+export const SelectInputCore = Select.ofType<ISelectInput>();
 
 
 interface SelectInputProps {
@@ -18,12 +18,12 @@ interface SelectInputProps {
 }
 
 
-class SelectInput extends React.PureComponent<SelectInputProps> {
+export class SelectInput extends React.PureComponent<SelectInputProps> {
     constructor(props: SelectInputProps) {
         super(props);
     }
 
-    renderFilm: ItemRenderer<ISelectInput> = (dt, {handleClick, modifiers, query}) => {
+    renderItem: ItemRenderer<ISelectInput> = (dt, {handleClick, modifiers, query}) => {
         if (!modifiers.matchesPredicate) {
             return null;
         }
@@ -44,7 +44,7 @@ class SelectInput extends React.PureComponent<SelectInputProps> {
         return (
             <SelectInputCore
                 items={this.props.items}
-                itemRenderer={this.renderFilm}
+                itemRenderer={this.renderItem}
                 itemPredicate={this.filterDataType}
                 onItemSelect={this.props.handleItemSelect}
                 noResults={<MenuItem disabled={true} text="No results."/>}

@@ -2,7 +2,9 @@ import * as React from "react";
 import { SearchField } from "./SearchField";
 import { DataTable } from "./DataTable";
 import { MeasurementData } from "../types";
-import { DataTablePaginationActions } from "./TablePaginationActions";
+import { DataTablePaginationActions } from "./DataTablePaginationActions";
+import { RegionSelect } from "./RegionSelect";
+import { Rectangle } from '../types';
 
 
 interface AppSearchProps {
@@ -11,6 +13,7 @@ interface AppSearchProps {
     data?: MeasurementData;
     onQueryStringChange: (queryString: string) => void;
     onPageChange: (start: number, offset: number) => void;
+    onRegionChange: (rectangle: Rectangle) => void;
 }
 
 
@@ -27,6 +30,8 @@ export class AppSearch extends React.PureComponent<AppSearchProps> {
 
                 <br/>
                 <br/>
+
+                <RegionSelect onRegionChange={this.props.onRegionChange} id={'region-select'} />
 
                 <DataTable data={this.props.data} />
                 <DataTablePaginationActions max={1000} id={'tt'} handleOnChange={this.props.onPageChange}/>

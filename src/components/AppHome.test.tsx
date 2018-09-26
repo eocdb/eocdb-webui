@@ -1,24 +1,22 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { AppHome } from './AppHome';
 import { mount, ReactWrapper } from "enzyme";
-import { FileInput } from "@blueprintjs/core";
-
-import AppIngestion from './AppIngestion';
 
 
 interface MockProps {
-    id: string
+    id: string;
 }
 
 
-describe("AppTestIngestion", () => {
+describe("AppHomeTest", () => {
     let props: MockProps;
-    let mountedAppScreen: ReactWrapper<MockProps, undefined, AppIngestion> | undefined;
+    let mountedAppScreen: ReactWrapper<MockProps, undefined, AppHome> | undefined;
 
     const appScreen = () => {
         if (!mountedAppScreen) {
             mountedAppScreen = mount(
-                <AppIngestion {...props} />
+                <AppHome {...props} />
             );
         }
 
@@ -27,22 +25,19 @@ describe("AppTestIngestion", () => {
 
     beforeEach(() => {
         props = {
-            id: "test"
+            id: "",
         };
 
         mountedAppScreen = undefined;
     });
 
-    it('AppIngestion renders without crashing', () => {
+    it('AppHome renders without crashing', () => {
         const div = document.createElement('div');
-        ReactDOM.render(<AppIngestion {...props} />, div);
+        ReactDOM.render(<AppHome {...props} />, div);
         ReactDOM.unmountComponentAtNode(div);
     });
 
-    it("AppIngestion always renders a `FileInput`", () => {
-        expect(appScreen().find(FileInput).length).toBe(1);
+    it("AppHome state is null", () => {
+        expect(appScreen().state()).toEqual(null );
     });
 });
-
-
-

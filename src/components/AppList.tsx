@@ -4,16 +4,24 @@ interface AppListProps {
     id: string;
 }
 
+interface AppListState {
+    report: string;
+}
 
-export class AppList extends React.PureComponent<AppListProps>{
-    constructor(props: AppListProps){
+
+export class AppList extends React.PureComponent<AppListProps, AppListState> {
+    constructor(props: AppListProps) {
         super(props);
+
+        this.state = {
+            report: 'Scientist',
+        };
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
-                Lists
+                List: {this.state.report}
             </div>
         );
     }

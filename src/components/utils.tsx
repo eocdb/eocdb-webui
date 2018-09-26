@@ -37,6 +37,11 @@ function escapeRegExpChars(text: string) {
 }
 
 
-export function valBetween(v: number, min: number, max: number) {
+export function valBetween(v: number, min: number, max: number): number {
+    if(min>max){
+        const buff = min;
+        min = max;
+        max = buff;
+    }
     return (Math.min(max, Math.max(min, v)));
 }
