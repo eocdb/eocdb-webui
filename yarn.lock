@@ -96,6 +96,10 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
+"@types/geojson@^7946.0.4":
+  version "7946.0.4"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.4.tgz#4e049756383c3f055dd8f3d24e63fb543e98eb07"
+
 "@types/jest@^23.3.1":
   version "23.3.1"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.1.tgz#a4319aedb071d478e6f407d1c4578ec8156829cf"
@@ -2911,10 +2915,6 @@ gauge@~2.7.3:
     string-width "^1.0.1"
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
-
-geojson@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/geojson/-/geojson-0.5.0.tgz#3cd6c96399be65b56ee55596116fe9191ce701c0"
 
 get-caller-file@^1.0.1:
   version "1.0.3"
