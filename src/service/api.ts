@@ -139,7 +139,7 @@ export interface ServiceApi {
     /**
      * Download datasets.
      *
-     * @rest /api/datasets/zip?{DatasetDownloadRequest}
+     * @rest /api/datasets/download?{DatasetDownloadRequest}
      *
      * @SeaBASS:
      * - File Search / Results / Download All
