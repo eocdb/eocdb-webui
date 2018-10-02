@@ -2,6 +2,7 @@
 
 # JetBrains
 /.idea
+*.iml
 
 # dependencies
 /node_modules

@@ -2,14 +2,18 @@
   "name": "eocdb-webui",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
   "dependencies": {
+    "@blueprintjs/select": "^3.2.0",
     "@babel/core": "^7.0.0",
     "@blueprintjs/core": "^3.4.0",
     "@blueprintjs/datetime": "^3.1.0",
     "@blueprintjs/docs-theme": "^3.0.1",
     "@blueprintjs/select": "^3.1.0",
     "@blueprintjs/table": "^3.1.1",
+    "@types/geojson": "^7946.0.4",
+    "@types/react-redux": "^6.0.9",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
     "@terrestris/react-geo": "^10.0.0",
     "@types/cesium": "^1.47.2",
     "@types/enzyme": "^3.1.13",
@@ -50,53 +54,19 @@
     "react-pagination-table": "^2.0.2",
     "react-redux": "^5.0.7",
     "react-scripts-ts": "2.17.0",
-    "react-table": "^6.8.6",
-    "read-yaml": "^1.1.0",
-    "redux": "^4.0.0",
-    "redux-logger": "^3.0.6",
-    "redux-mock-store": "^1.5.3",
-    "redux-thunk": "^2.3.0",
-    "redux-thunk-actions": "^1.2.1",
-    "ts-jest": "^23.1.4"
+    "redux": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
-    "test": "jest",
-    "compile": "tsc"
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.0.0",
     "@types/jest": "^23.3.1",
     "@types/node": "^10.7.1",
     "@types/react": "^16.4.11",
     "@types/react-dom": "^16.0.7",
-    "axios": "^0.18.0",
-    "expect": "^23.5.0",
-    "moxios": "^0.4.0",
     "typescript": "^3.0.1"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "testPathIgnorePatterns": [
-      "<rootDir>/build"
-    ],
-    "setupTestFrameworkScriptFile": "<rootDir>/src/setupEnzyme.ts",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "yml",
-      "node"
-    ],
-    "moduleNameMapper": {
-      "\\.(css)$": "<rootDir>/node_modules/jest-css-modules",
-      "\\.(css|jpg|png|svg)$": "<rootDir>/src/empty-module.js"
-    }
   }
 }
