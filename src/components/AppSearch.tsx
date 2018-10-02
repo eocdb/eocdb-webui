@@ -1,10 +1,11 @@
 import * as React from "react";
 import { SearchField } from "./SearchField";
 import { DataTable } from "./DataTable";
-import { MeasurementData } from "../types";
+import { GeoRectangle, MeasurementData } from "../types";
 import { DataTablePaginationActions } from "./DataTablePaginationActions";
-import { RegionSelect } from "./RegionSelect";
-import { Rectangle } from '../types';
+import { OL } from "./RegionSelect";
+import MultiSelectInput from "./MultiSelectInput";
+import { DataTypeItems } from "./SelectInputItems";
 
 
 interface AppSearchProps {
@@ -13,30 +14,60 @@ interface AppSearchProps {
     data?: MeasurementData;
     onQueryStringChange: (queryString: string) => void;
     onPageChange: (start: number, offset: number) => void;
-    onRegionChange: (rectangle: Rectangle) => void;
+    onRegionChange: (rectangle: GeoRectangle) => void;
 }
 
 
-export class AppSearch extends React.PureComponent<AppSearchProps> {
+interface AppSearchState {
+    searchSuccess: boolean;
+}
+
+
+export class AppSearch extends React.PureComponent<AppSearchProps, AppSearchState> {
     constructor(props: AppSearchProps) {
         super(props);
+
+        this.state = {
+            searchSuccess: false,
+        };
     }
 
+    handleSearchSuccess = (success: boolean) => {
+        this.setState({searchSuccess: success});
+    };
+
     render() {
-        return (
-            <div>
-                <SearchField queryString={this.props.queryString}
-                             onQueryStringChange={this.props.onQueryStringChange}/>
+        if(this.state.searchSuccess){
+            return(
+                <div>
+                    <DataTable data={this.props.data}/>
+                    <DataTablePaginationActions
+                        max={1000} id={'tt'}
+                        handleOnChange={this.props.onPageChange}
+                        handleOnSearchSuccess={this.handleSearchSuccess}
+                    />
+                </div>
+            );
+        }
+        else {
+            return (
+                <div>
+                    <SearchField queryString={this.props.queryString}
+                                 onQueryStringChange={this.props.onQueryStringChange}
+                                 onSearchSuccess={this.handleSearchSuccess}
+                    />
 
-                <br/>
-                <br/>
 
-                <RegionSelect onRegionChange={this.props.onRegionChange} id={'region-select'} />
+                    <OL
+                        onRegionChange={this.props.onRegionChange}
+                        onSearchSuccess={this.handleSearchSuccess}
+                        id={'region-select'}
+                    />
 
-                <DataTable data={this.props.data} />
-                <DataTablePaginationActions max={1000} id={'tt'} handleOnChange={this.props.onPageChange}/>
-            </div>
-        );
+                    <MultiSelectInput id={'select'} label={'Grouped Products'} items={DataTypeItems}/>
+                </div>
+            );
+        }
     }
 
 }

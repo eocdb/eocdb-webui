@@ -7,15 +7,11 @@ import {
     Navbar,
     NavbarDivider,
     NavbarGroup,
-    NavbarHeading,
-    Popover,
-    Position,
-    Menu,
-    MenuDivider,
-    MenuItem
+    NavbarHeading
 } from "@blueprintjs/core";
 
 import logo from './EUMETSAT.png';
+import PopoverSetting from "./PopoverSetting";
 
 
 interface NavigationProps {
@@ -23,11 +19,7 @@ interface NavigationProps {
 }
 
 
-interface NavigationState {
-}
-
-
-class Navigation extends React.PureComponent<NavigationProps, NavigationState> {
+class Navigation extends React.PureComponent<NavigationProps> {
     constructor(props: NavigationProps) {
         super(props);
     }
@@ -37,22 +29,7 @@ class Navigation extends React.PureComponent<NavigationProps, NavigationState> {
             <Navbar>
                 <NavbarGroup align={Alignment.LEFT}>
                     <NavbarHeading>
-                        <Popover content={
-                            <Menu className={Classes.ELEVATION_1}>
-                                <MenuItem icon="settings" text="Settings"
-                                          onClick={(event: React.MouseEvent<HTMLElement>) => this.props.handleNavigationClick(event, "settings")}
-                                />
-                                <MenuDivider/>
-                                <MenuItem icon="download" text="Test" onClick={
-                                    (event: React.MouseEvent<HTMLElement>) => this.props.handleNavigationClick(event, "test")
-                                }
-                                />
-                                <MenuDivider/>
-                            </Menu>
-                        }
-                                 position={Position.BOTTOM_RIGHT}>
-                            <Button icon="menu" text=""/>
-                        </Popover>
+                        <PopoverSetting handleNavigationClick={this.props.handleNavigationClick}/>
                     </NavbarHeading>
                     <NavbarDivider/>
                     <Button className={Classes.MINIMAL} icon="home" text="Home"
@@ -67,7 +44,7 @@ class Navigation extends React.PureComponent<NavigationProps, NavigationState> {
                             onClick={(event: React.MouseEvent<HTMLElement>) => this.props.handleNavigationClick(event, "help")}/>
                 </NavbarGroup>
                 <NavbarGroup align={Alignment.RIGHT}>
-                    <img src={logo} className="App-logo" alt="logo" />
+                    <img src={logo} className="App-logo" alt="logo"/>
                 </NavbarGroup>
             </Navbar>
         );

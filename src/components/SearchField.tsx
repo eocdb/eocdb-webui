@@ -11,6 +11,7 @@ Handle focus event
 interface SearchFieldProps {
     queryString: string;
     onQueryStringChange: (queryString: string) => void;
+    onSearchSuccess: (success: boolean) => void;
 }
 
 
@@ -26,11 +27,15 @@ export class SearchField extends React.PureComponent<SearchFieldProps, SearchFie
         this.state = {queryString: props.queryString};
     }
 
-    handleClick = () => this.props.onQueryStringChange(this.state.queryString);
+    handleClick = () => {
+        this.props.onQueryStringChange(this.state.queryString);
+        this.props.onSearchSuccess(true);
+    }
 
     handleOnKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
         if (event.keyCode === 13) {
             this.props.onQueryStringChange(this.state.queryString);
+            this.props.onSearchSuccess(true);
         }
     };
 
@@ -42,17 +47,21 @@ export class SearchField extends React.PureComponent<SearchFieldProps, SearchFie
 
     render() {
         return (
-            <InputGroup
-                disabled={false}
-                large={true}
-                leftIcon="search"
-                onChange={this.handleChange}
-                onKeyDown={this.handleOnKeyDown}
-                placeholder="query expression"
-                rightElement={<Button className="bp3-button bp3-minimal bp3-intent-primary bp3-icon-arrow-right"
-                                      onClick={this.handleClick}/>}
-                value={this.state.queryString}
-            />
+            <div>
+                <InputGroup
+                    disabled={false}
+                    large={true}
+                    leftIcon="search"
+                    onChange={this.handleChange}
+                    onKeyDown={this.handleOnKeyDown}
+                    placeholder="query expression"
+                    rightElement={<Button className="bp3-button bp3-minimal bp3-intent-primary bp3-icon-arrow-right"
+                                          onClick={this.handleClick}/>}
+                    value={this.state.queryString}
+                />
+                <br/>
+                <br/>
+            </div>
         );
     }
 }

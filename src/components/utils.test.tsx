@@ -14,6 +14,8 @@ describe("TestUtils", () => {
         expect(res).toEqual(50); /*!!!*/
         res = valBetween(50, 100, 100);
         expect(res).toEqual(100);
+        res = valBetween(0, 0, 0);
+        expect(res).toEqual(0);
     });
 
     it('highlightText works', () => {

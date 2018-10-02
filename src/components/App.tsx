@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { MeasurementData, Rectangle } from "../types";
+import { GeoRectangle, MeasurementData } from "../types";
 import './App.css';
 
 import { AppSearch } from "./AppSearch";
@@ -17,14 +17,14 @@ export interface AppStateProps {
     data?: MeasurementData;
     start?: number;
     offset?: number;
-    rectangle: Rectangle;
+    rectangle: GeoRectangle;
 }
 
 
 export interface AppDispatchProps {
     onQueryMeasurements: (queryString: string) => any;
     onPageChange: (start: number, offset: number) => any;
-    onRegionChange: (rectangle: Rectangle) => void;
+    onRegionChange: (rectangle: GeoRectangle) => void;
 }
 
 
@@ -45,14 +45,14 @@ export class App extends React.PureComponent<AppProps, AppState> {
 
     constructor(props: AppProps) {
         super(props);
-        this.state = {navTarget: "home"};
+        this.state = { navTarget: "home" };
     }
 
     handleQueryStringChange = (queryString: string) => {
         this.props.onQueryMeasurements(queryString);
     };
 
-    handleRegionSelectChange = (rectangle: Rectangle) => {
+    handleRegionSelectChange = (rectangle: GeoRectangle) => {
         console.log(rectangle);
         this.props.onRegionChange(rectangle);
     };

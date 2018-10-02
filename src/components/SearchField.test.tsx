@@ -8,6 +8,7 @@ import { InputGroup } from "@blueprintjs/core";
 interface MockProps {
     queryString: string;
     onQueryStringChange: (queryString: string) => void;
+    onSearchSuccess: (success: boolean) => void;
 }
 
 
@@ -34,6 +35,7 @@ describe("TestSearchField", () => {
         props = {
             queryString: 'ernie',
             onQueryStringChange: () => {},
+            onSearchSuccess: () => {},
         };
 
         mountedAppScreen = undefined;

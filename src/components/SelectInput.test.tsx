@@ -37,13 +37,12 @@ describe("TestSelectInput", () => {
 
     beforeEach(() => {
         props = {
-            id: '',
+            id: 'tt',
             items: MockItems,
             label: '',
             icon: undefined,
             selectedItem: undefined,
-            handleItemSelect: () => {
-            },
+            handleItemSelect: () => {},
         };
 
         mountedAppScreen = undefined;

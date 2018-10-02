@@ -39,9 +39,10 @@ function escapeRegExpChars(text: string) {
 
 export function valBetween(v: number, min: number, max: number): number {
     if(min>max){
-        const buff = min;
-        min = max;
-        max = buff;
+        min = min + max;
+        max = min - max;
+        min = min - max;
+        console.warn('Warning: min is larger than max in utils.valBetween. Swapped min and max.');
     }
     return (Math.min(max, Math.max(min, v)));
 }

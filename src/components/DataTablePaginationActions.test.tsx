@@ -11,6 +11,7 @@ interface MockProps {
     id: string;
     max: number;
     handleOnChange: (start: number, offset: number) => void;
+    handleOnSearchSuccess: (success: boolean) => void;
 }
 
 
@@ -40,6 +41,7 @@ describe("TestDataTablePaginationActions", () => {
             id: '',
             max: 0,
             handleOnChange: () => {},
+            handleOnSearchSuccess: () => {},
         };
 
         mountedAppScreen = undefined;

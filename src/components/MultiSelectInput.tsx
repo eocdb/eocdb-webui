@@ -28,38 +28,38 @@ class MultiSelectInput extends React.PureComponent<MultiSelectInputProps, MultiS
         };
     }
 
-    selectFilm(item: ISelectInput) {
-        this.setState({ selectedItems: [...this.state.selectedItems, item] });
+    selectItem(item: ISelectInput) {
+        this.setState({selectedItems: [...this.state.selectedItems, item]});
     };
 
-    deselectFilm(index: number) {
-        this.setState({ selectedItems: this.state.selectedItems.filter((_item, i) => i !== index) });
+    deselectItem(index: number) {
+        this.setState({selectedItems: this.state.selectedItems.filter((_item, i) => i !== index)});
     };
 
-    getSelectedFilmIndex(item: ISelectInput) {
+    getSelectedItemIndex(item: ISelectInput) {
         return this.state.selectedItems.indexOf(item);
     };
 
-    isFilmSelected(item: ISelectInput) {
-        return this.getSelectedFilmIndex(item) !== -1;
+    isItemSelected(item: ISelectInput) {
+        return this.getSelectedItemIndex(item) !== -1;
     };
 
     handleItemSelect = (item: ISelectInput) => {
-        if (!this.isFilmSelected(item)) {
-            this.selectFilm(item);
+        if (!this.isItemSelected(item)) {
+            this.selectItem(item);
         } else {
-            this.deselectFilm(this.getSelectedFilmIndex(item));
+            this.deselectItem(this.getSelectedItemIndex(item));
         }
     };
 
-    renderFilm: ItemRenderer<ISelectInput> = (item, { modifiers, handleClick }) => {
+    renderItem: ItemRenderer<ISelectInput> = (item, {modifiers, handleClick}) => {
         if (!modifiers.matchesPredicate) {
             return null;
         }
         return (
             <MenuItem
                 active={modifiers.active}
-                icon={this.isFilmSelected(item) ? "tick" : "blank"}
+                icon={this.isItemSelected(item) ? "tick" : "blank"}
                 key={item.value}
                 onClick={handleClick}
                 text={item.label}
@@ -76,13 +76,18 @@ class MultiSelectInput extends React.PureComponent<MultiSelectInputProps, MultiS
 
     render() {
         return (
-            <MultiSelectInputCore
-                items={this.props.items}
-                itemRenderer={this.renderFilm}
-                itemPredicate={this.filterDataType}
-                onItemSelect={this.handleItemSelect}
-                tagRenderer={this.renderTag}
-            />
+            <div>
+                <MultiSelectInputCore
+                    items={this.props.items}
+                    itemRenderer={this.renderItem}
+                    itemPredicate={this.filterDataType}
+                    onItemSelect={this.handleItemSelect}
+                    tagRenderer={this.renderTag}
+                    selectedItems={this.state.selectedItems}
+                />
+                <br/>
+                <br/>
+            </div>
         );
     }
 }

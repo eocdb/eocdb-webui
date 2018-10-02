@@ -8,6 +8,7 @@ interface DataTablePaginationActionsProps {
     id: string;
     max: number;
     handleOnChange: (start: number, offset: number) => void;
+    handleOnSearchSuccess: (success: boolean) => void;
 }
 
 
@@ -36,7 +37,11 @@ export class DataTablePaginationActions extends React.PureComponent<DataTablePag
         };
     }
 
-    handleOnClick= (event: React.MouseEvent<HTMLElement>) => {
+    handleBack = () => {
+        this.props.handleOnSearchSuccess(false);
+    };
+
+    handleOnClick = (event: React.MouseEvent<HTMLElement>) => {
         const action = (event.target as HTMLButtonElement).value;
 
         let start = this.state.start;
@@ -96,6 +101,7 @@ export class DataTablePaginationActions extends React.PureComponent<DataTablePag
                 <Button value={'left'} onClick={this.handleOnClick} icon={"chevron-left"}/>
                 <Button value={'right'} onClick={this.handleOnClick} icon={"chevron-right"}/>
                 <Button value={'forward'} onClick={this.handleOnClick} icon={"chevron-forward"}/>
+                <Button value={'back'} onClick={this.handleBack} icon={"arrow-left"}/>
             </div>
         );
     };

@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import App from './App';
 import { mount, ReactWrapper } from "enzyme";
-import { MeasurementData, Rectangle } from "../types";
+import { GeoRectangle, MeasurementData } from "../types";
 import Navigation from "./Navigation";
 import { Button } from "@blueprintjs/core";
 import { AppHome } from "./AppHome";
@@ -19,11 +19,11 @@ interface MockState {
 
 interface MockProps {
     queryString: string;
-    rectangle: Rectangle,
+    rectangle: GeoRectangle,
     data?: MeasurementData;
     onQueryMeasurements: (queryString: string) => any;
     onPageChange: (start: number, offset: number) => void;
-    onRegionChange: (rectangle: Rectangle) => void;
+    onRegionChange: (rectangle: GeoRectangle) => void;
 }
 
 
@@ -56,10 +56,10 @@ describe("AppTest", () => {
             queryString: "",
             data: undefined,
             rectangle: {
-                x: 0,
-                y: 0,
-                width: 0,
-                height: 0,
+                west: 0,
+                east: 0,
+                north: 0,
+                south: 0,
             },
             onQueryMeasurements: onQueryMeasurements,
             onPageChange: onPageChange,

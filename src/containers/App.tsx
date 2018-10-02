@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { App, AppDispatchProps, AppStateProps } from "../components/App";
 
 import { queryMeasurements, offsetResults, regionChange } from '../actions';
-import { Rectangle, StoreState } from '../types';
+import { GeoRectangle, StoreState } from '../types';
 
 
 export function mapStateToProps(state: StoreState): AppStateProps {
@@ -22,7 +22,7 @@ export function mapDispatchToProps(dispatch: Dispatch): AppDispatchProps {
     return {
         onQueryMeasurements: (queryString: string) => dispatch(queryMeasurements(queryString) as any), /* TO: Fix "as any" */
         onPageChange: (start: number, offset: number) => dispatch(offsetResults(start, offset) as any),
-        onRegionChange: (rectangle: Rectangle) => dispatch(regionChange(rectangle) as any)
+        onRegionChange: (rectangle: GeoRectangle) => dispatch(regionChange(rectangle) as any)
     };
 }
 

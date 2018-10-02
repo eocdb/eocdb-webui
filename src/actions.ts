@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { MeasurementData, Rectangle, StoreState } from "./types";
+import { GeoRectangle, MeasurementData, StoreState } from "./types";
 import * as constants from './constants';
 
 
@@ -18,7 +18,7 @@ export interface OffsetResults {
 
 export interface RegionSelectChange {
     type: constants.REGION_SELECT_CHANGE;
-    rectangle: Rectangle;
+    rectangle: GeoRectangle;
 }
 
 
@@ -41,7 +41,7 @@ export type EocdbAction = QueryMeasurements | MeasurementResults | MeasurementFa
 //export type ThunkActionCreator<R> = (...args: any[]) => ThunkAction2<R>;
 
 
-export function _regionChange(rectangle: Rectangle): RegionSelectChange{
+export function _regionChange(rectangle: GeoRectangle): RegionSelectChange{
     return {
        type: constants.REGION_SELECT_CHANGE,
        rectangle,
@@ -49,7 +49,7 @@ export function _regionChange(rectangle: Rectangle): RegionSelectChange{
 }
 
 
-export function regionChange(rectangle: Rectangle) {
+export function regionChange(rectangle: GeoRectangle) {
     return (dispatch: Dispatch, getState: () => StoreState) => {
         dispatch(_regionChange(rectangle));
         let queryString = getState().queryString;

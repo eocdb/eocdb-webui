@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppSearch } from "./AppSearch";
 import { mount, ReactWrapper } from "enzyme";
-import { MeasurementData, Rectangle } from "../types";
+import { GeoRectangle, MeasurementData } from "../types";
 import { SearchField } from "./SearchField";
 import { RegionSelect } from "./RegionSelect";
 import { DataTable } from "./DataTable";
@@ -17,7 +17,7 @@ interface MockProps {
     data?: MeasurementData;
     onQueryStringChange: (queryString: string) => void;
     onPageChange: (start: number, offset: number) => void;
-    onRegionChange: (rectangle: Rectangle) => void;
+    onRegionChange: (rectangle: GeoRectangle) => void;
 }
 
 

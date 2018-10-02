@@ -1,25 +1,142 @@
 import * as React from 'react';
 import { CSSProperties } from "react";
-
 import { Button, NumericInput } from '@blueprintjs/core';
+
 import { RectDiv } from "./RectDiv";
-import { Rectangle} from "../types";
+import { GEO_CLIENT_RECT_0, GEO_CLIENT_RECT_360 } from "../utils/ClientRectangle";
 import { valBetween } from "./utils";
+import { GeoRectangle, Rectangle } from "../types";
 
 import map_atlantic from './blue_marble_xs.jpg';
 import map_pacific from './blue_marble_xs_pacific.jpg';
 import './RegionSelect.css'
 
+import Map from 'ol/Map';
+import View from 'ol/View';
+import TileLayer from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
+import 'ol/ol.css';
+import Select from 'ol/interaction/Select';
+import DragBox from 'ol/interaction/DragBox';
+import { events } from "openlayers";
+import click = events.condition.click;
+import platformModifierKeyOnly = events.condition.platformModifierKeyOnly;
+
+
+interface OLState {
+    selected: number;
+    deselected: number;
+    numFeat: number;
+}
+
+interface OLProps {
+    id: string;
+    onRegionChange: (rect: GeoRectangle) => void;
+    onSearchSuccess: (success: boolean) => void;
+}
+
+export class OL extends React.PureComponent<OLProps, OLState> {
+
+    map: Map | undefined = undefined;
+    dragBox: DragBox | undefined;
+
+    constructor(props: OLProps) {
+        super(props);
+
+        this.state = {
+            selected: 0,
+            deselected: 0,
+            numFeat: 0,
+        };
+    }
+
+    buildMap(): Map {
+        const layers = [
+            new TileLayer({
+                source: new OSM()
+            }),
+        ];
+
+        const map = new Map({
+            layers: layers,
+            target: 'map',
+            view: new View({
+                projection: 'EPSG:4326',
+                center: [0, 0],
+                zoom: 4
+            })
+        });
+
+        const selectSingleClick = new Select({
+                condition: click
+            }
+        );
+        map.addInteraction(selectSingleClick);
+
+        this.dragBox = new DragBox({
+            condition: platformModifierKeyOnly
+        });
+
+        this.dragBox.on('boxend', this.handleOnFeatureDragBoxSelect);
+
+        map.addInteraction(this.dragBox);
+
+        selectSingleClick.on('select', this.handleOnFeatureSelect);
+
+        return map;
+    }
+
+    handleOnFeatureSelect = (e: Select.Event) => {
+        console.log(e.target.getFeatures());
+        this.setState(
+            {
+                selected: e.selected.length,
+                deselected: e.deselected.length,
+                numFeat: e.target.getFeatures().getLength(),
+            }
+        );
+    };
+
+    handleOnFeatureDragBoxSelect = () => {
+        if (this.dragBox) {
+            const extent = this.dragBox.getGeometry().getExtent();
+            const rect = {
+                west: extent[0],
+                south: extent[1],
+                north: extent[2],
+                east: extent[3],
+            };
+            this.props.onRegionChange(rect);
+            this.props.onSearchSuccess(true);
+        }
+    };
+
+    componentDidMount() {
+        this.map = this.buildMap();
+    }
+
+    render() {
+        return (
+            <div>
+                <div id="map" className="Map"/>
+                <br/>
+                <br/>
+            </div>
+        );
+    }
+}
+
 
 interface RegionSelectProps {
     id: string;
     idRect?: string;
-    onRegionChange: (rectangle: Rectangle)=> void;
+    onRegionChange: (rectangle: Rectangle) => void;
 }
 
 
 interface RegionSelectState {
     rectangle: Rectangle;
+    geo_rectangle: GeoRectangle;
     opacity: number;
     map: string;
     centre: number;
@@ -53,6 +170,12 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
                 width: 0,
                 height: 0,
             },
+            geo_rectangle: {
+                west: 0,
+                east: 0,
+                south: 0,
+                north: 0,
+            },
             opacity: 0,
             map: map_atlantic,
             centre: 0,
@@ -60,13 +183,31 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
         };
     }
 
-    static getRectangle(x: number, y: number, width: number, height: number): Rectangle{
+    static getRectangle(x: number, y: number, width: number, height: number): Rectangle {
         return {
             x: x,
             y: y,
             width: width,
             height: height,
         };
+    }
+
+    static getGeoRectangle(rect: Rectangle, centre: number): GeoRectangle {
+        if (centre === 0) {
+            return GEO_CLIENT_RECT_0.geoRect(rect);
+        }
+        else {
+            return GEO_CLIENT_RECT_360.geoRect(rect);
+        }
+    }
+
+    static getImgRectangle(rect: GeoRectangle, centre: number): Rectangle {
+        if (centre === 0) {
+            return GEO_CLIENT_RECT_0.imgRect(rect);
+        }
+        else {
+            return GEO_CLIENT_RECT_360.imgRect(rect);
+        }
     }
 
     handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -76,17 +217,19 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
         const x = Math.round(event.clientX - clientRect.left);
         const y = Math.round(event.clientY - clientRect.top);
 
-        const rect = RegionSelect.getRectangle(x, y,0,0);
+        const rect = RegionSelect.getRectangle(x, y, 0, 0);
+        const geo_rect = RegionSelect.getGeoRectangle(rect, this.state.centre);
 
         this.setState({
             rectangle: rect,
+            geo_rectangle: geo_rect,
             opacity: 0.25,
             prevent_send: true,
         });
     };
 
     handleMouseUp = (event: React.MouseEvent<HTMLDivElement>) => {
-        if(!this.state.prevent_send) {
+        if (!this.state.prevent_send) {
             const parentDiv = event.currentTarget;
             const clientRect = parentDiv.getBoundingClientRect();
 
@@ -97,11 +240,13 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
             const height = Math.round(y - this.state.rectangle.y);
 
             const rect = RegionSelect.getRectangle(this.state.rectangle.x, this.state.rectangle.y, width, height);
+            const geo_rect = RegionSelect.getGeoRectangle(rect, this.state.centre);
 
             this.props.onRegionChange(rect);
 
             this.setState({
                 rectangle: rect,
+                geo_rectangle: geo_rect,
                 opacity: 0.25,
                 prevent_send: true,
             });
@@ -119,10 +264,12 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
             const width = Math.round(x - this.state.rectangle.x);
             const height = Math.round(y - this.state.rectangle.y);
 
-            const rect = RegionSelect.getRectangle(this.state.rectangle.x, this.state.rectangle.y,width,height);
+            const rect = RegionSelect.getRectangle(this.state.rectangle.x, this.state.rectangle.y, width, height);
+            const geo_rect = RegionSelect.getGeoRectangle(rect, this.state.centre);
 
             this.setState({
                 rectangle: rect,
+                geo_rectangle: geo_rect,
                 opacity: 0.25,
                 prevent_send: false,
             });
@@ -148,12 +295,14 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
     };
 
     handleOnReset = () => {
-        const rect = RegionSelect.getRectangle(0, 0, 0, 0, );
+        const rect = RegionSelect.getRectangle(0, 0, 0, 0,);
+        const geo_rect = RegionSelect.getGeoRectangle(rect, this.state.centre);
 
         this.props.onRegionChange(rect);
 
         this.setState({
             rectangle: rect,
+            geo_rectangle: geo_rect,
             opacity: 0,
             prevent_send: true,
         });
@@ -163,22 +312,22 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
         const max = 512 - this.state.rectangle.width;
         const value = valBetween(Math.round(valueAsNumber), 0, max);
 
-        const rect = RegionSelect.getRectangle(
-            value,
-            this.state.rectangle.y,
-            this.state.rectangle.width,
-            this.state.rectangle.height
-        );
+        const geo_rect = {...this.state.geo_rectangle, west: value};
+
+        //const rect = RegionSelect.getImgRectangle(georect);
+
+        const rect = {
+            x: value,
+            y: this.state.rectangle.y,
+            width: this.state.rectangle.width,
+            height: this.state.rectangle.height
+        };
 
         this.props.onRegionChange(rect);
 
         this.setState({
-            rectangle: {
-                x: value,
-                y: this.state.rectangle.y,
-                width: this.state.rectangle.width,
-                height: this.state.rectangle.height,
-            },
+            rectangle: rect,
+            geo_rectangle: geo_rect,
             opacity: 0.25,
         });
     };
@@ -186,6 +335,8 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
     handleTopChange = (valueAsNumber: number) => {
         const value = Math.round(valueAsNumber);
 
+        const geo_rect = {...this.state.geo_rectangle, east: value};
+
         const rect = RegionSelect.getRectangle(
             this.state.rectangle.x,
             value,
@@ -197,6 +348,7 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
 
         this.setState({
             rectangle: rect,
+            geo_rectangle: geo_rect,
             opacity: 0.25,
         });
     };
@@ -204,6 +356,8 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
     handleRightChange = (valueAsNumber: number) => {
         const value = Math.round(valueAsNumber);
 
+        const geo_rect = {...this.state.geo_rectangle, north: value};
+
         const rect = RegionSelect.getRectangle(
             this.state.rectangle.x,
             this.state.rectangle.y,
@@ -214,18 +368,16 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
         this.props.onRegionChange(rect);
 
         this.setState({
-            rectangle: {
-                x: this.state.rectangle.x,
-                y: this.state.rectangle.y,
-                width: value,
-                height: this.state.rectangle.height,
-            },
+            rectangle: rect,
+            geo_rectangle: geo_rect,
             opacity: 0.25,
         });
     };
 
     handleBottomChange = (valueAsNumber: number) => {
         const value = Math.round(valueAsNumber);
+
+        const geo_rect = {...this.state.geo_rectangle, south: value};
 
         const rect = RegionSelect.getRectangle(
             this.state.rectangle.x,
@@ -238,6 +390,7 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
 
         this.setState({
             rectangle: rect,
+            geo_rectangle: geo_rect,
             opacity: 0.25,
         });
     };
@@ -280,7 +433,7 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
                 <table style={{margin: 'auto'} as CSSProperties} cellPadding={'10px'}>
                     <tbody>
                     <tr>
-                        <td> </td>
+                        <td/>
                         <td>
                             <NumericInput
                                 style={st}
@@ -289,7 +442,7 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
                                 leftIcon={"arrow-up"}
                             />
                         </td>
-                        <td> </td>
+                        <td/>
                     </tr>
 
                     <tr>
@@ -314,7 +467,7 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
                         </td>
                     </tr>
                     <tr>
-                        <td> </td>
+                        <td/>
                         <td>
                             <NumericInput
                                 style={st}
@@ -323,7 +476,7 @@ export class RegionSelect extends React.PureComponent<RegionSelectProps, RegionS
                                 leftIcon={"arrow-down"}
                             />
                         </td>
-                        <td> </td>
+                        <td/>
                     </tr>
                     </tbody>
                 </table>
