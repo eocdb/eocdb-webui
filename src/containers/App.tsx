@@ -1,23 +1,30 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
-import App from '../components/App';
-import * as actions from '../actions';
-import { StoreState } from '../types';
+import { App, AppDispatchProps, AppStateProps } from "../components/App";
+
+import { queryMeasurements, offsetResults, regionChange } from '../actions';
+import { GeoRectangle, StoreState } from '../types';
 
 
-export function mapStateToProps(state: StoreState) {
+export function mapStateToProps(state: StoreState): AppStateProps {
     return {
         data: state.data,
-        queryString: state.queryString
+        queryString: state.queryString ? state.queryString : "",
+        start: state.start,
+        offset: state.offset,
+        rectangle: state.rectangle,
     };
 }
 
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.EocdbAction>) {
+export function mapDispatchToProps(dispatch: Dispatch): AppDispatchProps {
     return {
-        onQueryMeasurements: (queryString: string) => dispatch(actions.queryMeasurements(queryString) as any) /* TODO: Fix "as any" */
-    }
+        onQueryMeasurements: (queryString: string) => dispatch(queryMeasurements(queryString) as any), /* TO: Fix "as any" */
+        onPageChange: (start: number, offset: number) => dispatch(offsetResults(start, offset) as any),
+        onRegionChange: (rectangle: GeoRectangle) => dispatch(regionChange(rectangle) as any)
+    };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App as any);
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

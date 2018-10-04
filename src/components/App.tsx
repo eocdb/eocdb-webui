@@ -1,39 +1,104 @@
 import * as React from 'react';
+
+import { GeoRectangle, MeasurementData } from "../types";
 import './App.css';
 
-import logo from './logo.svg';
-import { SearchField } from "./SearchField";
-import { DataTable } from "./DataTable";
-import { MeasurementData } from "../types";
+import { AppSearch } from "./AppSearch";
+import { AppHome } from "./AppHome";
+import { AppList } from "./AppList";
+import { AppHelp } from "./AppHelp";
+import { AppIngestion } from "./AppIngestion";
+import Navigation from "./Navigation";
+import { AppSettings } from "./AppSettings";
 
-interface AppProps {
+
+export interface AppStateProps {
     queryString: string;
     data?: MeasurementData;
-    onQueryMeasurements: (queryString: string) => void;
+    start?: number;
+    offset?: number;
+    rectangle: GeoRectangle;
 }
 
-class App extends React.PureComponent<AppProps> {
+
+export interface AppDispatchProps {
+    onQueryMeasurements: (queryString: string) => any;
+    onPageChange: (start: number, offset: number) => any;
+    onRegionChange: (rectangle: GeoRectangle) => void;
+}
+
+
+export interface AppOwnProps {
+    //id: string;
+}
+
+
+export interface AppState {
+    navTarget: string;
+}
+
+
+export type AppProps = AppStateProps & AppDispatchProps & AppOwnProps;
+
+
+export class App extends React.PureComponent<AppProps, AppState> {
+
+    constructor(props: AppProps) {
+        super(props);
+        this.state = { navTarget: "home" };
+    }
 
     handleQueryStringChange = (queryString: string) => {
         this.props.onQueryMeasurements(queryString);
     };
 
+    handleRegionSelectChange = (rectangle: GeoRectangle) => {
+        console.log(rectangle);
+        this.props.onRegionChange(rectangle);
+    };
+
+    handlePageChange = (start: number, offset: number) => {
+        console.log(start + '/' + offset);
+        this.props.onPageChange(start, offset);
+    };
+
+    handleNavigationClick = (event: React.MouseEvent<HTMLElement>, navTarget: string) => {
+        this.setState({navTarget});
+    };
+
     public render() {
+        let panel: JSX.Element = <AppHome id={"home"}/>;
+
+        if (this.state.navTarget === "search") {
+            panel = <AppSearch id={"app-search"}
+                               queryString={this.props.queryString}
+                               data={this.props.data}
+                               onQueryStringChange={this.handleQueryStringChange}
+                               onPageChange={this.handlePageChange}
+                               onRegionChange={this.handleRegionSelectChange}
+            />;
+        }
+        else if (this.state.navTarget === "lists") {
+            panel = <AppList id={"lists"}/>
+        }
+        else if (this.state.navTarget === "ingest") {
+            panel = <AppIngestion id={"ingest"}/>
+        }
+        else if (this.state.navTarget === "help") {
+            panel = <AppHelp id={"help"}/>
+        }
+        else if (this.state.navTarget === "settings") {
+            panel = <AppSettings id={"settings"}/>
+        }
+
         return (
             <div className="App">
                 <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
-                    <h1 className="App-title">Welcome to React</h1>
+                    <Navigation handleNavigationClick={this.handleNavigationClick}/>
                 </header>
-                <p className="App-intro">
-                    To get started, edit <code>src/App.tsx</code> and save to reload.
-                </p>
+
                 <div className="App-main">
-                    <SearchField queryString={this.props.queryString}
-                                 onQueryStringChange={this.handleQueryStringChange}/>
-                    <br/>
-                    <br/>
-                    <DataTable numRows={100} data={this.props.data}/>
+                    {panel}
                 </div>
             </div>
         );

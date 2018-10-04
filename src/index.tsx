@@ -16,14 +16,17 @@ const logger = createLogger({
 });
 
 
-const store = createStore(reduceStoreState, {
-    queryString: "",
+export const store = createStore(reduceStoreState, {
+    queryString: "ernie",
+    data: undefined,
+    start: 1,
+    offset: 10,
 },  applyMiddleware(logger, thunk));
 
 
 ReactDOM.render(
     <Provider store={store}>
-        <App/>
+        <App />
     </Provider>,
     document.getElementById('root') as HTMLElement
 );

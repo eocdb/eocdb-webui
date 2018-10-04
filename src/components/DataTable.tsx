@@ -1,20 +1,31 @@
 import * as React from "react";
 import { Column, Table, Cell } from "@blueprintjs/table";
-import { SelectionModes } from "../../node_modules/@blueprintjs/table/lib/cjs";
 import { MeasurementData } from "../types";
-//import { string } from "prop-types";
+import { ISelectInput } from "./SelectInputItems";
+
+
 interface DataTableProps {
-    numRows: number;
     data?: MeasurementData;
+    selectedOffsetItem?: ISelectInput | undefined;
 }
 
+
 export class DataTable extends React.PureComponent<DataTableProps> {
-    cellRendererDollars = (rowIndex: number, columnIndex: number) => {
-        let value = "";
+    //hasPagination: boolean = false;
+
+    cellRenderer = (rowIndex: number, columnIndex: number) => {
+        let value = '';
+
         if (this.props.data) {
-            value = JSON.stringify(this.props.data);
+            try {
+                value = JSON.stringify(this.props.data[0]['records'][rowIndex][columnIndex]);
+            }
+            catch (e) {
+
+            }
         }
-        return(
+
+        return (
             <Cell>{value}</Cell>
         )
     };
@@ -24,22 +35,36 @@ export class DataTable extends React.PureComponent<DataTableProps> {
     };
 
     render() {
-        let header = ["empty"];
+        let header = ['empty'];
+
+        try {
+            if (this.props.data) {
+                header = this.props.data[0]['attributes'];
+            }
+        }
+        catch (e) {
+
+        }
+
         let numRows = 1;
-        /*if (this.props.data) {
-            header = this.props.data[0];
-            numRows = 1; //this.props.data.length - 1;
-        }*/
+        try {
+            if (this.props.data) {
+                numRows = this.props.data[0]['records'].length - 1;
+            }
+        }
+        catch (e) {
+
+        }
 
         let cols = [];
         for (let col of header) {
             // note: we add a key prop here to allow react to uniquely identify each
             // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
-            cols.push(<Column key={col} name={col} cellRenderer={this.cellRendererDollars}/>);
+            cols.push(<Column key={col} name={col} cellRenderer={this.cellRenderer}/>);
         }
 
         return (
-            <Table selectionModes={SelectionModes.ALL} numRows={numRows}>
+            <Table numRows={numRows}>
                 {cols}
             </Table>
         );

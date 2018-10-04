@@ -1,57 +1,24 @@
 import { GeoJSON } from 'geojson';
 
-export type MeasurementData = JSON;
-
-
-export interface Rectangle {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-}
-
-
-export interface GeoRectangle {
-    west: number;
-    east: number;
-    north: number;
-    south: number;
-}
-
-
-export interface StoreState {
-    queryString?: string;
-    data?: MeasurementData;
-    start?: number;
-    offset?: number;
-    rectangle: GeoRectangle;
-    type: string;
-}
-
-
 export interface MeasurementType {
     name: string;
     description: string;
 }
-
 
 export interface ProductGroup {
     name: string;
     description: string;
 }
 
-
 export interface Product {
     name: string;
     groupNames: string[];
 }
 
-
 export interface DatasetRef {
     id: string;
     path: string;
 }
-
 
 export interface ContextInfo {
     measurementTypes: MeasurementType[];
@@ -61,13 +28,8 @@ export interface ContextInfo {
 
 
 export type BoundingBox = [number, number, number, number];
-
-
 export type TimeRange = [string, string];
-
-
 export type WaterDepthRange = [number, number];
-
 
 export enum ProductFindMode {
     // here: the three SeaBASS find modes
@@ -95,8 +57,8 @@ export interface DatasetSearchRequest {
     productFindMode?: ProductFindMode;
     productGroups?: string[];
     productNames?: string[];
-}
 
+}
 
 /**
  * Dataset search result.
@@ -145,6 +107,7 @@ export interface ServiceApi {
      * @returns {ContextInfo} general information about the data base.
      */
     getContextInfo(): ContextInfo;
+
     /**
      * Query datasets.
      *
@@ -152,10 +115,12 @@ export interface ServiceApi {
      *
      * @SeaBASS: Shows measurement points in a map (new window) --> click point --> show measurement
      * - File Search / Perform File Search
+
      * @param {DatasetSearchRequest} request The request parameters.
      * @returns {DatasetSearchResult}
      */
     queryDatasets(request: DatasetSearchRequest): DatasetSearchResult;
+
     /**
      * Get record points as GeoJSON.
      * Used by dedicated OpenLayer GeoJSON data source.
@@ -170,10 +135,11 @@ export interface ServiceApi {
      * @returns {GeoJSON}
      */
     searchDatasetPoints(request: DatasetSearchRequest): GeoJSON;
+
     /**
      * Download datasets.
      *
-     * @rest /api/datasets/zip?{DatasetDownloadRequest}
+     * @rest /api/datasets/download?{DatasetDownloadRequest}
      *
      * @SeaBASS:
      * - File Search / Results / Download All
@@ -183,6 +149,7 @@ export interface ServiceApi {
      * @returns {string} A download URL to ZIP archive or binary ZIP stream (TBD).
      */
     downloadDatasets(request: DatasetDownloadRequest): string;
+
     /**
      * Plot a dataset.
      *
@@ -199,6 +166,7 @@ export interface ServiceApi {
      * @returns {string} A download URL to plot PNG or binary PNG stream (TBD).
      */
     plotDataset(request: DatasetPlotRequest): string;
+
     /**
      * List files given a parent directory path.
      *
@@ -213,5 +181,3 @@ export interface ServiceApi {
      */
     listFiles(dirPath: string): string[];
 }
-
-
