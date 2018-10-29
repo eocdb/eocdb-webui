@@ -1,8 +1,0 @@
-{
-  "service": {
-    "protocol": "http",
-    "url": "localhost",
-    "port": 4000,
-    "api": "/eocdb/api/measurements"
-  }
-}
