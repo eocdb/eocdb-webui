@@ -85,17 +85,9 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     };
 
     private handleGeometryCreated = (e: any) => {
-        /*
         let type = e.layerType;
         let layer = e.layer;
-        if (type === 'marker') {
-            // Do marker specific actions
-            console.log('handleGeometryCreated: marker created', e, layer);
-        }
-        else {
-            console.log('handleGeometryCreated: something else created:', type, e, layer);
-        }
-        */
+        console.log('handleGeometryCreated: ', type, e, layer.getBounds().toBBoxString());
         this.updateSelectedRegions();
     };
 
