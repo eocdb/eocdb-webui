@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { AppState } from '../types/appState';
 
-import { updateGeometry } from '../actions/searchMap';
+import { updateSelectedRegions } from '../actions/searchMapActions';
 import SearchMap from '../components/SearchMap';
 
 const mapStateToProps = (state: AppState) => {
@@ -12,7 +12,7 @@ const mapStateToProps = (state: AppState) => {
 };
 
 const mapDispatchToProps = {
-    updateGeometry,
+    updateGeometry: updateSelectedRegions,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchMap);
