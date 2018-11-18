@@ -12,7 +12,7 @@ const mapStateToProps = (state: AppState) => {
 };
 
 const mapDispatchToProps = {
-    updateGeometry: updateSelectedRegions,
+    updateSelectedRegions,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchMap);

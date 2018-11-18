@@ -9,7 +9,7 @@ const EditControl = draw.EditControl;
 interface SearchMapProps {
     position: LatLng;
     zoom: number;
-    updateGeometry: (object: GeoJsonObject) => void;
+    updateSelectedRegions: (selectedRegions: GeoJsonObject) => void;
 }
 
 const DRAW_OPTIONS = {
@@ -67,11 +67,11 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         this.editableFeatureGroupRef = featureGroupRef;
     };
 
-    private updateGeometry = () => {
+    private updateSelectedRegions = () => {
         // this.editableFeatureGroupRef contains the edited geometry, which can be manipulated through the leaflet API
         const featureGroupRef = this.editableFeatureGroupRef;
-        if (featureGroupRef && this.props.updateGeometry) {
-            this.props.updateGeometry(featureGroupRef.leafletElement.toGeoJSON());
+        if (featureGroupRef && this.props.updateSelectedRegions) {
+            this.props.updateSelectedRegions(featureGroupRef.leafletElement.toGeoJSON());
         }
     };
 
@@ -82,7 +82,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
             numEdited += 1;
         });
         console.log(`handleGeometryEdited: edited ${numEdited} layers`, e);
-        this.updateGeometry();
+        this.updateSelectedRegions();
     };
 
     private handleGeometryCreated = (e: any) => {
@@ -96,7 +96,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
             console.log('handleGeometryCreated: something else created:', type, e, layer);
         }
         // Do whatever else you need to. (save to db; etc)
-        this.updateGeometry();
+        this.updateSelectedRegions();
     };
 
     private handleGeometryDeleted = (e: any) => {
@@ -106,7 +106,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         });
         console.log(`handleGeometryDeleted: removed ${numDeleted} layers`, e);
 
-        this.updateGeometry();
+        this.updateSelectedRegions();
     };
 
     private handleGeometryMounted = (drawControl: any) => {
