@@ -1,9 +1,11 @@
+import { ConfigState } from "./configState";
+import { DashboardState } from "./dashboardState";
 import { SearchMapState } from './searchMapState';
 import { SearchFormState } from './searchFormState';
-import { DashboardState } from "./dashboardState";
 
 export interface AppState {
+    configState:  ConfigState;
+    dashboardState:  DashboardState;
     searchFormState: SearchFormState;
     searchMapState: SearchMapState;
-    dashboardState:  DashboardState;
 }
