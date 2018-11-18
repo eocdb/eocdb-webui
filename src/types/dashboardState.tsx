@@ -4,6 +4,6 @@ export interface DashboardState {
 
 export function newDashboardState() {
     return {
-        currentDrawer: 'home',
+        currentDrawer: 'search',
     }
 }
