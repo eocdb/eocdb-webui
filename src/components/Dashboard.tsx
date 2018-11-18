@@ -13,18 +13,12 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import Star from '@material-ui/icons/Star';
 import { mainListItems, secondaryListItems } from './listitems';
-import SimpleTable from './SimpleTable';
-//import SearchMap from './SearchMap';
-import SearchMap from '../containers/SearchMap';
-import Grid from "@material-ui/core/Grid/Grid";
-import TextField from "@material-ui/core/TextField/TextField";
-import Button from "@material-ui/core/Button/Button";
-import SearchFileParam from "./SearchFileParam";
-
 
 import eumetsatLogo from './eumetsat.png';
+import DashSearchPanel from "./DashSearchPanel";
+
 
 const drawerWidth = 240;
 
@@ -109,13 +103,20 @@ interface DashboardProps {
     classes: any;
 }
 
-class Dashboard extends React.Component<DashboardProps> {
+interface DashboardState {
+    open: boolean;
+    numSearches: number;
+}
+
+
+class Dashboard extends React.Component<DashboardProps, DashboardState> {
     static readonly propTypes = {
         classes: PropTypes.object.isRequired,
     };
 
     state = {
         open: true,
+        numSearches: 0,
     };
 
     handleDrawerOpen = () => {
@@ -159,8 +160,8 @@ class Dashboard extends React.Component<DashboardProps> {
                         </Typography>
 
                         <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon/>
+                            <Badge badgeContent={this.state.numSearches} color="secondary">
+                                <Star/>
                             </Badge>
                         </IconButton>
                     </Toolbar>
@@ -180,94 +181,14 @@ class Dashboard extends React.Component<DashboardProps> {
                     <Divider/>
                     <List>{mainListItems}</List>
                     <Divider/>
-                    <List>{secondaryListItems}</List>
+
+                    <List>
+                        {secondaryListItems}
+                    </List>
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.appBarSpacer}/>
-                    <Typography variant="h4" gutterBottom component="h2">
-                        Search
-                    </Typography>
-                    <Grid spacing={24} container direction={"row"} justify={'space-between'} alignItems={"stretch"}>
-                        <Grid item xs={12}>
-                            <TextField
-                                id={"lucene-search"}
-                                label={"Search"}
-                                variant="outlined"
-                                className={classes.textField}
-                            />
-                            <TextField
-                                id="measurement-from-date"
-                                label="Measured From:"
-                                type="date"
-                                defaultValue="2017-05-24"
-                                className={classes.textField}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                variant="outlined"
-                            />
-                            <TextField
-                                id="measurement-to-date"
-                                label="To"
-                                type="date"
-                                defaultValue="2017-05-24"
-                                className={classes.textField}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                variant="outlined"
-                            />
-                            <Button size={"large"} variant="outlined" className={classes.button}>
-                                Submit
-                            </Button>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Divider/>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Grid container spacing={24}>
-                                <Grid item xs={4}>
-                                    <SearchFileParam
-                                        field={
-                                            <TextField
-                                                id="measurement-from-date"
-                                                label="Measured From:"
-                                                type="date"
-                                                defaultValue="2017-05-24"
-                                                className={classes.textField}
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                                variant="outlined"
-                                            />
-                                        }
-                                        heading={'kadjsbv'}
-                                        classes={classes}
-                                    />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <SearchFileParam
-                                        field={<Button/>}
-                                        heading={'kadjsbv'}
-                                        classes={classes}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Divider/>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <div className={classes.tableContainer}>
-                                <SimpleTable/>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <div className={classes.tableContainer}>
-                                <SearchMap/>
-                            </div>
-                        </Grid>
-                    </Grid>
+                    <DashSearchPanel classes={classes} />
                 </main>
             </div>
         );

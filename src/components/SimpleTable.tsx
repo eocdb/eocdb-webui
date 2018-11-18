@@ -7,6 +7,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Button from "@material-ui/core/Button/Button";
+import Icon from "@material-ui/core/Icon/Icon";
 
 const styles = {
     root: {
@@ -19,32 +21,32 @@ const styles = {
 };
 
 let id = 0;
-function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
+
+function createData(file: string) {
     id += 1;
-    return { id, name, calories, fat, carbs, protein };
+
+    return {id, file, map: 'map', plot: 'plot', archive: 'archive', documents: 'documents'};
 }
 
 const data = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
+    createData('OSU/S_Ocean/2K/drf23683.dat'),
+    createData('OSU/S_Ocean/2K/drf23684.dat'),
+    createData('OSU/S_Ocean/2K/drf23684.dat'),
 ];
 
 function SimpleTable(props: any) {
-    const { classes } = props;
+    const {classes} = props;
 
     return (
         <Paper className={classes.root}>
             <Table className={classes.table}>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Dessert (100g serving)</TableCell>
-                        <TableCell numeric>Calories</TableCell>
-                        <TableCell numeric>Fat (g)</TableCell>
-                        <TableCell numeric>Carbs (g)</TableCell>
-                        <TableCell numeric>Protein (g)</TableCell>
+                        <TableCell>File</TableCell>
+                        <TableCell>Map</TableCell>
+                        <TableCell>Plot</TableCell>
+                        <TableCell>Archive</TableCell>
+                        <TableCell>Documents</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -52,12 +54,20 @@ function SimpleTable(props: any) {
                         return (
                             <TableRow key={n.id}>
                                 <TableCell component="th" scope="row">
-                                    {n.name}
+                                    {n.file}
                                 </TableCell>
-                                <TableCell numeric>{n.calories}</TableCell>
-                                <TableCell numeric>{n.fat}</TableCell>
-                                <TableCell numeric>{n.carbs}</TableCell>
-                                <TableCell numeric>{n.protein}</TableCell>
+                                <TableCell numeric>
+                                    <Button><Icon className={classes.rightIcon}>language</Icon></Button>
+                                </TableCell>
+                                <TableCell numeric>
+                                    <Button><Icon className={classes.rightIcon}>bar_chart</Icon></Button>
+                                </TableCell>
+                                <TableCell numeric>
+                                    <Button><Icon className={classes.rightIcon}>archive</Icon></Button>
+                                </TableCell>
+                                <TableCell numeric>
+                                    <Button><Icon className={classes.rightIcon}>cloud_download</Icon></Button>
+                                </TableCell>
                             </TableRow>
                         );
                     })}
