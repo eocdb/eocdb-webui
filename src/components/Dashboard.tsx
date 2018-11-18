@@ -140,10 +140,11 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     render() {
         const {classes} = this.props;
 
-        let panel = <DashHomePanel classes={classes}/>;
-
-        if(this.props.currentDrawer == 'search'){
+        let panel;
+        if (this.props.currentDrawer == 'search') {
             panel = <DashSearchPanel classes={classes}/>;
+        } else {
+            panel = <DashHomePanel classes={classes}/>;
         }
 
         return (
@@ -182,7 +183,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 
                         </IconButton>
                         <IconButton color="inherit">
-                            <AccountCircle />
+                            <AccountCircle/>
                         </IconButton>
                     </Toolbar>
                 </AppBar>
@@ -199,7 +200,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         </IconButton>
                     </div>
                     <Divider/>
-                    <DrawerItems handleClick={this.handleDrawerChanged} />
+                    <DrawerItems handleClick={this.handleDrawerChanged}/>
                     <Divider/>
 
                     <List>

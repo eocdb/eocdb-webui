@@ -1,6 +1,6 @@
 import { DashboardState, newDashboardState } from '../types/dashboardState';
 
-import { CHANGE_DRAWER, DashboardAction, changeDrawer } from '../actions/dashboardAction';
+import { CHANGE_DRAWER, DashboardAction, changeDrawer } from '../actions/dashboardActions';
 
 const initialState = newDashboardState();
 
