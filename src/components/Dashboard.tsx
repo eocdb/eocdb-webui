@@ -17,9 +17,10 @@ import { Star, AccountCircle } from '@material-ui/icons';
 import { secondaryListItems } from './listitems';
 
 import eumetsatLogo from './eumetsat.png';
-import DashSearchPanel from "./DashSearchPanel";
 import DashHomePanel from "./DashHomePanel";
 import DrawerItems from "./DrawerItems";
+// TODO: avoid imports from ../containers
+import DashSearchPanel from "../containers/DashSearchPanel";
 
 
 const drawerWidth = 240;

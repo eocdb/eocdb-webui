@@ -30,6 +30,7 @@ export function searchDatasets() {
            })
            .catch(e => {
                /* TODO: handle error */
+               console.error(e);
            });
     };
 }
