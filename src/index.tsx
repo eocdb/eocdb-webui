@@ -6,11 +6,12 @@ import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import logger from 'redux-logger';
+import {createLogger} from 'redux-logger';
 import { appReducer } from './reducers/appReducer';
 
 import 'typeface-roboto';
 
+const logger = createLogger({collapsed: true});
 const store = createStore(appReducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
