@@ -102,6 +102,12 @@
     csstype "^2.0.0"
     indefinite-observable "^1.0.1"
 
+"@types/leaflet-draw@^0.4.13":
+  version "0.4.13"
+  resolved "https://registry.yarnpkg.com/@types/leaflet-draw/-/leaflet-draw-0.4.13.tgz#479d4a5909d3c7be600953d4ab26ba79a5427574"
+  dependencies:
+    "@types/leaflet" "*"
+
 "@types/leaflet@*":
   version "1.2.14"
   resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.2.14.tgz#912bcacdc2cfa62787573a27ca617ffb67f89614"
@@ -4486,6 +4492,10 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
+leaflet-draw@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/leaflet-draw/-/leaflet-draw-1.0.4.tgz#45be92f378ed253e7202fdeda1fcc71885198d46"
+
 leaflet@^1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.3.4.tgz#7f006ea5832603b53d7269ef5c595fd773060a40"
@@ -4552,7 +4562,7 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash-es@^4.0.0, lodash-es@^4.2.1:
+lodash-es@^4.0.0, lodash-es@^4.17.10, lodash-es@^4.2.1:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.11.tgz#145ab4a7ac5c5e52a3531fb4f310255a152b4be0"
 
@@ -5996,6 +6006,12 @@ react-event-listener@^0.6.2:
 react-is@^16.3.2, react-is@^16.6.0:
   version "16.6.3"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.6.3.tgz#d2d7462fcfcbe6ec0da56ad69047e47e56e7eac0"
+
+react-leaflet-draw@^0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/react-leaflet-draw/-/react-leaflet-draw-0.19.0.tgz#95de33054016db27e171f8f8f646f6bad17106f3"
+  dependencies:
+    lodash-es "^4.17.10"
 
 react-leaflet@^2.1.2:
   version "2.1.2"
