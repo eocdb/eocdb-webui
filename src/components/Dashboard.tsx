@@ -13,7 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import Star from '@material-ui/icons/Star';
+import { Star, AccountCircle } from '@material-ui/icons';
 import { mainListItems, secondaryListItems } from './listitems';
 
 import eumetsatLogo from './eumetsat.png';
@@ -102,24 +102,25 @@ const styles = (theme: any) => ({
 
 interface DashboardProps {
     classes: any;
+    currentDrawer: string;
+    changeDrawer: (currentDrawer: string) => void;
 }
+
 
 interface DashboardState {
     open: boolean;
-    numSearches: number;
-    currentDrawer: string;
 }
 
 
 class Dashboard extends React.Component<DashboardProps, DashboardState> {
     static readonly propTypes = {
         classes: PropTypes.object.isRequired,
+        currentDrawer: PropTypes.string.isRequired,
+        changeDrawer: PropTypes.func.isRequired,
     };
 
     state = {
         open: true,
-        numSearches: 0,
-        currentDrawer: 'Search',
     };
 
     handleDrawerOpen = () => {
@@ -130,20 +131,17 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         this.setState({open: false});
     };
 
-    handleDrawerSelect = () => {
-        this.setState({currentDrawer: 'Home'});
+    handleDrawerChanged = () => {
+        this.props.changeDrawer('search');
     };
 
     render() {
         const {classes} = this.props;
 
-        let panel = <DashSearchPanel classes={classes}/>;
+        let panel = <DashHomePanel classes={classes}/>;
 
-        if(this.state.currentDrawer == 'Home'){
-            panel = <DashHomePanel classes={classes}/>
-        }
-        else if(this.state.currentDrawer == 'Search'){
-            panel = <DashSearchPanel classes={classes}/>
+        if(this.props.currentDrawer == 'search'){
+            panel = <DashSearchPanel classes={classes}/>;
         }
 
         return (
@@ -176,9 +174,13 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         </Typography>
 
                         <IconButton color="inherit">
-                            <Badge badgeContent={this.state.numSearches} color="secondary">
+                            <Badge badgeContent={4} color="secondary">
                                 <Star/>
                             </Badge>
+
+                        </IconButton>
+                        <IconButton color="inherit">
+                            <AccountCircle />
                         </IconButton>
                     </Toolbar>
                 </AppBar>
