@@ -53,7 +53,7 @@ let res = [];
 
 for (let i = 0; i < localStorage.length; i++){
     res.push(
-        <ListItem button>
+        <ListItem button key={i}>
             <ListItemIcon>
                 <AssignmentIcon />
             </ListItemIcon>
