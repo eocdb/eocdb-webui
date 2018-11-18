@@ -18,6 +18,11 @@ import { mainListItems, secondaryListItems } from './listitems';
 import SimpleTable from './SimpleTable';
 //import SearchMap from './SearchMap';
 import SearchMap from '../containers/SearchMap';
+import Grid from "@material-ui/core/Grid/Grid";
+import TextField from "@material-ui/core/TextField/TextField";
+import Button from "@material-ui/core/Button/Button";
+import SearchFileParam from "./SearchFileParam";
+
 
 import eumetsatLogo from './eumetsat.png';
 
@@ -180,21 +185,94 @@ class Dashboard extends React.Component<DashboardProps> {
                 <main className={classes.content}>
                     <div className={classes.appBarSpacer}/>
                     <Typography variant="h4" gutterBottom component="h2">
-                        Orders
+                        Search
                     </Typography>
-                    <div style={{width: 400, height: 400}}>
-                        <SearchMap/>
-                    </div>
-                    <Typography variant="h4" gutterBottom component="h2">
-                        Products
-                    </Typography>
-                    <div className={classes.tableContainer}>
-                        <SimpleTable/>
-                    </div>
+                    <Grid spacing={24} container direction={"row"} justify={'space-between'} alignItems={"stretch"}>
+                        <Grid item xs={12}>
+                            <TextField
+                                id={"lucene-search"}
+                                label={"Search"}
+                                variant="outlined"
+                                className={classes.textField}
+                            />
+                            <TextField
+                                id="measurement-from-date"
+                                label="Measured From:"
+                                type="date"
+                                defaultValue="2017-05-24"
+                                className={classes.textField}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                variant="outlined"
+                            />
+                            <TextField
+                                id="measurement-to-date"
+                                label="To"
+                                type="date"
+                                defaultValue="2017-05-24"
+                                className={classes.textField}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                variant="outlined"
+                            />
+                            <Button size={"large"} variant="outlined" className={classes.button}>
+                                Submit
+                            </Button>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Divider/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container spacing={24}>
+                                <Grid item xs={4}>
+                                    <SearchFileParam
+                                        field={
+                                            <TextField
+                                                id="measurement-from-date"
+                                                label="Measured From:"
+                                                type="date"
+                                                defaultValue="2017-05-24"
+                                                className={classes.textField}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                variant="outlined"
+                                            />
+                                        }
+                                        heading={'kadjsbv'}
+                                        classes={classes}
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <SearchFileParam
+                                        field={<Button/>}
+                                        heading={'kadjsbv'}
+                                        classes={classes}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Divider/>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <div className={classes.tableContainer}>
+                                <SimpleTable/>
+                            </div>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <div className={classes.tableContainer}>
+                                <SearchMap/>
+                            </div>
+                        </Grid>
+                    </Grid>
                 </main>
             </div>
         );
     }
 }
+
 
 export default withStyles(styles as any)(Dashboard);
