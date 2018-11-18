@@ -43,7 +43,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                         onEdited={this.handleGeometryEdited}
                         onCreated={this.handleGeometryCreated}
                         onDeleted={this.handleGeometryDeleted}
-                        onMounted={this.handleGeometryMounted}
+                        onMounted={this.handleDrawControlMounted}
                         onEditStart={this.handleGeometryEditStart}
                         onEditStop={this.handleGeometryEditStop}
                         onDeleteStart={this.handleGeometryDeleteStart}
@@ -55,13 +55,11 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     }
 
     private handleFeatureGroupReady = (featureGroupRef: any) => {
-        console.log(featureGroupRef);
         // populate the leaflet FeatureGroup with the geoJson layers
         let leafletGeoJSON = new GeoJSON(getGeoJson());
         let leafletFeatureGroup = featureGroupRef.leafletElement;
         leafletGeoJSON.eachLayer((layer: Layer) => {
             leafletFeatureGroup.addLayer(layer);
-            console.log(layer);
         });
         // store the ref for future access to content
         this.editableFeatureGroupRef = featureGroupRef;
@@ -76,16 +74,18 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     };
 
     private handleGeometryEdited = (e: any) => {
-
+        /*
         let numEdited = 0;
         e.layers.eachLayer((layer: Layer) => {
             numEdited += 1;
         });
         console.log(`handleGeometryEdited: edited ${numEdited} layers`, e);
+        */
         this.updateSelectedRegions();
     };
 
     private handleGeometryCreated = (e: any) => {
+        /*
         let type = e.layerType;
         let layer = e.layer;
         if (type === 'marker') {
@@ -95,38 +95,39 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         else {
             console.log('handleGeometryCreated: something else created:', type, e, layer);
         }
-        // Do whatever else you need to. (save to db; etc)
+        */
         this.updateSelectedRegions();
     };
 
     private handleGeometryDeleted = (e: any) => {
+        /*
         let numDeleted = 0;
         e.layers.eachLayer((layer: Layer) => {
             numDeleted += 1;
         });
         console.log(`handleGeometryDeleted: removed ${numDeleted} layers`, e);
-
+        */
         this.updateSelectedRegions();
     };
 
-    private handleGeometryMounted = (drawControl: any) => {
-        console.log('handleGeometryMounted', drawControl);
+    private handleDrawControlMounted = (drawControl: any) => {
+        // console.log('handleDrawControlMounted', drawControl);
     };
 
     private handleGeometryEditStart = (e: any) => {
-        console.log('handleGeometryEditStart', e);
+        // console.log('handleGeometryEditStart', e);
     };
 
     private handleGeometryEditStop = (e: any) => {
-        console.log('handleGeometryEditStop', e);
+        // console.log('handleGeometryEditStop', e);
     };
 
     private handleGeometryDeleteStart = (e: any) => {
-        console.log('handleGeometryDeleteStart', e);
+        // console.log('handleGeometryDeleteStart', e);
     };
 
     private handleGeometryDeleteStop = (e: any) => {
-        console.log('handleGeometryDeleteStop', e);
+        // console.log('handleGeometryDeleteStop', e);
     };
 
 }
