@@ -6,8 +6,8 @@ body {
 
 /* Required by leaflet */
 .leaflet-container {
-    height: 400px;
-    width: 400px;
+    width: 100%;
+    height: calc(100vmin - 18em);
     margin: 0 auto;
 }
 
