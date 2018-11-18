@@ -14,11 +14,12 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { Star, AccountCircle } from '@material-ui/icons';
-import { mainListItems, secondaryListItems } from './listitems';
+import { secondaryListItems } from './listitems';
 
 import eumetsatLogo from './eumetsat.png';
 import DashSearchPanel from "./DashSearchPanel";
 import DashHomePanel from "./DashHomePanel";
+import DrawerItems from "./DrawerItems";
 
 
 const drawerWidth = 240;
@@ -131,8 +132,9 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         this.setState({open: false});
     };
 
-    handleDrawerChanged = () => {
-        this.props.changeDrawer('search');
+    handleDrawerChanged = (currentDrawer: string) => {
+        console.log(currentDrawer);
+        this.props.changeDrawer(currentDrawer);
     };
 
     render() {
@@ -197,7 +199,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         </IconButton>
                     </div>
                     <Divider/>
-                    <List>{mainListItems}</List>
+                    <DrawerItems handleClick={this.handleDrawerChanged} />
                     <Divider/>
 
                     <List>
