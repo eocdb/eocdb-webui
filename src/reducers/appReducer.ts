@@ -1,16 +1,8 @@
-import { AppState, newAppState } from '../types/appState';
+import { combineReducers } from 'redux';
+import { searchMapReducer } from './searchMapReducer';
 
-
-interface AppAction {
-    type: string;
-}
-
-const initialState = newAppState();
-
-
-export function appReducer(state: AppState, action: AppAction) {
-    if (typeof state === 'undefined') {
-        return initialState;
+export const appReducer = combineReducers(
+    {
+        searchMapState: searchMapReducer,
     }
-    return state;
-}
+);
