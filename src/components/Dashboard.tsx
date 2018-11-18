@@ -18,6 +18,7 @@ import { mainListItems, secondaryListItems } from './listitems';
 
 import eumetsatLogo from './eumetsat.png';
 import DashSearchPanel from "./DashSearchPanel";
+import DashHomePanel from "./DashHomePanel";
 
 
 const drawerWidth = 240;
@@ -106,6 +107,7 @@ interface DashboardProps {
 interface DashboardState {
     open: boolean;
     numSearches: number;
+    currentDrawer: string;
 }
 
 
@@ -117,6 +119,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     state = {
         open: true,
         numSearches: 0,
+        currentDrawer: 'Search',
     };
 
     handleDrawerOpen = () => {
@@ -127,8 +130,21 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         this.setState({open: false});
     };
 
+    handleDrawerSelect = () => {
+        this.setState({currentDrawer: 'Home'});
+    };
+
     render() {
         const {classes} = this.props;
+
+        let panel = <DashSearchPanel classes={classes}/>;
+
+        if(this.state.currentDrawer == 'Home'){
+            panel = <DashHomePanel classes={classes}/>
+        }
+        else if(this.state.currentDrawer == 'Search'){
+            panel = <DashSearchPanel classes={classes}/>
+        }
 
         return (
             <div className={classes.root}>
@@ -188,7 +204,8 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.appBarSpacer}/>
-                    <DashSearchPanel classes={classes} />
+                    {panel}
+
                 </main>
             </div>
         );
