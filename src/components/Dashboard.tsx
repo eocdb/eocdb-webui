@@ -15,10 +15,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listitems';
-//import SimpleLineChart from './SimpleLineChart';
 import SimpleTable from './SimpleTable';
+//import SearchMap from './SearchMap';
+import SearchMap from '../containers/SearchMap';
 
-//import logo from './eumetsat.png';
+import eumetsatLogo from './eumetsat.png';
 
 const drawerWidth = 240;
 
@@ -113,19 +114,19 @@ class Dashboard extends React.Component<DashboardProps> {
     };
 
     handleDrawerOpen = () => {
-        this.setState({ open: true });
+        this.setState({open: true});
     };
 
     handleDrawerClose = () => {
-        this.setState({ open: false });
+        this.setState({open: false});
     };
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
 
         return (
             <div className={classes.root}>
-                <CssBaseline />
+                <CssBaseline/>
                 <AppBar
                     position="absolute"
                     className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
@@ -140,22 +141,21 @@ class Dashboard extends React.Component<DashboardProps> {
                                 this.state.open && classes.menuButtonHidden,
                             )}
                         >
-                            <MenuIcon />
+                            <MenuIcon/>
                         </IconButton>
                         <Typography
                             component="h1"
-                            variant="h6"
+                            variant="h5"
                             color="inherit"
                             noWrap
                             className={classes.title}
                         >
-
-                            EUMESAT
+                            <img src={eumetsatLogo} height={56}/> Ocean Colour In-Situ Database
                         </Typography>
 
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon />
+                                <NotificationsIcon/>
                             </Badge>
                         </IconButton>
                     </Toolbar>
@@ -169,34 +169,32 @@ class Dashboard extends React.Component<DashboardProps> {
                 >
                     <div className={classes.toolbarIcon}>
                         <IconButton onClick={this.handleDrawerClose}>
-                            <ChevronLeftIcon />
+                            <ChevronLeftIcon/>
                         </IconButton>
                     </div>
-                    <Divider />
+                    <Divider/>
                     <List>{mainListItems}</List>
-                    <Divider />
+                    <Divider/>
                     <List>{secondaryListItems}</List>
                 </Drawer>
                 <main className={classes.content}>
-                    <div className={classes.appBarSpacer} />
+                    <div className={classes.appBarSpacer}/>
                     <Typography variant="h4" gutterBottom component="h2">
                         Orders
                     </Typography>
-                    <div className={classes.tableContainer}>
-                        <SimpleTable />
+                    <div style={{width: 400, height: 400}}>
+                        <SearchMap/>
                     </div>
                     <Typography variant="h4" gutterBottom component="h2">
                         Products
                     </Typography>
                     <div className={classes.tableContainer}>
-                        <SimpleTable />
+                        <SimpleTable/>
                     </div>
                 </main>
             </div>
         );
     }
 }
-
-
 
 export default withStyles(styles as any)(Dashboard);

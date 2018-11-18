@@ -1,5 +1,16 @@
-import { StoreState } from '../types/storeState';
+import { AppState, newAppState } from '../types/appState';
 
-export function appReducer(state: StoreState)  {
+
+interface AppAction {
+    type: string;
+}
+
+const initialState = newAppState();
+
+
+export function appReducer(state: AppState, action: AppAction) {
+    if (typeof state === 'undefined') {
+        return initialState;
+    }
     return state;
 }
