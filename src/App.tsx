@@ -12,8 +12,8 @@ class App extends React.Component {
     public render() {
         return (
             <React.Fragment>
-                <CssBaseline/>
                 <div className="App">
+                    <CssBaseline/>
                     <Dashboard/>
                 </div>
             </React.Fragment>
