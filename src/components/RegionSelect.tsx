@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 
-import { BoundingBox } from "../types";
-import { LatLng } from "leaflet";
+import { BoundingBox } from '../types/boundingBox';
+import { LatLng } from 'leaflet';
 
 
 interface RegionSelectState {
