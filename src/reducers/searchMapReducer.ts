@@ -1,4 +1,4 @@
-import { SearchMapState, newSearchMapState } from '../types/searchMapState';
+import { SearchMapState, newSearchMapState } from '../states/searchMapState';
 import { SearchMapAction, UPDATE_SELECTED_REGIONS } from '../actions/searchMapActions';
 
 const initialState = newSearchMapState();

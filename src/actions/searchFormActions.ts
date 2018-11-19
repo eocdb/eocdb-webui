@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 
 import { MessageLogAction, postMessage } from './messageLogActions'
 import { DatasetRef } from '../types/dataset';
-import { AppState } from '../types/appState';
+import { AppState } from '../states/appState';
 import * as api from '../api'
 
 export const UPDATE_FOUND_DATASETS = 'UPDATE_FOUND_DATASETS';

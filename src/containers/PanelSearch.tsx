@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { AppState } from '../types/appState';
+import { AppState } from '../states/appState';
 import { searchDatasets } from '../actions/searchFormActions';
 import PanelSearch from '../components/PanelSearch';
 

@@ -12,7 +12,7 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
 import { Theme, WithStyles, withStyles } from '@material-ui/core/styles';
 
-import { MessageLogEntry } from '../types/messageLogState';
+import { MessageLogEntry } from '../states/messageLogState';
 
 const variantIcon = {
     success: CheckCircleIcon,

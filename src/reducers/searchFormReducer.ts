@@ -1,4 +1,4 @@
-import { SearchFormState, newSearchFormState } from '../types/searchFormState';
+import { SearchFormState, newSearchFormState } from '../states/searchFormState';
 import { SearchFormAction } from '../actions/searchFormActions';
 
 const initialState = newSearchFormState();
