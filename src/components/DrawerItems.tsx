@@ -2,13 +2,10 @@ import * as React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
+
 import List from "@material-ui/core/List/List";
 
+import { Home, Search, FileCopy, SettingsApplications, ZoomIn } from "@material-ui/icons";
 
 interface DrawerItemsProps {
     handleClick: (currentDrawer: string) => void;
@@ -23,33 +20,33 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
         return (
             <List>
                 <div>
-                    <ListItem onClick={() => this.props.handleClick('Home')} button>
+                    <ListItem key={'Home'} onClick={() => this.props.handleClick('Home')} button>
                         <ListItemIcon>
-                            <DashboardIcon/>
+                            <Home/>
                         </ListItemIcon>
                         <ListItemText primary="Home"/>
                     </ListItem>
-                    <ListItem onClick={() => this.props.handleClick('Search')} button>
+                    <ListItem key={'Search'} onClick={() => this.props.handleClick('Search')} button>
                         <ListItemIcon>
-                            <ShoppingCartIcon/>
+                            <Search/>
                         </ListItemIcon>
                         <ListItemText primary="Search"/>
                     </ListItem>
-                    <ListItem onClick={() => this.props.handleClick('Browse')} button>
+                    <ListItem key={'Browse'} onClick={() => this.props.handleClick('Browse')} button>
                         <ListItemIcon>
-                            <PeopleIcon/>
+                            <ZoomIn/>
                         </ListItemIcon>
                         <ListItemText primary="Browse"/>
                     </ListItem>
-                    <ListItem onClick={() => this.props.handleClick('Submit')} button>
+                    <ListItem key={'Submit'} onClick={() => this.props.handleClick('Submit')} button>
                         <ListItemIcon>
-                            <BarChartIcon/>
+                            <FileCopy/>
                         </ListItemIcon>
                         <ListItemText primary="Submit"/>
                     </ListItem>
-                    <ListItem onClick={() => this.props.handleClick('Admin')} button>
+                    <ListItem key={'Admin'} onClick={() => this.props.handleClick('Admin')} button>
                         <ListItemIcon>
-                            <LayersIcon/>
+                            <SettingsApplications/>
                         </ListItemIcon>
                         <ListItemText primary="Admin"/>
                     </ListItem>

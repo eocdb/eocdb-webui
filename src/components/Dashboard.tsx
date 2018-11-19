@@ -20,8 +20,8 @@ import eumetsatLogo from './eumetsat.png';
 import DrawerItems from "./DrawerItems";
 // TODO: avoid imports from ../containers
 import DashPanels from "./DashPanels";
-import DlgUserLogin from "./DlgUserLogin";
-import DlgConfig from "./DlgConfig";
+import UserLoginDialog from "./dialogs/UserLoginDialog";
+import ConfigDialog from "./dialogs/ConfigDialog";
 
 
 const drawerWidth = 240;
@@ -210,14 +210,14 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             </Badge>
 
                         </IconButton>
-                        <DlgUserLogin
+                        <UserLoginDialog
                             open={this.props.dlgUserOpen}
                             handleClickOpen={this.handleUserLoginOpen}
                             handleClose={this.handleUserLoginClose}
                         />
-                        <DlgConfig open={this.props.dlgConfigOpen}
-                                   handleClickOpen={this.handleConfigOpen}
-                                   handleClose={this.handleConfigClose}
+                        <ConfigDialog open={this.props.dlgConfigOpen}
+                                      handleClickOpen={this.handleConfigOpen}
+                                      handleClose={this.handleConfigClose}
                         />
                     </Toolbar>
                 </AppBar>

@@ -6,40 +6,48 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Map } from "@material-ui/icons";
+import { AccountCircle } from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 
 
-interface DlgConfigProps {
+interface DlgUserLoginProps {
     open: boolean;
     handleClickOpen: () => void;
     handleClose: () => void;
 }
 
 
-export default class DlgConfig extends React.Component<DlgConfigProps> {
+export default class UserLoginDialog extends React.Component<DlgUserLoginProps> {
     render() {
         return (
             <div>
                 <IconButton color="inherit" onClick={this.props.handleClickOpen}>
-                    <Map/>
+                    <AccountCircle/>
                 </IconButton>
                 <Dialog
                     open={this.props.open}
                     onClose={this.props.handleClose}
                     aria-labelledby="form-dialog-title"
                 >
-                    <DialogTitle id="form-dialog-title">Configuration</DialogTitle>
+                    <DialogTitle id="form-dialog-title">Login</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Configure backend server address.
+                            Please enter user name and password.
                         </DialogContentText>
                         <TextField
                             autoFocus
                             margin="dense"
-                            id="server"
-                            label="Backend Server"
+                            id="user"
+                            label="User Name"
                             type="text"
+                            fullWidth
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="passwd"
+                            label="Password"
+                            type="password"
                             fullWidth
                         />
                     </DialogContent>
@@ -48,7 +56,7 @@ export default class DlgConfig extends React.Component<DlgConfigProps> {
                             Cancel
                         </Button>
                         <Button onClick={this.props.handleClose} color="primary">
-                            Save
+                            Login
                         </Button>
                     </DialogActions>
                 </Dialog>
