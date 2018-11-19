@@ -114,6 +114,9 @@ interface DashboardProps {
 
     dlgConfigOpen: boolean;
     toggleConfigDlg: (dlgConfigOpen: boolean) => void;
+
+    apiServerUrl: string;
+    apiServerUrlChange: (url: string) => void;
 }
 
 
@@ -133,6 +136,9 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 
         dlgConfigOpen: PropTypes.bool.isRequired,
         toggleConfigDlg: PropTypes.func.isRequired,
+
+        apiServerUrl: PropTypes.string.isRequired,
+        apiServerUrlChange: PropTypes.func.isRequired,
     };
 
     state = {
@@ -167,10 +173,13 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     };
 
     handleConfigClose = () => {
-        console.log('test');
         this.props.toggleConfigDlg(false);
     };
 
+    handleApiServerUrlChange = (url: string) => {
+        this.props.apiServerUrlChange(url);
+        this.handleConfigClose();
+    };
 
     render() {
         const {classes} = this.props;
@@ -201,7 +210,8 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             noWrap
                             className={classes.title}
                         >
-                            <img src={eumetsatLogo} height={56}/> Ocean Colour In-Situ Database
+                            <img src={eumetsatLogo} height={56}/>
+                            Ocean Colour In-Situ Database.
                         </Typography>
 
                         <IconButton color="inherit">
@@ -218,6 +228,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         <ConfigDialog open={this.props.dlgConfigOpen}
                                       handleClickOpen={this.handleConfigOpen}
                                       handleClose={this.handleConfigClose}
+                                      apiServerUrlChange={this.handleApiServerUrlChange}
                         />
                     </Toolbar>
                 </AppBar>
