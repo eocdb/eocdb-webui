@@ -23,54 +23,46 @@ class PanelSearch extends React.PureComponent<PanelSearchProps> {
         const {classes} = this.props;
 
         return (
-            <div className={this.props.show? '': classes.hidden}>
-                <Grid spacing={24} container direction={"row"} justify={'flex-start'}>
-                    <Grid item xs={12} container direction={'row'} alignItems={'baseline'}>
-                        <Grid container spacing={8}>
-                            <Grid item xs={2}>
-                                <TextField
-                                    id={"lucene-search"}
-                                    label={"Search"}
-                                    variant="outlined"
-                                    className={classes.textField}
-                                />
-                            </Grid>
-                            <Grid item xs={2}>
-                                <TextField
-                                    id="measurement-from-date"
-                                    label="Measured From:"
-                                    type="date"
-                                    defaultValue="2017-05-24"
-                                    className={classes.textField}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    variant="outlined"
-                                />
-                            </Grid>
-                            <Grid item xs={2}>
-                                <TextField
-                                    id="measurement-to-date"
-                                    label="To"
-                                    type="date"
-                                    defaultValue="2017-05-24"
-                                    className={classes.textField}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    variant="outlined"
-                                />
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Button variant="contained"
-                                        color="secondary"
-                                        className={classes.button}
-                                        onClick={this.props.searchDatasets}>
-                                    Search
-                                    <Icon className={classes.rightIcon}>search</Icon>
-                                </Button>
-                            </Grid>
-                        </Grid>
+            <div className={this.props.show ? '' : classes.hidden}>
+                <Grid spacing={24} container direction={"row"} justify={'flex-start'} alignItems={"center"}>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            id={"lucene-search"}
+                            label={"Search"}
+                            variant="outlined"
+                            className={classes.searchField}
+                        />
+                        <TextField
+                            id="measurement-from-date"
+                            label="Measured From:"
+                            type="date"
+                            defaultValue="2017-05-24"
+                            className={classes.textField}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            variant="outlined"
+                        />
+                        <TextField
+                            id="measurement-to-date"
+                            label="To"
+                            type="date"
+                            defaultValue="2017-05-24"
+                            className={classes.textField}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            variant="outlined"
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6} justify={"flex-end"}>
+                        <Button variant="contained"
+                                color="secondary"
+                                className={classes.button}
+                                onClick={this.props.searchDatasets}>
+                            Search
+                            <Icon className={classes.rightIcon}>search</Icon>
+                        </Button>
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <div className={classes.tableContainer}>

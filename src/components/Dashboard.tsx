@@ -101,6 +101,9 @@ const styles = (theme: any) => ({
     h5: {
         marginBottom: theme.spacing.unit * 2,
     },
+    searchField:{
+        width: '50%',
+    }
 });
 
 interface DashboardProps {
