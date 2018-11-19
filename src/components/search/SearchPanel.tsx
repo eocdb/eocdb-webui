@@ -3,12 +3,12 @@ import Grid from '@material-ui/core/Grid/Grid';
 import TextField from '@material-ui/core/TextField/TextField';
 import Button from '@material-ui/core/Button/Button';
 import Icon from '@material-ui/core/Icon/Icon';
-import SimpleTable from '../SimpleTable';
-import SearchMap from '../../containers/SearchMap';
-import { DatasetQuery } from '../../api';
+import SimpleTable from './SimpleTable';
+import SearchMap from '../../containers/search/SearchMap';
+import { DatasetQuery } from '../../api/index';
 
 
-interface PanelSearchProps {
+interface SearchPanelProps {
     classes: any;
     show: boolean;
 
@@ -18,8 +18,8 @@ interface PanelSearchProps {
 }
 
 
-class PanelSearch extends React.PureComponent<PanelSearchProps> {
-    constructor(props: PanelSearchProps) {
+class SearchPanel extends React.PureComponent<SearchPanelProps> {
+    constructor(props: SearchPanelProps) {
         super(props);
     }
 
@@ -108,4 +108,4 @@ class PanelSearch extends React.PureComponent<PanelSearchProps> {
     }
 }
 
-export default PanelSearch;
+export default SearchPanel;

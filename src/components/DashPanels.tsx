@@ -1,9 +1,9 @@
-import PanelHome from "./panels/PanelHome";
+import HomePanel from "./home/HomePanel";
 import * as React from "react";
-import PanelSearch from "../containers/PanelSearch";
-import PanelSubmit from "./panels/PanelSubmit";
-import PanelBrowse from "./panels/PanelBrowse";
-import PanelAdmin from "./panels/PanelAdmin";
+import PanelSearch from "../containers/search/SearchPanel";
+import SubmitPanel from "./submit/SubmitPanel";
+import BrowsePanel from "./browse/BrowsePanel";
+import AdminPanel from "./admin/AdminPanel";
 
 
 interface DashPanelsProps {
@@ -20,10 +20,10 @@ class DashPanels extends React.PureComponent<DashPanelsProps> {
         return (
             <div>
                 <PanelSearch show={this.props.currentDrawer=='Search'} classes={this.props.classes}/>
-                <PanelHome show={this.props.currentDrawer=='Home'} classes={this.props.classes}/>
-                <PanelSubmit show={this.props.currentDrawer=='Submit'} classes={this.props.classes}/>
-                <PanelBrowse show={this.props.currentDrawer=='Browse'} classes={this.props.classes}/>
-                <PanelAdmin show={this.props.currentDrawer=='Admin'} classes={this.props.classes}/>
+                <HomePanel show={this.props.currentDrawer=='Home'} classes={this.props.classes}/>
+                <SubmitPanel show={this.props.currentDrawer=='Submit'} classes={this.props.classes}/>
+                <BrowsePanel show={this.props.currentDrawer=='Browse'} classes={this.props.classes}/>
+                <AdminPanel show={this.props.currentDrawer=='Admin'} classes={this.props.classes}/>
             </div>
         );
     }

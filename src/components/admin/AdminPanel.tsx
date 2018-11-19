@@ -1,14 +1,14 @@
 import * as React from "react";
 import Typography from "@material-ui/core/Typography/Typography";
 
-interface DashHomePanelProps{
+interface AdminPanelProps{
     classes: any;
     show: boolean;
 }
 
 
-class PanelHome extends React.PureComponent<DashHomePanelProps> {
-    constructor(props: DashHomePanelProps){
+class AdminPanel extends React.PureComponent<AdminPanelProps> {
+    constructor(props: AdminPanelProps){
         super(props);
     }
 
@@ -23,7 +23,7 @@ class PanelHome extends React.PureComponent<DashHomePanelProps> {
                     noWrap
                     className={classes.title}
                 >
-                    HOME
+                    ADMIN
                 </Typography>
             </div>
         );
@@ -31,4 +31,4 @@ class PanelHome extends React.PureComponent<DashHomePanelProps> {
 }
 
 
-export default PanelHome;
+export default AdminPanel;

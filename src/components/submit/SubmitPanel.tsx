@@ -1,21 +1,21 @@
 import * as React from "react";
 import Typography from "@material-ui/core/Typography/Typography";
 
-interface PanelBrowseProps{
+interface SubmitPanelProps {
     classes: any;
     show: boolean;
 }
 
 
-class PanelBrowse extends React.PureComponent<PanelBrowseProps> {
-    constructor(props: PanelBrowseProps){
+class SubmitPanel extends React.PureComponent<SubmitPanelProps> {
+    constructor(props: SubmitPanelProps) {
         super(props);
     }
 
-    render(){
+    render() {
         const {classes} = this.props;
-        return(
-            <div className={this.props.show? '': classes.hidden}>
+        return (
+            <div className={this.props.show ? '' : classes.hidden}>
                 <Typography
                     component="h1"
                     variant="h5"
@@ -23,7 +23,7 @@ class PanelBrowse extends React.PureComponent<PanelBrowseProps> {
                     noWrap
                     className={classes.title}
                 >
-                    BROWSE
+                    SUBMIT
                 </Typography>
             </div>
         );
@@ -31,4 +31,4 @@ class PanelBrowse extends React.PureComponent<PanelBrowseProps> {
 }
 
 
-export default PanelBrowse;
+export default SubmitPanel;

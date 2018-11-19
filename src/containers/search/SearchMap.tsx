@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { AppState } from '../states/appState';
+import { AppState } from '../../states/appState';
 
-import { updateSelectedRegions } from '../actions/searchMapActions';
-import SearchMap from '../components/SearchMap';
+import { updateSelectedRegions } from '../../actions/searchMapActions';
+import SearchMap from '../../components/search/SearchMap';
 
 const mapStateToProps = (state: AppState) => {
     return {
