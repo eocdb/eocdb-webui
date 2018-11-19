@@ -9,7 +9,11 @@ export function searchMapReducer(state: SearchMapState, action: SearchMapAction)
     }
     switch (action.type) {
         case UPDATE_SELECTED_REGIONS:
-            return {...state, selectedRegions: action.selectedRegions};
+            return {
+                ...state,
+                selectedRegions: action.selectedRegions,
+                selectedBounds: action.selectedBounds,
+            };
     }
     return state;
 }
