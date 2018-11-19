@@ -1,4 +1,4 @@
-import { MessageLogState, newMessageLogState } from '../types/messageLogState';
+import { MessageLogState, newMessageLogState } from '../states/messageLogState';
 
 import { HIDE_MESSAGE, MessageLogAction, POST_MESSAGE } from "../actions/messageLogActions";
 

@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 
-import { AppState } from '../types/appState';
+import { AppState } from '../states/appState';
 import { searchDatasets } from '../actions/searchFormActions';
 import PanelSearch from '../components/panels/PanelSearch';
 
 const mapStateToProps = (state: AppState) => {
     return {
-        /* TODO */
+        ...state.searchFormState.datasetQuery,
     };
 };
 

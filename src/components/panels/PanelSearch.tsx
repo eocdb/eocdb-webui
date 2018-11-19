@@ -1,13 +1,14 @@
-import Grid from "@material-ui/core/Grid/Grid";
-import TextField from "@material-ui/core/TextField/TextField";
-import Button from "@material-ui/core/Button/Button";
-import Icon from "@material-ui/core/Icon/Icon";
-import SimpleTable from "../SimpleTable";
-import SearchMap from "../../containers/SearchMap";
-import * as React from "react";
+import * as React from 'react';
+import Grid from '@material-ui/core/Grid/Grid';
+import TextField from '@material-ui/core/TextField/TextField';
+import Button from '@material-ui/core/Button/Button';
+import Icon from '@material-ui/core/Icon/Icon';
+import SimpleTable from '../SimpleTable';
+import SearchMap from '../../containers/SearchMap';
+import { DatasetQuery } from '../../api';
 
 
-interface PanelSearchProps {
+interface PanelSearchProps extends DatasetQuery {
     classes: any;
     show: boolean;
     searchDatasets: () => void;
@@ -21,6 +22,10 @@ class PanelSearch extends React.PureComponent<PanelSearchProps> {
 
     render() {
         const {classes} = this.props;
+
+        if (!this.props.show) {
+            return null;
+        }
 
         return (
             <div className={this.props.show ? '' : classes.hidden}>

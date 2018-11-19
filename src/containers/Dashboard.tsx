@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { AppState } from '../types/appState';
+import { AppState } from '../states/appState';
 
 import { changeDrawer, openUserDialog, openConfigDialog } from '../actions/dashboardActions';
 import { configServer } from '../actions/configActions'

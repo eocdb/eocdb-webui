@@ -1,4 +1,4 @@
-import { SearchMapState, newSearchMapState } from '../types/searchMapState';
+import { SearchMapState, newSearchMapState } from '../states/searchMapState';
 import { SearchMapAction, UPDATE_SELECTED_REGIONS } from '../actions/searchMapActions';
 
 const initialState = newSearchMapState();
@@ -9,7 +9,11 @@ export function searchMapReducer(state: SearchMapState, action: SearchMapAction)
     }
     switch (action.type) {
         case UPDATE_SELECTED_REGIONS:
-            return {...state, selectedRegions: action.selectedRegions};
+            return {
+                ...state,
+                selectedRegions: action.selectedRegions,
+                selectedBounds: action.selectedBounds,
+            };
     }
     return state;
 }

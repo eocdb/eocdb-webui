@@ -1,4 +1,4 @@
-import { ConfigState, newConfigState } from '../types/configState';
+import { ConfigState, newConfigState } from '../states/configState';
 
 import { ConfigAction, CONFIG_SERVER } from '../actions/configActions';
 

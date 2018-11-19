@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { AppState } from '../types/appState';
+import { AppState } from '../states/appState';
 
 import { updateSelectedRegions } from '../actions/searchMapActions';
 import SearchMap from '../components/SearchMap';
