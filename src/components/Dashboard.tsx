@@ -19,8 +19,8 @@ import eumetsatLogo from './eumetsat.png';
 import DrawerItems from "./DrawerItems";
 // TODO: avoid imports from ../containers
 import DashPanels from "./DashPanels";
-import UserLoginDialog from "./dialogs/UserLoginDialog";
-import ConfigDialog from "./dialogs/ConfigDialog";
+import UserLoginDialog from "./user/UserLoginDialog";
+import ConfigDialog from "./admin/ConfigDialog";
 import createStyles from "@material-ui/core/styles/createStyles";
 
 
