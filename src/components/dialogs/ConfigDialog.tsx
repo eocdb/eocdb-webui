@@ -26,6 +26,10 @@ interface ConfigDialogState {
 
 
 export default class ConfigDialog extends React.Component<ConfigDialogProps, ConfigDialogState> {
+    state = {
+        url: '',
+    };
+
     handleApiServerUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
         const v = event.target.value;
         this.setState({...this.state, url: v});

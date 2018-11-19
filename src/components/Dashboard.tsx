@@ -111,10 +111,12 @@ interface DashboardProps extends WithStyles<typeof styles> {
     changeDrawer: (currentDrawer: string) => void;
 
     dlgUserOpen: boolean;
-    toggleUserDlg: (dlgUserOpen: boolean) => void;
+    openUserDialog: () => void;
+    closeUserDialog: () => void;
 
     dlgConfigOpen: boolean;
-    toggleConfigDlg: (dlgConfigOpen: boolean) => void;
+    openConfigDialog: () => void;
+    closeConfigDialog: () => void;
 
     apiServerUrl: string;
     apiServerUrlChange: (url: string) => void;
@@ -145,22 +147,20 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     };
 
     handleUserLoginOpen = () => {
-        console.log('test');
-        this.props.toggleUserDlg(true);
+        this.props.openUserDialog();
     };
 
     handleUserLoginClose = () => {
-        console.log('test');
-        this.props.toggleUserDlg(false);
+        this.props.closeUserDialog();
     };
 
     handleConfigOpen = () => {
         console.log('test');
-        this.props.toggleConfigDlg(true);
+        this.props.openConfigDialog();
     };
 
     handleConfigClose = () => {
-        this.props.toggleConfigDlg(false);
+        this.props.closeConfigDialog();
     };
 
     handleApiServerUrlChange = (url: string) => {
