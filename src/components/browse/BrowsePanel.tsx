@@ -1,14 +1,14 @@
 import * as React from "react";
 import Typography from "@material-ui/core/Typography/Typography";
 
-interface PanelAdminProps{
+interface BrowsePanelProps{
     classes: any;
     show: boolean;
 }
 
 
-class PanelAdmin extends React.PureComponent<PanelAdminProps> {
-    constructor(props: PanelAdminProps){
+class BrowsePanel extends React.PureComponent<BrowsePanelProps> {
+    constructor(props: BrowsePanelProps){
         super(props);
     }
 
@@ -23,7 +23,7 @@ class PanelAdmin extends React.PureComponent<PanelAdminProps> {
                     noWrap
                     className={classes.title}
                 >
-                    ADMIN
+                    BROWSE
                 </Typography>
             </div>
         );
@@ -31,4 +31,4 @@ class PanelAdmin extends React.PureComponent<PanelAdminProps> {
 }
 
 
-export default PanelAdmin;
+export default BrowsePanel;
