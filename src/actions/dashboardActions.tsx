@@ -19,9 +19,23 @@ export interface OpenUserDialog {
     dlgUserOpen: boolean;
 }
 
-export function openUserDialog(dlgUserOpen: boolean): OpenUserDialog {
-    return {type: OPEN_USER_DIALOG, dlgUserOpen};
+export function openUserDialog(): OpenUserDialog {
+    return {type: OPEN_USER_DIALOG, dlgUserOpen: true};
 }
+
+
+export const CLOSE_USER_DIALOG = 'CLOSE_USER_DIALOG';
+export type CLOSE_USER_DIALOG = typeof CLOSE_USER_DIALOG;
+
+export interface CloseUserDialog {
+    type: CLOSE_USER_DIALOG;
+    dlgUserOpen: boolean;
+}
+
+export function closeUserDialog(): CloseUserDialog {
+    return {type: CLOSE_USER_DIALOG, dlgUserOpen: false};
+}
+
 
 
 export const OPEN_CONFIG_DIALOG = 'OPEN_CONFIG_DIALOG';
@@ -32,9 +46,22 @@ export interface OpenConfigDialog {
     dlgConfigOpen: boolean;
 }
 
-export function openConfigDialog(dlgConfigOpen: boolean): OpenConfigDialog {
-    return {type: OPEN_CONFIG_DIALOG, dlgConfigOpen};
+export function openConfigDialog(): OpenConfigDialog {
+    return {type: OPEN_CONFIG_DIALOG, dlgConfigOpen: true};
 }
 
 
-export type DashboardAction = ChangeDrawer | OpenUserDialog | OpenConfigDialog;
+export const CLOSE_CONFIG_DIALOG = 'CLOSE_CONFIG_DIALOG';
+export type CLOSE_CONFIG_DIALOG = typeof CLOSE_CONFIG_DIALOG;
+
+export interface CloseConfigDialog {
+    type: CLOSE_CONFIG_DIALOG;
+    dlgConfigOpen: boolean;
+}
+
+export function closeConfigDialog(): OpenConfigDialog {
+    return {type: OPEN_CONFIG_DIALOG, dlgConfigOpen: false};
+}
+
+
+export type DashboardAction = ChangeDrawer | OpenUserDialog | CloseUserDialog | OpenConfigDialog | CloseConfigDialog;
