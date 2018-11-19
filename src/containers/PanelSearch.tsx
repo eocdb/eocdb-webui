@@ -6,7 +6,7 @@ import PanelSearch from '../components/panels/PanelSearch';
 
 const mapStateToProps = (state: AppState) => {
     return {
-        /* TODO */
+        ...state.searchFormState.datasetQuery,
     };
 };
 

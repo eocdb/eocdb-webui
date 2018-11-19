@@ -1,10 +1,11 @@
-import { HTTPError } from './errors';
+import { callJsonApi } from './fetch';
+import { DatasetRef } from '../types/dataset';
 
 export type ProductMode = 'contains' | 'same_cruise' | 'dont_apply';
 export type MeasurementType = 'all';
 export type WavelengthsMode = 'all' | 'multispectral' | 'hyperspectral';
 
-export interface DatasetQueryParameters {
+export interface DatasetQuery {
     searchExpr?: string;
     startDate?: string;
     endDate?: string;
@@ -20,54 +21,32 @@ export interface DatasetQueryParameters {
 
 type QueryComponent = [string, string];
 
-export function searchDatasets(apiServerUrl: string, queryParameters: DatasetQueryParameters) {
+export function searchDatasets(apiServerUrl: string, datasetQuery: DatasetQuery) {
     const queryComponents: QueryComponent[] = [];
-
-    collectSearchExprComponent(queryParameters, queryComponents);
-    collectTimeComponent(queryParameters, queryComponents);
-    collectRegionComponent(queryParameters, queryComponents);
-    collectProductComponents(queryParameters, queryComponents);
-    collectMeasurementTypeComponent(queryParameters, queryComponents);
-    collectWavelengthsTypeComponent(queryParameters, queryComponents);
-    collectOffsetCountComponents(queryParameters, queryComponents);
-
-    const searchDatasetEndpointUrl = apiServerUrl + '/datasets';
-    let searchDatasetUrl = searchDatasetEndpointUrl;
-    if (queryComponents.length > 0) {
-        const queryString = queryComponents.map(kv => kv.map(encodeURIComponent).join('=')).join('&');
-        searchDatasetUrl += '?' + queryString;
-    }
-
-    console.log(searchDatasetUrl);
-
-    return fetch(searchDatasetUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new HTTPError(response.status, response.statusText);
-            }
-            return response.json();
-        })
-        .catch(error => {
-            if (error instanceof TypeError) {
-                throw new Error(`Cannot reach ${searchDatasetEndpointUrl}`);
-            }
-        });
+    collectSearchExprComponent(datasetQuery, queryComponents);
+    collectTimeComponent(datasetQuery, queryComponents);
+    collectRegionComponent(datasetQuery, queryComponents);
+    collectProductComponents(datasetQuery, queryComponents);
+    collectMeasurementTypeComponent(datasetQuery, queryComponents);
+    collectWavelengthsTypeComponent(datasetQuery, queryComponents);
+    collectOffsetCountComponents(datasetQuery, queryComponents);
+    return callJsonApi<DatasetRef[]>(apiServerUrl + '/datasets', queryComponents);
 }
 
 
-function collectSearchExprComponent(queryParameters: DatasetQueryParameters, queryComponents: QueryComponent[]) {
+function collectSearchExprComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
     if (queryParameters.searchExpr) {
         queryComponents.push(['expr', queryParameters.searchExpr]);
     }
 }
 
-function collectRegionComponent(queryParameters: DatasetQueryParameters, queryComponents: QueryComponent[]) {
+function collectRegionComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
     if (queryParameters.region) {
         queryComponents.push(['region', queryParameters.region]);
     }
 }
 
-function collectTimeComponent(queryParameters: DatasetQueryParameters, queryComponents: QueryComponent[]) {
+function collectTimeComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
     if (queryParameters.startDate && queryParameters.endDate) {
         queryComponents.push(['time', `${queryParameters.startDate},${queryParameters.endDate}`]);
     } else if (queryParameters.startDate) {
@@ -77,19 +56,19 @@ function collectTimeComponent(queryParameters: DatasetQueryParameters, queryComp
     }
 }
 
-function collectMeasurementTypeComponent(queryParameters: DatasetQueryParameters, queryComponents: QueryComponent[]) {
+function collectMeasurementTypeComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
     if (queryParameters.measurementType) {
         queryComponents.push(['mtype', queryParameters.measurementType]);
     }
 }
 
-function collectWavelengthsTypeComponent(queryParameters: DatasetQueryParameters, queryComponents: QueryComponent[]) {
+function collectWavelengthsTypeComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
     if (queryParameters.wavelengthsMode) {
         queryComponents.push(['wlmode', queryParameters.wavelengthsMode]);
     }
 }
 
-function collectProductComponents(queryParameters: DatasetQueryParameters, queryComponents: QueryComponent[]) {
+function collectProductComponents(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
     if (queryParameters.productNames) {
         for (const productName of queryParameters.productNames) {
             queryComponents.push(['pname', productName]);
@@ -105,7 +84,7 @@ function collectProductComponents(queryParameters: DatasetQueryParameters, query
     }
 }
 
-function collectOffsetCountComponents(queryParameters: DatasetQueryParameters, queryComponents: QueryComponent[]) {
+function collectOffsetCountComponents(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
     if (typeof queryParameters.offset === 'number' && Number.isSafeInteger(queryParameters.offset)) {
         queryComponents.push(['offset', '' + queryParameters.offset]);
     }

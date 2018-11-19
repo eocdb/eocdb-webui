@@ -23,15 +23,12 @@ export function searchDatasets() {
     return (dispatch: Dispatch<UpdateFoundDatasets | MessageLogAction>, getState: () => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
-        const searchFormState = state.searchFormState;
+        let datasetQuery = state.searchFormState.datasetQuery;
         const selectedBounds = state.searchMapState.selectedBounds;
-        let datasetQueryParameters;
         if (selectedBounds) {
-            datasetQueryParameters = {...searchFormState, region: selectedBounds.toBBoxString()};
-        } else {
-            datasetQueryParameters = {...searchFormState};
+            datasetQuery = {...datasetQuery, region: selectedBounds.toBBoxString()};
         }
-        api.searchDatasets(apiServerUrl, datasetQueryParameters)
+        api.searchDatasets(apiServerUrl, datasetQuery)
            .then((foundDatasets: DatasetRef[]) => {
                dispatch(updateFoundDatasets(foundDatasets));
            })

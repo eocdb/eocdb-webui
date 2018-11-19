@@ -1,11 +1,13 @@
+import { DatasetQuery } from '../api';
+
 export interface SearchFormState {
-    searchExpr?: string;
-    startDate?: string;
-    endDate?: string;
-    productNames?: string[];
-    productGroupNames?: string[];
+    datasetQuery: DatasetQuery;
+    storedDatasetQueries: { [name: string]: DatasetQuery };
 }
 
 export function newSearchFormState() {
-    return {};
+    return {
+        datasetQuery: {},
+        storedDatasetQueries: {},
+    };
 }
