@@ -7,14 +7,14 @@ import SearchMap from "../containers/SearchMap";
 import * as React from "react";
 
 
-interface DashSearchPanelProps {
+interface PanelSearchProps {
     classes: any;
     searchDatasets: () => void;
 }
 
 
-class DashSearchPanel extends React.PureComponent<DashSearchPanelProps> {
-    constructor(props: DashSearchPanelProps) {
+class PanelSearch extends React.PureComponent<PanelSearchProps> {
+    constructor(props: PanelSearchProps) {
         super(props);
     }
 
@@ -85,4 +85,4 @@ class DashSearchPanel extends React.PureComponent<DashSearchPanelProps> {
     }
 }
 
-export default DashSearchPanel;
+export default PanelSearch;

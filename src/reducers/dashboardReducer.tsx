@@ -1,6 +1,11 @@
 import { DashboardState, newDashboardState } from '../types/dashboardState';
 
-import { CHANGE_DRAWER, DashboardAction, changeDrawer } from '../actions/dashboardActions';
+import {
+    DashboardAction,
+    CHANGE_DRAWER,
+    OPEN_USER_DIALOG,
+    OPEN_CONFIG_DIALOG
+} from '../actions/dashboardActions';
 
 const initialState = newDashboardState();
 
@@ -10,7 +15,11 @@ export function dashboardReducer(state: DashboardState, action: DashboardAction)
     }
     switch (action.type) {
         case CHANGE_DRAWER:
-            return {...state, selectedRegions: changeDrawer};
+            return {...state, currentDrawer: action.currentDrawer};
+        case OPEN_USER_DIALOG:
+            return {...state, dlgUserOpen: action.dlgUserOpen};
+        case OPEN_CONFIG_DIALOG:
+            return {...state, dlgConfigOpen: action.dlgConfigOpen};
     }
     return state;
 }

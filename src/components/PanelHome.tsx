@@ -5,7 +5,7 @@ interface DashHomePanelProps{
 }
 
 
-class DashHomePanel extends React.PureComponent<DashHomePanelProps> {
+class PanelHome extends React.PureComponent<DashHomePanelProps> {
     constructor(props: DashHomePanelProps){
         super(props);
     }
@@ -16,4 +16,4 @@ class DashHomePanel extends React.PureComponent<DashHomePanelProps> {
 }
 
 
-export default DashHomePanel;
+export default PanelHome;

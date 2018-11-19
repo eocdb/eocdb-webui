@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { AppState } from '../types/appState';
 import { searchDatasets } from '../actions/searchFormActions';
-import DashSearchPanel from '../components/DashSearchPanel';
+import PanelSearch from '../components/PanelSearch';
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -14,4 +14,4 @@ const mapDispatchToProps = {
     searchDatasets,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashSearchPanel);
+export default connect(mapStateToProps, mapDispatchToProps)(PanelSearch);

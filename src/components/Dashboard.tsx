@@ -13,14 +13,15 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { Star, AccountCircle } from '@material-ui/icons';
+import { Star } from '@material-ui/icons';
 import { secondaryListItems } from './listitems';
 
 import eumetsatLogo from './eumetsat.png';
-import DashHomePanel from "./DashHomePanel";
 import DrawerItems from "./DrawerItems";
 // TODO: avoid imports from ../containers
-import DashSearchPanel from "../containers/DashSearchPanel";
+import DashPanels from "./DashPanels";
+import DlgUserLogin from "./DlgUserLogin";
+import DlgConfig from "./DlgConfig";
 
 
 const drawerWidth = 240;
@@ -58,7 +59,7 @@ const styles = (theme: any) => ({
         marginLeft: 12,
         marginRight: 36,
     },
-    menuButtonHidden: {
+    hidden: {
         display: 'none',
     },
     title: {
@@ -104,8 +105,15 @@ const styles = (theme: any) => ({
 
 interface DashboardProps {
     classes: any;
+
     currentDrawer: string;
     changeDrawer: (currentDrawer: string) => void;
+
+    dlgUserOpen: boolean;
+    toggleUserDlg: (dlgUserOpen: boolean) => void;
+
+    dlgConfigOpen: boolean;
+    toggleConfigDlg: (dlgConfigOpen: boolean) => void;
 }
 
 
@@ -119,6 +127,12 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         classes: PropTypes.object.isRequired,
         currentDrawer: PropTypes.string.isRequired,
         changeDrawer: PropTypes.func.isRequired,
+
+        dlgUserOpen: PropTypes.bool.isRequired,
+        toggleUserDlg: PropTypes.func.isRequired,
+
+        dlgConfigOpen: PropTypes.bool.isRequired,
+        toggleConfigDlg: PropTypes.func.isRequired,
     };
 
     state = {
@@ -134,19 +148,32 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     };
 
     handleDrawerChanged = (currentDrawer: string) => {
-        console.log(currentDrawer);
         this.props.changeDrawer(currentDrawer);
     };
 
+    handleUserLoginOpen = () => {
+        console.log('test');
+        this.props.toggleUserDlg(true);
+    };
+
+    handleUserLoginClose = () => {
+        console.log('test');
+        this.props.toggleUserDlg(false);
+    };
+
+    handleConfigOpen = () => {
+        console.log('test');
+        this.props.toggleConfigDlg(true);
+    };
+
+    handleConfigClose = () => {
+        console.log('test');
+        this.props.toggleConfigDlg(false);
+    };
+
+
     render() {
         const {classes} = this.props;
-
-        let panel;
-        if (this.props.currentDrawer == 'search') {
-            panel = <DashSearchPanel classes={classes}/>;
-        } else {
-            panel = <DashHomePanel classes={classes}/>;
-        }
 
         return (
             <div className={classes.root}>
@@ -162,7 +189,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             onClick={this.handleDrawerOpen}
                             className={classNames(
                                 classes.menuButton,
-                                this.state.open && classes.menuButtonHidden,
+                                this.state.open && classes.hidden,
                             )}
                         >
                             <MenuIcon/>
@@ -183,9 +210,15 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             </Badge>
 
                         </IconButton>
-                        <IconButton color="inherit">
-                            <AccountCircle/>
-                        </IconButton>
+                        <DlgUserLogin
+                            open={this.props.dlgUserOpen}
+                            handleClickOpen={this.handleUserLoginOpen}
+                            handleClose={this.handleUserLoginClose}
+                        />
+                        <DlgConfig open={this.props.dlgConfigOpen}
+                                   handleClickOpen={this.handleConfigOpen}
+                                   handleClose={this.handleConfigClose}
+                        />
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -210,7 +243,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.appBarSpacer}/>
-                    {panel}
+                    <DashPanels currentDrawer={this.props.currentDrawer} classes={classes}/>
 
                 </main>
             </div>
