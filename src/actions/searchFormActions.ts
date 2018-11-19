@@ -24,14 +24,20 @@ export function searchDatasets() {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
         const searchFormState = state.searchFormState;
-        const selectedRegions = state.searchMapState.selectedRegions;
-        api.searchDatasets(apiServerUrl, {...searchFormState, selectedRegions})
-            .then((foundDatasets: DatasetRef[]) => {
-                dispatch(updateFoundDatasets(foundDatasets));
-            })
-            .catch(error => {
-                dispatch(postMessage("error", error + ""));
-            });
+        const selectedBounds = state.searchMapState.selectedBounds;
+        let datasetQueryParameters;
+        if (selectedBounds) {
+            datasetQueryParameters = {...searchFormState, region: selectedBounds.toBBoxString()};
+        } else {
+            datasetQueryParameters = {...searchFormState};
+        }
+        api.searchDatasets(apiServerUrl, datasetQueryParameters)
+           .then((foundDatasets: DatasetRef[]) => {
+               dispatch(updateFoundDatasets(foundDatasets));
+           })
+           .catch(error => {
+               dispatch(postMessage('error', error + ''));
+           });
     };
 }
 

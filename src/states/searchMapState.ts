@@ -1,13 +1,14 @@
-import { LatLng } from 'leaflet';
+import { LatLng, LatLngBounds } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 
 export interface SearchMapState {
     position: LatLng;
     zoom: number;
     selectedRegions?: GeoJsonObject;
+    selectedBounds?: LatLngBounds;
 }
 
-const EUMETSAT_LAT_LNG = new LatLng(49.858996564, 8.622830842 );
+const EUMETSAT_LAT_LNG = new LatLng(49.858996564, 8.622830842);
 
 export function newSearchMapState() {
     return {
