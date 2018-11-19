@@ -1,14 +1,14 @@
-export const CONFIG_SERVER = 'CONFIG_SERVER';
-export type CONFIG_SERVER = typeof CONFIG_SERVER;
+export const SET_API_SERVER_URL = 'SET_API_SERVER_URL';
+export type SET_API_SERVER_URL = typeof SET_API_SERVER_URL;
 
-export interface ConfigServer {
-    type: CONFIG_SERVER;
+export interface SetAptServerUrl {
+    type: SET_API_SERVER_URL;
     apiServerUrl: string;
 }
 
-export function configServer(apiServerUrl: string): ConfigServer {
-    return {type: CONFIG_SERVER, apiServerUrl};
+export function configServer(apiServerUrl: string): SetAptServerUrl {
+    return {type: SET_API_SERVER_URL, apiServerUrl};
 }
 
 
-export type ConfigAction = ConfigServer;
+export type ConfigAction = SetAptServerUrl;

@@ -1,7 +1,14 @@
 import { connect } from 'react-redux';
 import { AppState } from '../states/appState';
 
-import { changeDrawer, openUserDialog, openConfigDialog } from '../actions/dashboardActions';
+import {
+    changeDrawer,
+    openUserDialog,
+    openConfigDialog,
+    closeConfigDialog,
+    closeUserDialog
+} from '../actions/dashboardActions';
+
 import { configServer } from '../actions/configActions'
 import Dashboard from '../components/Dashboard';
 
@@ -16,8 +23,11 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = {
     changeDrawer,
-    toggleUserDlg: openUserDialog,
-    toggleConfigDlg: openConfigDialog,
+    openUserDialog: openUserDialog,
+    closeUserDialog: closeUserDialog,
+
+    openConfigDialog: openConfigDialog,
+    closeConfigDialog: closeConfigDialog,
 
     apiServerUrlChange: configServer,
 };
