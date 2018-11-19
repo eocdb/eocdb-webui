@@ -1,7 +1,6 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { Theme, WithStyles, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -22,11 +21,12 @@ import DrawerItems from "./DrawerItems";
 import DashPanels from "./DashPanels";
 import UserLoginDialog from "./dialogs/UserLoginDialog";
 import ConfigDialog from "./dialogs/ConfigDialog";
+import createStyles from "@material-ui/core/styles/createStyles";
 
 
 const drawerWidth = 240;
 
-const styles = (theme: any) => ({
+const styles = (theme: Theme) => createStyles({
     root: {
         display: 'flex',
     },
@@ -106,9 +106,7 @@ const styles = (theme: any) => ({
     }
 });
 
-interface DashboardProps {
-    classes: any;
-
+interface DashboardProps extends WithStyles<typeof styles> {
     currentDrawer: string;
     changeDrawer: (currentDrawer: string) => void;
 
@@ -129,20 +127,6 @@ interface DashboardState {
 
 
 class Dashboard extends React.Component<DashboardProps, DashboardState> {
-    static readonly propTypes = {
-        classes: PropTypes.object.isRequired,
-        currentDrawer: PropTypes.string.isRequired,
-        changeDrawer: PropTypes.func.isRequired,
-
-        dlgUserOpen: PropTypes.bool.isRequired,
-        toggleUserDlg: PropTypes.func.isRequired,
-
-        dlgConfigOpen: PropTypes.bool.isRequired,
-        toggleConfigDlg: PropTypes.func.isRequired,
-
-        apiServerUrl: PropTypes.string.isRequired,
-        apiServerUrlChange: PropTypes.func.isRequired,
-    };
 
     state = {
         open: true,
@@ -266,4 +250,4 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 }
 
 
-export default withStyles(styles as any)(Dashboard);
+export default withStyles(styles)(Dashboard);
