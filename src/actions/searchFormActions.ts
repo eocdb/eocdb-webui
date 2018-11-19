@@ -61,4 +61,4 @@ export function updateFoundDatasets(foundDatasets: DatasetRef[]): UpdateFoundDat
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type SearchAction = UpdateDatasetQuery | UpdateFoundDatasets;
+export type SearchFormAction = UpdateDatasetQuery | UpdateFoundDatasets;

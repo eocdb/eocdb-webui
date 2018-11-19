@@ -1,9 +1,9 @@
 import { SearchFormState, newSearchFormState } from '../states/searchFormState';
-import { SearchAction, UPDATE_DATASET_QUERY, UPDATE_FOUND_DATASETS } from '../actions/searchFormActions';
+import { SearchFormAction, UPDATE_DATASET_QUERY, UPDATE_FOUND_DATASETS } from '../actions/searchFormActions';
 
 const initialState = newSearchFormState();
 
-export function searchFormReducer(state: SearchFormState, action: SearchAction): SearchFormState {
+export function searchFormReducer(state: SearchFormState, action: SearchFormAction): SearchFormState {
     if (typeof state === 'undefined') {
         state = initialState;
     }
