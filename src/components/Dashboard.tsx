@@ -1,7 +1,6 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { Theme, WithStyles, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -22,11 +21,12 @@ import DrawerItems from "./DrawerItems";
 import DashPanels from "./DashPanels";
 import UserLoginDialog from "./dialogs/UserLoginDialog";
 import ConfigDialog from "./dialogs/ConfigDialog";
+import createStyles from "@material-ui/core/styles/createStyles";
 
 
 const drawerWidth = 240;
 
-const styles = (theme: any) => ({
+const styles = (theme: Theme) => createStyles({
     root: {
         display: 'flex',
     },
@@ -101,11 +101,12 @@ const styles = (theme: any) => ({
     h5: {
         marginBottom: theme.spacing.unit * 2,
     },
+    searchField:{
+        width: '50%',
+    }
 });
 
-interface DashboardProps {
-    classes: any;
-
+interface DashboardProps extends WithStyles<typeof styles> {
     currentDrawer: string;
     changeDrawer: (currentDrawer: string) => void;
 
@@ -114,6 +115,9 @@ interface DashboardProps {
 
     dlgConfigOpen: boolean;
     toggleConfigDlg: (dlgConfigOpen: boolean) => void;
+
+    apiServerUrl: string;
+    apiServerUrlChange: (url: string) => void;
 }
 
 
@@ -123,17 +127,6 @@ interface DashboardState {
 
 
 class Dashboard extends React.Component<DashboardProps, DashboardState> {
-    static readonly propTypes = {
-        classes: PropTypes.object.isRequired,
-        currentDrawer: PropTypes.string.isRequired,
-        changeDrawer: PropTypes.func.isRequired,
-
-        dlgUserOpen: PropTypes.bool.isRequired,
-        toggleUserDlg: PropTypes.func.isRequired,
-
-        dlgConfigOpen: PropTypes.bool.isRequired,
-        toggleConfigDlg: PropTypes.func.isRequired,
-    };
 
     state = {
         open: true,
@@ -167,10 +160,13 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     };
 
     handleConfigClose = () => {
-        console.log('test');
         this.props.toggleConfigDlg(false);
     };
 
+    handleApiServerUrlChange = (url: string) => {
+        this.props.apiServerUrlChange(url);
+        this.handleConfigClose();
+    };
 
     render() {
         const {classes} = this.props;
@@ -201,7 +197,8 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             noWrap
                             className={classes.title}
                         >
-                            <img src={eumetsatLogo} height={56}/> Ocean Colour In-Situ Database
+                            <img src={eumetsatLogo} height={56}/>
+                            Ocean Colour In-Situ Database.
                         </Typography>
 
                         <IconButton color="inherit">
@@ -218,6 +215,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         <ConfigDialog open={this.props.dlgConfigOpen}
                                       handleClickOpen={this.handleConfigOpen}
                                       handleClose={this.handleConfigClose}
+                                      apiServerUrlChange={this.handleApiServerUrlChange}
                         />
                     </Toolbar>
                 </AppBar>
@@ -252,4 +250,4 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 }
 
 
-export default withStyles(styles as any)(Dashboard);
+export default withStyles(styles)(Dashboard);

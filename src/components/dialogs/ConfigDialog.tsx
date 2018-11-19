@@ -8,16 +8,33 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Settings } from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton/IconButton";
+import { ChangeEvent } from "react";
 
 
-interface DlgConfigProps {
+interface ConfigDialogProps {
     open: boolean;
     handleClickOpen: () => void;
     handleClose: () => void;
+
+    apiServerUrlChange: (url: string) => void;
 }
 
 
-export default class ConfigDialog extends React.Component<DlgConfigProps> {
+interface ConfigDialogState {
+    url: string;
+}
+
+
+export default class ConfigDialog extends React.Component<ConfigDialogProps, ConfigDialogState> {
+    handleApiServerUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const v = event.target.value;
+        this.setState({...this.state, url: v});
+    };
+
+    handleApiServerUrlSave = () => {
+        this.props.apiServerUrlChange(this.state.url);
+    };
+
     render() {
         return (
             <div>
@@ -41,13 +58,14 @@ export default class ConfigDialog extends React.Component<DlgConfigProps> {
                             label="Backend Server"
                             type="text"
                             fullWidth
+                            onChange={this.handleApiServerUrlChange}
                         />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.props.handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={this.props.handleClose} color="primary">
+                        <Button onClick={this.handleApiServerUrlSave} color="primary">
                             Save
                         </Button>
                     </DialogActions>
