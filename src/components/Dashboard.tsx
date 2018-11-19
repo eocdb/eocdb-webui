@@ -197,8 +197,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             noWrap
                             className={classes.title}
                         >
-                            <img src={eumetsatLogo} height={56}/>
-                            Ocean Colour In-Situ Database.
+                            <img src={eumetsatLogo} height={48}/> Ocean Colour In-Situ Database
                         </Typography>
 
                         <IconButton color="inherit">
