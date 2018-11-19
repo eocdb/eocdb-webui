@@ -1,4 +1,4 @@
-import { callJsonApi } from './fetch';
+import { callJsonApi } from './callApi';
 import { DatasetRef } from '../types/dataset';
 
 export type ProductMode = 'contains' | 'same_cruise' | 'dont_apply';
@@ -21,7 +21,7 @@ export interface DatasetQuery {
 
 type QueryComponent = [string, string];
 
-export function searchDatasets(apiServerUrl: string, datasetQuery: DatasetQuery) {
+export function searchDatasets(apiServerUrl: string, datasetQuery: DatasetQuery): Promise<DatasetRef[]> {
     const queryComponents: QueryComponent[] = [];
     collectSearchExprComponent(datasetQuery, queryComponents);
     collectTimeComponent(datasetQuery, queryComponents);

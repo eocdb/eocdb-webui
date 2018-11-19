@@ -2,10 +2,10 @@ import { HTTPError } from './errors';
 
 export type QueryComponent = [string, string];
 
-export function callApi<T>(endpointUrl: string, queryComponents: QueryComponent[], init?: RequestInit): Promise<Response> {
+export function callApi<T>(endpointUrl: string, queryComponents?: QueryComponent[], init?: RequestInit): Promise<Response> {
 
     let url = endpointUrl;
-    if (queryComponents.length > 0) {
+    if (queryComponents && queryComponents.length > 0) {
         const queryString = queryComponents.map(kv => kv.map(encodeURIComponent).join('=')).join('&');
         url += '?' + queryString;
     }
