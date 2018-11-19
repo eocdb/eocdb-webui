@@ -12,7 +12,7 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
 import { Theme, WithStyles, withStyles } from '@material-ui/core/styles';
 
-import { MessageLogEntry } from "../types/messageLogState";
+import { MessageLogEntry } from '../types/messageLogState';
 
 const variantIcon = {
     success: CheckCircleIcon,
@@ -48,12 +48,12 @@ const styles = (theme: Theme) => ({
 });
 
 interface MessageLogContentProps extends WithStyles<typeof styles> {
-    onClose: (messageId: number) => void;
+    hideMessage: (messageId: number) => void;
     messageLogEntry: MessageLogEntry;
 }
 
 function MessageLogContent(props: MessageLogContentProps) {
-    const {classes, onClose, messageLogEntry} = props;
+    const {classes, hideMessage, messageLogEntry} = props;
     const messageId = messageLogEntry.id;
     const messageType = messageLogEntry.type;
     const messageText = messageLogEntry.text;
@@ -77,7 +77,7 @@ function MessageLogContent(props: MessageLogContentProps) {
                     key="close"
                     aria-label="Close"
                     color="inherit"
-                    onClick={() => onClose(messageId)}
+                    onClick={() => hideMessage(messageId)}
                 >
                     <CloseIcon className={classes.icon}/>
                 </IconButton>,
@@ -108,10 +108,10 @@ export class MessageLog extends React.Component<MessageLogProps> {
                     anchorOrigin={anchorOrigin as any}
                     open={true}
                     autoHideDuration={6000}
-                    onClose={this.handleClose}
+                    onClose={() => hideMessage(messageLogEntry.id)}
                 >
                     <MessageLogContentWrapper
-                        onClose={hideMessage}
+                        hideMessage={hideMessage}
                         messageLogEntry={messageLogEntry}
                     />
                 </Snackbar>
@@ -119,9 +119,5 @@ export class MessageLog extends React.Component<MessageLogProps> {
         }
 
         return <React.Fragment>{snackBars}</React.Fragment>;
-    }
-
-    private handleClose = () => {
-        console.log("CLOSED!");
     }
 }
