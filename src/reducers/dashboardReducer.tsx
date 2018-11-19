@@ -1,4 +1,4 @@
-import { DashboardState, newDashboardState } from '../types/dashboardState';
+import { DashboardState, newDashboardState } from '../states/dashboardState';
 
 import {
     DashboardAction,

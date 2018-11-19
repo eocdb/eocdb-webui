@@ -1,4 +1,4 @@
-import { MessageType } from "../types/messageLogState";
+import { MessageType } from "../states/messageLogState";
 
 export const POST_MESSAGE = 'POST_MESSAGE';
 export type POST_MESSAGE = typeof POST_MESSAGE;
