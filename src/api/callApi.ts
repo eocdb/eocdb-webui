@@ -27,6 +27,6 @@ export function callApi<T>(endpointUrl: string, queryComponents?: QueryComponent
         });
 }
 
-export function callJsonApi<T>(endpointUrl: string, queryComponents: QueryComponent[], init?: RequestInit): Promise<T> {
+export function callJsonApi<T>(endpointUrl: string, queryComponents?: QueryComponent[], init?: RequestInit): Promise<T> {
     return callApi(endpointUrl, queryComponents, init).then(response => response.json());
 }
