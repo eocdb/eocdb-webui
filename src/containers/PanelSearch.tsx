@@ -1,16 +1,17 @@
 import { connect } from 'react-redux';
 
 import { AppState } from '../states/appState';
-import { searchDatasets } from '../actions/searchFormActions';
+import { updateDatasetQuery, searchDatasets } from '../actions/searchFormActions';
 import PanelSearch from '../components/panels/PanelSearch';
 
 const mapStateToProps = (state: AppState) => {
     return {
-        ...state.searchFormState.datasetQuery,
+        datasetQuery: state.searchFormState.datasetQuery,
     };
 };
 
 const mapDispatchToProps = {
+    updateDatasetQuery,
     searchDatasets,
 };
 

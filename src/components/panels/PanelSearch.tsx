@@ -8,9 +8,12 @@ import SearchMap from '../../containers/SearchMap';
 import { DatasetQuery } from '../../api';
 
 
-interface PanelSearchProps extends DatasetQuery {
+interface PanelSearchProps {
     classes: any;
     show: boolean;
+
+    datasetQuery: DatasetQuery;
+    updateDatasetQuery: (datasetQuery: DatasetQuery) => void;
     searchDatasets: () => void;
 }
 
@@ -20,8 +23,24 @@ class PanelSearch extends React.PureComponent<PanelSearchProps> {
         super(props);
     }
 
+    handleSearchExprChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const searchExpr = event.target.value;
+        this.props.updateDatasetQuery({...this.props.datasetQuery, searchExpr});
+    };
+
+    handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const startDate = event.target.value;
+        this.props.updateDatasetQuery({...this.props.datasetQuery, startDate});
+    };
+
+    handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const endDate = event.target.value;
+        this.props.updateDatasetQuery({...this.props.datasetQuery, endDate});
+    };
+
     render() {
-        const {classes} = this.props;
+        const {classes, datasetQuery} = this.props;
+        const {searchExpr, startDate, endDate} = datasetQuery;
 
         if (!this.props.show) {
             return null;
@@ -29,38 +48,42 @@ class PanelSearch extends React.PureComponent<PanelSearchProps> {
 
         return (
             <div className={this.props.show ? '' : classes.hidden}>
-                <Grid spacing={24} container direction={"row"} justify={'flex-start'} alignItems={"center"}>
+                <Grid spacing={24} container direction={'row'} justify={'flex-start'} alignItems={'center'}>
                     <Grid item xs={12} sm={6}>
                         <TextField
-                            id={"lucene-search"}
-                            label={"Search"}
+                            id={'lucene-search'}
+                            label={'Expression'}
                             variant="outlined"
                             className={classes.searchField}
+                            value={searchExpr}
+                            onChange={this.handleSearchExprChange}
                         />
                         <TextField
                             id="measurement-from-date"
-                            label="Measured From:"
+                            label="Measured From"
                             type="date"
-                            defaultValue="2017-05-24"
                             className={classes.textField}
                             InputLabelProps={{
                                 shrink: true,
                             }}
                             variant="outlined"
+                            value={startDate}
+                            onChange={this.handleStartDateChange}
                         />
                         <TextField
                             id="measurement-to-date"
-                            label="To"
+                            label="Measured To"
                             type="date"
-                            defaultValue="2017-05-24"
                             className={classes.textField}
                             InputLabelProps={{
                                 shrink: true,
                             }}
                             variant="outlined"
+                            value={endDate}
+                            onChange={this.handleEndDateChange}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6} justify={"flex-end"}>
+                    <Grid item xs={12} sm={6} justify={'flex-end'}>
                         <Button variant="contained"
                                 color="secondary"
                                 className={classes.button}

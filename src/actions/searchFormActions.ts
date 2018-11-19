@@ -4,20 +4,22 @@ import { MessageLogAction, postMessage } from './messageLogActions'
 import { DatasetRef } from '../types/dataset';
 import { AppState } from '../states/appState';
 import * as api from '../api'
+import { DatasetQuery } from '../api/searchDatasets';
 
-export const UPDATE_FOUND_DATASETS = 'UPDATE_FOUND_DATASETS';
-export type UPDATE_FOUND_DATASETS = typeof UPDATE_FOUND_DATASETS;
+export const UPDATE_DATASET_QUERY = 'UPDATE_DATASET_QUERY';
+export type UPDATE_DATASET_QUERY = typeof UPDATE_DATASET_QUERY;
 
-export interface UpdateFoundDatasets {
-    type: UPDATE_FOUND_DATASETS;
-    foundDatasets: DatasetRef[];
+export interface UpdateDatasetQuery {
+    type: UPDATE_DATASET_QUERY;
+    datasetQuery: DatasetQuery;
 }
 
-export function updateFoundDatasets(foundDatasets: DatasetRef[]): UpdateFoundDatasets {
+export function updateDatasetQuery(datasetQuery: DatasetQuery): UpdateDatasetQuery {
     return {
-        type: UPDATE_FOUND_DATASETS, foundDatasets,
+        type: UPDATE_DATASET_QUERY, datasetQuery,
     };
 }
+
 
 export function searchDatasets() {
     return (dispatch: Dispatch<UpdateFoundDatasets | MessageLogAction>, getState: () => AppState) => {
@@ -38,4 +40,18 @@ export function searchDatasets() {
     };
 }
 
-export type SearchFormAction = UpdateFoundDatasets;
+export const UPDATE_FOUND_DATASETS = 'UPDATE_FOUND_DATASETS';
+export type UPDATE_FOUND_DATASETS = typeof UPDATE_FOUND_DATASETS;
+
+export interface UpdateFoundDatasets {
+    type: UPDATE_FOUND_DATASETS;
+    foundDatasets: DatasetRef[];
+}
+
+export function updateFoundDatasets(foundDatasets: DatasetRef[]): UpdateFoundDatasets {
+    return {
+        type: UPDATE_FOUND_DATASETS, foundDatasets,
+    };
+}
+
+export type SearchFormAction = UpdateDatasetQuery | UpdateFoundDatasets;
