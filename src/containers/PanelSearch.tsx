@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { AppState } from '../states/appState';
 import { searchDatasets } from '../actions/searchFormActions';
-import PanelSearch from '../components/PanelSearch';
+import PanelSearch from '../components/panels/PanelSearch';
 
 const mapStateToProps = (state: AppState) => {
     return {
