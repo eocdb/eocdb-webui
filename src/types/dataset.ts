@@ -7,7 +7,7 @@ export interface DatasetRef {
 }
 
 
-export interface Info {
+export interface StoreInfo {
     products: Product[];
     productGroups: ProductGroup[];
 }

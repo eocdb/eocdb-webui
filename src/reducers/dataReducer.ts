@@ -1,5 +1,5 @@
 import { newDataState, DataState } from "../states/dataState";
-import { UpdateInfo, GET_INFO } from "../actions/configActions";
+import { UpdateInfo, UPDATE_STORE_INFO } from "../actions/configActions";
 
 const initialState = newDataState();
 
@@ -8,7 +8,7 @@ export function dataReducer(state: DataState, action: UpdateInfo): DataState {
         state = initialState;
     }
     switch (action.type) {
-        case GET_INFO: {
+        case UPDATE_STORE_INFO: {
             return {...state, info: action.info};
         }
     }

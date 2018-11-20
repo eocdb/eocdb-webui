@@ -1,7 +1,7 @@
-import { Info } from "../types/dataset";
+import { StoreInfo } from "../types/dataset";
 
 export interface DataState {
-    info: Info;
+    info: StoreInfo;
 }
 
 export function newDataState() {

@@ -6,7 +6,8 @@ import Icon from '@material-ui/core/Icon/Icon';
 import SimpleTable from './SimpleTable';
 import SearchMap from '../../containers/search/SearchMap';
 import { DatasetQuery } from '../../api/index';
-import { Info } from "../../types/dataset";
+import { StoreInfo } from "../../types/dataset";
+import { MultipleSelect } from "./MultipleSelect";
 
 
 interface SearchPanelProps {
@@ -17,7 +18,7 @@ interface SearchPanelProps {
     updateDatasetQuery: (datasetQuery: DatasetQuery) => void;
     searchDatasets: () => void;
 
-    serverInfo: Info;
+    serverInfo: StoreInfo;
 }
 
 
@@ -86,6 +87,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             value={endDate}
                             onChange={this.handleEndDateChange}
                         />
+                        <MultipleSelect classes={classes} productGroups={this.props.serverInfo['productGroups']} />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <Button variant="contained"

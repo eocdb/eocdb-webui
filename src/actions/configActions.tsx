@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { MessageLogAction, postMessage } from "./messageLogActions";
 import { AppState } from "../states/appState";
 import * as api from '../api'
-import { Info } from "../types/dataset";
+import { StoreInfo } from "../types/dataset";
 
 export const SET_API_SERVER_URL = 'SET_API_SERVER_URL';
 export type SET_API_SERVER_URL = typeof SET_API_SERVER_URL;
@@ -19,23 +19,23 @@ export function configServer(apiServerUrl: string): SetAptServerUrl {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-export const GET_INFO = 'GET_INFO';
-export type GET_INFO = typeof GET_INFO;
+export const UPDATE_STORE_INFO = 'UPDATE_STORE_INFO';
+export type UPDATE_STORE_INFO = typeof UPDATE_STORE_INFO;
 
 export interface UpdateInfo {
-    type: GET_INFO;
-    info: Info;
+    type: UPDATE_STORE_INFO;
+    info: StoreInfo;
 }
 
 
-export function getInfo() {
+export function updateStoreInfo() {
     return (dispatch: Dispatch<UpdateInfo | MessageLogAction>, getState: () => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
 
-        api.getInfo(apiServerUrl)
-            .then((foundInfo: Info) => {
-                dispatch(_getInfo(foundInfo));
+        api.getStoreInfo(apiServerUrl)
+            .then((foundInfo: StoreInfo) => {
+                dispatch(_updateStoreInfo(foundInfo));
             })
             .catch(error => {
                 dispatch(postMessage('error', error + ''));
@@ -44,9 +44,9 @@ export function getInfo() {
 }
 
 
-export function _getInfo(info: Info): UpdateInfo {
+export function _updateStoreInfo(info: StoreInfo): UpdateInfo {
     return {
-        type: GET_INFO,
+        type: UPDATE_STORE_INFO,
         info: info,
     };
 }

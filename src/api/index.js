@@ -1,3 +1,3 @@
 export { searchDatasets, DatasetQuery } from './searchDatasets'
-export { getInfo } from './getInfo'
+export { getStoreInfo } from './getStoreInfo'
 export { HTTPError } from './errors'
