@@ -47,6 +47,10 @@ interface MultipleSelectProps extends WithStyles<typeof styles> {
 }
 
 
+interface MultipleSelectState{
+    groups: string[];
+}
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -58,14 +62,18 @@ const MenuProps = {
     },
 };
 
-class MultipleSelect extends React.Component<MultipleSelectProps> {
-    state = {
-        groups: ['None',],
-    };
+class MultipleSelect extends React.Component<MultipleSelectProps, MultipleSelectState> {
+    constructor(props: MultipleSelectProps){
+        super(props);
+        this.state = {
+            groups: []
+        };
+    }
 
     handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         console.log(event.target.value);
-        this.setState({groups: event.target.value});
+        this.setState({groups: event.target.value as any});
+
     };
 
     getStyles = (name: string) => {
