@@ -1,6 +1,8 @@
 import { GeoJsonObject } from 'geojson';
 import { LatLngBounds } from 'leaflet';
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const UPDATE_SELECTED_REGIONS = 'UPDATE_SELECTED_REGIONS';
 export type UPDATE_SELECTED_REGIONS = typeof UPDATE_SELECTED_REGIONS;
 
@@ -14,5 +16,6 @@ export function updateSelectedRegions(selectedRegions: GeoJsonObject, selectedBo
     return {type: UPDATE_SELECTED_REGIONS, selectedRegions, selectedBounds};
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type SearchMapAction = UpdateSelectedRegions;
