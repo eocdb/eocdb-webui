@@ -6,6 +6,8 @@ import { AppState } from '../states/appState';
 import * as api from '../api'
 import { DatasetQuery } from '../api/searchDatasets';
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const UPDATE_DATASET_QUERY = 'UPDATE_DATASET_QUERY';
 export type UPDATE_DATASET_QUERY = typeof UPDATE_DATASET_QUERY;
 
@@ -20,6 +22,7 @@ export function updateDatasetQuery(datasetQuery: DatasetQuery): UpdateDatasetQue
     };
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export function searchDatasets() {
     return (dispatch: Dispatch<UpdateFoundDatasets | MessageLogAction>, getState: () => AppState) => {
@@ -40,6 +43,8 @@ export function searchDatasets() {
     };
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const UPDATE_FOUND_DATASETS = 'UPDATE_FOUND_DATASETS';
 export type UPDATE_FOUND_DATASETS = typeof UPDATE_FOUND_DATASETS;
 
@@ -53,5 +58,7 @@ export function updateFoundDatasets(foundDatasets: DatasetRef[]): UpdateFoundDat
         type: UPDATE_FOUND_DATASETS, foundDatasets,
     };
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type SearchFormAction = UpdateDatasetQuery | UpdateFoundDatasets;

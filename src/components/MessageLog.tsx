@@ -105,6 +105,7 @@ export class MessageLog extends React.Component<MessageLogProps> {
         for (const messageLogEntry of messages) {
             snackBars.push(
                 <Snackbar
+                    key={messageLogEntry.id}
                     anchorOrigin={anchorOrigin as any}
                     open={true}
                     autoHideDuration={6000}
