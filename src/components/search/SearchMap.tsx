@@ -2,11 +2,17 @@ import * as React from 'react'
 import { FeatureGroup, Map, Marker, Popup, TileLayer } from 'react-leaflet'
 import { LatLng, LatLngBounds } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
+import { Theme, WithStyles } from '@material-ui/core';
+import createStyles from '@material-ui/core/styles/createStyles';
+import { withStyles } from '@material-ui/core/styles';
 
 const draw = require('react-leaflet-draw');
 const EditControl = draw.EditControl;
 
-interface SearchMapProps {
+// noinspection JSUnusedLocalSymbols
+const styles = (theme: Theme) => createStyles({});
+
+interface SearchMapProps extends WithStyles<typeof styles> {
     position: LatLng;
     zoom: number;
     updateSelectedRegions: (selectedRegions: GeoJsonObject, selectedBounds?: LatLngBounds) => void;
@@ -121,7 +127,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
 }
 
-export default SearchMap;
+export default withStyles(styles)(SearchMap);
 
 //
 // // data taken from the example in https://github.com/PaulLeCam/react-leaflet/issues/176

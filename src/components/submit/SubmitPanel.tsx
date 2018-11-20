@@ -1,11 +1,15 @@
-import * as React from "react";
-import Typography from "@material-ui/core/Typography/Typography";
+import * as React from 'react';
+import Typography from '@material-ui/core/Typography/Typography';
+import { Theme, WithStyles } from '@material-ui/core';
+import createStyles from '@material-ui/core/styles/createStyles';
+import { withStyles } from '@material-ui/core/styles';
 
-interface SubmitPanelProps {
-    classes: any;
+// noinspection JSUnusedLocalSymbols
+const styles = (theme: Theme) => createStyles({});
+
+interface SubmitPanelProps extends WithStyles<typeof styles> {
     show: boolean;
 }
-
 
 class SubmitPanel extends React.PureComponent<SubmitPanelProps> {
     constructor(props: SubmitPanelProps) {
@@ -13,15 +17,16 @@ class SubmitPanel extends React.PureComponent<SubmitPanelProps> {
     }
 
     render() {
-        const {classes} = this.props;
+        if (!this.props.show) {
+            return null;
+        }
         return (
-            <div className={this.props.show ? '' : classes.hidden}>
+            <div>
                 <Typography
                     component="h1"
                     variant="h5"
                     color="inherit"
                     noWrap
-                    className={classes.title}
                 >
                     SUBMIT
                 </Typography>
@@ -30,5 +35,4 @@ class SubmitPanel extends React.PureComponent<SubmitPanelProps> {
     }
 }
 
-
-export default SubmitPanel;
+export default withStyles(styles)(SubmitPanel);

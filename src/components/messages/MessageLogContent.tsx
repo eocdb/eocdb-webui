@@ -7,12 +7,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import green from '@material-ui/core/colors/green';
 import amber from '@material-ui/core/colors/amber';
 import IconButton from '@material-ui/core/IconButton';
-import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
 import { Theme, WithStyles, withStyles } from '@material-ui/core/styles';
-
-import { MessageLogEntry } from '../states/messageLogState';
+import { MessageLogEntry } from '../../states/messageLogState';
+import createStyles from '@material-ui/core/styles/createStyles';
 
 const variantIcon = {
     success: CheckCircleIcon,
@@ -21,31 +20,32 @@ const variantIcon = {
     info: InfoIcon,
 };
 
-const styles = (theme: Theme) => ({
-    success: {
-        backgroundColor: green[600],
-    },
-    error: {
-        backgroundColor: theme.palette.error.dark,
-    },
-    info: {
-        backgroundColor: theme.palette.primary.dark,
-    },
-    warning: {
-        backgroundColor: amber[700],
-    },
-    icon: {
-        fontSize: 20,
-    },
-    iconVariant: {
-        opacity: 0.9,
-        marginRight: theme.spacing.unit,
-    },
-    message: {
-        display: 'flex',
-        alignItems: 'center',
-    },
-});
+const styles = (theme: Theme) => createStyles(
+    {
+        success: {
+            backgroundColor: green[600],
+        },
+        error: {
+            backgroundColor: theme.palette.error.dark,
+        },
+        info: {
+            backgroundColor: theme.palette.primary.dark,
+        },
+        warning: {
+            backgroundColor: amber[700],
+        },
+        icon: {
+            fontSize: 20,
+        },
+        iconVariant: {
+            opacity: 0.9,
+            marginRight: theme.spacing.unit,
+        },
+        message: {
+            display: 'flex',
+            alignItems: 'center',
+        },
+    });
 
 interface MessageLogContentProps extends WithStyles<typeof styles> {
     hideMessage: (messageId: number) => void;
@@ -86,39 +86,4 @@ function MessageLogContent(props: MessageLogContentProps) {
     );
 }
 
-const MessageLogContentWrapper = withStyles(styles)(MessageLogContent);
-
-export interface MessageLogProps {
-    messages: MessageLogEntry[];
-    hideMessage: (messageId: number) => void;
-}
-
-export class MessageLog extends React.Component<MessageLogProps> {
-
-    render() {
-        const {messages, hideMessage} = this.props;
-        const anchorOrigin = {
-            vertical: 'bottom',
-            horizontal: 'left',
-        };
-        const snackBars = [];
-        for (const messageLogEntry of messages) {
-            snackBars.push(
-                <Snackbar
-                    key={messageLogEntry.id}
-                    anchorOrigin={anchorOrigin as any}
-                    open={true}
-                    autoHideDuration={6000}
-                    onClose={() => hideMessage(messageLogEntry.id)}
-                >
-                    <MessageLogContentWrapper
-                        hideMessage={hideMessage}
-                        messageLogEntry={messageLogEntry}
-                    />
-                </Snackbar>
-            );
-        }
-
-        return <React.Fragment>{snackBars}</React.Fragment>;
-    }
-}
+export default withStyles(styles)(MessageLogContent);

@@ -21,9 +21,9 @@ export function dashboardReducer(state: DashboardState, action: DashboardAction)
         case CLOSE_LOGIN_DIALOG:
             return {...state, loginDialogOpen: false};
         case OPEN_CONFIG_DIALOG:
-            return {...state, dlgConfigOpen: action.dlgConfigOpen};
+            return {...state, configDialogOpen: true};
         case CLOSE_CONFIG_DIALOG:
-            return {...state, dlgConfigOpen: action.dlgConfigOpen};
+            return {...state, configDialogOpen: false};
     }
     return state;
 }

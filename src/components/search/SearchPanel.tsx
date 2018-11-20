@@ -3,15 +3,29 @@ import Grid from '@material-ui/core/Grid/Grid';
 import TextField from '@material-ui/core/TextField/TextField';
 import Button from '@material-ui/core/Button/Button';
 import Icon from '@material-ui/core/Icon/Icon';
+import { Theme, WithStyles } from '@material-ui/core';
+import createStyles from '@material-ui/core/styles/createStyles';
+import { withStyles } from '@material-ui/core/styles';
+
 import SimpleTable from './SimpleTable';
 import SearchMap from '../../containers/search/SearchMap';
 import { DatasetQuery } from '../../api/index';
-import { StoreInfo } from "../../types/dataset";
-import { MultipleSelect } from "./MultipleSelect";
+import { StoreInfo } from '../../types/dataset';
+import MultipleSelect from './MultipleSelect';
 
+// noinspection JSUnusedLocalSymbols
+const styles = (theme: Theme) => createStyles(
+    {
+        searchField: {
+            width: 300,
+        },
+        textField: {},
+        button: {},
+        rightIcon: {},
+        tableContainer: {},
+    });
 
-interface SearchPanelProps {
-    classes: any;
+interface SearchPanelProps extends WithStyles<typeof styles> {
     show: boolean;
 
     datasetQuery: DatasetQuery;
@@ -21,11 +35,7 @@ interface SearchPanelProps {
     serverInfo: StoreInfo;
 }
 
-
 class SearchPanel extends React.PureComponent<SearchPanelProps> {
-    constructor(props: SearchPanelProps) {
-        super(props);
-    }
 
     handleSearchExprChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const searchExpr = event.target.value;
@@ -43,16 +53,15 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
     };
 
     render() {
-        const {classes, datasetQuery} = this.props;
-        const {searchExpr, startDate, endDate} = datasetQuery;
-
         if (!this.props.show) {
             return null;
         }
-        console.log(this.props.serverInfo);
+
+        const {classes, datasetQuery} = this.props;
+        const {searchExpr, startDate, endDate} = datasetQuery;
 
         return (
-            <div className={this.props.show ? '' : classes.hidden}>
+            <div>
                 <Grid spacing={24} container direction={'row'} justify={'flex-start'} alignItems={'center'}>
                     <Grid item xs={12} sm={6}>
                         <TextField
@@ -87,7 +96,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             value={endDate}
                             onChange={this.handleEndDateChange}
                         />
-                        <MultipleSelect classes={classes} productGroups={this.props.serverInfo['productGroups']} />
+                        <MultipleSelect productGroups={this.props.serverInfo['productGroups']}/>
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <Button variant="contained"
@@ -114,4 +123,4 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
     }
 }
 
-export default SearchPanel;
+export default withStyles(styles)(SearchPanel);

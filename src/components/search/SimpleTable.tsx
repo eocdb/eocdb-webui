@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,18 +6,24 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Button from "@material-ui/core/Button/Button";
-import Icon from "@material-ui/core/Icon/Icon";
+import Button from '@material-ui/core/Button/Button';
+import Icon from '@material-ui/core/Icon/Icon';
+import createStyles from '@material-ui/core/styles/createStyles';
+import { Theme, WithStyles } from '@material-ui/core';
 
-const styles = {
-    root: {
-        width: '100%',
-        overflowX: 'auto',
-    },
-    table: {
-        minWidth: 700,
-    },
-};
+// noinspection JSUnusedLocalSymbols
+const styles = (theme: Theme) => createStyles(
+    {
+        root: {
+            width: '100%',
+            overflowX: 'auto',
+        },
+        table: {
+            minWidth: 700,
+        },
+        rightIcon: {
+        },
+    });
 
 let id = 0;
 
@@ -34,7 +39,10 @@ const data = [
     createData('OSU/S_Ocean/2K/drf23684.dat'),
 ];
 
-function SimpleTable(props: any) {
+interface SimpleTableProps extends WithStyles<typeof styles> {
+}
+
+function SimpleTable(props: SimpleTableProps) {
     const {classes} = props;
 
     return (
@@ -56,16 +64,16 @@ function SimpleTable(props: any) {
                                 <TableCell component="th" scope="row">
                                     {n.file}
                                 </TableCell>
-                                <TableCell numeric>
+                                <TableCell>
                                     <Button><Icon className={classes.rightIcon}>language</Icon></Button>
                                 </TableCell>
-                                <TableCell numeric>
+                                <TableCell>
                                     <Button><Icon className={classes.rightIcon}>bar_chart</Icon></Button>
                                 </TableCell>
-                                <TableCell numeric>
+                                <TableCell>
                                     <Button><Icon className={classes.rightIcon}>archive</Icon></Button>
                                 </TableCell>
-                                <TableCell numeric>
+                                <TableCell>
                                     <Button><Icon className={classes.rightIcon}>cloud_download</Icon></Button>
                                 </TableCell>
                             </TableRow>
@@ -77,8 +85,4 @@ function SimpleTable(props: any) {
     );
 }
 
-SimpleTable.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles as any)(SimpleTable);
+export default withStyles(styles)(SimpleTable);
