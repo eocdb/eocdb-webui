@@ -7,6 +7,7 @@ import SearchPanel from '../../components/search/SearchPanel';
 const mapStateToProps = (state: AppState) => {
     return {
         datasetQuery: state.searchFormState.datasetQuery,
+        serverInfo: state.dataState.info,
     };
 };
 

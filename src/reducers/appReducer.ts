@@ -4,6 +4,7 @@ import { dashboardReducer } from './dashboardReducer';
 import { searchMapReducer } from './searchMapReducer';
 import { searchFormReducer } from './searchFormReducer';
 import { messageLogReducer } from "./messageLogReducer";
+import { dataReducer } from "./dataReducer";
 
 export const appReducer = combineReducers(
     {
@@ -12,5 +13,6 @@ export const appReducer = combineReducers(
         searchFormState: searchFormReducer,
         searchMapState: searchMapReducer,
         messageLogState: messageLogReducer,
+        dataState: dataReducer,
     }
 );

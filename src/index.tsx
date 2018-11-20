@@ -10,9 +10,12 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 import 'typeface-roboto';
+import { getInfo } from "./actions/configActions";
 
 const logger = createLogger({collapsed: true});
 const store = createStore(appReducer, applyMiddleware(thunk, logger));
+
+store.dispatch(getInfo() as any);
 
 ReactDOM.render(
     <Provider store={store}>

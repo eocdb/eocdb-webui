@@ -6,6 +6,7 @@ import Icon from '@material-ui/core/Icon/Icon';
 import SimpleTable from './SimpleTable';
 import SearchMap from '../../containers/search/SearchMap';
 import { DatasetQuery } from '../../api/index';
+import { Info } from "../../types/dataset";
 
 
 interface SearchPanelProps {
@@ -15,6 +16,8 @@ interface SearchPanelProps {
     datasetQuery: DatasetQuery;
     updateDatasetQuery: (datasetQuery: DatasetQuery) => void;
     searchDatasets: () => void;
+
+    serverInfo: Info;
 }
 
 
@@ -45,6 +48,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         if (!this.props.show) {
             return null;
         }
+        console.log(this.props.serverInfo);
 
         return (
             <div className={this.props.show ? '' : classes.hidden}>
@@ -83,7 +87,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             onChange={this.handleEndDateChange}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6} justify={'flex-end'}>
+                    <Grid item xs={12} sm={6}>
                         <Button variant="contained"
                                 color="secondary"
                                 className={classes.button}

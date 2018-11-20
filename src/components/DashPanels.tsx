@@ -1,9 +1,9 @@
 import HomePanel from "./home/HomePanel";
 import * as React from "react";
-import PanelSearch from "../containers/search/SearchPanel";
 import SubmitPanel from "./submit/SubmitPanel";
 import BrowsePanel from "./browse/BrowsePanel";
 import AdminPanel from "./admin/AdminPanel";
+import SearchPanel from "../containers/search/SearchPanel";
 
 
 interface DashPanelsProps {
@@ -19,7 +19,7 @@ class DashPanels extends React.PureComponent<DashPanelsProps> {
     render() {
         return (
             <div>
-                <PanelSearch show={this.props.currentDrawer=='Search'} classes={this.props.classes}/>
+                <SearchPanel show={this.props.currentDrawer=='Search'} classes={this.props.classes}/>
                 <HomePanel show={this.props.currentDrawer=='Home'} classes={this.props.classes}/>
                 <SubmitPanel show={this.props.currentDrawer=='Submit'} classes={this.props.classes}/>
                 <BrowsePanel show={this.props.currentDrawer=='Browse'} classes={this.props.classes}/>

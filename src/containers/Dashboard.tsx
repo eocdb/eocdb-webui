@@ -9,8 +9,8 @@ import {
     closeUserDialog
 } from '../actions/dashboardActions';
 
-import { configServer } from '../actions/configActions'
 import Dashboard from '../components/Dashboard';
+import { configServer } from "../actions/configActions";
 
 const mapStateToProps = (state: AppState) => {
     return {
