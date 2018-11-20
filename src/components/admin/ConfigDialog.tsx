@@ -6,22 +6,25 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import createStyles from '@material-ui/core/styles/createStyles';
+import { Theme, WithStyles } from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles';
 
+// noinspection JSUnusedLocalSymbols
+const styles = (theme: Theme) => createStyles({});
 
-interface ConfigDialogProps {
+interface ConfigDialogProps extends WithStyles<typeof styles> {
     open: boolean;
     handleClose: () => void;
 
     apiServerUrlChange: (url: string) => void;
 }
 
-
 interface ConfigDialogState {
     url: string;
 }
 
-
-export default class ConfigDialog extends React.Component<ConfigDialogProps, ConfigDialogState> {
+class ConfigDialog extends React.Component<ConfigDialogProps, ConfigDialogState> {
     state = {
         url: '',
     };
@@ -71,3 +74,5 @@ export default class ConfigDialog extends React.Component<ConfigDialogProps, Con
         );
     }
 }
+
+export default withStyles(styles)(ConfigDialog);

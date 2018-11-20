@@ -12,13 +12,13 @@ localStorage.setItem('search2', 'ernie');
 
 let res = [];
 
-for (let i = 0; i < localStorage.length; i++){
+for (let i = 0; i < localStorage.length; i++) {
     res.push(
         <ListItem button key={i}>
             <ListItemIcon>
-                <AssignmentIcon />
+                <AssignmentIcon/>
             </ListItemIcon>
-            <ListItemText primary={localStorage.key(i)} />
+            <ListItemText primary={localStorage.key(i)}/>
         </ListItem>
     );
 }

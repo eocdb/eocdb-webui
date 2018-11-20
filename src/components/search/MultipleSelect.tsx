@@ -1,42 +1,44 @@
-import * as React from "react";
-import { Theme, WithStyles } from "@material-ui/core";
-import createStyles from "@material-ui/core/styles/createStyles";
-import InputLabel from "@material-ui/core/InputLabel/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem/MenuItem";
-import Select from "@material-ui/core/Select/Select";
-import { ProductGroup } from "../../types/dataset";
+import * as React from 'react';
+import { Theme, WithStyles } from '@material-ui/core';
+import createStyles from '@material-ui/core/styles/createStyles';
+import InputLabel from '@material-ui/core/InputLabel/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem/MenuItem';
+import Select from '@material-ui/core/Select/Select';
+import { ProductGroup } from '../../types/dataset';
 import Input from '@material-ui/core/Input';
-import Chip from "@material-ui/core/Chip/Chip";
-import classNames from "classnames";
+import Chip from '@material-ui/core/Chip/Chip';
+import classNames from 'classnames';
+import { withStyles } from '@material-ui/core/styles';
 
 
-const styles = (theme: Theme) => createStyles({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    formControl: {
-        margin: theme.spacing.unit,
-        minWidth: 120,
-        maxWidth: 300,
-    },
-    chips: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    chip: {
-        margin: theme.spacing.unit / 4,
-    },
-    noLabel: {
-        marginTop: theme.spacing.unit * 3,
-    },
-    fontRegular: {
-        fontWeight: theme.typography.fontWeightRegular,
-    },
-    fontMedium: {
-        fontWeight: theme.typography.fontWeightMedium,
-    },
-});
+const styles = (theme: Theme) => createStyles(
+    {
+        root: {
+            display: 'flex',
+            flexWrap: 'wrap',
+        },
+        formControl: {
+            margin: theme.spacing.unit,
+            minWidth: 120,
+            maxWidth: 300,
+        },
+        chips: {
+            display: 'flex',
+            flexWrap: 'wrap',
+        },
+        chip: {
+            margin: theme.spacing.unit / 4,
+        },
+        noLabel: {
+            marginTop: theme.spacing.unit * 3,
+        },
+        fontRegular: {
+            fontWeight: theme.typography.fontWeightRegular,
+        },
+        fontMedium: {
+            fontWeight: theme.typography.fontWeightMedium,
+        },
+    });
 
 
 interface MultipleSelectProps extends WithStyles<typeof styles> {
@@ -56,9 +58,9 @@ const MenuProps = {
     },
 };
 
-export class MultipleSelect extends React.Component<MultipleSelectProps> {
+class MultipleSelect extends React.Component<MultipleSelectProps> {
     state = {
-        groups: ['None', ],
+        groups: ['None',],
     };
 
     handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -68,8 +70,8 @@ export class MultipleSelect extends React.Component<MultipleSelectProps> {
 
     getStyles = (name: string) => {
         return (this.state.groups.indexOf(name) === -1
-            ? this.props.classes.fontRegular
-            : this.props.classes.fontMedium)
+                ? this.props.classes.fontRegular
+                : this.props.classes.fontMedium)
     };
 
     renderItems = () => {
@@ -104,7 +106,7 @@ export class MultipleSelect extends React.Component<MultipleSelectProps> {
                     }}
                     input={<Input id="select-multiple"/>}
                     MenuProps={MenuProps}
-                    variant={"outlined"}
+                    variant={'outlined'}
                     renderValue={(selected: string[]) => (
                         <div className={classes.chips}>
                             {selected.map(value => (
@@ -120,4 +122,4 @@ export class MultipleSelect extends React.Component<MultipleSelectProps> {
     }
 }
 
-
+export default withStyles(styles)(MultipleSelect);

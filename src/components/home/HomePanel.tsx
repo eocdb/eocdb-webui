@@ -1,27 +1,30 @@
-import * as React from "react";
-import Typography from "@material-ui/core/Typography/Typography";
+import * as React from 'react';
+import Typography from '@material-ui/core/Typography/Typography';
+import { Theme, WithStyles } from '@material-ui/core';
+import createStyles from '@material-ui/core/styles/createStyles';
+import { withStyles } from '@material-ui/core/styles';
 
-interface HomePanelProps{
+// noinspection JSUnusedLocalSymbols
+const styles = (theme: Theme) => createStyles({});
+
+interface HomePanelProps extends WithStyles<typeof styles> {
     classes: any;
     show: boolean;
 }
 
-
 class HomePanel extends React.PureComponent<HomePanelProps> {
-    constructor(props: HomePanelProps){
-        super(props);
-    }
 
-    render(){
-        const {classes} = this.props;
-        return(
-            <div className={this.props.show? '': classes.hidden}>
+    render() {
+        if (!this.props.show) {
+            return null;
+        }
+        return (
+            <div>
                 <Typography
                     component="h1"
                     variant="h5"
                     color="inherit"
                     noWrap
-                    className={classes.title}
                 >
                     HOME
                 </Typography>
@@ -31,4 +34,4 @@ class HomePanel extends React.PureComponent<HomePanelProps> {
 }
 
 
-export default HomePanel;
+export default withStyles(styles)(HomePanel);

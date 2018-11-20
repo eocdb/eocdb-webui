@@ -1,21 +1,29 @@
-import * as React from "react";
-import Typography from "@material-ui/core/Typography/Typography";
+import * as React from 'react';
+import Typography from '@material-ui/core/Typography/Typography';
+import { Theme, WithStyles } from '@material-ui/core';
+import createStyles from '@material-ui/core/styles/createStyles';
+import { withStyles } from '@material-ui/core/styles';
 
-interface AdminPanelProps{
-    classes: any;
+// noinspection JSUnusedLocalSymbols
+const styles = (theme: Theme) => createStyles(
+    {
+        title: {},
+    });
+
+interface AdminPanelProps extends WithStyles<typeof styles> {
     show: boolean;
 }
 
-
 class AdminPanel extends React.PureComponent<AdminPanelProps> {
-    constructor(props: AdminPanelProps){
-        super(props);
-    }
 
-    render(){
+    render() {
+        if (!this.props.show) {
+            return null;
+        }
+
         const {classes} = this.props;
-        return(
-            <div className={this.props.show? '': classes.hidden}>
+        return (
+            <div>
                 <Typography
                     component="h1"
                     variant="h5"
@@ -30,5 +38,4 @@ class AdminPanel extends React.PureComponent<AdminPanelProps> {
     }
 }
 
-
-export default AdminPanel;
+export default withStyles(styles)(AdminPanel);

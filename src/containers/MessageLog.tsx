@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { AppState } from '../states/appState';
 
 import { hideMessage } from '../actions/messageLogActions';
-import { MessageLog } from '../components/MessageLog';
+import MessageLog from '../components/messages/MessageLog';
 
 const mapStateToProps = (state: AppState) => {
     return {

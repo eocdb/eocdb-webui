@@ -2,19 +2,20 @@ import * as React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import { Home, Search, FileCopy, SettingsApplications, ZoomIn } from '@material-ui/icons';
+import List from '@material-ui/core/List/List';
+import { Theme, WithStyles } from '@material-ui/core';
+import createStyles from '@material-ui/core/styles/createStyles';
+import { withStyles } from '@material-ui/core/styles';
 
-import List from "@material-ui/core/List/List";
+// noinspection JSUnusedLocalSymbols
+const styles = (theme: Theme) => createStyles({});
 
-import { Home, Search, FileCopy, SettingsApplications, ZoomIn } from "@material-ui/icons";
-
-interface DrawerItemsProps {
+interface DrawerItemsProps extends WithStyles<typeof styles> {
     handleClick: (currentDrawer: string) => void;
 }
 
 class DrawerItems extends React.PureComponent<DrawerItemsProps> {
-    constructor(props: DrawerItemsProps) {
-        super(props);
-    }
 
     render() {
         return (
@@ -57,5 +58,4 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
 
 }
 
-export default DrawerItems;
-
+export default withStyles(styles)(DrawerItems);
