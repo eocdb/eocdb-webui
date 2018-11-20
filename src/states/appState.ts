@@ -3,6 +3,7 @@ import { DashboardState } from "./dashboardState";
 import { SearchMapState } from './searchMapState';
 import { SearchFormState } from './searchFormState';
 import { MessageLogState } from "./messageLogState";
+import { SessionState } from './sessionState';
 
 export interface AppState {
     configState:  ConfigState;
@@ -10,4 +11,5 @@ export interface AppState {
     searchFormState: SearchFormState;
     searchMapState: SearchMapState;
     messageLogState: MessageLogState;
+    sessionState: SessionState;
 }

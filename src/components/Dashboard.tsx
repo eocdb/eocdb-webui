@@ -12,109 +12,111 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { Star } from '@material-ui/icons';
-import { secondaryListItems } from './listitems';
+import { Star, AccountCircle, Settings } from '@material-ui/icons';
+import createStyles from '@material-ui/core/styles/createStyles';
 
+import { secondaryListItems } from './listitems';
 import eumetsatLogo from './eumetsat.png';
-import DrawerItems from "./DrawerItems";
-// TODO: avoid imports from ../containers
-import DashPanels from "./DashPanels";
-import UserLoginDialog from "./user/UserLoginDialog";
-import ConfigDialog from "./admin/ConfigDialog";
-import createStyles from "@material-ui/core/styles/createStyles";
+import DrawerItems from './DrawerItems';
+import DashPanels from './DashPanels';
+import LoginDialog from '../containers/user/LoginDialog'; // TODO: dependency issue here!
+import ConfigDialog from './admin/ConfigDialog';
 
 
 const drawerWidth = 240;
 
-const styles = (theme: Theme) => createStyles({
-    root: {
-        display: 'flex',
-    },
-    toolbar: {
-        paddingRight: 24, // keep right padding when drawer closed
-    },
-    toolbarIcon: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '0 8px',
-        ...theme.mixins.toolbar,
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-    },
-    appBarShift: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    menuButton: {
-        marginLeft: 12,
-        marginRight: 36,
-    },
-    hidden: {
-        display: 'none',
-    },
-    title: {
-        flexGrow: 1,
-    },
-    drawerPaper: {
-        position: 'relative',
-        whiteSpace: 'nowrap',
-        width: drawerWidth,
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    drawerPaperClose: {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing.unit * 7,
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing.unit * 9,
+const styles = (theme: Theme) => createStyles(
+    {
+        root: {
+            display: 'flex',
         },
-    },
-    appBarSpacer: theme.mixins.toolbar,
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing.unit * 3,
-        height: '100vh',
-        overflow: 'auto',
-    },
-    chartContainer: {
-        marginLeft: -22,
-    },
-    tableContainer: {
-        height: 320,
-    },
-    h5: {
-        marginBottom: theme.spacing.unit * 2,
-    },
-    searchField:{
-        width: '50%',
-    }
-});
+        toolbar: {
+            paddingRight: 24, // keep right padding when drawer closed
+        },
+        toolbarIcon: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            padding: '0 8px',
+            ...theme.mixins.toolbar,
+        },
+        appBar: {
+            zIndex: theme.zIndex.drawer + 1,
+            transition: theme.transitions.create(['width', 'margin'], {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.leavingScreen,
+            }),
+        },
+        appBarShift: {
+            marginLeft: drawerWidth,
+            width: `calc(100% - ${drawerWidth}px)`,
+            transition: theme.transitions.create(['width', 'margin'], {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+        },
+        menuButton: {
+            marginLeft: 12,
+            marginRight: 36,
+        },
+        hidden: {
+            display: 'none',
+        },
+        title: {
+            flexGrow: 1,
+        },
+        drawerPaper: {
+            position: 'relative',
+            whiteSpace: 'nowrap',
+            width: drawerWidth,
+            transition: theme.transitions.create('width', {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+        },
+        drawerPaperClose: {
+            overflowX: 'hidden',
+            transition: theme.transitions.create('width', {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.leavingScreen,
+            }),
+            width: theme.spacing.unit * 7,
+            [theme.breakpoints.up('sm')]: {
+                width: theme.spacing.unit * 9,
+            },
+        },
+        appBarSpacer: theme.mixins.toolbar,
+        content: {
+            flexGrow: 1,
+            padding: theme.spacing.unit * 3,
+            height: '100vh',
+            overflow: 'auto',
+        },
+        chartContainer: {
+            marginLeft: -22,
+        },
+        tableContainer: {
+            height: 320,
+        },
+        h5: {
+            marginBottom: theme.spacing.unit * 2,
+        },
+        searchField: {
+            width: '50%',
+        }
+    });
 
 interface DashboardProps extends WithStyles<typeof styles> {
     currentDrawer: string;
     changeDrawer: (currentDrawer: string) => void;
 
-    dlgUserOpen: boolean;
-    openUserDialog: () => void;
-    closeUserDialog: () => void;
+    loginDialogOpen: boolean;
+    openLoginDialog: () => void;
+    closeLoginDialog: () => void;
+    loginUser: (name: string, password: string) => void;
+    openRegistrationDialog: () => void;
 
-    dlgConfigOpen: boolean;
+    configDialogOpen: boolean;
     openConfigDialog: () => void;
     closeConfigDialog: () => void;
 
@@ -146,14 +148,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         this.props.changeDrawer(currentDrawer);
     };
 
-    handleUserLoginOpen = () => {
-        this.props.openUserDialog();
-    };
-
-    handleUserLoginClose = () => {
-        this.props.closeUserDialog();
-    };
-
     handleConfigOpen = () => {
         console.log('test');
         this.props.openConfigDialog();
@@ -174,6 +168,11 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         return (
             <div className={classes.root}>
                 <CssBaseline/>
+                <LoginDialog/>
+                <ConfigDialog open={this.props.configDialogOpen}
+                              handleClose={this.handleConfigClose}
+                              apiServerUrlChange={this.handleApiServerUrlChange}
+                />
                 <AppBar
                     position="absolute"
                     className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
@@ -204,18 +203,13 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             <Badge badgeContent={4} color="secondary">
                                 <Star/>
                             </Badge>
-
                         </IconButton>
-                        <UserLoginDialog
-                            open={this.props.dlgUserOpen}
-                            handleClickOpen={this.handleUserLoginOpen}
-                            handleClose={this.handleUserLoginClose}
-                        />
-                        <ConfigDialog open={this.props.dlgConfigOpen}
-                                      handleClickOpen={this.handleConfigOpen}
-                                      handleClose={this.handleConfigClose}
-                                      apiServerUrlChange={this.handleApiServerUrlChange}
-                        />
+                        <IconButton color="inherit" onClick={this.props.openConfigDialog}>
+                            <Settings/>
+                        </IconButton>
+                        <IconButton color="inherit" onClick={this.props.openLoginDialog}>
+                            <AccountCircle/>
+                        </IconButton>
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -241,12 +235,10 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                 <main className={classes.content}>
                     <div className={classes.appBarSpacer}/>
                     <DashPanels currentDrawer={this.props.currentDrawer} classes={classes}/>
-
                 </main>
             </div>
         );
     }
 }
-
 
 export default withStyles(styles)(Dashboard);

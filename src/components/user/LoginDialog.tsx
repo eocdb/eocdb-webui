@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Theme, WithStyles } from "@material-ui/core";
+import { Theme, WithStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,79 +7,85 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Visibility, VisibilityOff } from "@material-ui/icons";
-import Input from "@material-ui/core/Input/Input";
-import InputLabel from "@material-ui/core/InputLabel/InputLabel";
-import FormControl from "@material-ui/core/FormControl/FormControl";
-import InputAdornment from "@material-ui/core/InputAdornment/InputAdornment";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import classNames from "classnames";
-import createStyles from "@material-ui/core/styles/createStyles";
+import { Visibility, VisibilityOff } from '@material-ui/icons';
+import Input from '@material-ui/core/Input/Input';
+import InputLabel from '@material-ui/core/InputLabel/InputLabel';
+import FormControl from '@material-ui/core/FormControl/FormControl';
+import InputAdornment from '@material-ui/core/InputAdornment/InputAdornment';
+import IconButton from '@material-ui/core/IconButton/IconButton';
+import classNames from 'classnames';
+import createStyles from '@material-ui/core/styles/createStyles';
+import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
 
-
-const styles = (theme: Theme) => createStyles({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    margin: {
-        margin: theme.spacing.unit,
-    },
-    withoutLabel: {
-        marginTop: theme.spacing.unit * 3,
-    },
-    textField: {
-        flexBasis: 200,
-    },
-});
+const styles = (theme: Theme) => createStyles(
+    {
+        root: {
+            display: 'flex',
+            flexWrap: 'wrap',
+        },
+        margin: {
+            margin: theme.spacing.unit,
+        },
+        withoutLabel: {
+            marginTop: theme.spacing.unit * 3,
+        },
+        textField: {
+            flexBasis: 200,
+        },
+    });
 
 
 interface LoginDialogProps extends WithStyles<typeof styles> {
     open: boolean;
-    nameOrEmail?: string;
+    userName: string;
+    userLoginError: string | null;
+    userLoginInProgress: boolean;
 
-    loginUser: (nameOrEmail: string, password: string) => void;
-    openUserRegistrationDialog: () => void;
-    closeUserLoginDialog: () => void;
+    loginUser: (name: string, password: string) => void;
+    openRegistrationDialog: () => void;
+    closeLoginDialog: () => void;
 }
 
 interface LoginDialogState {
     showPassword: boolean;
-    nameOrEmail: string;
+    userName: string;
     password: string;
 }
 
-export class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
+class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
 
     state = {
         showPassword: false,
-        nameOrEmail: "",
-        password: "",
+        userName: '',
+        password: '',
     };
 
-    static getDerivedStateFromProps(props: LoginDialogProps, state: LoginDialogState): LoginDialogState {
-        return {...state, nameOrEmail: props.nameOrEmail || ""};
-    }
+    // static getDerivedStateFromProps(props: LoginDialogProps, state: LoginDialogState): LoginDialogState {
+    //     console.log(props);
+    //     return {...state, userName: props.userName || ''};
+    // }
 
     private handleDialogClose = () => {
         // ?
     };
 
     private handleLogin = () => {
-        this.props.loginUser(this.state.nameOrEmail, this.state.password);
+        this.props.loginUser(this.state.userName, this.state.password);
     };
 
     private handleCancel = () => {
-        this.props.closeUserLoginDialog();
+        this.props.closeLoginDialog();
     };
 
     private handleRegister = () => {
-        this.props.closeUserLoginDialog();
-        this.props.openUserRegistrationDialog();
+        this.props.closeLoginDialog();
+        this.props.openRegistrationDialog();
     };
 
-    private handleNameOrEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({nameOrEmail: event.target.value});
+    private handleUserNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({userName: event.target.value});
     };
 
     private handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,8 +97,21 @@ export class LoginDialog extends React.Component<LoginDialogProps, LoginDialogSt
     };
 
     render() {
-        const {classes, open} = this.props;
-        const {nameOrEmail, password, showPassword} = this.state;
+        const {classes, open, userLoginError, userLoginInProgress,} = this.props;
+        const {userName, password, showPassword} = this.state;
+
+        let progress = null;
+        if (userLoginInProgress) {
+            progress = <CircularProgress size={24}/>;
+        }
+
+        let error = null;
+        if (userLoginError) {
+            error = (<Typography color="error" align="right" variant="body2">
+                {userLoginError}
+            </Typography>);
+        }
+
         return (
             <Dialog
                 open={open}
@@ -105,16 +124,16 @@ export class LoginDialog extends React.Component<LoginDialogProps, LoginDialogSt
                         Please enter your login details here or register for a new account.
                     </DialogContentText>
                     <TextField
+                        className={classNames(classes.margin, classes.textField)}
                         autoFocus
-                        margin="dense"
                         id="name"
-                        label="User Name or Email Address"
+                        label="User Name or E-mail Address"
                         type="email"
                         fullWidth
-                        value={nameOrEmail}
-                        onChange={this.handleNameOrEmailChange}
+                        value={userName}
+                        onChange={this.handleUserNameChange}
                     />
-                    <FormControl className={classNames(classes.margin, classes.textField)}>
+                    <FormControl className={classNames(classes.margin, classes.textField)} fullWidth>
                         <InputLabel htmlFor="adornment-password">Password</InputLabel>
                         <Input
                             id="adornment-password"
@@ -133,6 +152,8 @@ export class LoginDialog extends React.Component<LoginDialogProps, LoginDialogSt
                             }
                         />
                     </FormControl>
+                    {progress}
+                    {error}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.handleCancel} color="primary">
@@ -149,3 +170,5 @@ export class LoginDialog extends React.Component<LoginDialogProps, LoginDialogSt
         );
     }
 }
+
+export default withStyles(styles)(LoginDialog);
