@@ -1,4 +1,6 @@
-import { MessageType } from "../states/messageLogState";
+import { MessageType } from '../states/messageLogState';
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const POST_MESSAGE = 'POST_MESSAGE';
 export type POST_MESSAGE = typeof POST_MESSAGE;
@@ -13,6 +15,8 @@ export function postMessage(messageType: MessageType, messageText: string): Post
     return {type: POST_MESSAGE, messageType, messageText};
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const HIDE_MESSAGE = 'HIDE_MESSAGE';
 export type HIDE_MESSAGE = typeof HIDE_MESSAGE;
 
@@ -24,5 +28,7 @@ export interface HideMessage {
 export function hideMessage(messageId: number): HideMessage {
     return {type: HIDE_MESSAGE, messageId};
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type MessageLogAction = PostMessage | HideMessage;
