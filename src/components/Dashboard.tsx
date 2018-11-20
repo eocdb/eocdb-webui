@@ -13,8 +13,6 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { Star } from '@material-ui/icons';
-import createStyles from "@material-ui/core/styles/createStyles";
-
 
 import { secondaryListItems } from './listitems';
 import eumetsatLogo from './eumetsat.png';
