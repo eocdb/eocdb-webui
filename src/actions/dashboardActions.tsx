@@ -14,30 +14,35 @@ export function changeDrawer(currentDrawer: string): ChangeDrawer {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const OPEN_USER_DIALOG = 'OPEN_USER_DIALOG';
-export type OPEN_USER_DIALOG = typeof OPEN_USER_DIALOG;
+export const OPEN_LOGIN_DIALOG = 'OPEN_LOGIN_DIALOG';
+export type OPEN_LOGIN_DIALOG = typeof OPEN_LOGIN_DIALOG;
 
-export interface OpenUserDialog {
-    type: OPEN_USER_DIALOG;
-    dlgUserOpen: boolean;
+export interface OpenLoginDialog {
+    type: OPEN_LOGIN_DIALOG;
 }
 
-export function openUserDialog(): OpenUserDialog {
-    return {type: OPEN_USER_DIALOG, dlgUserOpen: true};
+export function openLoginDialog(): OpenLoginDialog {
+    return {type: OPEN_LOGIN_DIALOG};
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const CLOSE_USER_DIALOG = 'CLOSE_USER_DIALOG';
-export type CLOSE_USER_DIALOG = typeof CLOSE_USER_DIALOG;
+export const CLOSE_LOGIN_DIALOG = 'CLOSE_LOGIN_DIALOG';
+export type CLOSE_LOGIN_DIALOG = typeof CLOSE_LOGIN_DIALOG;
 
 export interface CloseUserDialog {
-    type: CLOSE_USER_DIALOG;
-    dlgUserOpen: boolean;
+    type: CLOSE_LOGIN_DIALOG;
 }
 
-export function closeUserDialog(): CloseUserDialog {
-    return {type: CLOSE_USER_DIALOG, dlgUserOpen: false};
+export function closeLoginDialog(): CloseUserDialog {
+    return {type: CLOSE_LOGIN_DIALOG};
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export function openRegistrationDialog() {
+    // TODO: implement me
+    throw Error('Not implemented.');
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,4 +76,4 @@ export function closeConfigDialog(): OpenConfigDialog {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type DashboardAction = ChangeDrawer | OpenUserDialog | CloseUserDialog | OpenConfigDialog | CloseConfigDialog;
+export type DashboardAction = ChangeDrawer | OpenLoginDialog | CloseUserDialog | OpenConfigDialog | CloseConfigDialog;

@@ -3,33 +3,37 @@ import { AppState } from '../states/appState';
 
 import {
     changeDrawer,
-    openUserDialog,
+    openLoginDialog,
     openConfigDialog,
     closeConfigDialog,
-    closeUserDialog
+    closeLoginDialog,
+    openRegistrationDialog
 } from '../actions/dashboardActions';
-
 import { configServer } from '../actions/configActions'
 import Dashboard from '../components/Dashboard';
+import { loginUser } from '../actions/userActions';
 
 const mapStateToProps = (state: AppState) => {
     return {
         currentDrawer: state.dashboardState.currentDrawer,
-        dlgUserOpen: state.dashboardState.dlgUserOpen,
-        dlgConfigOpen: state.dashboardState.dlgConfigOpen,
+        loginDialogOpen: state.dashboardState.loginDialogOpen,
+        configDialogOpen: state.dashboardState.configDialogOpen,
         apiServerUrl: state.configState.apiServerUrl,
     }
 };
 
 const mapDispatchToProps = {
     changeDrawer,
-    openUserDialog: openUserDialog,
-    closeUserDialog: closeUserDialog,
+    openLoginDialog,
+    closeLoginDialog,
 
-    openConfigDialog: openConfigDialog,
-    closeConfigDialog: closeConfigDialog,
+    openConfigDialog,
+    closeConfigDialog,
 
-    apiServerUrlChange: configServer,
+    loginUser,
+    openRegistrationDialog,
+
+    apiServerUrlChange: configServer, // TODO: rename apiServerUrlChange --> configServer
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

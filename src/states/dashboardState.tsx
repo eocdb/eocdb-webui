@@ -1,13 +1,13 @@
 export interface DashboardState {
     currentDrawer: string;
-    dlgUserOpen: boolean;
-    dlgConfigOpen: boolean,
+    loginDialogOpen: boolean;
+    configDialogOpen: boolean,
 }
 
 export function newDashboardState() {
     return {
         currentDrawer: 'Search',
-        dlgUserOpen: false,
-        dlgConfigOpen: false,
+        loginDialogOpen: false,
+        configDialogOpen: false,
     }
 }
