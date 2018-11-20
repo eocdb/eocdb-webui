@@ -52,11 +52,10 @@ export type OPEN_CONFIG_DIALOG = typeof OPEN_CONFIG_DIALOG;
 
 export interface OpenConfigDialog {
     type: OPEN_CONFIG_DIALOG;
-    dlgConfigOpen: boolean;
 }
 
 export function openConfigDialog(): OpenConfigDialog {
-    return {type: OPEN_CONFIG_DIALOG, dlgConfigOpen: true};
+    return {type: OPEN_CONFIG_DIALOG};
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,11 +65,10 @@ export type CLOSE_CONFIG_DIALOG = typeof CLOSE_CONFIG_DIALOG;
 
 export interface CloseConfigDialog {
     type: CLOSE_CONFIG_DIALOG;
-    dlgConfigOpen: boolean;
 }
 
-export function closeConfigDialog(): OpenConfigDialog {
-    return {type: OPEN_CONFIG_DIALOG, dlgConfigOpen: false};
+export function closeConfigDialog(): CloseConfigDialog {
+    return {type: CLOSE_CONFIG_DIALOG};
 }
 
 
