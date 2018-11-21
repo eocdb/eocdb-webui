@@ -65,19 +65,18 @@ const MenuProps = {
 class MultipleSelect extends React.Component<MultipleSelectProps, MultipleSelectState> {
     constructor(props: MultipleSelectProps){
         super(props);
+
         this.state = {
             groups: []
         };
     }
 
     handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const options = event.target.options;
+        const options = event.target.value;
 
         let value = [];
         for (let i = 0, l = options.length; i < l; i++) {
-            if (options[i].selected) {
-                value.push(options[i].value);
-            }
+            value.push(options[i]);
         }
 
         this.setState({groups: value});
