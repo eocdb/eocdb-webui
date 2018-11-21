@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles(
     {
+        root: {},
         title: {},
     });
 
