@@ -71,8 +71,16 @@ class MultipleSelect extends React.Component<MultipleSelectProps, MultipleSelect
     }
 
     handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(event.target.value);
-        this.setState({groups: event.target.value as any});
+        const options = event.target.options;
+
+        let value = [];
+        for (let i = 0, l = options.length; i < l; i++) {
+            if (options[i].selected) {
+                value.push(options[i].value);
+            }
+        }
+
+        this.setState({groups: value});
 
     };
 
