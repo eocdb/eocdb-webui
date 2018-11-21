@@ -8,6 +8,10 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button/Button";
+import {Dataset, DatasetMetaData} from "../../types/dataset";
+import ListItem from "@material-ui/core/ListItem/ListItem";
+import ListItemText from "@material-ui/core/ListItemText/ListItemText";
+import List from "@material-ui/core/List/List";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -15,8 +19,9 @@ const styles = (theme: Theme) => createStyles({
     });
 
 interface MetaInfoDialogProps extends WithStyles<typeof styles>{
-    id?: string;
     open: boolean;
+    dataset: Dataset;
+
     handleClose: () => void;
 }
 
@@ -25,7 +30,19 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps>{
         super(props);
     }
 
+    renderInfo(metadata: DatasetMetaData){
+        return (
+            <List>
+                <div>
+                    <ListItem>
+                        <ListItemText primary={metadata.contact}/>
+                    </ListItem>
+                </div>
+            </List>
+        );
+    }
     render(){
+
         return(
             <Dialog
                 open={this.props.open}
@@ -35,7 +52,7 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps>{
                 <DialogTitle id="form-dialog-title">Settings</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Metainformation of dataset
+                        {this.renderInfo(this.props.dataset.metadata)}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

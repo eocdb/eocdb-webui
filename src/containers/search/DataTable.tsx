@@ -5,7 +5,8 @@ import {
     closeMetaInfoDialog,
     openMetaInfoDialog,
     updateDataPage,
-    updateDataRowsPerPage
+    updateDataRowsPerPage,
+    updateDataset,
 } from '../../actions/dataTableActions';
 import DataTable from '../../components/search/DataTable';
 
@@ -17,6 +18,7 @@ const mapStateToProps = (state: AppState) => {
         metaInfoDialogOpen: state.dataTableState.metaInfoDialogOpen,
 
         data: state.searchFormState.foundDatasets,
+        dataset: state.dataTableState.dataset,
     };
 };
 
@@ -25,6 +27,7 @@ const mapDispatchToProps = {
     updateDataRowsPerPage,
     closeMetaInfoDialog,
     openMetaInfoDialog,
+    updateDataset,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataTable);

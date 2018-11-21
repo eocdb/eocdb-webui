@@ -1,5 +1,11 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+import { Dataset } from "../types/dataset";
+import { Dispatch } from "redux";
+import { MessageLogAction, postMessage } from "./messageLogActions";
+import { AppState } from "../states/appState";
+import * as api from '../api'
+
 export const UPDATE_DATA_PAGE = 'UPDATE_DATA_PAGE';
 export type UPDATE_DATA_PAGE = typeof UPDATE_DATA_PAGE;
 
@@ -54,6 +60,41 @@ export function closeMetaInfoDialog (): CloseMetaInfoDialog{
     return {type: CLOSE_METAINFO_DIALOG};
 }
 
+//////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_DATASET = 'UPDATE_DATASET';
+export type UPDATE_DATASET = typeof UPDATE_DATASET;
+
+export interface UpdateDataset {
+    type: UPDATE_DATASET;
+    dataset: Dataset;
+}
+
+
+export function updateDataset(datasetId: string) {
+    return (dispatch: Dispatch<UpdateDataset | MessageLogAction>, getState: () => AppState) => {
+        const state = getState();
+        const apiServerUrl = state.configState.apiServerUrl;
+
+        api.getDataset(apiServerUrl, datasetId)
+            .then((foundDataset: Dataset) => {
+                dispatch(_updateDataset(foundDataset));
+            })
+            .catch(error => {
+                dispatch(postMessage('error', error + ''));
+            });
+    };
+}
+
+
+export function _updateDataset(dataset: Dataset): UpdateDataset {
+    return {
+        type: UPDATE_DATASET,
+        dataset: dataset,
+    };
+}
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type DataTableAction = UpdateDataPage | UpdateDataRowsPerPage | OpenMetaInfoDialog | CloseMetaInfoDialog;
+export type DataTableAction = UpdateDataPage | UpdateDataRowsPerPage | OpenMetaInfoDialog | UpdateDataset | CloseMetaInfoDialog;

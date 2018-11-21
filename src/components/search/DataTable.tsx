@@ -16,7 +16,7 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import TableFooter from "@material-ui/core/TableFooter/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination/TablePagination";
-import { QueryResult } from "../../types/dataset";
+import {Dataset, QueryResult} from "../../types/dataset";
 import MetaInfoDialog from "./MetaInfoDialog";
 
 
@@ -125,6 +125,9 @@ interface DataTableProps extends WithStyles<typeof styles> {
     metaInfoDialogOpen: boolean;
     openMetaInfoDialog: () => void;
     closeMetaInfoDialog: () => void;
+
+    updateDataset: (datasetId: string) => void;
+    dataset: Dataset;
 }
 
 
@@ -147,6 +150,7 @@ class DataTable extends React.Component<DataTableProps> {
 
     handleMetaInfoOpen = () => {
         this.props.openMetaInfoDialog();
+        this.props.updateDataset('5bf5422361d82d05dcd6b817');
     };
 
     handleMetaInfoClose = () => {
@@ -162,6 +166,7 @@ class DataTable extends React.Component<DataTableProps> {
                 <MetaInfoDialog
                     open={this.props.metaInfoDialogOpen}
                     handleClose={this.handleMetaInfoClose}
+                    dataset={this.props.dataset}
                 />
                 <Table className={classes.table}>
                     <TableHead>

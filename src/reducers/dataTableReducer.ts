@@ -2,7 +2,10 @@ import { newDataTableState, DataTableState } from "../states/dataTableState";
 import {
     UPDATE_DATA_PAGE,
     UPDATE_DATA_ROWS_PER_PAGE,
-    DataTableAction, CLOSE_METAINFO_DIALOG, OPEN_METAINFO_DIALOG
+    CLOSE_METAINFO_DIALOG,
+    OPEN_METAINFO_DIALOG,
+    UPDATE_DATASET,
+    DataTableAction
 } from "../actions/dataTableActions";
 
 
@@ -19,10 +22,15 @@ export function dataTableReducer(state: DataTableState, action: DataTableAction)
         case UPDATE_DATA_ROWS_PER_PAGE: {
             return {...state, rowsPerPage: action.rowsPerPage};
         }
-        case OPEN_METAINFO_DIALOG:
+        case OPEN_METAINFO_DIALOG: {
             return {...state, metaInfoDialogOpen: true};
-        case CLOSE_METAINFO_DIALOG:
+        }
+        case CLOSE_METAINFO_DIALOG: {
             return {...state, metaInfoDialogOpen: false};
+        }
+        case UPDATE_DATASET: {
+            return {...state, dataset: action.dataset}
+        }
     }
     return state;
 }
