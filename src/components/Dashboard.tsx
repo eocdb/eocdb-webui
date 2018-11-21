@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { Theme, WithStyles, withStyles } from '@material-ui/core/styles';
+import { Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -131,10 +131,13 @@ interface DashboardState {
 
 
 class Dashboard extends React.Component<DashboardProps, DashboardState> {
+    constructor(props: DashboardProps){
+        super(props);
 
-    state = {
-        open: true,
-    };
+        this.state = {
+            open: true,
+        };
+    }
 
     handleDrawerOpen = () => {
         this.setState({open: true});
