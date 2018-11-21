@@ -7,11 +7,11 @@ import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
 
-import SimpleTable from './SimpleTable';
 import SearchMap from '../../containers/search/SearchMap';
 import { DatasetQuery } from '../../api/index';
 import { StoreInfo } from '../../types/dataset';
 import MultipleSelect from './MultipleSelect';
+import DataTable from "../../containers/search/DataTable";
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles(
@@ -62,7 +62,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
         return (
             <div>
-                <Grid spacing={24} container direction={'row'} justify={'flex-start'} alignItems={'center'}>
+                <Grid spacing={24} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
                     <Grid item container spacing={8} xs={12} sm={8}>
                         <TextField
                             id={'lucene-search'}
@@ -109,7 +109,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <div className={classes.tableContainer}>
-                            <SimpleTable/>
+                            <DataTable searchDatasets={this.props.searchDatasets}/>
                         </div>
                     </Grid>
                     <Grid item xs={12} sm={6}>

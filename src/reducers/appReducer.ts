@@ -6,6 +6,7 @@ import { searchFormReducer } from './searchFormReducer';
 import { messageLogReducer } from "./messageLogReducer";
 import { sessionReducer } from './sessionReducer';
 import { dataReducer } from "./dataReducer";
+import { dataTableReducer } from "./dataTableReducer";
 
 export const appReducer = combineReducers(
     {
@@ -16,5 +17,6 @@ export const appReducer = combineReducers(
         messageLogState: messageLogReducer,
         sessionState: sessionReducer,
         dataState: dataReducer,
+        dataTableState: dataTableReducer,
     }
 );

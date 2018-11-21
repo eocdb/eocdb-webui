@@ -5,6 +5,7 @@ import { SearchFormState } from './searchFormState';
 import { MessageLogState } from "./messageLogState";
 import { SessionState } from './sessionState';
 import { DataState } from "./dataState";
+import { DataTableState } from "./dataTableState";
 
 export interface AppState {
     configState:  ConfigState;
@@ -14,4 +15,5 @@ export interface AppState {
     messageLogState: MessageLogState;
     sessionState: SessionState;
     dataState: DataState;
+    dataTableState: DataTableState;
 }

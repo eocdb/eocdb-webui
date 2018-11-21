@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
 import { MessageLogAction, postMessage } from './messageLogActions'
-import { DatasetRef } from '../types/dataset';
+import { QueryResult } from '../types/dataset';
 import { AppState } from '../states/appState';
 import * as api from '../api'
 import { DatasetQuery } from '../api/searchDatasets';
@@ -33,8 +33,11 @@ export function searchDatasets() {
         if (selectedBounds) {
             datasetQuery = {...datasetQuery, region: selectedBounds.toBBoxString()};
         }
+        datasetQuery = {...datasetQuery, count:state.dataTableState.rowsPerPage};
+        datasetQuery = {...datasetQuery, offset:((state.dataTableState.page * state.dataTableState.rowsPerPage)+1)};
+
         api.searchDatasets(apiServerUrl, datasetQuery)
-           .then((foundDatasets: DatasetRef[]) => {
+           .then((foundDatasets: QueryResult) => {
                dispatch(updateFoundDatasets(foundDatasets));
            })
            .catch(error => {
@@ -50,10 +53,10 @@ export type UPDATE_FOUND_DATASETS = typeof UPDATE_FOUND_DATASETS;
 
 export interface UpdateFoundDatasets {
     type: UPDATE_FOUND_DATASETS;
-    foundDatasets: DatasetRef[];
+    foundDatasets: QueryResult;
 }
 
-export function updateFoundDatasets(foundDatasets: DatasetRef[]): UpdateFoundDatasets {
+export function updateFoundDatasets(foundDatasets: QueryResult): UpdateFoundDatasets {
     return {
         type: UPDATE_FOUND_DATASETS, foundDatasets,
     };
