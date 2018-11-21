@@ -73,6 +73,7 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
 
     private handleLogin = () => {
         this.props.loginUser(this.state.userName, this.state.password);
+        this.props.closeLoginDialog();
     };
 
     private handleCancel = () => {
