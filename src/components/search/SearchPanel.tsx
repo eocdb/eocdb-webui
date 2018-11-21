@@ -63,7 +63,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         return (
             <div>
                 <Grid spacing={24} container direction={'row'} justify={'flex-start'} alignItems={'center'}>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item container spacing={8} xs={12} sm={8}>
                         <TextField
                             id={'lucene-search'}
                             label={'Expression'}
@@ -98,7 +98,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         />
                         <MultipleSelect productGroups={this.props.serverInfo['productGroups']}/>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm>
                         <Button variant="contained"
                                 color="secondary"
                                 className={classes.button}

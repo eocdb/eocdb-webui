@@ -11,10 +11,8 @@ import { withStyles } from '@material-ui/core/styles'; // TODO: dependency issue
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
+    root: {},
+
 });
 
 interface DashPanelsProps extends WithStyles<typeof styles> {
