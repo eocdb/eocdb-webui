@@ -50,8 +50,9 @@ const styles = (theme: Theme) => createStyles(
 interface MultipleSelectProps extends WithStyles<typeof styles> {
     open?: boolean;
     productGroups: ProductGroup[];
-}
 
+    productGroupsChange: (productGroups: string[]) => void;
+}
 
 interface MultipleSelectState {
     groups: string[];
@@ -92,6 +93,7 @@ class MultipleSelect extends React.Component<MultipleSelectProps, MultipleSelect
         }
 
         this.setState({groups: value});
+        this.props.productGroupsChange(value);
 
     };
 

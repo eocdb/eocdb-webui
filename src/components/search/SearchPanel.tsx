@@ -52,6 +52,10 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         this.props.updateDatasetQuery({...this.props.datasetQuery, endDate});
     };
 
+    handleProductGroupsChange = (productGroupNames: string[]) => {
+        this.props.updateDatasetQuery({...this.props.datasetQuery, productGroupNames})
+    }
+
     render() {
         if (!this.props.show) {
             return null;
@@ -96,7 +100,10 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             value={endDate}
                             onChange={this.handleEndDateChange}
                         />
-                        <MultipleSelect productGroups={this.props.serverInfo['productGroups']}/>
+                        <MultipleSelect
+                            productGroups={this.props.serverInfo['productGroups']}
+                            productGroupsChange={this.handleProductGroupsChange}
+                        />
                     </Grid>
                     <Grid item xs={12} sm>
                         <Button variant="contained"
