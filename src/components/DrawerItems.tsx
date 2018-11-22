@@ -2,7 +2,7 @@ import * as React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Home, Search, FileCopy, SettingsApplications, ZoomIn } from '@material-ui/icons';
+import { Home, Search, SettingsApplications, CloudUpload, ViewList } from '@material-ui/icons';
 import List from '@material-ui/core/List/List';
 import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
@@ -35,13 +35,13 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
                     </ListItem>
                     <ListItem key={'Browse'} onClick={() => this.props.handleClick('Browse')} button>
                         <ListItemIcon>
-                            <ZoomIn/>
+                            <ViewList/>
                         </ListItemIcon>
                         <ListItemText primary="Browse"/>
                     </ListItem>
                     <ListItem key={'Submit'} onClick={() => this.props.handleClick('Submit')} button>
                         <ListItemIcon>
-                            <FileCopy/>
+                            <CloudUpload/>
                         </ListItemIcon>
                         <ListItemText primary="Submit"/>
                     </ListItem>
