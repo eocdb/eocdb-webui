@@ -25,7 +25,7 @@ for (let i = 0; i < localStorage.length; i++) {
 
 export const secondaryListItems = (
     <div>
-        <ListSubheader inset>Saved reports</ListSubheader>
+        <ListSubheader inset>Saved Searches</ListSubheader>
         {res}
     </div>
 );

@@ -12,6 +12,8 @@ import { DatasetQuery } from '../../api/index';
 import { StoreInfo } from '../../types/dataset';
 import MultipleSelect from './MultipleSelect';
 import DataTable from "../../containers/search/DataTable";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import { Star } from "@material-ui/icons";
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles(
@@ -33,6 +35,9 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     searchDatasets: () => void;
 
     serverInfo: StoreInfo;
+
+    //updateSearchHistory: () => void;
+    //searchHistory: SearchHistoryItem[];
 }
 
 class SearchPanel extends React.PureComponent<SearchPanelProps> {
@@ -54,7 +59,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
     handleProductGroupsChange = (productGroupNames: string[]) => {
         this.props.updateDatasetQuery({...this.props.datasetQuery, productGroupNames})
-    }
+    };
 
     render() {
         if (!this.props.show) {
@@ -67,7 +72,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         return (
             <div>
                 <Grid spacing={24} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
-                    <Grid item container spacing={8} xs={12} sm={8}>
+                    <Grid item container spacing={8} xs={12} sm={10}>
                         <TextField
                             id={'lucene-search'}
                             label={'Expression'}
@@ -105,7 +110,11 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             productGroupsChange={this.handleProductGroupsChange}
                         />
                     </Grid>
-                    <Grid item xs={12} sm>
+                    <Grid item container justify={"flex-end"} xs={12} sm>
+                        <IconButton color="primary">
+                            <Star/>
+                        </IconButton>
+
                         <Button variant="contained"
                                 color="secondary"
                                 className={classes.button}
