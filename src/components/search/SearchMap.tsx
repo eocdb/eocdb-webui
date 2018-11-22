@@ -1,13 +1,16 @@
 import * as React from 'react'
-import { FeatureGroup, Map, Marker, Popup, TileLayer } from 'react-leaflet'
-import { LatLng, LatLngBounds } from 'leaflet';
-import { GeoJsonObject } from 'geojson';
 import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
+import { FeatureGroup, Map, Marker, Popup, TileLayer } from 'react-leaflet'
+import { LatLng, LatLngBounds } from 'leaflet';
+import { GeoJsonObject } from 'geojson';
+import 'react-leaflet-markercluster/dist/styles.css';
+import MarkerClusterGroup from "react-leaflet-markercluster";
 
 const draw = require('react-leaflet-draw');
 const EditControl = draw.EditControl;
+
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({});
@@ -26,6 +29,8 @@ const DRAW_OPTIONS = {
     marker: false,
     circlemarker: false
 };
+
+const MARKERS = createRandomMarkers(10, 500);
 
 class SearchMap extends React.PureComponent<SearchMapProps> {
     private editableFeatureGroupRef: any = null;
@@ -49,6 +54,10 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                 <Marker position={this.props.position}>
                     <Popup>A pretty CSS3 popup.<br/>Easily customizable.</Popup>
                 </Marker>
+
+                <MarkerClusterGroup>
+                    {MARKERS}
+                </MarkerClusterGroup>
 
                 <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
                     <EditControl
@@ -113,22 +122,27 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         this.updateSelectedRegions(e);
     };
 
+    // noinspection JSUnusedLocalSymbols
     private handleDrawControlMounted = (drawControl: any) => {
         // console.log('handleDrawControlMounted', drawControl);
     };
 
+    // noinspection JSUnusedLocalSymbols
     private handleGeometryEditStart = (e: any) => {
         // console.log('handleGeometryEditStart', e);
     };
 
+    // noinspection JSUnusedLocalSymbols
     private handleGeometryEditStop = (e: any) => {
         // console.log('handleGeometryEditStop', e);
     };
 
+    // noinspection JSUnusedLocalSymbols
     private handleGeometryDeleteStart = (e: any) => {
         // console.log('handleGeometryDeleteStart', e);
     };
 
+    // noinspection JSUnusedLocalSymbols
     private handleGeometryDeleteStop = (e: any) => {
         // console.log('handleGeometryDeleteStop', e);
     };
@@ -136,6 +150,72 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 }
 
 export default withStyles(styles)(SearchMap);
+
+
+function randomGaussian(): number {
+    let u = 0, v = 0;
+    //Converting [0,1) to (0,1)
+    while (u === 0) {
+        u = Math.random();
+    }
+    while (v === 0) {
+        v = Math.random();
+    }
+    let num = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    num = num / 10.0 + 0.5; // Translate to 0 -> 1
+    if (num > 1 || num < 0) {
+        // resample between 0 and 1
+        return randomGaussian();
+    }
+    return num;
+}
+
+function createMarker(lat: number, lon: number, i: number) {
+    return <Marker position={new LatLng(lat, lon)}><Popup>ID {i}</Popup></Marker>;
+}
+
+function createRandomMarkers(minPoints: number, maxPoints: number) {
+    const centerPoints = [
+        [41.2, 5.4],
+        [36.2, 18.5],
+        [40.8, -13.5],
+        [35.2, -8.2],
+        [55.9, 4.2],
+        [58.1, 1.6],
+    ];
+
+    const points = [];
+
+    const v1 = 0.05;
+    const v2 = 0.05;
+    const v3 = 0.2;
+    for (let i = 0; i < centerPoints.length; i++) {
+        const lat0 = centerPoints[i][0];
+        const lon0 = centerPoints[i][1];
+        const numPoints = Math.floor(minPoints + (maxPoints - minPoints) * Math.random());
+        if (Math.floor(2 * Math.random()) == 0) {
+            let lat = lat0, lon = lon0;
+            let dx = -1 + 2 * Math.random();
+            let dy = -1 + 2 * Math.random();
+            for (let j = 0; j < numPoints; j++) {
+                lat += v1 * dy;
+                lon += v1 * dx;
+                dx += v2 * Math.random();
+                dy += v2 * Math.random();
+                points.push(createMarker(lat, lon, i));
+            }
+        } else {
+            for (let j = 0; j < numPoints; j++) {
+                const lat = lat0 + v3 * randomGaussian();
+                const lon = lon0 + v3 * randomGaussian();
+                points.push(<Marker position={new LatLng(lat, lon)}/>);
+            }
+        }
+    }
+
+    return points;
+}
+
 
 //
 // // data taken from the example in https://github.com/PaulLeCam/react-leaflet/issues/176
