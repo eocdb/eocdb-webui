@@ -13,7 +13,6 @@ import { StoreInfo } from '../../types/dataset';
 import MultipleSelect from './MultipleSelect';
 import DataTable from "../../containers/search/DataTable";
 import IconButton from "@material-ui/core/IconButton/IconButton";
-import Badge from "@material-ui/core/Badge/Badge";
 import { Star } from "@material-ui/icons";
 
 // noinspection JSUnusedLocalSymbols
@@ -36,6 +35,9 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     searchDatasets: () => void;
 
     serverInfo: StoreInfo;
+
+    //updateSearchHistory: () => void;
+    //searchHistory: SearchHistoryItem[];
 }
 
 class SearchPanel extends React.PureComponent<SearchPanelProps> {
@@ -110,9 +112,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                     </Grid>
                     <Grid item container justify={"flex-end"} xs={12} sm>
                         <IconButton color="primary">
-                            <Badge badgeContent={4} color="secondary">
-                                <Star/>
-                            </Badge>
+                            <Star/>
                         </IconButton>
 
                         <Button variant="contained"
