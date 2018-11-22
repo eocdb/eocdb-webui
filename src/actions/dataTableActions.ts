@@ -62,6 +62,36 @@ export function closeMetaInfoDialog (): CloseMetaInfoDialog{
 
 //////////////////////////////////////////////////////////////////////////////
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const OPEN_PLOT_DIALOG = 'OPEN_PLOT_DIALOG ';
+export type OPEN_PLOT_DIALOG  = typeof OPEN_PLOT_DIALOG ;
+
+export interface OpenPlotDialog {
+    type: OPEN_PLOT_DIALOG ;
+}
+
+export function openPlotDialog (): OpenPlotDialog{
+    return {type: OPEN_PLOT_DIALOG};
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+export const CLOSE_PLOT_DIALOG = 'CLOSE_PLOT_DIALOG ';
+export type CLOSE_PLOT_DIALOG  = typeof CLOSE_PLOT_DIALOG ;
+
+export interface ClosePlotDialog {
+    type: CLOSE_PLOT_DIALOG ;
+}
+
+export function closePlotDialog (): ClosePlotDialog{
+    return {type: CLOSE_PLOT_DIALOG};
+}
+
+//////////////////////////////////////////////////////////////////////////////
+
 export const UPDATE_DATASET = 'UPDATE_DATASET';
 export type UPDATE_DATASET = typeof UPDATE_DATASET;
 
@@ -97,4 +127,12 @@ export function _updateDataset(dataset: Dataset): UpdateDataset {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type DataTableAction = UpdateDataPage | UpdateDataRowsPerPage | OpenMetaInfoDialog | UpdateDataset | CloseMetaInfoDialog;
+export type DataTableAction = UpdateDataPage
+    | UpdateDataRowsPerPage
+    | OpenMetaInfoDialog
+    | CloseMetaInfoDialog
+    | OpenMetaInfoDialog
+    | CloseMetaInfoDialog
+    | OpenPlotDialog
+    | ClosePlotDialog
+    | UpdateDataset;

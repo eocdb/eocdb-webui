@@ -5,6 +5,7 @@ export interface DataTableState {
     rowsPerPage: number;
 
     metaInfoDialogOpen: boolean;
+    plotDialogOpen: boolean;
 
     dataset: Dataset;
 }
@@ -15,6 +16,7 @@ export function newDataTableState() {
         rowsPerPage: 5,
 
         metaInfoDialogOpen: false,
+        plotDialogOpen: false,
 
         dataset: {
             id: "",

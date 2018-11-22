@@ -9,6 +9,7 @@ import {
     updateDataset,
 } from '../../actions/dataTableActions';
 import DataTable from '../../components/search/DataTable';
+import { searchDatasets } from "../../actions/searchFormActions";
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -28,6 +29,7 @@ const mapDispatchToProps = {
     closeMetaInfoDialog,
     openMetaInfoDialog,
     updateDataset,
+    searchDatasets,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataTable);

@@ -116,7 +116,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <div className={classes.tableContainer}>
-                            <DataTable searchDatasets={this.props.searchDatasets}/>
+                            <DataTable/>
                         </div>
                     </Grid>
                     <Grid item xs={12} sm={6}>

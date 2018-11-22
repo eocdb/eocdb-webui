@@ -38,18 +38,22 @@ interface TablePaginationActionsProps extends WithStyles<typeof actionsStyles>, 
 
 class TablePaginationActions extends React.Component<TablePaginationActionsProps> {
     handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        console.log('First');
         this.props.onChangePage(event, 0);
     };
 
     handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        console.log('Back');
         this.props.onChangePage(event, this.props.page - 1);
     };
 
     handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        console.log('Next');
         this.props.onChangePage(event, this.props.page + 1);
     };
 
     handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        console.log('Last');
         this.props.onChangePage(
             event,
             Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
@@ -138,6 +142,7 @@ class DataTable extends React.Component<DataTableProps> {
 
     handleChangePage = (event: React.MouseEvent<HTMLButtonElement>, page: number) => {
         console.log(page);
+        console.log(event);
         this.props.updateDataPage(page);
         this.props.searchDatasets();
     };
@@ -148,9 +153,10 @@ class DataTable extends React.Component<DataTableProps> {
         this.props.searchDatasets();
     };
 
-    handleMetaInfoOpen = () => {
+    handleMetaInfoOpen = (id: string) => {
+        console.log(id);
         this.props.openMetaInfoDialog();
-        this.props.updateDataset('5bf5422361d82d05dcd6b817');
+        this.props.updateDataset(id);
     };
 
     handleMetaInfoClose = () => {
@@ -186,7 +192,10 @@ class DataTable extends React.Component<DataTableProps> {
                                         {row.path}
                                     </TableCell>
                                     <TableCell>
-                                        <IconButton color="inherit" onClick={this.handleMetaInfoOpen}>
+                                        <IconButton
+                                            color="inherit"
+                                            onClick={() => this.handleMetaInfoOpen(row.id)}
+                                        >
                                             <Settings/>
                                         </IconButton>
                                     </TableCell>

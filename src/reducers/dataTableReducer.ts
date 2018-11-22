@@ -4,8 +4,10 @@ import {
     UPDATE_DATA_ROWS_PER_PAGE,
     CLOSE_METAINFO_DIALOG,
     OPEN_METAINFO_DIALOG,
+    OPEN_PLOT_DIALOG,
+    CLOSE_PLOT_DIALOG,
     UPDATE_DATASET,
-    DataTableAction
+    DataTableAction,
 } from "../actions/dataTableActions";
 
 
@@ -27,6 +29,12 @@ export function dataTableReducer(state: DataTableState, action: DataTableAction)
         }
         case CLOSE_METAINFO_DIALOG: {
             return {...state, metaInfoDialogOpen: false};
+        }
+        case OPEN_PLOT_DIALOG: {
+            return {...state, plotDialogOpen: true};
+        }
+        case CLOSE_PLOT_DIALOG: {
+            return {...state, plotDialogOpen: false};
         }
         case UPDATE_DATASET: {
             return {...state, dataset: action.dataset}

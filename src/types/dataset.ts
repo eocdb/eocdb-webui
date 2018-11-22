@@ -92,3 +92,8 @@ export interface Dataset {
     times: string[];
 }
 
+
+export interface SearchHistoryItem{
+    name: string;
+    searchPath: string;
+}

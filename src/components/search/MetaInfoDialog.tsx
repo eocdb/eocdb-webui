@@ -8,42 +8,47 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button/Button";
-import {Dataset, DatasetMetaData} from "../../types/dataset";
+import { Dataset, DatasetMetaData } from "../../types/dataset";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import List from "@material-ui/core/List/List";
 
 
 const styles = (theme: Theme) => createStyles({
-        root: {},
-    });
+    root: {},
+});
 
-interface MetaInfoDialogProps extends WithStyles<typeof styles>{
+interface MetaInfoDialogProps extends WithStyles<typeof styles> {
     open: boolean;
     dataset: Dataset;
 
     handleClose: () => void;
 }
 
-class MetaInfoDialog extends React.Component<MetaInfoDialogProps>{
-    constructor(props: MetaInfoDialogProps){
+class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
+    constructor(props: MetaInfoDialogProps) {
         super(props);
     }
 
-    renderInfo(metadata: DatasetMetaData){
+    renderInfo(metadata: DatasetMetaData) {
+        let items = [];
+        for (let key in metadata) {
+            items.push(
+                <ListItem key={key} >
+                    <ListItemText secondary={metadata[key]} primary={key}/>
+                </ListItem>
+            );
+        }
         return (
             <List>
-                <div>
-                    <ListItem>
-                        <ListItemText primary={metadata.contact}/>
-                    </ListItem>
-                </div>
+                {items}
             </List>
         );
     }
-    render(){
 
-        return(
+    render() {
+
+        return (
             <Dialog
                 open={this.props.open}
                 onClose={this.props.handleClose}
