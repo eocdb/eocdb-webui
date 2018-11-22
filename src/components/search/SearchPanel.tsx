@@ -12,6 +12,9 @@ import { DatasetQuery } from '../../api/index';
 import { StoreInfo } from '../../types/dataset';
 import MultipleSelect from './MultipleSelect';
 import DataTable from "../../containers/search/DataTable";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import Badge from "@material-ui/core/Badge/Badge";
+import { Star } from "@material-ui/icons";
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles(
@@ -54,7 +57,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
     handleProductGroupsChange = (productGroupNames: string[]) => {
         this.props.updateDatasetQuery({...this.props.datasetQuery, productGroupNames})
-    }
+    };
 
     render() {
         if (!this.props.show) {
@@ -67,7 +70,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         return (
             <div>
                 <Grid spacing={24} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
-                    <Grid item container spacing={8} xs={12} sm={8}>
+                    <Grid item container spacing={8} xs={12} sm={10}>
                         <TextField
                             id={'lucene-search'}
                             label={'Expression'}
@@ -106,6 +109,12 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         />
                     </Grid>
                     <Grid item xs={12} sm>
+                        <IconButton color="primary">
+                            <Badge badgeContent={4} color="secondary">
+                                <Star/>
+                            </Badge>
+                        </IconButton>
+
                         <Button variant="contained"
                                 color="secondary"
                                 className={classes.button}

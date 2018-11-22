@@ -9,10 +9,9 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { Star, AccountCircle, Settings } from '@material-ui/icons';
+import { AccountCircle, Settings } from '@material-ui/icons';
 import createStyles from '@material-ui/core/styles/createStyles';
 
 import { secondaryListItems } from './listitems';
@@ -202,11 +201,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             <img src={eumetsatLogo} height={48}/> Ocean Colour In-Situ Database
                         </Typography>
 
-                        <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <Star/>
-                            </Badge>
-                        </IconButton>
                         <IconButton color="inherit" onClick={this.props.openConfigDialog}>
                             <Settings/>
                         </IconButton>
