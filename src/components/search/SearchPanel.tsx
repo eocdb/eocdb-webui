@@ -108,7 +108,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             productGroupsChange={this.handleProductGroupsChange}
                         />
                     </Grid>
-                    <Grid item xs={12} sm>
+                    <Grid item container justify={"flex-end"} xs={12} sm>
                         <IconButton color="primary">
                             <Badge badgeContent={4} color="secondary">
                                 <Star/>
