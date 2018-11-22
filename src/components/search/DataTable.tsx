@@ -11,13 +11,15 @@ import Icon from '@material-ui/core/Icon/Icon';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { Theme, WithStyles } from '@material-ui/core';
 import IconButton from "@material-ui/core/IconButton/IconButton";
-import { KeyboardArrowLeft, KeyboardArrowRight, Settings } from "@material-ui/icons";
+import { KeyboardArrowLeft, KeyboardArrowRight, Settings, BarChart } from "@material-ui/icons";
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import TableFooter from "@material-ui/core/TableFooter/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination/TablePagination";
 import {Dataset, QueryResult} from "../../types/dataset";
 import MetaInfoDialog from "./MetaInfoDialog";
+import PlotDialog from "./PlotDialog";
+import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 
 
 const actionsStyles = (theme: Theme) => ({
@@ -130,6 +132,10 @@ interface DataTableProps extends WithStyles<typeof styles> {
     openMetaInfoDialog: () => void;
     closeMetaInfoDialog: () => void;
 
+    plotDialogOpen: boolean;
+    openPlotDialog: () => void;
+    closePlotDialog: () => void;
+
     updateDataset: (datasetId: string) => void;
     dataset: Dataset;
 }
@@ -163,6 +169,15 @@ class DataTable extends React.Component<DataTableProps> {
         this.props.closeMetaInfoDialog();
     };
 
+    handlePlotOpen = (id: string) => {
+        this.props.openPlotDialog();
+        this.props.updateDataset(id);
+    };
+
+    handlePlotClose = () => {
+        this.props.closePlotDialog();
+    };
+
     render() {
         const {classes, data, rowsPerPage, page} = this.props;
         const {datasets, total_count} = data;
@@ -174,11 +189,18 @@ class DataTable extends React.Component<DataTableProps> {
                     handleClose={this.handleMetaInfoClose}
                     dataset={this.props.dataset}
                 />
+                <PlotDialog
+                    open={this.props.plotDialogOpen}
+                    handleClose={this.handlePlotClose}
+                />
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
+                            <TableCell padding="checkbox">
+                                <Checkbox checked={true} />
+                            </TableCell>
                             <TableCell>File</TableCell>
-                            <TableCell>Map</TableCell>
+                            <TableCell>Info</TableCell>
                             <TableCell>Plot</TableCell>
                             <TableCell>Archive</TableCell>
                             <TableCell>Documents</TableCell>
@@ -188,6 +210,10 @@ class DataTable extends React.Component<DataTableProps> {
                         {datasets.map(row => {
                             return (
                                 <TableRow key={row.id}>
+                                    <TableCell padding="checkbox">
+                                        <Checkbox checked={true} />
+                                    </TableCell>
+
                                     <TableCell component="th" scope="row">
                                         {row.path}
                                     </TableCell>
@@ -200,7 +226,12 @@ class DataTable extends React.Component<DataTableProps> {
                                         </IconButton>
                                     </TableCell>
                                     <TableCell>
-                                        <Button><Icon className={classes.rightIcon}>bar_chart</Icon></Button>
+                                        <IconButton
+                                            color="inherit"
+                                            onClick={() => this.handlePlotOpen(row.id)}
+                                        >
+                                            <BarChart/>
+                                        </IconButton>
                                     </TableCell>
                                     <TableCell>
                                         <Button><Icon className={classes.rightIcon}>archive</Icon></Button>

@@ -134,7 +134,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         super(props);
 
         this.state = {
-            open: true,
+            open: false,
         };
     }
 
