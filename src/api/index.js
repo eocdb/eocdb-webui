@@ -1,4 +1,5 @@
 export { searchDatasets, DatasetQuery } from './searchDatasets'
 export { loginUser } from './loginUser'
 export { getStoreInfo } from './getStoreInfo'
+export { getDataset } from './getDataset'
 export { HTTPError } from './errors'

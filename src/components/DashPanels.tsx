@@ -10,7 +10,10 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles'; // TODO: dependency issue here!
 
 // noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles({});
+const styles = (theme: Theme) => createStyles({
+    root: {},
+
+});
 
 interface DashPanelsProps extends WithStyles<typeof styles> {
     currentDrawer: string

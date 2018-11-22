@@ -1,7 +1,11 @@
+import { SearchHistoryItem } from "../types/dataset";
+
 export interface DashboardState {
     currentDrawer: string;
     loginDialogOpen: boolean;
     configDialogOpen: boolean,
+
+    searchHistory: SearchHistoryItem[];
 }
 
 export function newDashboardState() {
@@ -9,5 +13,6 @@ export function newDashboardState() {
         currentDrawer: 'Search',
         loginDialogOpen: false,
         configDialogOpen: false,
+        searchHistory: [],
     }
 }

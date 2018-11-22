@@ -7,11 +7,11 @@ import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
 
-import SimpleTable from './SimpleTable';
 import SearchMap from '../../containers/search/SearchMap';
 import { DatasetQuery } from '../../api/index';
 import { StoreInfo } from '../../types/dataset';
 import MultipleSelect from './MultipleSelect';
+import DataTable from "../../containers/search/DataTable";
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles(
@@ -52,6 +52,10 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         this.props.updateDatasetQuery({...this.props.datasetQuery, endDate});
     };
 
+    handleProductGroupsChange = (productGroupNames: string[]) => {
+        this.props.updateDatasetQuery({...this.props.datasetQuery, productGroupNames})
+    }
+
     render() {
         if (!this.props.show) {
             return null;
@@ -62,8 +66,8 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
         return (
             <div>
-                <Grid spacing={24} container direction={'row'} justify={'flex-start'} alignItems={'center'}>
-                    <Grid item xs={12} sm={6}>
+                <Grid spacing={24} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
+                    <Grid item container spacing={8} xs={12} sm={8}>
                         <TextField
                             id={'lucene-search'}
                             label={'Expression'}
@@ -96,9 +100,12 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             value={endDate}
                             onChange={this.handleEndDateChange}
                         />
-                        <MultipleSelect productGroups={this.props.serverInfo['productGroups']}/>
+                        <MultipleSelect
+                            productGroups={this.props.serverInfo['productGroups']}
+                            productGroupsChange={this.handleProductGroupsChange}
+                        />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm>
                         <Button variant="contained"
                                 color="secondary"
                                 className={classes.button}
@@ -109,7 +116,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <div className={classes.tableContainer}>
-                            <SimpleTable/>
+                            <DataTable/>
                         </div>
                     </Grid>
                     <Grid item xs={12} sm={6}>

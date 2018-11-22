@@ -1,10 +1,10 @@
 import { DatasetQuery } from '../api';
-import { DatasetRef } from '../types/dataset';
+import { QueryResult } from '../types/dataset';
 
 export interface SearchFormState {
     datasetQuery: DatasetQuery;
     storedDatasetQueries: { [name: string]: DatasetQuery };
-    foundDatasets?: DatasetRef[];
+    foundDatasets: QueryResult;
 }
 
 export function newSearchFormState() {
@@ -14,5 +14,14 @@ export function newSearchFormState() {
             endDate: "2020-01-01",
         },
         storedDatasetQueries: {},
+        foundDatasets: {
+            datasets: [],
+            query: {
+                mtype: '',
+                shallow: '',
+                wdepth: '',
+            },
+            total_count: 0,
+        }
     };
 }

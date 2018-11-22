@@ -1,5 +1,5 @@
 import { callJsonApi } from './callApi';
-import { DatasetRef } from '../types/dataset';
+import { QueryResult } from '../types/dataset';
 
 export type ProductMode = 'contains' | 'same_cruise' | 'dont_apply';
 export type MeasurementType = 'all';
@@ -21,7 +21,7 @@ export interface DatasetQuery {
 
 type QueryComponent = [string, string];
 
-export function searchDatasets(apiServerUrl: string, datasetQuery: DatasetQuery): Promise<DatasetRef[]> {
+export function searchDatasets(apiServerUrl: string, datasetQuery: DatasetQuery): Promise<QueryResult> {
     const queryComponents: QueryComponent[] = [];
     collectSearchExprComponent(datasetQuery, queryComponents);
     collectTimeComponent(datasetQuery, queryComponents);
@@ -30,7 +30,7 @@ export function searchDatasets(apiServerUrl: string, datasetQuery: DatasetQuery)
     collectMeasurementTypeComponent(datasetQuery, queryComponents);
     collectWavelengthsTypeComponent(datasetQuery, queryComponents);
     collectOffsetCountComponents(datasetQuery, queryComponents);
-    return callJsonApi<DatasetRef[]>(apiServerUrl + '/datasets', queryComponents);
+    return callJsonApi<QueryResult>(apiServerUrl + '/datasets', queryComponents);
 }
 
 
