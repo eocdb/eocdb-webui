@@ -5,11 +5,14 @@ import { withStyles } from '@material-ui/core/styles';
 import { FeatureGroup, Map, Marker, Popup, TileLayer } from 'react-leaflet'
 import { LatLng, LatLngBounds } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
-import 'react-leaflet-markercluster/dist/styles.css';
-import MarkerClusterGroup from "react-leaflet-markercluster";
 
-const draw = require('react-leaflet-draw');
-const EditControl = draw.EditControl;
+import MarkerClusterGroup from "react-leaflet-markercluster";
+import 'react-leaflet-markercluster/dist/styles.css';
+
+// FIXME: forman did not find any typedefs for 'react-leaflet-draw', 2018.11.xx
+// import EditControl from "react-leaflet-draw";
+const reactLeafletDraw = require('react-leaflet-draw');
+const EditControl = reactLeafletDraw.EditControl;
 
 
 // noinspection JSUnusedLocalSymbols
@@ -19,6 +22,7 @@ interface SearchMapProps extends WithStyles<typeof styles> {
     position: LatLng;
     zoom: number;
     updateSelectedRegions: (selectedRegions: GeoJsonObject, selectedBounds?: LatLngBounds) => void;
+    testMarkerCluster?: boolean;
 }
 
 const DRAW_OPTIONS = {
@@ -30,14 +34,25 @@ const DRAW_OPTIONS = {
     circlemarker: false
 };
 
-const MARKERS = createRandomMarkers(10, 500);
+let MARKERS: React.ReactNode[] | null = null;
 
 class SearchMap extends React.PureComponent<SearchMapProps> {
     private editableFeatureGroupRef: any = null;
 
     render() {
+        let testMarkerClusterGroup = null;
+        if (this.props.testMarkerCluster) {
+            if (MARKERS === null) {
+                MARKERS = createRandomMarkers(100, 1000);
+            }
+            testMarkerClusterGroup = (
+                <MarkerClusterGroup>
+                    {MARKERS}
+                </MarkerClusterGroup>
+            );
+        }
         return (
-            <Map center={this.props.position} zoom={this.props.zoom}>
+            <Map center={this.props.position} zoom={this.props.zoom} maxZoom={24}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
@@ -45,19 +60,19 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                 <TileLayer
                     url="https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer/tile/{z}/{y}/{x}"
                     attribution="&copy; <a href=&quot;https://www.gebco.net/data_and_products/gridded_bathymetry_data/&quot;>GEBCO</a>, <a href=&quot;https://maps.ngdc.noaa.gov/&quot;>NOAHH</a> and contributors"
+                    maxZoom={9}
                 />
                 <TileLayer
                     url="https://a.tiles.mapbox.com/v3/mapbox.natural-earth-2/{z}/{x}/{y}.png"
                     attribution="&copy; <a href=&quot;https://www.naturalearthdata.com/&quot;>MapBox</a>, <a href=&quot;https://www.mapbox.com/&quot;>MapBox</a> and contributors"
+                    maxZoom={6}
                 />
 
                 <Marker position={this.props.position}>
                     <Popup>A pretty CSS3 popup.<br/>Easily customizable.</Popup>
                 </Marker>
 
-                <MarkerClusterGroup>
-                    {MARKERS}
-                </MarkerClusterGroup>
+                {testMarkerClusterGroup}
 
                 <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
                     <EditControl
@@ -151,6 +166,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
 export default withStyles(styles)(SearchMap);
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function randomGaussian(): number {
     let u = 0, v = 0;
@@ -170,8 +186,8 @@ function randomGaussian(): number {
     return num;
 }
 
-function createMarker(lat: number, lon: number, i: number) {
-    return <Marker position={new LatLng(lat, lon)}><Popup>ID {i}</Popup></Marker>;
+function createMarker(lat: number, lon: number, key: number, dsId: number) {
+    return <Marker key={key} position={new LatLng(lat, lon)}><Popup>DS-ID {dsId}<br/>Key {key}</Popup></Marker>;
 }
 
 function createRandomMarkers(minPoints: number, maxPoints: number) {
@@ -186,30 +202,17 @@ function createRandomMarkers(minPoints: number, maxPoints: number) {
 
     const points = [];
 
-    const v1 = 0.05;
-    const v2 = 0.05;
-    const v3 = 0.2;
+    const spread = 1.5;
+    let key = 0;
     for (let i = 0; i < centerPoints.length; i++) {
         const lat0 = centerPoints[i][0];
         const lon0 = centerPoints[i][1];
         const numPoints = Math.floor(minPoints + (maxPoints - minPoints) * Math.random());
-        if (Math.floor(2 * Math.random()) == 0) {
-            let lat = lat0, lon = lon0;
-            let dx = -1 + 2 * Math.random();
-            let dy = -1 + 2 * Math.random();
-            for (let j = 0; j < numPoints; j++) {
-                lat += v1 * dy;
-                lon += v1 * dx;
-                dx += v2 * Math.random();
-                dy += v2 * Math.random();
-                points.push(createMarker(lat, lon, i));
-            }
-        } else {
-            for (let j = 0; j < numPoints; j++) {
-                const lat = lat0 + v3 * randomGaussian();
-                const lon = lon0 + v3 * randomGaussian();
-                points.push(<Marker position={new LatLng(lat, lon)}/>);
-            }
+        for (let j = 0; j < numPoints; j++) {
+            const lat = lat0 + spread * randomGaussian();
+            const lon = lon0 + spread * randomGaussian();
+            points.push(createMarker(lat, lon, key, i));
+            key++;
         }
     }
 
