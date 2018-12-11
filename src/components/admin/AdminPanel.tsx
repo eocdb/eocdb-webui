@@ -8,7 +8,9 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = (theme: Theme) => createStyles(
     {
         root: {},
-        title: {},
+        title: {
+            flexGrow: 1,
+        },
     });
 
 interface AdminPanelProps extends WithStyles<typeof styles> {
@@ -16,6 +18,9 @@ interface AdminPanelProps extends WithStyles<typeof styles> {
 }
 
 class AdminPanel extends React.PureComponent<AdminPanelProps> {
+    constructor(props: AdminPanelProps){
+        super(props);
+    }
 
     render() {
         if (!this.props.show) {

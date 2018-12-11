@@ -5,14 +5,18 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
 
 // noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles({});
+const styles = (theme: Theme) => createStyles({
+    root: {},
+});
 
 interface HomePanelProps extends WithStyles<typeof styles> {
-    classes: any;
     show: boolean;
 }
 
 class HomePanel extends React.PureComponent<HomePanelProps> {
+    constructor(props: HomePanelProps){
+        super(props);
+    }
 
     render() {
         if (!this.props.show) {
