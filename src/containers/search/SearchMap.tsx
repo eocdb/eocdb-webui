@@ -8,6 +8,7 @@ const mapStateToProps = (state: AppState) => {
     return {
         position: state.searchMapState.position,
         zoom: state.searchMapState.zoom,
+        testMarkerCluster: true,
     }
 };
 
