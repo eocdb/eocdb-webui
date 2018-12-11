@@ -47,12 +47,11 @@ function collectRegionComponent(queryParameters: DatasetQuery, queryComponents: 
 }
 
 function collectTimeComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
-    if (queryParameters.startDate && queryParameters.endDate) {
-        queryComponents.push(['time', `${queryParameters.startDate},${queryParameters.endDate}`]);
-    } else if (queryParameters.startDate) {
-        queryComponents.push(['time', `${queryParameters.startDate},`]);
-    } else if (queryParameters.endDate) {
-        queryComponents.push(['time', `,${queryParameters.endDate}`]);
+    if (queryParameters.startDate) {
+        queryComponents.push(['start_time', `${queryParameters.startDate}`]);
+    }
+    if (queryParameters.endDate) {
+        queryComponents.push(['end_time', `${queryParameters.endDate}`]);
     }
 }
 
