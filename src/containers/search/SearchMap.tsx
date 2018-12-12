@@ -9,6 +9,7 @@ const mapStateToProps = (state: AppState) => {
         position: state.searchMapState.position,
         zoom: state.searchMapState.zoom,
         testMarkerCluster: true,
+        measurementPoints: state.searchFormState.foundDatasets.locations,
     }
 };
 

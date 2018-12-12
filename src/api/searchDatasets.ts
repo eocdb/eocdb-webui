@@ -17,6 +17,7 @@ export interface DatasetQuery {
     wavelengthsMode?: WavelengthsMode;
     offset?: number;
     count?: number;
+    geojson?: boolean;
 }
 
 type QueryComponent = [string, string];
@@ -30,7 +31,15 @@ export function searchDatasets(apiServerUrl: string, datasetQuery: DatasetQuery)
     collectMeasurementTypeComponent(datasetQuery, queryComponents);
     collectWavelengthsTypeComponent(datasetQuery, queryComponents);
     collectOffsetCountComponents(datasetQuery, queryComponents);
+    collectGeoJsonComponent(datasetQuery, queryComponents);
     return callJsonApi<QueryResult>(apiServerUrl + '/datasets', queryComponents);
+}
+
+
+function collectGeoJsonComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
+    if (queryParameters.geojson) {
+        queryComponents.push(['geojson', `${queryParameters.geojson}`]);
+    }
 }
 
 

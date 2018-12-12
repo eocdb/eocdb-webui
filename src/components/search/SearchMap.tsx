@@ -21,8 +21,12 @@ const styles = (theme: Theme) => createStyles({});
 interface SearchMapProps extends WithStyles<typeof styles> {
     position: LatLng;
     zoom: number;
+
     updateSelectedRegions: (selectedRegions: GeoJsonObject, selectedBounds?: LatLngBounds) => void;
     testMarkerCluster?: boolean;
+
+    measurementPoints: {};
+    drawMeasurementPoints?: boolean;
 }
 
 const DRAW_OPTIONS = {
@@ -34,23 +38,38 @@ const DRAW_OPTIONS = {
     circlemarker: false
 };
 
-let MARKERS: React.ReactNode[] | null = null;
+//let MARKERS: React.ReactNode[] | null = null;
 
 class SearchMap extends React.PureComponent<SearchMapProps> {
     private editableFeatureGroupRef: any = null;
 
-    render() {
-        let testMarkerClusterGroup = null;
-        if (this.props.testMarkerCluster) {
-            if (MARKERS === null) {
-                MARKERS = createRandomMarkers(100, 1000);
+    createMarker(lat: number, lon: number, key: number, dsId: number) {
+        return <Marker key={key} position={new LatLng(lat, lon)}><Popup>DS-ID {dsId}<br/>Key {key}</Popup></Marker>;
+    }
+
+    renderMeasurementPointCluster(){
+        let i = 0;
+        let markers = [];
+        for(let f in this.props.measurementPoints) {
+            let feat_str = this.props.measurementPoints[f];
+            feat_str = feat_str.replace(new RegExp("'", 'g'), '"');
+            const feats = JSON.parse(feat_str)['features'];
+            for(let feat=0; feat<feats.length; feat++) {
+                const coords = feats[0]['geometry']['coordinates'];
+                const marker = this.createMarker(coords[1], coords[0], i, i);
+                markers.push(marker);
+                i += 1;
             }
-            testMarkerClusterGroup = (
-                <MarkerClusterGroup>
-                    {MARKERS}
-                </MarkerClusterGroup>
-            );
         }
+        return markers;
+    }
+
+    render() {
+        const markerClusterGroup = (
+            <MarkerClusterGroup>
+                {this.renderMeasurementPointCluster()}
+            </MarkerClusterGroup>
+        );
         return (
             <Map center={this.props.position} zoom={this.props.zoom} maxZoom={24}>
                 <TileLayer
@@ -68,11 +87,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     maxZoom={6}
                 />
 
-                <Marker position={this.props.position}>
-                    <Popup>A pretty CSS3 popup.<br/>Easily customizable.</Popup>
-                </Marker>
-
-                {testMarkerClusterGroup}
+                {markerClusterGroup}
 
                 <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
                     <EditControl
@@ -166,286 +181,4 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
 export default withStyles(styles)(SearchMap);
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function randomGaussian(): number {
-    let u = 0, v = 0;
-    //Converting [0,1) to (0,1)
-    while (u === 0) {
-        u = Math.random();
-    }
-    while (v === 0) {
-        v = Math.random();
-    }
-    let num = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
-    num = num / 10.0 + 0.5; // Translate to 0 -> 1
-    if (num > 1 || num < 0) {
-        // resample between 0 and 1
-        return randomGaussian();
-    }
-    return num;
-}
-
-function createMarker(lat: number, lon: number, key: number, dsId: number) {
-    return <Marker key={key} position={new LatLng(lat, lon)}><Popup>DS-ID {dsId}<br/>Key {key}</Popup></Marker>;
-}
-
-function createRandomMarkers(minPoints: number, maxPoints: number) {
-    const centerPoints = [
-        [41.2, 5.4],
-        [36.2, 18.5],
-        [40.8, -13.5],
-        [35.2, -8.2],
-        [55.9, 4.2],
-        [58.1, 1.6],
-    ];
-
-    const points = [];
-
-    const spread = 1.5;
-    let key = 0;
-    for (let i = 0; i < centerPoints.length; i++) {
-        const lat0 = centerPoints[i][0];
-        const lon0 = centerPoints[i][1];
-        const numPoints = Math.floor(minPoints + (maxPoints - minPoints) * Math.random());
-        for (let j = 0; j < numPoints; j++) {
-            const lat = lat0 + spread * randomGaussian();
-            const lon = lon0 + spread * randomGaussian();
-            points.push(createMarker(lat, lon, key, i));
-            key++;
-        }
-    }
-
-    return points;
-}
-
-
-//
-// // data taken from the example in https://github.com/PaulLeCam/react-leaflet/issues/176
-//
-// function getGeoJson(): any {
-//     return {
-//         'type': 'FeatureCollection',
-//         'features': [
-//             {
-//                 'type': 'Feature',
-//                 'properties': {},
-//                 'geometry': {
-//                     'type': 'LineString',
-//                     'coordinates': [
-//                         [
-//                             -122.47979164123535,
-//                             37.830124319877235
-//                         ],
-//                         [
-//                             -122.47721672058105,
-//                             37.809377088502615
-//                         ]
-//                     ]
-//                 }
-//             },
-//             {
-//                 'type': 'Feature',
-//                 'properties': {},
-//                 'geometry': {
-//                     'type': 'Point',
-//                     'coordinates': [
-//                         -122.46923446655273,
-//                         37.80293476836673
-//                     ]
-//                 }
-//             },
-//             {
-//                 'type': 'Feature',
-//                 'properties': {},
-//                 'geometry': {
-//                     'type': 'Point',
-//                     'coordinates': [
-//                         -122.48399734497069,
-//                         37.83466623607849
-//                     ]
-//                 }
-//             },
-//             {
-//                 'type': 'Feature',
-//                 'properties': {},
-//                 'geometry': {
-//                     'type': 'Point',
-//                     'coordinates': [
-//                         -122.47867584228514,
-//                         37.81893781173967
-//                     ]
-//                 }
-//             },
-//             {
-//                 'type': 'Feature',
-//                 'properties': {},
-//                 'geometry': {
-//                     'type': 'Polygon',
-//                     'coordinates': [
-//                         [
-//                             [
-//                                 -122.48069286346434,
-//                                 37.800637436707525
-//                             ],
-//                             [
-//                                 -122.48069286346434,
-//                                 37.803104310307276
-//                             ],
-//                             [
-//                                 -122.47950196266174,
-//                                 37.803104310307276
-//                             ],
-//                             [
-//                                 -122.47950196266174,
-//                                 37.800637436707525
-//                             ],
-//                             [
-//                                 -122.48069286346434,
-//                                 37.800637436707525
-//                             ]
-//                         ]
-//                     ]
-//                 }
-//             },
-//             {
-//                 'type': 'Feature',
-//                 'properties': {},
-//                 'geometry': {
-//                     'type': 'Polygon',
-//                     'coordinates': [
-//                         [
-//                             [
-//                                 -122.48103886842728,
-//                                 37.833075326166274
-//                             ],
-//                             [
-//                                 -122.48065531253813,
-//                                 37.832558431940114
-//                             ],
-//                             [
-//                                 -122.4799284338951,
-//                                 37.8322660885204
-//                             ],
-//                             [
-//                                 -122.47963070869446,
-//                                 37.83231693093747
-//                             ],
-//                             [
-//                                 -122.47948586940764,
-//                                 37.832467339549524
-//                             ],
-//                             [
-//                                 -122.47945636510849,
-//                                 37.83273426112019
-//                             ],
-//                             [
-//                                 -122.47959315776825,
-//                                 37.83289737938241
-//                             ],
-//                             [
-//                                 -122.48004108667372,
-//                                 37.833109220743104
-//                             ],
-//                             [
-//                                 -122.48058557510376,
-//                                 37.83328293020496
-//                             ],
-//                             [
-//                                 -122.48080283403395,
-//                                 37.83332529830436
-//                             ],
-//                             [
-//                                 -122.48091548681259,
-//                                 37.83322785163939
-//                             ],
-//                             [
-//                                 -122.48103886842728,
-//                                 37.833075326166274
-//                             ]
-//                         ]
-//                     ]
-//                 }
-//             },
-//             {
-//                 'type': 'Feature',
-//                 'properties': {},
-//                 'geometry': {
-//                     'type': 'Polygon',
-//                     'coordinates': [
-//                         [
-//                             [
-//                                 -122.48043537139893,
-//                                 37.82564992009924
-//                             ],
-//                             [
-//                                 -122.48129367828368,
-//                                 37.82629397920697
-//                             ],
-//                             [
-//                                 -122.48240947723389,
-//                                 37.82544653184479
-//                             ],
-//                             [
-//                                 -122.48373985290527,
-//                                 37.82632787689904
-//                             ],
-//                             [
-//                                 -122.48425483703613,
-//                                 37.82680244295304
-//                             ],
-//                             [
-//                                 -122.48605728149415,
-//                                 37.82639567223645
-//                             ],
-//                             [
-//                                 -122.4898338317871,
-//                                 37.82663295542695
-//                             ],
-//                             [
-//                                 -122.4930953979492,
-//                                 37.82415839321614
-//                             ],
-//                             [
-//                                 -122.49700069427489,
-//                                 37.821887146654376
-//                             ],
-//                             [
-//                                 -122.4991464614868,
-//                                 37.82171764783966
-//                             ],
-//                             [
-//                                 -122.49850273132326,
-//                                 37.81798857543524
-//                             ],
-//                             [
-//                                 -122.50923156738281,
-//                                 37.82090404811055
-//                             ],
-//                             [
-//                                 -122.51232147216798,
-//                                 37.823344820392535
-//                             ],
-//                             [
-//                                 -122.50150680541992,
-//                                 37.8271414168374
-//                             ],
-//                             [
-//                                 -122.48743057250977,
-//                                 37.83093781796035
-//                             ],
-//                             [
-//                                 -122.48313903808594,
-//                                 37.82822612280363
-//                             ],
-//                             [
-//                                 -122.48043537139893,
-//                                 37.82564992009924
-//                             ]
-//                         ]
-//                     ]
-//                 }
-//             }
-//         ]
-//     };
-// }

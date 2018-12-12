@@ -3,6 +3,7 @@
  */
 import { ProductMode } from "../api/searchDatasets";
 
+
 export interface DatasetRef {
     id: string;
     path: string;
@@ -21,6 +22,7 @@ export interface DatasetQuery {
     wdepth: string;
     offset?: number;
     count?: number;
+    geojson?: boolean;
 }
 
 
@@ -28,6 +30,7 @@ export interface QueryResult {
     datasets: DatasetRef[];
     query: DatasetQuery;
     total_count: number;
+    locations: Map<string, string>;
 }
 
 

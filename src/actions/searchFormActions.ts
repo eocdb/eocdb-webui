@@ -36,8 +36,11 @@ export function searchDatasets() {
         datasetQuery = {...datasetQuery, count:state.dataTableState.rowsPerPage};
         datasetQuery = {...datasetQuery, offset:((state.dataTableState.page * state.dataTableState.rowsPerPage)+1)};
 
+        datasetQuery = {...datasetQuery, geojson: true};
+
         api.searchDatasets(apiServerUrl, datasetQuery)
            .then((foundDatasets: QueryResult) => {
+               console.log(foundDatasets);
                dispatch(updateFoundDatasets(foundDatasets));
            })
            .catch(error => {

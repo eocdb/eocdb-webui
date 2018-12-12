@@ -12,9 +12,11 @@ export function newSearchFormState() {
         datasetQuery: {
             startDate: "1980-01-01",
             endDate: "2020-01-01",
+            geojson: true,
         },
         storedDatasetQueries: {},
         foundDatasets: {
+            locations: new Map(),
             datasets: [],
             query: {
                 mtype: '',
