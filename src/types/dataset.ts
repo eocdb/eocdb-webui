@@ -2,6 +2,7 @@
  * Dataset reference.
  */
 import { ProductMode } from "../api/searchDatasets";
+import { LatLngBounds } from "leaflet";
 
 
 export interface DatasetRef {
@@ -50,6 +51,11 @@ export interface ProductGroup {
     description: string;
 }
 
+export interface SearchHistoryItem {
+    key: string;
+    datasetQuery: DatasetQuery;
+    selectedBounds: LatLngBounds;
+}
 
 export interface DatasetMetaData {
     intidentifier_product_doi: string;

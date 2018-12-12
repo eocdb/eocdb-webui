@@ -1,10 +1,11 @@
 import { DatasetQuery } from '../api';
-import { QueryResult } from '../types/dataset';
+import { QueryResult, SearchHistoryItem } from '../types/dataset';
 
 export interface SearchFormState {
     datasetQuery: DatasetQuery;
     storedDatasetQueries: { [name: string]: DatasetQuery };
     foundDatasets: QueryResult;
+    searchHistory: SearchHistoryItem[];
 }
 
 export function newSearchFormState() {
@@ -15,6 +16,7 @@ export function newSearchFormState() {
             geojson: true,
         },
         storedDatasetQueries: {},
+        searchHistory: [],
         foundDatasets: {
             locations: new Map(),
             datasets: [],

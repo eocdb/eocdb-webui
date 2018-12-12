@@ -2,13 +2,16 @@ import { HTTPError } from './errors';
 
 export type QueryComponent = [string, string];
 
-export function callApi<T>(endpointUrl: string, queryComponents?: QueryComponent[], init?: RequestInit): Promise<Response> {
-
-    let url = endpointUrl;
+export function makeUrl(url: string, queryComponents?: QueryComponent[]){
     if (queryComponents && queryComponents.length > 0) {
         const queryString = queryComponents.map(kv => kv.map(encodeURIComponent).join('=')).join('&');
         url += '?' + queryString;
     }
+    return url;
+}
+
+export function callApi<T>(endpointUrl: string, queryComponents?: QueryComponent[], init?: RequestInit): Promise<Response> {
+    const url = makeUrl(endpointUrl, queryComponents);
 
     console.debug('Calling API: ', url);
 

@@ -22,7 +22,7 @@ export interface DatasetQuery {
 
 type QueryComponent = [string, string];
 
-export function searchDatasets(apiServerUrl: string, datasetQuery: DatasetQuery): Promise<QueryResult> {
+export function collectComponents(datasetQuery: DatasetQuery){
     const queryComponents: QueryComponent[] = [];
     collectSearchExprComponent(datasetQuery, queryComponents);
     collectTimeComponent(datasetQuery, queryComponents);
@@ -32,6 +32,12 @@ export function searchDatasets(apiServerUrl: string, datasetQuery: DatasetQuery)
     collectWavelengthsTypeComponent(datasetQuery, queryComponents);
     collectOffsetCountComponents(datasetQuery, queryComponents);
     collectGeoJsonComponent(datasetQuery, queryComponents);
+    return queryComponents;
+}
+
+export function searchDatasets(apiServerUrl: string, datasetQuery: DatasetQuery): Promise<QueryResult> {
+    const queryComponents = collectComponents(datasetQuery);
+
     return callJsonApi<QueryResult>(apiServerUrl + '/datasets', queryComponents);
 }
 

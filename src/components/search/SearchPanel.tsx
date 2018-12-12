@@ -35,9 +35,6 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     searchDatasets: () => void;
 
     serverInfo: StoreInfo;
-
-    //updateSearchHistory: () => void;
-    //searchHistory: SearchHistoryItem[];
 }
 
 class SearchPanel extends React.PureComponent<SearchPanelProps> {

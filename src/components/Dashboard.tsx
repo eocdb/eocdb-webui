@@ -5,7 +5,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,12 +13,12 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { AccountCircle, Settings } from '@material-ui/icons';
 import createStyles from '@material-ui/core/styles/createStyles';
 
-import { secondaryListItems } from './listitems';
 import eumetsatLogo from './eumetsat.png';
 import DrawerItems from './DrawerItems';
 import DashPanels from './DashPanels';
 import LoginDialog from '../containers/user/LoginDialog'; // TODO: dependency issue here!
 import ConfigDialog from './admin/ConfigDialog';
+import SearchHistory from "../containers/search/SearchHistory";
 
 
 const drawerWidth = 240;
@@ -198,7 +197,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             noWrap
                             className={classes.title}
                         >
-                            <img src={eumetsatLogo} height={48}/> Ocean Colour In-Situ Database
+                            <img src={eumetsatLogo} height={48} alt={'EUMETSAT'}/> Ocean Colour In-Situ Database
                         </Typography>
 
                         <IconButton color="inherit" onClick={this.props.openConfigDialog}>
@@ -225,9 +224,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                     <DrawerItems handleClick={this.handleDrawerChanged}/>
                     <Divider/>
 
-                    <List>
-                        {secondaryListItems}
-                    </List>
+                    <SearchHistory />
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.appBarSpacer}/>
