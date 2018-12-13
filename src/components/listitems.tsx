@@ -5,20 +5,21 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
+// TODO - forman - Store/restore items to/from localStorage later
+const ITEMS = [
+    ['My Search 1', 'ernie'],
+    ['My Search 2', 'ernie'],
+];
 
-localStorage.clear();
-localStorage.setItem('search1', 'ernie');
-localStorage.setItem('search2', 'ernie');
+const listItems = [];
 
-let res = [];
-
-for (let i = 0; i < localStorage.length; i++) {
-    res.push(
+for (let i = 0; i < ITEMS.length; i++) {
+    listItems.push(
         <ListItem button key={i}>
             <ListItemIcon>
                 <AssignmentIcon/>
             </ListItemIcon>
-            <ListItemText primary={localStorage.key(i)}/>
+            <ListItemText primary={ITEMS[0]}/>
         </ListItem>
     );
 }
@@ -26,6 +27,6 @@ for (let i = 0; i < localStorage.length; i++) {
 export const secondaryListItems = (
     <div>
         <ListSubheader inset>Saved Searches</ListSubheader>
-        {res}
+        {listItems}
     </div>
 );
