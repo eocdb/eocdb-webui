@@ -105,8 +105,9 @@ export function updateDataset(datasetId: string) {
     return (dispatch: Dispatch<UpdateDataset | MessageLogAction>, getState: () => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
+        const apiServerAuth = state.configState.apiServerAuth;
 
-        api.getDataset(apiServerUrl, datasetId)
+        api.getDataset(apiServerUrl, apiServerAuth, datasetId)
             .then((foundDataset: Dataset) => {
                 dispatch(_updateDataset(foundDataset));
             })

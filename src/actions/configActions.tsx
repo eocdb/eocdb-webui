@@ -4,16 +4,17 @@ import { AppState } from "../states/appState";
 import * as api from '../api'
 import { StoreInfo } from "../types/dataset";
 
-export const SET_API_SERVER_URL = 'SET_API_SERVER_URL';
-export type SET_API_SERVER_URL = typeof SET_API_SERVER_URL;
+export const CONFIGURE_API_SERVER = 'CONFIGURE_API_SERVER';
+export type CONFIGURE_API_SERVER = typeof CONFIGURE_API_SERVER;
 
-export interface SetAptServerUrl {
-    type: SET_API_SERVER_URL;
+export interface ConfigureApiServer {
+    type: CONFIGURE_API_SERVER;
     apiServerUrl: string;
+    apiServerAuth: string;
 }
 
-export function configServer(apiServerUrl: string): SetAptServerUrl {
-    return {type: SET_API_SERVER_URL, apiServerUrl};
+export function configureApiServer(apiServerUrl: string, apiServerAuth: string): ConfigureApiServer {
+    return {type: CONFIGURE_API_SERVER, apiServerUrl, apiServerAuth};
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,8 +33,9 @@ export function updateStoreInfo() {
     return (dispatch: Dispatch<UpdateInfo | MessageLogAction>, getState: () => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
+        const apiServerAuth = state.configState.apiServerAuth;
 
-        api.getStoreInfo(apiServerUrl)
+        api.getStoreInfo(apiServerUrl, apiServerAuth)
             .then((foundInfo: StoreInfo) => {
                 dispatch(_updateStoreInfo(foundInfo));
             })
@@ -57,4 +59,4 @@ export function _updateStoreInfo(info: StoreInfo): UpdateInfo {
 
 
 
-export type ConfigAction = SetAptServerUrl | UpdateInfo;
+export type ConfigAction = ConfigureApiServer | UpdateInfo;

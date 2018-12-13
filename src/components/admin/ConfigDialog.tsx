@@ -17,16 +17,18 @@ interface ConfigDialogProps extends WithStyles<typeof styles> {
     open: boolean;
     handleClose: () => void;
 
-    apiServerUrlChange: (url: string) => void;
+    apiServerConfigChange: (url: string, auth: string) => void;
 }
 
 interface ConfigDialogState {
     url: string;
+    auth: string;
 }
 
 class ConfigDialog extends React.Component<ConfigDialogProps, ConfigDialogState> {
     state = {
         url: '',
+        auth: '',
     };
 
     handleApiServerUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,8 +36,13 @@ class ConfigDialog extends React.Component<ConfigDialogProps, ConfigDialogState>
         this.setState({...this.state, url: v});
     };
 
-    handleApiServerUrlSave = () => {
-        this.props.apiServerUrlChange(this.state.url);
+    handleApiServerAuthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const v = event.target.value;
+        this.setState({...this.state, auth: v});
+    };
+
+    handleApiServerConfigSave = () => {
+        this.props.apiServerConfigChange(this.state.url, this.state.auth);
     };
 
     render() {
@@ -49,23 +56,32 @@ class ConfigDialog extends React.Component<ConfigDialogProps, ConfigDialogState>
                     <DialogTitle id="form-dialog-title">Settings</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Configure backend server address.
+                            Please enter the server URL and and API authorisation string.
                         </DialogContentText>
                         <TextField
                             autoFocus
                             margin="dense"
                             id="server"
-                            label="Backend Server"
+                            label="Server URL"
                             type="text"
                             fullWidth
                             onChange={this.handleApiServerUrlChange}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="auth"
+                            label="API Authorisation"
+                            type="text"
+                            fullWidth
+                            onChange={this.handleApiServerAuthChange}
                         />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.props.handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={this.handleApiServerUrlSave} color="primary">
+                        <Button onClick={this.handleApiServerConfigSave} color="primary">
                             Save
                         </Button>
                     </DialogActions>

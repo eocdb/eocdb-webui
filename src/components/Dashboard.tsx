@@ -119,8 +119,7 @@ interface DashboardProps extends WithStyles<typeof styles> {
     openConfigDialog: () => void;
     closeConfigDialog: () => void;
 
-    apiServerUrl: string;
-    apiServerUrlChange: (url: string) => void;
+    configureApiServer: (url: string, auth: string) => void;
 }
 
 
@@ -159,8 +158,8 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         this.props.closeConfigDialog();
     };
 
-    handleApiServerUrlChange = (url: string) => {
-        this.props.apiServerUrlChange(url);
+    handleConfigApiServer = (url: string, auth: string) => {
+        this.props.configureApiServer(url, auth);
         this.handleConfigClose();
     };
 
@@ -173,7 +172,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                 <LoginDialog/>
                 <ConfigDialog open={this.props.configDialogOpen}
                               handleClose={this.handleConfigClose}
-                              apiServerUrlChange={this.handleApiServerUrlChange}
+                              apiServerConfigChange={this.handleConfigApiServer}
                 />
                 <AppBar
                     position="absolute"

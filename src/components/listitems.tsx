@@ -19,7 +19,7 @@ for (let i = 0; i < ITEMS.length; i++) {
             <ListItemIcon>
                 <AssignmentIcon/>
             </ListItemIcon>
-            <ListItemText primary={ITEMS[0]}/>
+            <ListItemText primary={ITEMS[i][0]}/>
         </ListItem>
     );
 }

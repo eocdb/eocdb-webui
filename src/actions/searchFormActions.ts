@@ -28,6 +28,7 @@ export function searchDatasets() {
     return (dispatch: Dispatch<UpdateFoundDatasets | MessageLogAction>, getState: () => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
+        const apiServerAuth = state.configState.apiServerAuth;
         let datasetQuery = state.searchFormState.datasetQuery;
         const selectedBounds = state.searchMapState.selectedBounds;
         if (selectedBounds) {
@@ -36,7 +37,7 @@ export function searchDatasets() {
         datasetQuery = {...datasetQuery, count:state.dataTableState.rowsPerPage};
         datasetQuery = {...datasetQuery, offset:((state.dataTableState.page * state.dataTableState.rowsPerPage)+1)};
 
-        api.searchDatasets(apiServerUrl, datasetQuery)
+        api.searchDatasets(apiServerUrl, apiServerAuth, datasetQuery)
            .then((foundDatasets: QueryResult) => {
                dispatch(updateFoundDatasets(foundDatasets));
            })

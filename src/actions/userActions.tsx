@@ -8,7 +8,10 @@ import { User } from '../types/user';
 export function loginUser(name: string, password: string) {
     return (dispatch: Dispatch<LoginUser | StartUserLogin>, getState: () => AppState) => {
         dispatch(_startUserLogin());
-        api.loginUser(getState().configState.apiServerUrl, name, password)
+        const apiServerUrl = getState().configState.apiServerUrl;
+        const apiServerAuth = getState().configState.apiServerAuth;
+
+        api.loginUser(apiServerUrl, apiServerAuth, name, password)
            .then((user: User) => {
                dispatch(_loginUser(user, null));
            })
