@@ -18,7 +18,6 @@ import TableFooter from "@material-ui/core/TableFooter/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination/TablePagination";
 import {Dataset, QueryResult} from "../../types/dataset";
 import MetaInfoDialog from "./MetaInfoDialog";
-import PlotDialog from "./PlotDialog";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 
 
@@ -189,10 +188,6 @@ class DataTable extends React.Component<DataTableProps> {
                     handleClose={this.handleMetaInfoClose}
                     dataset={this.props.dataset}
                 />
-                <PlotDialog
-                    open={this.props.plotDialogOpen}
-                    handleClose={this.handlePlotClose}
-                />
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
@@ -228,7 +223,6 @@ class DataTable extends React.Component<DataTableProps> {
                                     <TableCell>
                                         <IconButton
                                             color="inherit"
-                                            onClick={() => this.handlePlotOpen(row.id)}
                                         >
                                             <BarChart/>
                                         </IconButton>
