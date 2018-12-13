@@ -74,4 +74,36 @@ export function closeConfigDialog(): CloseConfigDialog {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type DashboardAction = ChangeDrawer | OpenLoginDialog | CloseUserDialog | OpenConfigDialog | CloseConfigDialog;
+export const OPEN_ADVANCED_SEARCH_DIALOG = 'OPEN_ADVANCED_SEARCH_DIALOG';
+export type OPEN_ADVANCED_SEARCH_DIALOG = typeof OPEN_ADVANCED_SEARCH_DIALOG;
+
+export interface OpenAdvancedSearchDialog {
+    type: OPEN_ADVANCED_SEARCH_DIALOG;
+}
+
+export function openAdvancedSearchDialog(): OpenAdvancedSearchDialog {
+    return {type: OPEN_ADVANCED_SEARCH_DIALOG};
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const CLOSE_ADVANCED_SEARCH_DIALOG = 'CLOSE_ADVANCED_SEARCH_DIALOG';
+export type CLOSE_ADVANCED_SEARCH_DIALOG = typeof CLOSE_ADVANCED_SEARCH_DIALOG;
+
+export interface CloseAdvancedSearchDialog {
+    type: CLOSE_ADVANCED_SEARCH_DIALOG;
+}
+
+export function closeAdvancedSearchDialog(): CloseAdvancedSearchDialog {
+    return {type: CLOSE_ADVANCED_SEARCH_DIALOG};
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export type DashboardAction = ChangeDrawer
+    | OpenLoginDialog
+    | CloseUserDialog
+    | OpenConfigDialog
+    | CloseConfigDialog
+    | OpenAdvancedSearchDialog
+    | CloseAdvancedSearchDialog;

@@ -4,6 +4,7 @@ export interface DashboardState {
     currentDrawer: string;
     loginDialogOpen: boolean;
     configDialogOpen: boolean,
+    advancedSearchDialogOpen: boolean;
 
     searchHistory: SearchHistoryItem[];
 }
@@ -13,6 +14,7 @@ export function newDashboardState() {
         currentDrawer: 'Search',
         loginDialogOpen: false,
         configDialogOpen: false,
+        advancedSearchDialogOpen: false,
         searchHistory: [],
     }
 }

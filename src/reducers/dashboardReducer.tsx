@@ -4,7 +4,11 @@ import {
     DashboardAction,
     CHANGE_DRAWER,
     OPEN_LOGIN_DIALOG,
-    OPEN_CONFIG_DIALOG, CLOSE_LOGIN_DIALOG, CLOSE_CONFIG_DIALOG
+    OPEN_CONFIG_DIALOG,
+    OPEN_ADVANCED_SEARCH_DIALOG,
+    CLOSE_LOGIN_DIALOG,
+    CLOSE_CONFIG_DIALOG,
+    CLOSE_ADVANCED_SEARCH_DIALOG
 } from '../actions/dashboardActions';
 
 const initialState = newDashboardState();
@@ -24,6 +28,10 @@ export function dashboardReducer(state: DashboardState, action: DashboardAction)
             return {...state, configDialogOpen: true};
         case CLOSE_CONFIG_DIALOG:
             return {...state, configDialogOpen: false};
+        case OPEN_ADVANCED_SEARCH_DIALOG:
+            return {...state, advancedSearchDialogOpen: true}
+        case CLOSE_ADVANCED_SEARCH_DIALOG:
+            return {...state, advancedSearchDialogOpen: false}
     }
     return state;
 }

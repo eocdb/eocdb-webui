@@ -12,8 +12,7 @@ import { DatasetQuery } from '../../api/index';
 import { StoreInfo } from '../../types/dataset';
 import MultipleSelect from './MultipleSelect';
 import DataTable from "../../containers/search/DataTable";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import { Star } from "@material-ui/icons";
+import SearchAdvancedDialog from "./SearchAdvancedDialog";
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles(
@@ -35,6 +34,10 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     searchDatasets: () => void;
 
     serverInfo: StoreInfo;
+
+    advancedSearchDialogOpen: boolean;
+    openAdvancedSearchDialog: () => void;
+    closeAdvancedSearchDialog: () => void;
 }
 
 class SearchPanel extends React.PureComponent<SearchPanelProps> {
@@ -108,9 +111,10 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         />
                     </Grid>
                     <Grid item container justify={"flex-end"} xs={12} sm>
-                        <IconButton color="primary">
-                            <Star/>
-                        </IconButton>
+                        <Button className={classes.button}
+                                onClick={this.props.openAdvancedSearchDialog}>
+                            Advanced
+                        </Button>
 
                         <Button variant="contained"
                                 color="secondary"
@@ -119,6 +123,11 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             Search
                             <Icon className={classes.rightIcon}>search</Icon>
                         </Button>
+                        <SearchAdvancedDialog
+                            open={this.props.advancedSearchDialogOpen}
+                            handleClose={this.props.closeAdvancedSearchDialog}
+                        />
+
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <div className={classes.tableContainer}>

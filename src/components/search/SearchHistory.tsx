@@ -22,7 +22,7 @@ interface SearchHistoryProps extends WithStyles<typeof styles>{
 }
 
 
-class SearchHistory extends React.Component<SearchHistoryProps>{
+class SearchHistory extends React.PureComponent<SearchHistoryProps>{
     constructor(props: SearchHistoryProps){
         super(props);
     }
