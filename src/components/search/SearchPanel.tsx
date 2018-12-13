@@ -75,6 +75,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                     <Grid item container spacing={8} xs={12} sm={10}>
                         <TextField
                             id={'lucene-search'}
+                            key={'lucene-search'}
                             label={'Expression'}
                             variant="outlined"
                             className={classes.searchField}
@@ -83,6 +84,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         />
                         <TextField
                             id="measurement-from-date"
+                            key="measurement-from-date"
                             label="Measured From"
                             type="date"
                             className={classes.textField}
@@ -95,6 +97,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         />
                         <TextField
                             id="measurement-to-date"
+                            key="measurement-to-date"
                             label="Measured To"
                             type="date"
                             className={classes.textField}
@@ -126,6 +129,14 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         <SearchAdvancedDialog
                             open={this.props.advancedSearchDialogOpen}
                             handleClose={this.props.closeAdvancedSearchDialog}
+                            handleSearchExprChange={this.handleSearchExprChange}
+                            handleStartDateChange={this.handleStartDateChange}
+                            handleEndDateChange={this.handleEndDateChange}
+                            handleProductGroupsChange={this.handleProductGroupsChange}
+                            datasetQuery={datasetQuery}
+                            searchDataset={this.props.searchDatasets}
+                            serverInfo={this.props.serverInfo}
+                            updateDatasetQuery={this.props.updateDatasetQuery}
                         />
 
                     </Grid>

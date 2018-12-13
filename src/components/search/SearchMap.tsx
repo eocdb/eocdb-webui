@@ -54,11 +54,15 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
             let feat_str = this.props.measurementPoints[f];
             feat_str = feat_str.replace(new RegExp("'", 'g'), '"');
             const feats = JSON.parse(feat_str)['features'];
+            let last_coords = [];
             for(let feat=0; feat<feats.length; feat++) {
                 const coords = feats[0]['geometry']['coordinates'];
-                const marker = this.createMarker(coords[1], coords[0], i, i);
-                markers.push(marker);
-                i += 1;
+                if(last_coords != coords) {
+                    const marker = this.createMarker(coords[1], coords[0], i, i);
+                    markers.push(marker);
+                    i += 1;
+                }
+                last_coords = coords;
             }
         }
         return markers;
@@ -66,7 +70,9 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
     render() {
         const markerClusterGroup = (
-            <MarkerClusterGroup>
+            <MarkerClusterGroup
+                chunkedLoading={true}
+            >
                 {this.renderMeasurementPointCluster()}
             </MarkerClusterGroup>
         );

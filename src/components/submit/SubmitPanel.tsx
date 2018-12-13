@@ -3,7 +3,6 @@ import Typography from '@material-ui/core/Typography/Typography';
 import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
-import SubmitSteps from "./SubmitSteps";
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({
@@ -33,7 +32,6 @@ class SubmitPanel extends React.PureComponent<SubmitPanelProps> {
                 >
                     SUBMIT
                 </Typography>
-                <SubmitSteps  classes={this.props.classes}/>
             </div>
         );
     }

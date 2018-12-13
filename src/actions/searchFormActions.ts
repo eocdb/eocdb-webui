@@ -49,6 +49,7 @@ export function searchDatasets() {
         const selectedBounds = state.searchMapState.selectedBounds;
         if (selectedBounds) {
             datasetQuery = {...datasetQuery, region: selectedBounds.toBBoxString()};
+            console.log(datasetQuery);
         }
         datasetQuery = {...datasetQuery, count: state.dataTableState.rowsPerPage};
         datasetQuery = {...datasetQuery, offset: ((state.dataTableState.page * state.dataTableState.rowsPerPage) + 1)};
@@ -56,9 +57,6 @@ export function searchDatasets() {
         datasetQuery = {...datasetQuery, geojson: true};
 
         let searchHistory = state.searchFormState.searchHistory;
-
-        // @ts-ignore
-        searchHistory.push({key: 'test', datasetQuery, selectedBounds});
 
         api.searchDatasets(apiServerUrl, datasetQuery)
             .then((foundDatasets: QueryResult) => {
