@@ -16,8 +16,9 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import TableFooter from "@material-ui/core/TableFooter/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination/TablePagination";
-import {Dataset, QueryResult} from "../../types/dataset";
+import { Dataset, QueryResult } from "../../types/dataset";
 import MetaInfoDialog from "./MetaInfoDialog";
+import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 
 
 const actionsStyles = (theme: Theme) => ({
@@ -163,9 +164,19 @@ class DataTable extends React.Component<DataTableProps> {
         this.props.closeMetaInfoDialog();
     };
 
+    handleOnSelectAllClick = () => {
+
+    };
+
+    isSelected = (id: string) => {
+        console.log(id);
+        return true;
+    };
+
     render() {
         const {classes, data, rowsPerPage, page} = this.props;
         const {datasets, total_count} = data;
+        const numSelected = 1;
 
         return (
             <Paper className={classes.root}>
@@ -177,17 +188,34 @@ class DataTable extends React.Component<DataTableProps> {
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
+                            <TableCell padding="checkbox">
+                                <Checkbox
+                                    indeterminate={numSelected > 0 && numSelected < rowsPerPage}
+                                    checked={numSelected === rowsPerPage}
+                                    onChange={this.handleOnSelectAllClick}
+                                />
+                            </TableCell>
                             <TableCell>File</TableCell>
                             <TableCell>Map</TableCell>
                             <TableCell>Plot</TableCell>
-                            <TableCell>Archive</TableCell>
-                            <TableCell>Documents</TableCell>
+                            <TableCell>Download</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {datasets.map(row => {
+                            const isSelected = this.isSelected(row.id);
                             return (
-                                <TableRow key={row.id}>
+                                <TableRow
+                                    hover
+                                    role="checkbox"
+                                    key={row.id}
+                                    aria-checked={isSelected}
+                                    tabIndex={-1}
+                                    selected={isSelected}
+                                >
+                                    <TableCell padding="checkbox">
+                                        <Checkbox checked={true}/>
+                                    </TableCell>
                                     <TableCell component="th" scope="row">
                                         {row.path}
                                     </TableCell>
@@ -204,9 +232,6 @@ class DataTable extends React.Component<DataTableProps> {
                                     </TableCell>
                                     <TableCell>
                                         <Button><Icon className={classes.rightIcon}>archive</Icon></Button>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Button><Icon className={classes.rightIcon}>cloud_download</Icon></Button>
                                     </TableCell>
                                 </TableRow>
                             );
