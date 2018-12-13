@@ -15,6 +15,7 @@ import DataTable from "../../containers/search/DataTable";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import { Star } from "@material-ui/icons";
 
+
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles(
     {
@@ -74,14 +75,6 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                 <Grid spacing={24} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
                     <Grid item container spacing={8} xs={12} sm={10}>
                         <TextField
-                            id={'lucene-search'}
-                            label={'Expression'}
-                            variant="outlined"
-                            className={classes.searchField}
-                            value={searchExpr}
-                            onChange={this.handleSearchExprChange}
-                        />
-                        <TextField
                             id="measurement-from-date"
                             label="Measured From"
                             type="date"
@@ -109,7 +102,16 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             productGroups={this.props.serverInfo['productGroups']}
                             productGroupsChange={this.handleProductGroupsChange}
                         />
+                        <TextField
+                            id={'lucene-search'}
+                            label={'Expression'}
+                            variant="outlined"
+                            className={classes.searchField}
+                            value={searchExpr}
+                            onChange={this.handleSearchExprChange}
+                        />
                     </Grid>
+
                     <Grid item container justify={"flex-end"} xs={12} sm>
                         <IconButton color="primary">
                             <Star/>
@@ -123,6 +125,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             <Icon className={classes.rightIcon}>search</Icon>
                         </Button>
                     </Grid>
+
                     <Grid item xs={12} sm={6}>
                         <div className={classes.tableContainer}>
                             <DataTable/>

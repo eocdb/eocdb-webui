@@ -198,7 +198,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             noWrap
                             className={classes.title}
                         >
-                            <img src={eumetsatLogo} height={48}/> Ocean Colour In-Situ Database
+                            <img alt="EUMETSAT" src={eumetsatLogo} height={48}/> Ocean Colour In-Situ Database
                         </Typography>
 
                         <IconButton color="inherit" onClick={this.props.openConfigDialog}>
@@ -222,7 +222,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         </IconButton>
                     </div>
                     <Divider/>
-                    <DrawerItems handleClick={this.handleDrawerChanged}/>
+                    <DrawerItems classes={classes} handleClick={this.handleDrawerChanged}/>
                     <Divider/>
 
                     <List>
@@ -231,7 +231,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.appBarSpacer}/>
-                    <DashPanels currentDrawer={this.props.currentDrawer} classes={classes}/>
+                    <DashPanels currentDrawer={this.props.currentDrawer} />
                 </main>
             </div>
         );

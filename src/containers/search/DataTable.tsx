@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 
 import { AppState } from '../../states/appState';
 import {
-    closeMetaInfoDialog,
-    openMetaInfoDialog,
+    closeMetaInfoDialog, closePlotDialog,
+    openMetaInfoDialog, openPlotDialog,
     updateDataPage,
     updateDataRowsPerPage,
     updateDataset,
@@ -17,6 +17,7 @@ const mapStateToProps = (state: AppState) => {
         rowsPerPage: state.dataTableState.rowsPerPage,
 
         metaInfoDialogOpen: state.dataTableState.metaInfoDialogOpen,
+        plotDialogOpen: state.dataTableState.plotDialogOpen,
 
         data: state.searchFormState.foundDatasets,
         dataset: state.dataTableState.dataset,
@@ -28,6 +29,8 @@ const mapDispatchToProps = {
     updateDataRowsPerPage,
     closeMetaInfoDialog,
     openMetaInfoDialog,
+    closePlotDialog,
+    openPlotDialog,
     updateDataset,
     searchDatasets,
 };
