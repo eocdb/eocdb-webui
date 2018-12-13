@@ -62,8 +62,10 @@ export function searchDatasets() {
 
         api.searchDatasets(apiServerUrl, datasetQuery)
             .then((foundDatasets: QueryResult) => {
-                dispatch(updateSearchHistory(searchHistory));
                 dispatch(updateFoundDatasets(foundDatasets));
+            })
+            .then(() => {
+                dispatch(updateSearchHistory(searchHistory));
             })
             .catch((error: string) => {
                 dispatch(postMessage('error', error + ''));
