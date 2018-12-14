@@ -12,7 +12,9 @@ import { DatasetQuery } from '../../api/index';
 import { StoreInfo } from '../../types/dataset';
 import MultipleSelect from './MultipleSelect';
 import DataTable from "../../containers/search/DataTable";
-import SearchAdvancedDialog from "./SearchAdvancedDialog";
+import SearchAdvancedDialog from "../../containers/search/AdvancedSeachDialog";
+import Typography from "@material-ui/core/Typography/Typography";
+import Card from "@material-ui/core/Card/Card";
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles(
@@ -38,6 +40,9 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     advancedSearchDialogOpen: boolean;
     openAdvancedSearchDialog: () => void;
     closeAdvancedSearchDialog: () => void;
+
+    advancedFilterLog: Map<string, string>;
+    advancedFilterChange: (filterLog: Map<string, string>) => void;
 }
 
 class SearchPanel extends React.PureComponent<SearchPanelProps> {
@@ -61,6 +66,16 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         this.props.updateDatasetQuery({...this.props.datasetQuery, productGroupNames})
     };
 
+    logMapElements = (): string => {
+        let res = '';
+        this.props.advancedFilterLog.forEach(
+            (log: string, key: string) => {
+                res += `${key} = ${log} - `;
+            }
+        );
+        return res;
+    };
+
     render() {
         if (!this.props.show) {
             return null;
@@ -68,6 +83,8 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
         const {classes, datasetQuery} = this.props;
         const {searchExpr, startDate, endDate} = datasetQuery;
+
+        let res = this.logMapElements();
 
         return (
             <div>
@@ -129,16 +146,16 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         <SearchAdvancedDialog
                             open={this.props.advancedSearchDialogOpen}
                             handleClose={this.props.closeAdvancedSearchDialog}
-                            handleSearchExprChange={this.handleSearchExprChange}
-                            handleStartDateChange={this.handleStartDateChange}
-                            handleEndDateChange={this.handleEndDateChange}
-                            handleProductGroupsChange={this.handleProductGroupsChange}
-                            datasetQuery={datasetQuery}
-                            searchDataset={this.props.searchDatasets}
-                            serverInfo={this.props.serverInfo}
-                            updateDatasetQuery={this.props.updateDatasetQuery}
+                            logChange={this.props.advancedFilterChange}
                         />
 
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Card>
+                            <Typography>
+                                {res}
+                            </Typography>
+                        </Card>
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <div className={classes.tableContainer}>

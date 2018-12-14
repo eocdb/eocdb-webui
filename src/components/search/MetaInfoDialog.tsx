@@ -62,7 +62,7 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.props.handleClose} color="primary">
-                        Cancel
+                        Close
                     </Button>
                 </DialogActions>
             </Dialog>

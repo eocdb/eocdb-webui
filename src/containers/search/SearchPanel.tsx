@@ -4,12 +4,14 @@ import { AppState } from '../../states/appState';
 import { updateDatasetQuery, searchDatasets } from '../../actions/searchFormActions';
 import SearchPanel from '../../components/search/SearchPanel';
 import { closeAdvancedSearchDialog, openAdvancedSearchDialog } from "../../actions/dashboardActions";
+import { logChange } from "../../actions/advancedSearchActions";
 
 const mapStateToProps = (state: AppState) => {
     return {
         datasetQuery: state.searchFormState.datasetQuery,
         serverInfo: state.dataState.info,
         advancedSearchDialogOpen: state.dashboardState.advancedSearchDialogOpen,
+        advancedFilterLog: state.advancedSearchState.filterLog,
     };
 };
 
@@ -18,6 +20,7 @@ const mapDispatchToProps = {
     searchDatasets,
     openAdvancedSearchDialog,
     closeAdvancedSearchDialog,
+    advancedFilterChange: logChange,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPanel);

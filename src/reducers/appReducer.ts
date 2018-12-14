@@ -7,6 +7,7 @@ import { messageLogReducer } from "./messageLogReducer";
 import { sessionReducer } from './sessionReducer';
 import { dataReducer } from "./dataReducer";
 import { dataTableReducer } from "./dataTableReducer";
+import { advancedSearchReducer } from "./advancedSearchReducer";
 
 export const appReducer = combineReducers(
     {
@@ -18,5 +19,6 @@ export const appReducer = combineReducers(
         sessionState: sessionReducer,
         dataState: dataReducer,
         dataTableState: dataTableReducer,
+        advancedSearchState: advancedSearchReducer,
     }
 );

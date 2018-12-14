@@ -90,6 +90,21 @@ export function closePlotDialog (): ClosePlotDialog{
     return {type: CLOSE_PLOT_DIALOG};
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+export const UPDATE_DOWNLOAD_DOCS = 'UPDATE_DOWNLOAD_DOCS ';
+export type UPDATE_DOWNLOAD_DOCS  = typeof UPDATE_DOWNLOAD_DOCS ;
+
+export interface UpdateDownloadDocs {
+    type: UPDATE_DOWNLOAD_DOCS;
+    downloadDocs: boolean;
+}
+
+export function updateDownloadDocs (downloadDocs: boolean): UpdateDownloadDocs{
+    return {type: UPDATE_DOWNLOAD_DOCS, downloadDocs};
+}
+
 //////////////////////////////////////////////////////////////////////////////
 
 export const UPDATE_DATASET = 'UPDATE_DATASET';
@@ -135,4 +150,5 @@ export type DataTableAction = UpdateDataPage
     | CloseMetaInfoDialog
     | OpenPlotDialog
     | ClosePlotDialog
-    | UpdateDataset;
+    | UpdateDataset
+    | UpdateDownloadDocs;

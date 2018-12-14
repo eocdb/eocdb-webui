@@ -1,29 +1,18 @@
-import { DatasetQuery } from '../api';
-import { QueryResult } from "../types/dataset";
-
-
 export interface AdvancedSearchState {
-    datasetQuery: DatasetQuery;
-    foundDatasets: QueryResult;
+    left: number;
+    bottom: number;
+    right: number;
+    top: number;
+    filterLog: Map<string, string>;
 }
 
 
 export function newAdvancedSearchState() {
     return {
-        datasetQuery: {
-            startDate: "1980-01-01",
-            endDate: "2020-01-01",
-            geojson: true,
-        },
-        foundDatasets: {
-            locations: new Map(),
-            datasets: [],
-            query: {
-                mtype: '',
-                shallow: '',
-                wdepth: '',
-            },
-            total_count: 0,
-        }
+        left: 0,
+        bottom: 0,
+        right: 0,
+        top: 0,
+        filterLog: new Map(),
     };
 }

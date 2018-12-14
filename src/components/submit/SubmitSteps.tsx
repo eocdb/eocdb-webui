@@ -123,8 +123,8 @@ class SubmitSteps extends React.Component<SubmitStepsProps, SubmitStepsState> {
         return this.state.skipped.has(step);
     }
 
-    handleOndrop = (acceptedFiles: any) => {
-        let files: File[] = [];
+    handleOndrop = (acceptedFiles: any, rejectedFiles: any) => {
+        let files = new Array();
         acceptedFiles.forEach((file: any) => {
             console.log(file);
             files.push(file);

@@ -6,7 +6,7 @@ import {
     openMetaInfoDialog,
     updateDataPage,
     updateDataRowsPerPage,
-    updateDataset,
+    updateDataset, updateDownloadDocs,
 } from '../../actions/dataTableActions';
 import DataTable from '../../components/search/DataTable';
 import { searchDatasets } from "../../actions/searchFormActions";
@@ -20,6 +20,7 @@ const mapStateToProps = (state: AppState) => {
 
         data: state.searchFormState.foundDatasets,
         dataset: state.dataTableState.dataset,
+        downloadDocs: state.dataTableState.downloadDocs,
     };
 };
 
@@ -30,6 +31,7 @@ const mapDispatchToProps = {
     openMetaInfoDialog,
     updateDataset,
     searchDatasets,
+    updateDownloadDocs,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataTable);

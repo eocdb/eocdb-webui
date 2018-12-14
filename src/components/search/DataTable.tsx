@@ -19,6 +19,7 @@ import TablePagination from "@material-ui/core/TablePagination/TablePagination";
 import { Dataset, QueryResult } from "../../types/dataset";
 import MetaInfoDialog from "./MetaInfoDialog";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
 
 
 const actionsStyles = (theme: Theme) => ({
@@ -116,6 +117,7 @@ const styles = (theme: Theme) => createStyles(
             minWidth: 700,
         },
         rightIcon: {},
+        button: {},
     });
 
 
@@ -133,6 +135,9 @@ interface DataTableProps extends WithStyles<typeof styles> {
 
     updateDataset: (datasetId: string) => void;
     dataset: Dataset;
+
+    downloadDocs: boolean;
+    updateDownloadDocs: (downloadDocs: boolean) => void;
 }
 
 
@@ -168,6 +173,14 @@ class DataTable extends React.Component<DataTableProps> {
 
     };
 
+    handleUpdateDownloadDocs(event: React.ChangeEvent<HTMLInputElement>){
+        let checked = event.target.checked;
+        console.log(checked);
+        if(this.props) {
+            this.props.updateDownloadDocs(checked);
+        }
+    }
+
     isSelected = (id: string) => {
         console.log(id);
         return true;
@@ -185,8 +198,32 @@ class DataTable extends React.Component<DataTableProps> {
                     handleClose={this.handleMetaInfoClose}
                     dataset={this.props.dataset}
                 />
+
                 <Table className={classes.table}>
                     <TableHead>
+                        <TableRow>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
+                            <TableCell>
+                                <Button variant="contained"
+                                        color="secondary"
+                                        className={classes.button}
+                                >
+                                    Download
+                                    <Icon className={classes.rightIcon}>archive</Icon>
+                                </Button>
+                            </TableCell>
+                            <TableCell padding="checkbox">
+                                <FormControlLabel
+                                    control={<Checkbox
+                                        value={'docs'}
+                                    />}
+                                    label="Include Docs"
+                                    onChange={this.handleUpdateDownloadDocs}
+                                />
+                            </TableCell>
+                        </TableRow>
                         <TableRow>
                             <TableCell padding="checkbox">
                                 <Checkbox

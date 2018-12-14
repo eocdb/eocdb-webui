@@ -49,8 +49,17 @@ export function searchDatasets() {
         const selectedBounds = state.searchMapState.selectedBounds;
         if (selectedBounds) {
             datasetQuery = {...datasetQuery, region: selectedBounds.toBBoxString()};
-            console.log(datasetQuery);
         }
+
+        const left = state.advancedSearchState.left;
+        const bottom = state.advancedSearchState.bottom;
+        const right = state.advancedSearchState.right;
+        const top = state.advancedSearchState.top;
+
+        if(left>0 && bottom>0 && right>0 && top>0){
+            datasetQuery = {...datasetQuery, region: `${left},${bottom},${right},${top}`};
+        }
+
         datasetQuery = {...datasetQuery, count: state.dataTableState.rowsPerPage};
         datasetQuery = {...datasetQuery, offset: ((state.dataTableState.page * state.dataTableState.rowsPerPage) + 1)};
 
@@ -60,6 +69,7 @@ export function searchDatasets() {
 
         api.searchDatasets(apiServerUrl, datasetQuery)
             .then((foundDatasets: QueryResult) => {
+                console.log(foundDatasets);
                 dispatch(updateFoundDatasets(foundDatasets));
             })
             .then(() => {

@@ -7,7 +7,7 @@ import {
     OPEN_PLOT_DIALOG,
     CLOSE_PLOT_DIALOG,
     UPDATE_DATASET,
-    DataTableAction,
+    DataTableAction, UPDATE_DOWNLOAD_DOCS,
 } from "../actions/dataTableActions";
 
 
@@ -37,8 +37,10 @@ export function dataTableReducer(state: DataTableState, action: DataTableAction)
             return {...state, plotDialogOpen: false};
         }
         case UPDATE_DATASET: {
-            return {...state, dataset: action.dataset}
+            return {...state, dataset: action.dataset};
         }
+        case UPDATE_DOWNLOAD_DOCS:
+            return {...state, downloadDocs: action.downloadDocs};
     }
     return state;
 }
