@@ -1,4 +1,7 @@
 import * as React from 'react';
+
+const path = require('path');
+
 import { withStyles, WithTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -20,6 +23,8 @@ import { Dataset, QueryResult } from "../../types/dataset";
 import MetaInfoDialog from "./MetaInfoDialog";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
+import Typography from "@material-ui/core/Typography/Typography";
+import Grid from "@material-ui/core/Grid/Grid";
 
 
 const actionsStyles = (theme: Theme) => ({
@@ -118,6 +123,9 @@ const styles = (theme: Theme) => createStyles(
         },
         rightIcon: {},
         button: {},
+        link: {
+            fontcolor: 'black'
+        },
     });
 
 
@@ -140,10 +148,17 @@ interface DataTableProps extends WithStyles<typeof styles> {
     updateDownloadDocs: (downloadDocs: boolean) => void;
 }
 
+interface DataTableState {
+    selected: string[];
+}
 
-class DataTable extends React.Component<DataTableProps> {
+class DataTable extends React.Component<DataTableProps, DataTableState> {
     constructor(props: DataTableProps) {
         super(props);
+
+        this.state = {
+            selected: [],
+        };
     }
 
     handleChangePage = (event: React.MouseEvent<HTMLButtonElement>, page: number) => {
@@ -173,57 +188,53 @@ class DataTable extends React.Component<DataTableProps> {
 
     };
 
-    handleUpdateDownloadDocs(event: React.ChangeEvent<HTMLInputElement>){
+    handleUpdateDownloadDocs(event: React.ChangeEvent<HTMLInputElement>) {
         let checked = event.target.checked;
         console.log(checked);
-        if(this.props) {
+        if (this.props) {
             this.props.updateDownloadDocs(checked);
         }
     }
 
     isSelected = (id: string) => {
-        console.log(id);
-        return true;
-    };
+        this.state.selected.indexOf(id) !== -1;
+    }
 
     render() {
         const {classes, data, rowsPerPage, page} = this.props;
         const {datasets, total_count} = data;
         const numSelected = 1;
+        const hrefStyle: React.CSSProperties = {color: 'black', textDecoration: "none"};
 
         return (
             <Paper className={classes.root}>
-                <MetaInfoDialog
-                    open={this.props.metaInfoDialogOpen}
-                    handleClose={this.handleMetaInfoClose}
-                    dataset={this.props.dataset}
-                />
-
+                <Grid spacing={24} container direction={'row'} justify={"flex-end"}>
+                    <Grid container item xs={12} justify={"flex-end"}>
+                        <MetaInfoDialog
+                            open={this.props.metaInfoDialogOpen}
+                            handleClose={this.handleMetaInfoClose}
+                            dataset={this.props.dataset}
+                        />
+                        <Button variant="contained"
+                                color="secondary"
+                                className={classes.button}
+                                disabled={total_count==0}
+                        >
+                            Download
+                            <Icon className={classes.rightIcon}>archive</Icon>
+                        </Button>
+                        <FormControlLabel
+                            control={<Checkbox
+                                value={'docs'}
+                                disabled={total_count==0}
+                            />}
+                            label="Include Docs"
+                            onChange={this.handleUpdateDownloadDocs}
+                        />
+                    </Grid>
+                </Grid>
                 <Table className={classes.table}>
                     <TableHead>
-                        <TableRow>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell>
-                                <Button variant="contained"
-                                        color="secondary"
-                                        className={classes.button}
-                                >
-                                    Download
-                                    <Icon className={classes.rightIcon}>archive</Icon>
-                                </Button>
-                            </TableCell>
-                            <TableCell padding="checkbox">
-                                <FormControlLabel
-                                    control={<Checkbox
-                                        value={'docs'}
-                                    />}
-                                    label="Include Docs"
-                                    onChange={this.handleUpdateDownloadDocs}
-                                />
-                            </TableCell>
-                        </TableRow>
                         <TableRow>
                             <TableCell padding="checkbox">
                                 <Checkbox
@@ -233,14 +244,15 @@ class DataTable extends React.Component<DataTableProps> {
                                 />
                             </TableCell>
                             <TableCell>File</TableCell>
-                            <TableCell>Map</TableCell>
-                            <TableCell>Plot</TableCell>
-                            <TableCell>Download</TableCell>
+                            <TableCell>Tools</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {datasets.map(row => {
-                            const isSelected = this.isSelected(row.id);
+                            const isSelected = false;
+
+                            const fileName = path.basename(row.path);
+                            const dirName = path.dirname(row.path);
                             return (
                                 <TableRow
                                     hover
@@ -251,10 +263,22 @@ class DataTable extends React.Component<DataTableProps> {
                                     selected={isSelected}
                                 >
                                     <TableCell padding="checkbox">
-                                        <Checkbox checked={true}/>
+                                        <Checkbox />
                                     </TableCell>
                                     <TableCell component="th" scope="row">
-                                        {row.path}
+                                        <Typography variant="button" gutterBottom>
+                                            <a
+                                                href={"https://seabass.gsfc.nasa.gov/archive_preview/AWI/PANGAEA/ANT-XVIII-2/archive/ANT-XVIII_2_pigments.sb"}
+                                                //href={"http://10.2.0.57:4000/eocdb/api/v0.1.0/store/download?expr=path%3A%20*" + fileName +  "*"}
+                                                download={fileName + '.zip'}
+                                                style={hrefStyle}
+                                            >
+                                                {fileName}
+                                            </a>
+                                        </Typography>
+                                        <Typography>
+                                            {dirName}
+                                        </Typography>
                                     </TableCell>
                                     <TableCell>
                                         <IconButton
@@ -263,12 +287,7 @@ class DataTable extends React.Component<DataTableProps> {
                                         >
                                             <Settings/>
                                         </IconButton>
-                                    </TableCell>
-                                    <TableCell>
                                         <Button><Icon className={classes.rightIcon}>bar_chart</Icon></Button>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Button><Icon className={classes.rightIcon}>archive</Icon></Button>
                                     </TableCell>
                                 </TableRow>
                             );
