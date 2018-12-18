@@ -11,9 +11,11 @@ import SearchMap from '../../containers/search/SearchMap';
 import { DatasetQuery } from '../../api/index';
 import { StoreInfo } from '../../types/dataset';
 import MultipleSelect from './MultipleSelect';
-import DataTable from "../../containers/search/DataTable";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import { Star } from "@material-ui/icons";
+import DataTable from '../../containers/search/DataTable';
+import IconButton from '@material-ui/core/IconButton/IconButton';
+import { Star, HelpOutline } from '@material-ui/icons';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import { SearchExprHelpDialog } from './SearchExprHelpDialog';
 
 
 // noinspection JSUnusedLocalSymbols
@@ -41,7 +43,11 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     //searchHistory: SearchHistoryItem[];
 }
 
-class SearchPanel extends React.PureComponent<SearchPanelProps> {
+interface SearchPanelState {
+    exprHelpDialogOpen: boolean;
+}
+
+class SearchPanel extends React.PureComponent<SearchPanelProps, SearchPanelState> {
 
     handleSearchExprChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const searchExpr = event.target.value;
@@ -62,6 +68,19 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         this.props.updateDatasetQuery({...this.props.datasetQuery, productGroupNames})
     };
 
+    handleClickExprHelpOpen = () => {
+        this.setState({exprHelpDialogOpen: true});
+    };
+
+    handleClickExprHelpClose = () => {
+        this.setState({exprHelpDialogOpen: false});
+    };
+
+    constructor(props: SearchPanelProps) {
+        super(props);
+        this.state = {exprHelpDialogOpen: false};
+    }
+
     render() {
         if (!this.props.show) {
             return null;
@@ -72,7 +91,8 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
         return (
             <div>
-                <Grid spacing={24} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
+                <SearchExprHelpDialog open={this.state.exprHelpDialogOpen} onClose={this.handleClickExprHelpClose}/>
+                <Grid spacing={24} container direction={'row'} justify={'flex-start'} alignItems={'flex-start'}>
                     <Grid item container spacing={8} xs={12} sm={10}>
                         <TextField
                             id="measurement-from-date"
@@ -109,10 +129,22 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             className={classes.searchField}
                             value={searchExpr}
                             onChange={this.handleSearchExprChange}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="Expression help"
+                                            onClick={this.handleClickExprHelpOpen}
+                                        >
+                                            <HelpOutline/>
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
                         />
                     </Grid>
 
-                    <Grid item container justify={"flex-end"} xs={12} sm>
+                    <Grid item container justify={'flex-end'} xs={12} sm>
                         <IconButton color="primary">
                             <Star/>
                         </IconButton>
