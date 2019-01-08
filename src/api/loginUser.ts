@@ -1,12 +1,14 @@
-import { callJsonApi } from './callApi';
+import { callJsonApi, getRequestInit } from './callApi';
 import { User } from '../types/user';
 
 
-export function loginUser(apiServerUrl: string, name: string, password: string): Promise<User> {
-    return callJsonApi<User>(apiServerUrl + '/users/login', undefined, {
+export function loginUser(apiServerUrl: string, apiServerAuth: string, name: string, password: string): Promise<User> {
+    const init = {
+        ...getRequestInit(apiServerAuth),
         method: 'post',
-        body: JSON.stringify({username: name, password: password})
-    })
+        body: JSON.stringify({username: name, password: password}),
+    };
+    return callJsonApi<User>(apiServerUrl + '/users/login', undefined, init)
         .then((obj: any) => ({
             id: obj.id,
             name: obj.name,

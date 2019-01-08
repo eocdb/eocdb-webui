@@ -9,7 +9,7 @@ import {
     closeLoginDialog,
     openRegistrationDialog
 } from '../actions/dashboardActions';
-import { configServer } from '../actions/configActions'
+import { configureApiServer } from '../actions/configActions'
 import Dashboard from '../components/Dashboard';
 import { loginUser } from '../actions/userActions';
 
@@ -18,7 +18,6 @@ const mapStateToProps = (state: AppState) => {
         currentDrawer: state.dashboardState.currentDrawer,
         loginDialogOpen: state.dashboardState.loginDialogOpen,
         configDialogOpen: state.dashboardState.configDialogOpen,
-        apiServerUrl: state.configState.apiServerUrl,
     }
 };
 
@@ -33,7 +32,7 @@ const mapDispatchToProps = {
     loginUser,
     openRegistrationDialog,
 
-    apiServerUrlChange: configServer, // TODO: rename apiServerUrlChange --> configServer
+    configureApiServer,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

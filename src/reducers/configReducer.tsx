@@ -1,6 +1,6 @@
 import { ConfigState, newConfigState } from '../states/configState';
 
-import { ConfigAction, SET_API_SERVER_URL } from '../actions/configActions';
+import { ConfigAction, CONFIGURE_API_SERVER } from '../actions/configActions';
 
 const initialState = newConfigState();
 
@@ -9,8 +9,8 @@ export function configReducer(state: ConfigState, action: ConfigAction): ConfigS
         state = initialState;
     }
     switch (action.type) {
-        case SET_API_SERVER_URL:
-            return {...state, apiServerUrl: action.apiServerUrl};
+        case CONFIGURE_API_SERVER:
+            return {...state, apiServerUrl: action.apiServerUrl, apiServerAuth: action.apiServerAuth};
     }
     return state;
 }
