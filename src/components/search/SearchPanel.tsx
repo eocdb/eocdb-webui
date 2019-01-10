@@ -1,8 +1,11 @@
 import * as React from 'react';
+
 import Grid from '@material-ui/core/Grid/Grid';
 import TextField from '@material-ui/core/TextField/TextField';
 import Button from '@material-ui/core/Button/Button';
+import Chip from "@material-ui/core/Chip/Chip";
 import Icon from '@material-ui/core/Icon/Icon';
+import Paper from "@material-ui/core/Paper/Paper";
 import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
@@ -13,20 +16,20 @@ import { StoreInfo } from '../../types/dataset';
 import MultipleSelect from './MultipleSelect';
 import DataTable from "../../containers/search/DataTable";
 import SearchAdvancedDialog from "../../containers/search/AdvancedSeachDialog";
-import Typography from "@material-ui/core/Typography/Typography";
-import Card from "@material-ui/core/Card/Card";
+import { AdvancedSearchItem } from "../../types/advancedSearchDialog";
+
 
 // noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles(
-    {
-        searchField: {
-            width: 300,
-        },
-        textField: {},
-        button: {},
-        rightIcon: {},
-        tableContainer: {},
-    });
+const styles = (theme: Theme) => createStyles({
+    searchField: {
+        width: 300,
+    },
+    textField: {},
+    button: {},
+    rightIcon: {},
+    tableContainer: {},
+});
+
 
 interface SearchPanelProps extends WithStyles<typeof styles> {
     show: boolean;
@@ -41,8 +44,8 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     openAdvancedSearchDialog: () => void;
     closeAdvancedSearchDialog: () => void;
 
-    advancedFilterLog: Map<string, string>;
-    advancedFilterChange: (filterLog: Map<string, string>) => void;
+    advancedFilterLog: AdvancedSearchItem[];
+    advancedFilterChange: (filterLog: AdvancedSearchItem[]) => void;
 }
 
 class SearchPanel extends React.PureComponent<SearchPanelProps> {
@@ -66,14 +69,23 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         this.props.updateDatasetQuery({...this.props.datasetQuery, productGroupNames})
     };
 
-    logMapElements = (): string => {
-        let res = '';
-        this.props.advancedFilterLog.forEach(
-            (log: string, key: string) => {
-                res += `${key} = ${log} - `;
+    handleFilterDelete = (log: AdvancedSearchItem) => () => {
+        console.log(this.props.advancedFilterLog.indexOf(log));
+    };
+
+    renderAdvancedFilterLog = () => {
+        const logItems = this.props.advancedFilterLog.map(
+            (log: AdvancedSearchItem) => {
+                const label = log.key + ': ' + log.value;
+                return (<Chip key={log.key} label={label} onDelete={this.handleFilterDelete(log)}/>)
             }
         );
-        return res;
+
+        return (
+            <Paper>
+                {logItems}
+            </Paper>
+        );
     };
 
     render() {
@@ -84,7 +96,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         const {classes, datasetQuery} = this.props;
         const {searchExpr, startDate, endDate} = datasetQuery;
 
-        let res = this.logMapElements();
+        const advancedFilterLog = this.renderAdvancedFilterLog();
 
         return (
             <div>
@@ -151,11 +163,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
                     </Grid>
                     <Grid item xs={12}>
-                        <Card>
-                            <Typography>
-                                {res}
-                            </Typography>
-                        </Card>
+                        {advancedFilterLog}
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <div className={classes.tableContainer}>
