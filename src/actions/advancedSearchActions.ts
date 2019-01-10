@@ -1,15 +1,17 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+import { AdvancedSearchItem } from "../types/advancedSearchDialog";
+
 export const LOG_CHANGE = 'LOG_CHANGE';
 export type LOG_CHANGE = typeof LOG_CHANGE;
 
 export interface LogChange {
     type: LOG_CHANGE;
-    filterLog: Map<string, string>;
+    filterLog: AdvancedSearchItem[];
 }
 
-export function logChange(filterLog: Map<string, string>): LogChange {
+export function logChange(filterLog: AdvancedSearchItem[]): LogChange {
     return {type: LOG_CHANGE, filterLog};
 }
 
