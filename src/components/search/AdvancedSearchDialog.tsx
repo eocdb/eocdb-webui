@@ -11,8 +11,10 @@ import Grid from "@material-ui/core/Grid/Grid";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import WaveLengthSelect from "../../containers/search/WaveLengthSelect";
+import { AdvancedSearchItem } from "../../types/advancedSearchDialog";
 
 
+// noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({
     appBar: {
         position: 'relative',
@@ -29,16 +31,16 @@ const styles = (theme: Theme) => createStyles({
     tableContainer: {},
 });
 
-function Transition(props: SearchAdvancedDialogProps) {
+function Transition(props: AdvancedSearchDialogProps) {
     return <Slide direction="up" {...props} />;
 }
 
-interface SearchAdvancedDialogProps extends WithStyles<typeof styles> {
+export interface AdvancedSearchDialogProps extends WithStyles<typeof styles> {
     open: boolean;
     handleClose: () => void;
 
-    logChange: (filterLog: Map<string, string>) => void;
-    filterLog: Map<string, string>;
+    logChange: (filterLog: AdvancedSearchItem[]) => void;
+    filterLog: AdvancedSearchItem[];
 
     leftChange: (left: number) => void;
     bottomChange: (bottom: number) => void;
@@ -48,25 +50,32 @@ interface SearchAdvancedDialogProps extends WithStyles<typeof styles> {
     bottom: number;
     right: number;
     top: number;
-
-    //updateSelectedRegions: (selectedRegions: GeoJsonObject, selectedBounds?: LatLngBounds) => void;
 }
 
-class AdvancedSearchDialog extends React.Component<SearchAdvancedDialogProps> {
-    constructor(props: SearchAdvancedDialogProps) {
+class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
+    constructor(props: AdvancedSearchDialogProps) {
         super(props);
-
-        this.state = {
-            left: 0,
-            bottom: 0,
-            right: 0,
-            top: 0,
-        };
     }
 
-    handleLogChange = (key: string, log: string) => {
-        const filterLog = this.props.filterLog;
-        filterLog.set(key, log);
+    handleLogChange = (key: string, value: string) => {
+        let success = false;
+        const filterLog = this.props.filterLog.map(
+            (log: AdvancedSearchItem) => {
+                if(log.key == key){
+                    log.value = value;
+                    success = true;
+                }
+                return log;
+            }
+        );
+
+        if(!success){
+            filterLog.push({
+                key: key,
+                value: value,
+            });
+        }
+
         this.props.logChange(filterLog);
     };
 
@@ -96,7 +105,7 @@ class AdvancedSearchDialog extends React.Component<SearchAdvancedDialogProps> {
 
     handleWaveLengthChange = () => {
 
-    }
+    };
 
     render() {
         const {classes} = this.props;
