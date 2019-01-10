@@ -11,7 +11,7 @@ interface FileUploadProps {
 }
 
 export class FileUpload extends React.Component<FileUploadProps> {
-    constructor(props: FileUploadProps){
+    constructor(props: FileUploadProps) {
         super(props);
     }
 
