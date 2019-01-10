@@ -44,7 +44,7 @@ class ChipsArray extends React.PureComponent<ChipsArrayProps> {
                 {
                     this.props.chipData.map(
                         (chip: ChipEntry) => {
-                            return(
+                            return (
                                 <Chip
                                     key={chip.key}
                                     label={chip.label}
