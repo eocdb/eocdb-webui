@@ -4,6 +4,7 @@ import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
 import SubmitSteps from "./SubmitSteps";
+import SubmitTable from "./SubmitTable";
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({
@@ -12,6 +13,7 @@ const styles = (theme: Theme) => createStyles({
 
 interface SubmitPanelProps extends WithStyles<typeof styles> {
     show: boolean;
+    submitNew?: boolean;
 }
 
 class SubmitPanel extends React.PureComponent<SubmitPanelProps> {
@@ -33,7 +35,11 @@ class SubmitPanel extends React.PureComponent<SubmitPanelProps> {
                 >
                     SUBMIT
                 </Typography>
-                <SubmitSteps  classes={this.props.classes}/>
+                {this.props.submitNew ? (
+                    <SubmitSteps classes={this.props.classes}/>
+                ) : (
+                    <SubmitTable/>
+                )}
             </div>
         );
     }
