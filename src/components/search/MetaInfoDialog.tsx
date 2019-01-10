@@ -1,22 +1,25 @@
 import * as React from "react";
-import { Theme, WithStyles } from "@material-ui/core";
+import { WithStyles } from "@material-ui/core";
 import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
+
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button/Button";
-import { Dataset, DatasetMetaData } from "../../types/dataset";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import List from "@material-ui/core/List/List";
 
+import { Dataset, DatasetMetaData } from "../../types/dataset";
 
-const styles = (theme: Theme) => createStyles({
+
+const styles = () => createStyles({
     root: {},
 });
+
 
 interface MetaInfoDialogProps extends WithStyles<typeof styles> {
     open: boolean;
@@ -30,6 +33,7 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
         super(props);
     }
 
+    // noinspection JSMethodCanBeStatic
     renderInfo(metadata: DatasetMetaData) {
         let items = [];
         for (let key in metadata) {
@@ -44,7 +48,7 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
                 {items}
             </List>
         );
-    }
+    };
 
     render() {
 
