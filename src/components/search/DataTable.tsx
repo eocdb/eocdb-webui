@@ -129,7 +129,7 @@ const styles = (theme: Theme) => createStyles(
     });
 
 
-interface DataTableProps extends WithStyles<typeof styles> {
+export interface DataTableProps extends WithStyles<typeof styles> {
     data: QueryResult;
     page: number;
     rowsPerPage: number;
@@ -175,7 +175,6 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
     };
 
     handleMetaInfoOpen = (id: string) => {
-        console.log(id);
         this.props.openMetaInfoDialog();
         this.props.updateDataset(id);
     };
@@ -197,8 +196,9 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
     }
 
     isSelected = (id: string) => {
-        this.state.selected.indexOf(id) !== -1;
-    }
+        console.log('test');
+        return this.state.selected.indexOf(id) !== -1;
+    };
 
     render() {
         const {classes, data, rowsPerPage, page} = this.props;
@@ -215,8 +215,9 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
                             handleClose={this.handleMetaInfoClose}
                             dataset={this.props.dataset}
                         />
-                        <Button variant="contained"
-                                color="secondary"
+                        <Button variant={"contained"}
+                                color={"secondary"}
+                                key={"btn_download33"}
                                 className={classes.button}
                                 disabled={total_count==0}
                         >
