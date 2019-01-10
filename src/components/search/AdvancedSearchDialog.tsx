@@ -61,7 +61,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
         let success = false;
         const filterLog = this.props.filterLog.map(
             (log: AdvancedSearchItem) => {
-                if(log.key == key){
+                if (log.key == key) {
                     log.value = value;
                     success = true;
                 }
@@ -69,7 +69,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
             }
         );
 
-        if(!success){
+        if (!success) {
             filterLog.push({
                 key: key,
                 value: value,
@@ -80,9 +80,9 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
     };
 
     handleLeftChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-       const left = event.target.valueAsNumber;
-       this.handleLogChange('left', left.toString());
-       this.props.leftChange(left);
+        const left = event.target.valueAsNumber;
+        this.handleLogChange('left', left.toString());
+        this.props.leftChange(left);
     };
 
     handleBottomChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -158,14 +158,14 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <WaveLengthSelect currentSelect={'All'} />
+                            <WaveLengthSelect currentSelect={'All'}/>
                         </Grid>
                     </Grid>
                     <DialogActions className={classes.appBar}>
                         <Button onClick={this.props.handleClose}
-                            aria-label="Close"
-                            variant="contained"
-                            color="secondary"
+                                aria-label="Close"
+                                variant="contained"
+                                color="secondary"
                         >
                             Close
                         </Button>
