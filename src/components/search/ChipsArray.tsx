@@ -12,7 +12,9 @@ export interface ChipEntry {
 }
 
 const styles = (theme: Theme) => createStyles({
-    root: {},
+    root: {
+        marginBottom: theme.spacing.unit,
+    },
     chip: {
         margin: theme.spacing.unit / 2,
     },
@@ -21,7 +23,7 @@ const styles = (theme: Theme) => createStyles({
 
 interface ChipsArrayProps extends WithStyles<typeof styles> {
     chipData: ChipEntry[];
-    onDelete: (chip: ChipEntry) => void;
+    onDelete: () => void;
 }
 
 class ChipsArray extends React.PureComponent<ChipsArrayProps> {
@@ -35,6 +37,9 @@ class ChipsArray extends React.PureComponent<ChipsArrayProps> {
     };
 
     render() {
+        if(this.props.chipData.length == 0){
+            return null;
+        }
         const {classes} = this.props;
 
         return (

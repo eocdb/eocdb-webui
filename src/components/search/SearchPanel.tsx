@@ -3,9 +3,7 @@ import * as React from 'react';
 import Grid from '@material-ui/core/Grid/Grid';
 import TextField from '@material-ui/core/TextField/TextField';
 import Button from '@material-ui/core/Button/Button';
-import Chip from "@material-ui/core/Chip/Chip";
 import Icon from '@material-ui/core/Icon/Icon';
-import Paper from "@material-ui/core/Paper/Paper";
 import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
@@ -15,8 +13,9 @@ import { DatasetQuery } from '../../api/index';
 import { StoreInfo } from '../../types/dataset';
 import MultipleSelect from './MultipleSelect';
 import DataTable from "../../containers/search/DataTable";
-import SearchAdvancedDialog from "../../containers/search/AdvancedSeachDialog";
+import AdvancedSearchDialog from "../../containers/search/AdvancedSeachDialog";
 import { AdvancedSearchItem } from "../../types/advancedSearchDialog";
+import ChipsArray from "./ChipsArray";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -26,6 +25,7 @@ const styles = (theme: Theme) => createStyles({
     },
     textField: {},
     button: {},
+    filterButton: {},
     rightIcon: {},
     tableContainer: {},
 });
@@ -43,6 +43,10 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     advancedSearchDialogOpen: boolean;
     openAdvancedSearchDialog: () => void;
     closeAdvancedSearchDialog: () => void;
+
+    productGroupsOpen: boolean;
+    openProductGroups: () => void;
+    closeProductGroups: () => void;
 
     advancedFilterLog: AdvancedSearchItem[];
     advancedFilterChange: (filterLog: AdvancedSearchItem[]) => void;
@@ -69,22 +73,19 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         this.props.updateDatasetQuery({...this.props.datasetQuery, productGroupNames})
     };
 
-    handleFilterDelete = (log: AdvancedSearchItem) => () => {
-        console.log(this.props.advancedFilterLog.indexOf(log));
+    handleFilterDelete = () => () => {
+        console.log('delete');
     };
 
-    renderAdvancedFilterLog = () => {
-        const logItems = this.props.advancedFilterLog.map(
+    getFilterChipEntries = () => {
+        return this.props.advancedFilterLog.map(
             (log: AdvancedSearchItem) => {
                 const label = log.key + ': ' + log.value;
-                return (<Chip key={log.key} label={label} onDelete={this.handleFilterDelete(log)}/>)
+                return {
+                    key: log.key,
+                    label: label,
+                };
             }
-        );
-
-        return (
-            <Paper>
-                {logItems}
-            </Paper>
         );
     };
 
@@ -95,8 +96,6 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
         const {classes, datasetQuery} = this.props;
         const {searchExpr, startDate, endDate} = datasetQuery;
-
-        const advancedFilterLog = this.renderAdvancedFilterLog();
 
         return (
             <div>
@@ -128,7 +127,16 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             value={endDate}
                             onChange={this.handleEndDateChange}
                         />
+                        <Button
+                            variant="outlined"
+                            className={classes.filterButton}
+                            onClick={this.props.openProductGroups}
+                        >
+                            Product Groups
+                        </Button>
                         <MultipleSelect
+                            open={this.props.productGroupsOpen}
+                            onClose={this.props.closeProductGroups}
                             productGroups={this.props.serverInfo['productGroups']}
                             productGroupsChange={this.handleProductGroupsChange}
                         />
@@ -155,25 +163,19 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             Search
                             <Icon className={classes.rightIcon}>search</Icon>
                         </Button>
-                        <SearchAdvancedDialog
+                        <AdvancedSearchDialog
                             open={this.props.advancedSearchDialogOpen}
-                            handleClose={this.props.closeAdvancedSearchDialog}
+                            onClose={this.props.closeAdvancedSearchDialog}
                             logChange={this.props.advancedFilterChange}
                         />
 
                     </Grid>
-                    <Grid item xs={12}>
-                        {advancedFilterLog}
+                    <Grid item xs={12} sm={6}>
+                        <ChipsArray chipData={this.getFilterChipEntries()} onDelete={this.handleFilterDelete}/>
+                        <DataTable/>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <div className={classes.tableContainer}>
-                            <DataTable/>
-                        </div>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <div className={classes.tableContainer}>
-                            <SearchMap/>
-                        </div>
+                        <SearchMap/>
                     </Grid>
                 </Grid>
             </div>

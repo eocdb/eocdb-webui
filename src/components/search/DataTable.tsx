@@ -27,12 +27,12 @@ import Typography from "@material-ui/core/Typography/Typography";
 import Grid from "@material-ui/core/Grid/Grid";
 
 
-const actionsStyles = (theme: Theme) => ({
+const actionsStyles = (theme: Theme) => createStyles({
     root: {
         flexShrink: 0,
         color: theme.palette.text.secondary,
         marginLeft: theme.spacing.unit * 2.5,
-    },
+    }
 });
 
 
@@ -43,28 +43,23 @@ interface TablePaginationActionsProps extends WithStyles<typeof actionsStyles>, 
     rowsPerPage: number;
 }
 
+
 class TablePaginationActions extends React.Component<TablePaginationActionsProps> {
     handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        console.log('First');
         this.props.onChangePage(event, 0);
     };
 
     handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        console.log('Back');
         this.props.onChangePage(event, this.props.page - 1);
     };
 
     handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        console.log('Next');
         this.props.onChangePage(event, this.props.page + 1);
     };
 
     handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        console.log('Last');
-        this.props.onChangePage(
-            event,
-            Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
-        );
+        const last = Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 2);
+        this.props.onChangePage(event, last);
     };
 
     render() {
@@ -119,12 +114,18 @@ const styles = (theme: Theme) => createStyles(
             overflowX: 'auto',
         },
         table: {
-            minWidth: 700,
+            minWidth: 100,
         },
         rightIcon: {},
-        button: {},
+        button: {
+            margin: theme.spacing.unit / 2,
+        },
         link: {
             fontcolor: 'black'
+        },
+        downloadContainer: {
+            width: '100%',
+            border: '1px solid red',
         },
     });
 
@@ -162,8 +163,6 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
     }
 
     handleChangePage = (event: React.MouseEvent<HTMLButtonElement>, page: number) => {
-        console.log(page);
-        console.log(event);
         this.props.updateDataPage(page);
         this.props.searchDatasets();
     };
@@ -208,31 +207,32 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
 
         return (
             <Paper className={classes.root}>
-                <Grid spacing={24} container direction={'row'} justify={"flex-end"}>
-                    <Grid container item xs={12} justify={"flex-end"}>
-                        <MetaInfoDialog
-                            open={this.props.metaInfoDialogOpen}
-                            handleClose={this.handleMetaInfoClose}
-                            dataset={this.props.dataset}
-                        />
-                        <Button variant={"contained"}
-                                color={"secondary"}
-                                key={"btn_download33"}
-                                className={classes.button}
-                                disabled={total_count==0}
-                        >
-                            Download
-                            <Icon className={classes.rightIcon}>archive</Icon>
-                        </Button>
-                        <FormControlLabel
-                            control={<Checkbox
+                <MetaInfoDialog
+                    open={this.props.metaInfoDialogOpen}
+                    handleClose={this.handleMetaInfoClose}
+                    dataset={this.props.dataset}
+                />
+                <Grid container justify={"flex-end"}>
+                    <Button variant={"contained"}
+                            color={"secondary"}
+                            key={"btn_download33"}
+                            className={classes.button}
+                            disabled={total_count == 0}
+                    >
+                        Download
+                        <Icon className={classes.rightIcon}>archive</Icon>
+                    </Button>
+                    <FormControlLabel
+                        className={classes.button}
+                        control={
+                            <Checkbox
                                 value={'docs'}
-                                disabled={total_count==0}
-                            />}
-                            label="Include Docs"
-                            onChange={this.handleUpdateDownloadDocs}
-                        />
-                    </Grid>
+                                disabled={total_count == 0}
+                            />
+                        }
+                        label="Include Docs"
+                        onChange={this.handleUpdateDownloadDocs}
+                    />
                 </Grid>
                 <Table className={classes.table}>
                     <TableHead>
@@ -264,7 +264,7 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
                                     selected={isSelected}
                                 >
                                     <TableCell padding="checkbox">
-                                        <Checkbox />
+                                        <Checkbox/>
                                     </TableCell>
                                     <TableCell component="th" scope="row">
                                         <Typography variant="button" gutterBottom>
@@ -296,16 +296,22 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
                     </TableBody>
                     <TableFooter>
                         <TableRow>
-                            <TablePagination
-                                rowsPerPageOptions={[5, 10, 25]}
-                                colSpan={3}
-                                count={total_count}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                onChangePage={this.handleChangePage}
-                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                ActionsComponent={TablePaginationActionsWrapped}
-                            />
+                            {datasets.length > 0 ? (
+                                    <TablePagination
+                                        rowsPerPageOptions={[5, 10, 25]}
+                                        colSpan={3}
+                                        count={total_count}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        onChangePage={this.handleChangePage}
+                                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                        ActionsComponent={TablePaginationActionsWrapped}
+                                    />
+                                ) :
+                                <TableCell>
+                                    No Files
+                                </TableCell>
+                            }
                         </TableRow>
                     </TableFooter>
                 </Table>

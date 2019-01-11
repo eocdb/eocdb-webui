@@ -98,6 +98,33 @@ export function closeAdvancedSearchDialog(): CloseAdvancedSearchDialog {
     return {type: CLOSE_ADVANCED_SEARCH_DIALOG};
 }
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const OPEN_PRODUCT_GROUPS = 'OPEN_PRODUCT_GROUPS';
+export type OPEN_PRODUCT_GROUPS = typeof OPEN_PRODUCT_GROUPS;
+
+export interface OpenProductGroups {
+    type: OPEN_PRODUCT_GROUPS;
+}
+
+export function openProductGroups(): OpenProductGroups {
+    return {type: OPEN_PRODUCT_GROUPS};
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const CLOSE_PRODUCT_GROUPS = 'CLOSE_PRODUCT_GROUPS';
+export type CLOSE_PRODUCT_GROUPS = typeof CLOSE_PRODUCT_GROUPS;
+
+export interface CloseProductGroups {
+    type: CLOSE_PRODUCT_GROUPS;
+}
+
+export function closeProductGroups(): CloseProductGroups {
+    return {type: CLOSE_PRODUCT_GROUPS};
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type DashboardAction = ChangeDrawer
@@ -106,4 +133,6 @@ export type DashboardAction = ChangeDrawer
     | OpenConfigDialog
     | CloseConfigDialog
     | OpenAdvancedSearchDialog
-    | CloseAdvancedSearchDialog;
+    | CloseAdvancedSearchDialog
+    | OpenProductGroups
+    | CloseProductGroups;

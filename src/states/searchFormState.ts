@@ -26,6 +26,6 @@ export function newSearchFormState() {
                 wdepth: '',
             },
             total_count: 0,
-        }
+        },
     };
 }

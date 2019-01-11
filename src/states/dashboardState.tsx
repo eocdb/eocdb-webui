@@ -5,6 +5,7 @@ export interface DashboardState {
     loginDialogOpen: boolean;
     configDialogOpen: boolean,
     advancedSearchDialogOpen: boolean;
+    productGroupsOpen: boolean;
 
     searchHistory: SearchHistoryItem[];
 }
@@ -15,6 +16,7 @@ export function newDashboardState() {
         loginDialogOpen: false,
         configDialogOpen: false,
         advancedSearchDialogOpen: false,
+        productGroupsOpen: false,
         searchHistory: [],
     }
 }

@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 import { AppState } from '../../states/appState';
 import { updateDatasetQuery, searchDatasets } from '../../actions/searchFormActions';
 import SearchPanel from '../../components/search/SearchPanel';
-import { closeAdvancedSearchDialog, openAdvancedSearchDialog } from "../../actions/dashboardActions";
+import {
+    closeAdvancedSearchDialog,
+    closeProductGroups,
+    openAdvancedSearchDialog,
+    openProductGroups
+} from "../../actions/dashboardActions";
 import { logChange } from "../../actions/advancedSearchActions";
 
 const mapStateToProps = (state: AppState) => {
@@ -11,6 +16,7 @@ const mapStateToProps = (state: AppState) => {
         datasetQuery: state.searchFormState.datasetQuery,
         serverInfo: state.dataState.info,
         advancedSearchDialogOpen: state.dashboardState.advancedSearchDialogOpen,
+        productGroupsOpen: state.dashboardState.productGroupsOpen,
         advancedFilterLog: state.advancedSearchState.filterLog,
     };
 };
@@ -18,8 +24,12 @@ const mapStateToProps = (state: AppState) => {
 const mapDispatchToProps = {
     updateDatasetQuery,
     searchDatasets,
+
     openAdvancedSearchDialog,
     closeAdvancedSearchDialog,
+
+    openProductGroups,
+    closeProductGroups,
     advancedFilterChange: logChange,
 };
 

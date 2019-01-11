@@ -37,7 +37,7 @@ function Transition(props: AdvancedSearchDialogProps) {
 
 export interface AdvancedSearchDialogProps extends WithStyles<typeof styles> {
     open: boolean;
-    handleClose: () => void;
+    onClose: () => void;
 
     logChange: (filterLog: AdvancedSearchItem[]) => void;
     filterLog: AdvancedSearchItem[];
@@ -114,7 +114,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                 <Dialog
                     fullScreen
                     open={this.props.open}
-                    onClose={this.props.handleClose}
+                    onClose={this.props.onClose}
                     TransitionComponent={Transition}
                 >
                     <DialogTitle id="form-dialog-title">Advanced Search</DialogTitle>
@@ -162,7 +162,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                         </Grid>
                     </Grid>
                     <DialogActions className={classes.appBar}>
-                        <Button onClick={this.props.handleClose}
+                        <Button onClick={this.props.onClose}
                                 aria-label="Close"
                                 variant="contained"
                                 color="secondary"

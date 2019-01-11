@@ -6,7 +6,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button/Button";
 import ListItem from "@material-ui/core/ListItem/ListItem";
@@ -38,7 +37,7 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
         let items = [];
         for (let key in metadata) {
             items.push(
-                <ListItem key={key} >
+                <ListItem component={'span'} key={key}>
                     <ListItemText secondary={metadata[key]} primary={key}/>
                 </ListItem>
             );
@@ -60,9 +59,7 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
             >
                 <DialogTitle id="form-dialog-title">Settings</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        {this.renderInfo(this.props.dataset.metadata)}
-                    </DialogContentText>
+                    {this.renderInfo(this.props.dataset.metadata)}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.props.handleClose} color="primary">
