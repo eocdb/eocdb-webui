@@ -1,9 +1,11 @@
+import { AdvancedSearchItem } from "../types/advancedSearchDialog";
+
 export interface AdvancedSearchState {
     left: number;
     bottom: number;
     right: number;
     top: number;
-    filterLog: Map<string, string>;
+    filterLog: AdvancedSearchItem[];
 }
 
 
@@ -13,6 +15,6 @@ export function newAdvancedSearchState() {
         bottom: 0,
         right: 0,
         top: 0,
-        filterLog: new Map(),
+        filterLog: [],
     };
 }
