@@ -8,6 +8,7 @@ import { sessionReducer } from './sessionReducer';
 import { dataReducer } from "./dataReducer";
 import { dataTableReducer } from "./dataTableReducer";
 import { advancedSearchReducer } from "./advancedSearchReducer";
+import { submitReducer } from "./submitReducer";
 
 export const appReducer = combineReducers(
     {
@@ -20,5 +21,6 @@ export const appReducer = combineReducers(
         dataState: dataReducer,
         dataTableState: dataTableReducer,
         advancedSearchState: advancedSearchReducer,
+        submitState: submitReducer,
     }
 );

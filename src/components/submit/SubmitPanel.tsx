@@ -13,7 +13,9 @@ const styles = (theme: Theme) => createStyles({
 
 interface SubmitPanelProps extends WithStyles<typeof styles> {
     show: boolean;
-    submitNew?: boolean;
+    submitStepsOpen: boolean;
+    openSubmitSteps: () => void,
+    closeSubmitSteps: () => void,
 }
 
 class SubmitPanel extends React.PureComponent<SubmitPanelProps> {
@@ -35,10 +37,14 @@ class SubmitPanel extends React.PureComponent<SubmitPanelProps> {
                 >
                     SUBMIT
                 </Typography>
-                {this.props.submitNew ? (
-                    <SubmitSteps classes={this.props.classes}/>
+                {this.props.submitStepsOpen ? (
+                    <SubmitSteps
+                        closeSubmitSteps={this.props.closeSubmitSteps}
+                    />
                 ) : (
-                    <SubmitTable/>
+                    <SubmitTable
+                        openSubmitSteps={this.props.openSubmitSteps}
+                    />
                 )}
             </div>
         );

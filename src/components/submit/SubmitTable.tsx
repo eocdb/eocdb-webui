@@ -1,5 +1,5 @@
 import * as React from "react";
-import { WithStyles } from "@material-ui/core";
+import { Theme, WithStyles } from "@material-ui/core";
 import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import TableHead from "@material-ui/core/TableHead/TableHead";
@@ -11,9 +11,10 @@ import Paper from "@material-ui/core/Paper/Paper";
 // import Icon from "@material-ui/core/Icon/Icon";
 import Button from "@material-ui/core/Button/Button";
 import { CloudUpload } from "@material-ui/icons";
+import Grid from "@material-ui/core/Grid";
 
 
-const styles = () => createStyles(
+const styles = (theme: Theme) => createStyles(
     {
         root: {
             width: '100%',
@@ -23,7 +24,9 @@ const styles = () => createStyles(
             minWidth: 700,
         },
         rightIcon: {},
-        button: {},
+        button: {
+            margin: theme.spacing.unit / 2,
+        },
         link: {
             fontcolor: 'black'
         },
@@ -31,7 +34,7 @@ const styles = () => createStyles(
 
 
 interface SubmitTableProps extends WithStyles<typeof styles> {
-
+    openSubmitSteps: () => void,
 }
 
 
@@ -40,19 +43,25 @@ class SubmitTable extends React.PureComponent<SubmitTableProps> {
         super(props);
     }
 
+    handleOpenSubmitSteps = () => {
+        this.props.openSubmitSteps();
+    };
+
     render() {
         const classes = this.props.classes;
 
         return (
             <Paper className={classes.root}>
-                <Button variant="contained"
-                        color="secondary"
-                        className={classes.button}
-                        //disabled={total_count==0}
-                >
-                    New Submission
-                    <CloudUpload />
-                </Button>
+                <Grid container justify={"flex-end"}>
+                    <Button variant="contained"
+                            color="secondary"
+                            className={classes.button}
+                            onClick={this.handleOpenSubmitSteps}
+                    >
+                        New Submission
+                        <CloudUpload/>
+                    </Button>
+                </Grid>
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
@@ -66,6 +75,7 @@ class SubmitTable extends React.PureComponent<SubmitTableProps> {
                             <TableCell>Upload ID</TableCell>
                             <TableCell>Date</TableCell>
                             <TableCell>File(s)</TableCell>
+                            <TableCell>Status</TableCell>
                         </TableRow>
                     </TableHead>
                 </Table>

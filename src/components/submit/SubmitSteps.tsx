@@ -8,11 +8,13 @@ import Button from "@material-ui/core/Button/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Step from "@material-ui/core/Step/Step";
 import { FileUpload } from "./FileUpload";
+import { Cancel } from "@material-ui/icons";
+import Grid from "@material-ui/core/Grid";
 
 
 const styles = (theme: Theme) => createStyles({
     root: {
-        width: '90%',
+        width: '100%',
     },
     button: {
         marginRight: theme.spacing.unit,
@@ -29,9 +31,8 @@ function getSteps() {
 }
 
 
-interface  SubmitStepsProps extends WithStyles<typeof styles> {
-
-
+interface SubmitStepsProps extends WithStyles<typeof styles> {
+    closeSubmitSteps: () => void,
 }
 
 interface SubmitStepsState {
@@ -52,6 +53,10 @@ class SubmitSteps extends React.Component<SubmitStepsProps, SubmitStepsState> {
         };
     }
 
+    handleCloseSubmitSteps = () => {
+        this.props.closeSubmitSteps();
+    };
+
     isStepOptional = (step: number) => {
         return step === 1;
     };
@@ -68,7 +73,8 @@ class SubmitSteps extends React.Component<SubmitStepsProps, SubmitStepsState> {
             case 1:
                 return <Typography className={classes.instructions}>{'We are validating your data files'}</Typography>;
             case 2:
-                return <Typography className={classes.instructions}>{'Scientists are reviewing your data files'}</Typography>;
+                return <Typography
+                    className={classes.instructions}>{'Scientists are reviewing your data files'}</Typography>;
             case 3:
                 return <Typography className={classes.instructions}>{'Your data is available now.'}</Typography>;
             default:
@@ -123,10 +129,11 @@ class SubmitSteps extends React.Component<SubmitStepsProps, SubmitStepsState> {
         return this.state.skipped.has(step);
     }
 
+    // noinspection JSUnusedLocalSymbols
     handleOndrop = (acceptedFiles: any, rejectedFiles: any) => {
+        // noinspection JSPrimitiveTypeWrapperUsage
         let files = new Array();
         acceptedFiles.forEach((file: any) => {
-            console.log(file);
             files.push(file);
         });
 
@@ -163,6 +170,16 @@ class SubmitSteps extends React.Component<SubmitStepsProps, SubmitStepsState> {
                             </Step>
                         );
                     })}
+                    <Grid container justify={"flex-end"}>
+                        <Button variant="contained"
+                                color="secondary"
+                                className={classes.button}
+                                onClick={this.handleCloseSubmitSteps}
+                        >
+                            Cancel
+                            <Cancel/>
+                        </Button>
+                    </Grid>
                 </Stepper>
                 <div>
                     {activeStep === steps.length ? (

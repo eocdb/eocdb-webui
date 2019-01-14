@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import HomePanel from './home/HomePanel';
-import SubmitPanel from './submit/SubmitPanel';
+import SubmitPanel from '../containers/submit/SubmitPanel';
 import BrowsePanel from './browse/BrowsePanel';
 import AdminPanel from './admin/AdminPanel';
 import SearchPanel from '../containers/search/SearchPanel';
