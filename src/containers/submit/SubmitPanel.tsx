@@ -13,8 +13,8 @@ const mapStateToProps = (state: AppState) => {
 
 
 const mapDispatchToProps = {
-        closeSubmitSteps,
-        openSubmitSteps,
+    closeSubmitSteps,
+    openSubmitSteps,
 };
 
 

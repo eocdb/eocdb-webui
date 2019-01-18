@@ -10,30 +10,25 @@ interface FileUploadProps {
 
 }
 
-export class FileUpload extends React.Component<FileUploadProps> {
+class FileUpload extends React.Component<FileUploadProps> {
     constructor(props: FileUploadProps) {
         super(props);
     }
 
     render() {
-        const num_files = this.props.files.length;
-        let fns = [];
-
-        for (let i = 0; i < num_files; i++) {
-            fns.push(
-                <Typography key={this.props.files[i].name}>
-                    <FileCopy/>
-                    {this.props.files[i].name}
-                </Typography>
-            )
-        }
-
         return (
             <Dropzone
                 onDrop={this.props.onDrop}
             >
-                {fns}
+                {this.props.files.map((file: File) => {
+                        return (<Typography key={file.name}>
+                            <FileCopy/>
+                            {file.name}
+                        </Typography>);
+                    })}
             </Dropzone>
         );
     }
 }
+
+export default FileUpload

@@ -34,7 +34,8 @@ const styles = (theme: Theme) => createStyles(
 
 
 interface SubmitTableProps extends WithStyles<typeof styles> {
-    openSubmitSteps: () => void,
+    show: boolean;
+    openSubmitSteps: () => void;
 }
 
 
@@ -48,6 +49,10 @@ class SubmitTable extends React.PureComponent<SubmitTableProps> {
     };
 
     render() {
+        if(!this.props.show){
+            return null;
+        }
+
         const classes = this.props.classes;
 
         return (

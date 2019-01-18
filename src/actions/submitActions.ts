@@ -5,6 +5,43 @@
 * @date 14/01/2019
 */
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const SET_ACTIVE_STEP_UP = 'SET_ACTIVE_STEP_UP';
+export type SET_ACTIVE_STEP_UP = typeof SET_ACTIVE_STEP_UP;
+
+export interface SetActiveStepUp {
+    type: SET_ACTIVE_STEP_UP;
+}
+
+
+/**
+ * Set submit step
+ */
+export function setActiveStepUp(): SetActiveStepUp {
+    return {type: SET_ACTIVE_STEP_UP};
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const SET_ACTIVE_STEP_DOWN = 'SET_ACTIVE_STEP_DOWN';
+export type SET_ACTIVE_STEP_DOWN = typeof SET_ACTIVE_STEP_DOWN;
+
+export interface SetActiveStepDown {
+    type: SET_ACTIVE_STEP_DOWN;
+}
+
+
+/**
+ * Set submit step
+ */
+export function setActiveStepDown(): SetActiveStepDown {
+    return {type: SET_ACTIVE_STEP_DOWN};
+}
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const CLOSE_SUBMIT_STEPS = 'CLOSE_SUBMIT_STEPS';
@@ -42,4 +79,4 @@ export function openSubmitSteps(): OpenSubmitSteps {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type SubmitAction = OpenSubmitSteps | CloseSubmitSteps;
+export type SubmitAction = OpenSubmitSteps | CloseSubmitSteps | SetActiveStepUp | SetActiveStepDown ;
