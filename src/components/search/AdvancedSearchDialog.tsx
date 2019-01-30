@@ -2,7 +2,7 @@ import * as React from "react";
 import { Theme, withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import Slide from '@material-ui/core/Slide';
+import Slide, { SlideProps } from '@material-ui/core/Slide';
 
 import createStyles from "@material-ui/core/styles/createStyles";
 import { WithStyles } from "@material-ui/core";
@@ -31,9 +31,11 @@ const styles = (theme: Theme) => createStyles({
     tableContainer: {},
 });
 
-function Transition(props: AdvancedSearchDialogProps) {
+
+function Transition(props: SlideProps) {
     return <Slide direction="up" {...props} />;
 }
+
 
 export interface AdvancedSearchDialogProps extends WithStyles<typeof styles> {
     open: boolean;
@@ -51,6 +53,7 @@ export interface AdvancedSearchDialogProps extends WithStyles<typeof styles> {
     right: number;
     top: number;
 }
+
 
 class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
     constructor(props: AdvancedSearchDialogProps) {
