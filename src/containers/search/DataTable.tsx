@@ -11,7 +11,7 @@ import {
     updateSelectedDatasets,
 } from '../../actions/dataTableActions';
 import DataTable from '../../components/search/DataTable';
-import { searchDatasets } from "../../actions/searchFormActions";
+import { searchDatasets, startLoading } from "../../actions/searchFormActions";
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -39,6 +39,7 @@ const mapDispatchToProps = {
     searchDatasets,
     updateDownloadDocs,
     updateSelectedDatasets,
+    startLoading,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataTable);
