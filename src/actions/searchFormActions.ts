@@ -9,6 +9,38 @@ import { DatasetQuery } from '../api/searchDatasets';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+export const START_LOADING = 'START_LOADING';
+export type START_LOADING = typeof START_LOADING;
+
+export interface StartLoading {
+    type: START_LOADING;
+}
+
+export function startLoading(): StartLoading {
+    return {
+        type: START_LOADING
+    };
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const STOP_LOADING = 'STOP_LOADING';
+export type STOP_LOADING = typeof STOP_LOADING;
+
+export interface StopLoading {
+    type: STOP_LOADING;
+}
+
+export function stopLoading(): StopLoading {
+    return {
+        type: STOP_LOADING
+    };
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const UPDATE_DATASET_QUERY = 'UPDATE_DATASET_QUERY';
 export type UPDATE_DATASET_QUERY = typeof UPDATE_DATASET_QUERY;
 
@@ -42,7 +74,8 @@ export function updateSearchHistory(searchHistory: SearchHistoryItem[]): UpdateS
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export function searchDatasets() {
-    return (dispatch: Dispatch<UpdateFoundDatasets | MessageLogAction | UpdateSearchHistory>, getState: () => AppState) => {
+    return (dispatch: Dispatch<UpdateFoundDatasets | MessageLogAction | UpdateSearchHistory | StopLoading>, getState: ()
+        => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
         let datasetQuery = state.searchFormState.datasetQuery;
@@ -75,6 +108,9 @@ export function searchDatasets() {
             .then(() => {
                 dispatch(updateSearchHistory(searchHistory));
             })
+            .then(() => {
+                dispatch(stopLoading());
+            })
             .catch((error: string) => {
                 dispatch(postMessage('error', error + ''));
             });
@@ -99,4 +135,8 @@ export function updateFoundDatasets(foundDatasets: QueryResult): UpdateFoundData
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type SearchFormAction = UpdateDatasetQuery | UpdateFoundDatasets | UpdateSearchHistory;
+export type SearchFormAction = UpdateDatasetQuery
+    | UpdateFoundDatasets
+    | UpdateSearchHistory
+    | StartLoading
+    | StopLoading;
