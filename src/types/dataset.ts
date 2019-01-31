@@ -57,38 +57,9 @@ export interface SearchHistoryItem {
     selectedBounds: LatLngBounds;
 }
 
-export interface DatasetMetaData {
-    intidentifier_product_doi: string;
-    received: string;
-    investigators: string;
-    affiliations: string;
-    contact: string;
-    experiment: string;
-    cruise: string;
-    station: string;
-    data_file_name: string;
-    documents: string;
-    calibration_files: string;
-    instrument: string;
-    data_type: string;
-    data_status: string;
-    start_date: string;
-    end_date: string;
-    start_time: string;
-    end_time: string;
-    north_latitude: string;
-    south_latitude: string;
-    east_longitude: string;
-    west_longitude: string;
-    water_depth: string;
-    secchi_depth: string;
-    cloud_percent: string;
-    wind_speed: string;
-    wave_height: string;
-    missing: string;
-    delimiter: string;
-    units: string;
-}
+
+export type DatasetMetaData = Map<string, string>;
+
 
 export interface Dataset {
     id: string;
@@ -97,7 +68,7 @@ export interface Dataset {
     records: number[][];
     longitudes: number[];
     latiudes: number[];
-    attribures: string[];
+    attributes: string[];
     times: string[];
 }
 
