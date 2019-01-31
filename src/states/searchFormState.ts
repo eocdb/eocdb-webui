@@ -3,9 +3,9 @@ import { QueryResult, SearchHistoryItem } from '../types/dataset';
 
 export interface SearchFormState {
     datasetQuery: DatasetQuery;
-    storedDatasetQueries: { [name: string]: DatasetQuery };
     foundDatasets: QueryResult;
     searchHistory: SearchHistoryItem[];
+    loading: boolean;
 }
 
 export function newSearchFormState() {
@@ -15,7 +15,6 @@ export function newSearchFormState() {
             endDate: "2020-01-01",
             geojson: true,
         },
-        storedDatasetQueries: {},
         searchHistory: [],
         foundDatasets: {
             locations: new Map(),
@@ -27,5 +26,6 @@ export function newSearchFormState() {
             },
             total_count: 0,
         },
+        loading: false,
     };
 }
