@@ -1,6 +1,6 @@
 import { SearchFormState, newSearchFormState } from '../states/searchFormState';
 import {
-    SearchFormAction,
+    SearchFormAction, START_LOADING, STOP_LOADING,
     UPDATE_DATASET_QUERY,
     UPDATE_FOUND_DATASETS,
     UPDATE_SEARCH_HISTORY
@@ -22,6 +22,11 @@ export function searchFormReducer(state: SearchFormState, action: SearchFormActi
         case UPDATE_SEARCH_HISTORY: {
             return {...state, searchHistory: action.searchHistory}
         }
+        case START_LOADING: {
+            return {...state, loading: true}
+        }
+        case STOP_LOADING:
+            return {...state, loading: false}
     }
     return state;
 }
