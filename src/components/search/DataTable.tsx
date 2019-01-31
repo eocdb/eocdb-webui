@@ -153,6 +153,8 @@ export interface DataTableProps extends WithStyles<typeof styles> {
 
     selectedDatasets: string[];
     updateSelectedDatasets: (selectedDatasets: string[]) => void;
+
+    startLoading: () => void;
 }
 
 
@@ -164,12 +166,14 @@ class DataTable extends React.Component<DataTableProps> {
     handleChangePage = (event: React.MouseEvent<HTMLButtonElement>, page: number) => {
         this.props.updateDataPage(page);
         this.props.searchDatasets();
+        this.props.startLoading();
     };
 
     handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = parseInt(event.target.value);
         this.props.updateDataRowsPerPage(value);
         this.props.searchDatasets();
+        this.props.startLoading();
     };
 
     handleMetaInfoOpen = (id: string) => {
