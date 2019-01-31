@@ -13,8 +13,6 @@ export function makeUrl(url: string, queryComponents?: QueryComponent[]){
 export function callApi<T>(endpointUrl: string, queryComponents?: QueryComponent[], init?: RequestInit): Promise<Response> {
     const url = makeUrl(endpointUrl, queryComponents);
 
-    console.debug('Calling API: ', url);
-
     return fetch(url, init)
         .then(response => {
             if (!response.ok) {
