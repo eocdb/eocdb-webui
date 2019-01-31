@@ -1,7 +1,11 @@
 import { connect } from 'react-redux';
 
 import { AppState } from '../../states/appState';
-import { updateDatasetQuery, searchDatasets } from '../../actions/searchFormActions';
+import {
+    updateDatasetQuery,
+    searchDatasets,
+    startLoading
+} from '../../actions/searchFormActions';
 import SearchPanel from '../../components/search/SearchPanel';
 import {
     closeAdvancedSearchDialog,
@@ -18,6 +22,7 @@ const mapStateToProps = (state: AppState) => {
         advancedSearchDialogOpen: state.dashboardState.advancedSearchDialogOpen,
         productGroupsOpen: state.dashboardState.productGroupsOpen,
         advancedFilterLog: state.advancedSearchState.filterLog,
+        loading: state.searchFormState.loading,
     };
 };
 
@@ -31,6 +36,8 @@ const mapDispatchToProps = {
     openProductGroups,
     closeProductGroups,
     advancedFilterChange: logChange,
+
+    startLoading,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPanel);
