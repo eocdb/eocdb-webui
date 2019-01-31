@@ -17,7 +17,7 @@ import MultipleSelect from './MultipleSelect';
 import DataTable from "../../containers/search/DataTable";
 import AdvancedSearchDialog from "../../containers/search/AdvancedSeachDialog";
 import { AdvancedSearchItem } from "../../types/advancedSearchDialog";
-import ChipsArray from "./ChipsArray";
+import AdvancedSearchLog from "../../containers/search/AdvancedSearchLog";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -86,32 +86,9 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         this.props.updateDatasetQuery({...this.props.datasetQuery, productGroupNames})
     };
 
-    handleFilterDelete = () => () => {
-        console.log('delete');
-    };
-
     handleSearchDatasets = () => {
         this.props.startLoading();
         this.props.searchDatasets();
-    };
-
-    getFilterChipEntries = () => {
-        /*let res = [];
-        const region = this.props.datasetQuery.region;
-        console.log(region);
-        if(region) {
-            res.push({key: 'region', label: region});
-        }
-        return res;*/
-        return this.props.advancedFilterLog.map(
-            (log: AdvancedSearchItem) => {
-                const label = log.key + ': ' + log.value;
-                return {
-                    key: log.key,
-                    label: label,
-                };
-            }
-        );
     };
 
     render() {
@@ -197,7 +174,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <ChipsArray chipData={this.getFilterChipEntries()} onDelete={this.handleFilterDelete}/>
+                        <AdvancedSearchLog/>
                         <DataTable/>
                     </Grid>
                     <Grid item xs={12} sm={6}>
