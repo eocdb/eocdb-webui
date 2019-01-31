@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+
 const path = require('path');
 
 import { withStyles, WithTheme } from '@material-ui/core/styles';
@@ -134,6 +135,7 @@ export interface DataTableProps extends WithStyles<typeof styles> {
     data: QueryResult;
     page: number;
     rowsPerPage: number;
+
     searchDatasets: () => void;
     updateDataPage: (page: number) => void;
     updateDataRowsPerPage: (rowsPerPage: number) => void;
@@ -145,21 +147,18 @@ export interface DataTableProps extends WithStyles<typeof styles> {
     updateDataset: (datasetId: string) => void;
     dataset: Dataset;
 
+    apiServerUrl: string;
     downloadDocs: boolean;
     updateDownloadDocs: (downloadDocs: boolean) => void;
+
+    selectedDatasets: string[];
+    updateSelectedDatasets: (selectedDatasets: string[]) => void;
 }
 
-interface DataTableState {
-    selected: string[];
-}
 
-class DataTable extends React.Component<DataTableProps, DataTableState> {
+class DataTable extends React.Component<DataTableProps> {
     constructor(props: DataTableProps) {
         super(props);
-
-        this.state = {
-            selected: [],
-        };
     }
 
     handleChangePage = (event: React.MouseEvent<HTMLButtonElement>, page: number) => {
@@ -182,28 +181,66 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
         this.props.closeMetaInfoDialog();
     };
 
-    handleOnSelectAllClick = () => {
+    handleOnSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+        let selectedDatasets: string[] = [];
+        if(event.target.checked) {
+            selectedDatasets = this.props.data.datasets.map(row => {
+                return row.id;
+            });
+        }
 
+        this.props.updateSelectedDatasets(selectedDatasets);
     };
 
     handleUpdateDownloadDocs(event: React.ChangeEvent<HTMLInputElement>) {
         let checked = event.target.checked;
-        console.log(checked);
+
         if (this.props) {
             this.props.updateDownloadDocs(checked);
         }
     }
 
+    handleRowClicked = (event: React.ChangeEvent<HTMLInputElement>, selectedDatasets: string[]) => {
+        const id = event.target.value;
+        const idx = selectedDatasets.indexOf(id);
+        const clonedArray  = Object.assign([], selectedDatasets);
+        console.log(clonedArray);
+        if(event.target.checked) {
+            if (idx === -1) {
+                clonedArray.push(id);
+            }
+        }
+        else{
+            clonedArray.splice(idx, 1);
+        }
+
+        this.props.updateSelectedDatasets(clonedArray);
+    };
+
+    generateDownloadUrl = (): string => {
+        const selectedIds = this.props.selectedDatasets;
+        let url = this.props.apiServerUrl + "/store/download?";
+        if(selectedIds.length > 0){
+            url = url + 'id='
+        }
+        const ids = selectedIds.join('&id=');
+        console.log(url + ids);
+
+        return url + ids;
+    };
+
     isSelected = (id: string) => {
-        console.log('test');
-        return this.state.selected.indexOf(id) !== -1;
+        return this.props.selectedDatasets.indexOf(id) !== -1;
     };
 
     render() {
-        const {classes, data, rowsPerPage, page} = this.props;
+        const {classes, data, rowsPerPage, page, selectedDatasets} = this.props;
         const {datasets, total_count} = data;
-        const numSelected = 1;
+        const numSelected = selectedDatasets.length;
         const hrefStyle: React.CSSProperties = {color: 'black', textDecoration: "none"};
+        const downloadUrl = this.generateDownloadUrl();
+
+        // const MyLink = (props: any)=> {return (<Link to="http://www.gwdg.de" {...props} />);};
 
         return (
             <Paper className={classes.root}>
@@ -217,7 +254,8 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
                             color={"secondary"}
                             key={"btn_download33"}
                             className={classes.button}
-                            disabled={total_count == 0}
+                            disabled={numSelected == 0}
+                            href={downloadUrl}
                     >
                         Download
                         <Icon className={classes.rightIcon}>archive</Icon>
@@ -227,7 +265,7 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
                         control={
                             <Checkbox
                                 value={'docs'}
-                                disabled={total_count == 0}
+                                disabled={numSelected == 0}
                             />
                         }
                         label="Include Docs"
@@ -264,13 +302,16 @@ class DataTable extends React.Component<DataTableProps, DataTableState> {
                                     selected={isSelected}
                                 >
                                     <TableCell padding="checkbox">
-                                        <Checkbox/>
+                                        <Checkbox
+                                            onChange={(event) => this.handleRowClicked(event, selectedDatasets)}
+                                            checked={this.isSelected(row.id)}
+                                            value={row.id}
+                                        />
                                     </TableCell>
                                     <TableCell component="th" scope="row">
                                         <Typography variant="button" gutterBottom>
                                             <a
-                                                href={"https://seabass.gsfc.nasa.gov/archive_preview/AWI/PANGAEA/ANT-XVIII-2/archive/ANT-XVIII_2_pigments.sb"}
-                                                //href={"http://10.2.0.57:4000/eocdb/api/v0.1.0/store/download?expr=path%3A%20*" + fileName +  "*"}
+                                                href={this.props.apiServerUrl + "/store/download?expr=path%3A%20*" + fileName +  "*"}
                                                 download={fileName + '.zip'}
                                                 style={hrefStyle}
                                             >
