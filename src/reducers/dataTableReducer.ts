@@ -6,7 +6,7 @@ import {
     OPEN_METAINFO_DIALOG,
     OPEN_PLOT_DIALOG,
     CLOSE_PLOT_DIALOG,
-    DataTableAction, UPDATE_DOWNLOAD_DOCS,
+    DataTableAction, UPDATE_DOWNLOAD_DOCS, UPDATE_DATASET,
 } from "../actions/dataTableActions";
 
 
@@ -34,6 +34,9 @@ export function dataTableReducer(state: DataTableState, action: DataTableAction)
         }
         case CLOSE_PLOT_DIALOG: {
             return {...state, plotDialogOpen: false};
+        }
+        case UPDATE_DATASET: {
+            return {...state, dataset: action.dataset}
         }
         case UPDATE_DOWNLOAD_DOCS:
             return {...state, downloadDocs: action.downloadDocs};
