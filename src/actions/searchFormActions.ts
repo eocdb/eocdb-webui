@@ -14,11 +14,13 @@ export type START_LOADING = typeof START_LOADING;
 
 export interface StartLoading {
     type: START_LOADING;
+    loading: boolean;
 }
 
 export function startLoading(): StartLoading {
     return {
-        type: START_LOADING
+        type: START_LOADING,
+        loading: true,
     };
 }
 
@@ -30,11 +32,13 @@ export type STOP_LOADING = typeof STOP_LOADING;
 
 export interface StopLoading {
     type: STOP_LOADING;
+    loading: boolean;
 }
 
 export function stopLoading(): StopLoading {
     return {
-        type: STOP_LOADING
+        type: STOP_LOADING,
+        loading: false,
     };
 }
 
@@ -100,9 +104,8 @@ export function searchDatasets() {
 
         let searchHistory = state.searchFormState.searchHistory;
 
-        api.searchDatasets(apiServerUrl, datasetQuery)
+        return api.searchDatasets(apiServerUrl, datasetQuery)
             .then((foundDatasets: QueryResult) => {
-                console.log(foundDatasets);
                 dispatch(updateFoundDatasets(foundDatasets));
             })
             .then(() => {
