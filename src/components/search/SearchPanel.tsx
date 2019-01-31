@@ -4,6 +4,8 @@ import Grid from '@material-ui/core/Grid/Grid';
 import TextField from '@material-ui/core/TextField/TextField';
 import Button from '@material-ui/core/Button/Button';
 import Icon from '@material-ui/core/Icon/Icon';
+import green from '@material-ui/core/colors/green';
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
@@ -28,6 +30,14 @@ const styles = (theme: Theme) => createStyles({
     filterButton: {},
     rightIcon: {},
     tableContainer: {},
+    buttonProgress: {
+        color: green[500],
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
+    },
 });
 
 
@@ -50,6 +60,9 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
 
     advancedFilterLog: AdvancedSearchItem[];
     advancedFilterChange: (filterLog: AdvancedSearchItem[]) => void;
+
+    loading: boolean;
+    startLoading: () => void;
 }
 
 class SearchPanel extends React.PureComponent<SearchPanelProps> {
@@ -77,7 +90,19 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         console.log('delete');
     };
 
+    handleSearchDatasets = () => {
+        this.props.startLoading();
+        this.props.searchDatasets();
+    };
+
     getFilterChipEntries = () => {
+        /*let res = [];
+        const region = this.props.datasetQuery.region;
+        console.log(region);
+        if(region) {
+            res.push({key: 'region', label: region});
+        }
+        return res;*/
         return this.props.advancedFilterLog.map(
             (log: AdvancedSearchItem) => {
                 const label = log.key + ': ' + log.value;
@@ -159,8 +184,9 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         <Button variant="contained"
                                 color="secondary"
                                 className={classes.button}
-                                onClick={this.props.searchDatasets}>
+                                onClick={this.handleSearchDatasets}>
                             Search
+                            {this.props.loading && <CircularProgress size={24} className={classes.buttonProgress} />}
                             <Icon className={classes.rightIcon}>search</Icon>
                         </Button>
                         <AdvancedSearchDialog
