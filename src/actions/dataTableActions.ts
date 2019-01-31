@@ -1,10 +1,26 @@
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 import { Dataset } from "../types/dataset";
 import { Dispatch } from "redux";
 import { MessageLogAction, postMessage } from "./messageLogActions";
 import { AppState } from "../states/appState";
 import * as api from '../api'
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_SELECTED_DATASETS = 'UPDATE_SELECTED_DATASETS';
+export type UPDATE_SELECTED_DATASETS = typeof UPDATE_SELECTED_DATASETS;
+
+export interface UpdateSelectedDatasets {
+    type: UPDATE_SELECTED_DATASETS;
+    selectedDatasets: string[];
+}
+
+export function updateSelectedDatasets(selectedDatasets: string[]): UpdateSelectedDatasets{
+    return {type: UPDATE_SELECTED_DATASETS, selectedDatasets};
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const UPDATE_DATA_PAGE = 'UPDATE_DATA_PAGE';
 export type UPDATE_DATA_PAGE = typeof UPDATE_DATA_PAGE;
@@ -151,4 +167,5 @@ export type DataTableAction = UpdateDataPage
     | OpenPlotDialog
     | ClosePlotDialog
     | UpdateDataset
-    | UpdateDownloadDocs;
+    | UpdateDownloadDocs
+    | UpdateSelectedDatasets;
