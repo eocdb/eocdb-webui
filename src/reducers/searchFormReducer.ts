@@ -23,10 +23,10 @@ export function searchFormReducer(state: SearchFormState, action: SearchFormActi
             return {...state, searchHistory: action.searchHistory}
         }
         case START_LOADING: {
-            return {...state, loading: true}
+            return {...state, loading: action.loading}
         }
         case STOP_LOADING:
-            return {...state, loading: false}
+            return {...state, loading: action.loading}
     }
     return state;
 }
