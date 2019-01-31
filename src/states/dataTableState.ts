@@ -9,6 +9,8 @@ export interface DataTableState {
     downloadDocs: boolean;
 
     dataset: Dataset;
+
+    selectedDatasets: string[];
 }
 
 export function newDataTableState() {
@@ -30,5 +32,6 @@ export function newDataTableState() {
             attributes: [],
             times: [],
         },
+        selectedDatasets: [],
     }
 }
