@@ -6,6 +6,7 @@ export interface SearchFormState {
     foundDatasets: QueryResult;
     searchHistory: SearchHistoryItem[];
     loading: boolean;
+    downloading: boolean;
 }
 
 export function newSearchFormState() {
@@ -27,5 +28,6 @@ export function newSearchFormState() {
             total_count: 0,
         },
         loading: false,
+        downloading: false,
     };
 }
