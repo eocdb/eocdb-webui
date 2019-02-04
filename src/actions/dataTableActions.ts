@@ -137,7 +137,7 @@ export function updateDataset(datasetId: string) {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
 
-        api.getDataset(apiServerUrl, datasetId)
+        api.getDatasetById(apiServerUrl, datasetId)
             .then((foundDataset: Dataset) => {
                 dispatch(_updateDataset(foundDataset));
             })
