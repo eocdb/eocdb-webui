@@ -4,7 +4,8 @@ import { MessageLogAction, postMessage } from './messageLogActions'
 import { QueryResult, SearchHistoryItem } from '../types/dataset';
 import { AppState } from '../states/appState';
 import * as api from '../api'
-import { DatasetQuery } from '../api/searchDatasets';
+import { DatasetQuery } from '../api/findDatasets';
+import { SELECTED_BOUNDS_DEFAULT } from "../states/advancedSearchState";
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,6 +76,32 @@ export function updateSearchHistory(searchHistory: SearchHistoryItem[]): UpdateS
 }
 
 
+function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): DatasetQuery {
+    const selectedBounds = state.searchMapState.selectedBounds;
+    if (selectedBounds) {
+        datasetQuery = {...datasetQuery, region: selectedBounds.toBBoxString()};
+    }
+
+    const selectedBoundsAdvanced = state.advancedSearchState.selectedBounds;
+
+    if (!selectedBoundsAdvanced.equals(SELECTED_BOUNDS_DEFAULT)) {
+        datasetQuery = {...datasetQuery, region: selectedBoundsAdvanced.toBBoxString()};
+    }
+
+    const selectedWavelength = state.advancedSearchState.selectedWavelength;
+
+    if (selectedWavelength !== "all") {
+        datasetQuery = {...datasetQuery, wavelengthsMode: state.advancedSearchState.selectedWavelength};
+    }
+
+    datasetQuery = {...datasetQuery, count: state.dataTableState.rowsPerPage};
+    datasetQuery = {...datasetQuery, offset: ((state.dataTableState.page * state.dataTableState.rowsPerPage) + 1)};
+
+    datasetQuery = {...datasetQuery, geojson: true};
+
+    return datasetQuery;
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export function searchDatasets() {
@@ -83,28 +110,12 @@ export function searchDatasets() {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
         let datasetQuery = state.searchFormState.datasetQuery;
-        const selectedBounds = state.searchMapState.selectedBounds;
-        if (selectedBounds) {
-            datasetQuery = {...datasetQuery, region: selectedBounds.toBBoxString()};
-        }
 
-        const left = state.advancedSearchState.left;
-        const bottom = state.advancedSearchState.bottom;
-        const right = state.advancedSearchState.right;
-        const top = state.advancedSearchState.top;
-
-        if(left>0 && bottom>0 && right>0 && top>0){
-            datasetQuery = {...datasetQuery, region: `${left},${bottom},${right},${top}`};
-        }
-
-        datasetQuery = {...datasetQuery, count: state.dataTableState.rowsPerPage};
-        datasetQuery = {...datasetQuery, offset: ((state.dataTableState.page * state.dataTableState.rowsPerPage) + 1)};
-
-        datasetQuery = {...datasetQuery, geojson: true};
+        datasetQuery = collectDatasetQuery(state, datasetQuery);
 
         let searchHistory = state.searchFormState.searchHistory;
 
-        return api.searchDatasets(apiServerUrl, datasetQuery)
+        return api.findDatasets(apiServerUrl, datasetQuery)
             .then((foundDatasets: QueryResult) => {
                 dispatch(updateFoundDatasets(foundDatasets));
             })
@@ -119,6 +130,7 @@ export function searchDatasets() {
             });
     };
 }
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -136,10 +148,52 @@ export function updateFoundDatasets(foundDatasets: QueryResult): UpdateFoundData
     };
 }
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export function downloadDatasets() {
+    return (dispatch: Dispatch<UpdateDownloadedDatasets | MessageLogAction>, getState: ()
+        => AppState) => {
+        const state = getState();
+        const apiServerUrl = state.configState.apiServerUrl;
+        let datasetQuery = state.searchFormState.datasetQuery;
+
+        datasetQuery = collectDatasetQuery(state, datasetQuery);
+
+        return api.downloadStoreFilesByIds(apiServerUrl, datasetQuery)
+            .then(() => {
+                dispatch(updateDownloadedDatasets());
+            })
+            .catch((error: string) => {
+                dispatch(postMessage('error', error + ''));
+            });
+    };
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_DOWNLOADED_DATASETS = 'UPDATE_DOWNLOADED_DATASETS';
+export type UPDATE_DOWNLOADED_DATASETS = typeof UPDATE_DOWNLOADED_DATASETS;
+
+export interface UpdateDownloadedDatasets {
+    type: UPDATE_DOWNLOADED_DATASETS;
+    downloading: boolean;
+}
+
+export function updateDownloadedDatasets(): UpdateDownloadedDatasets {
+    return {
+        type: UPDATE_DOWNLOADED_DATASETS,
+        downloading: false,
+    };
+}
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type SearchFormAction = UpdateDatasetQuery
     | UpdateFoundDatasets
+    | UpdateDownloadedDatasets
     | UpdateSearchHistory
     | StartLoading
     | StopLoading;
