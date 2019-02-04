@@ -11,7 +11,7 @@ import {
     updateSelectedDatasets,
 } from '../../actions/dataTableActions';
 import DataTable from '../../components/search/DataTable';
-import { searchDatasets, startLoading } from "../../actions/searchFormActions";
+import { downloadDatasets, searchDatasets, startLoading } from "../../actions/searchFormActions";
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -27,6 +27,8 @@ const mapStateToProps = (state: AppState) => {
         selectedDatasets: state.dataTableState.selectedDatasets,
 
         apiServerUrl: state.configState.apiServerUrl,
+
+        downloading: state.searchFormState.downloading,
     };
 };
 
@@ -39,6 +41,7 @@ const mapDispatchToProps = {
     searchDatasets,
     updateDownloadDocs,
     updateSelectedDatasets,
+    downloadDatasets,
     startLoading,
 };
 
