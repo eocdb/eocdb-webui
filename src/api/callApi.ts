@@ -1,8 +1,10 @@
 import { HTTPError } from './errors';
+import { DEBUG } from "./config";
+
 
 export type QueryComponent = [string, string];
 
-export function makeUrl(url: string, queryComponents?: QueryComponent[]){
+export function makeUrl(url: string, queryComponents?: QueryComponent[]) {
     if (queryComponents && queryComponents.length > 0) {
         const queryString = queryComponents.map(kv => kv.map(encodeURIComponent).join('=')).join('&');
         url += '?' + queryString;
@@ -10,8 +12,12 @@ export function makeUrl(url: string, queryComponents?: QueryComponent[]){
     return url;
 }
 
-export function callApi<T>(endpointUrl: string, queryComponents?: QueryComponent[], init?: RequestInit): Promise<Response> {
+export function callApi(endpointUrl: string, queryComponents?: QueryComponent[], init?: RequestInit): Promise<Response> {
     const url = makeUrl(endpointUrl, queryComponents);
+
+    if (DEBUG) {
+        console.debug('Calling API: ', url);
+    }
 
     return fetch(url, init)
         .then(response => {
@@ -27,6 +33,31 @@ export function callApi<T>(endpointUrl: string, queryComponents?: QueryComponent
             throw error;
         });
 }
+
+function download(blob: Blob){
+    const fileName: string = 'my-test.csv';
+    const objectUrl: string = URL.createObjectURL(blob);
+    const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
+
+    a.href = objectUrl;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+
+    document.body.removeChild(a);
+    URL.revokeObjectURL(objectUrl);
+}
+
+
+export function callBlobApi(endpointUrl: string, queryComponents?: QueryComponent[], init?: RequestInit): Promise<Blob> {
+    return callApi(endpointUrl, queryComponents, init).then(response => response.blob())
+        .then((blob: Blob) => {
+            download(blob);
+
+            return blob;
+        });
+}
+
 
 export function callJsonApi<T>(endpointUrl: string, queryComponents?: QueryComponent[], init?: RequestInit): Promise<T> {
     return callApi(endpointUrl, queryComponents, init).then(response => response.json());
