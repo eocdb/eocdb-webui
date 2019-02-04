@@ -264,7 +264,6 @@ class DataTable extends React.Component<DataTableProps> {
                         Download
                         <Icon className={classes.rightIcon}>archive</Icon>
                         {this.props.downloading && <CircularProgress size={24} className={classes.buttonProgress} />}
-                        <Icon className={classes.rightIcon}>search</Icon>
                     </Button>
                     <FormControlLabel
                         className={classes.button}
