@@ -2,9 +2,12 @@ import { PureComponent } from "react";
 import TextField from "@material-ui/core/TextField/TextField";
 import * as React from "react";
 import { Theme, withStyles, WithStyles } from "@material-ui/core";
+import { LatLng, latLngBounds, LatLngBounds } from 'leaflet';
+
 import createStyles from "@material-ui/core/styles/createStyles";
 
 
+// noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) =>  createStyles({
     searchField: {
         width: 300,
@@ -16,79 +19,122 @@ const styles = (theme: Theme) =>  createStyles({
 });
 
 interface BBoxInputProps extends WithStyles<typeof styles>{
-    onBBoxChange: (left: number, bottom: number, right: number, top: number) => void;
-    left: number;
-    bottom: number;
-    right: number;
-    top: number;
+    onBBoxChange: (selectedBounds: LatLngBounds) => void;
+    selectedBounds: LatLngBounds;
 }
 
 
 class BBoxInput extends PureComponent<BBoxInputProps> {
     constructor(props: BBoxInputProps) {
         super(props);
-
     }
 
-    handleLeftChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const left = event.target.valueAsNumber;
-        this.props.onBBoxChange(left, this.props.bottom, this.props.right, this.props.top);
+    createNewBBox = (south: number, west: number, north: number, east: number) => {
+        const newSouthWest = new LatLng(south, west);
+        const newNorthEast = new LatLng(north, east);
+        return latLngBounds(newSouthWest, newNorthEast);
     };
 
-    handleBottomChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const bottom = event.target.valueAsNumber;
-        this.props.onBBoxChange(this.props.left, bottom, this.props.right, this.props.top);
+    handleSouthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        let south = event.target.valueAsNumber;
+        const {selectedBounds} = this.props;
+
+        if(!south) {
+            south = 0;
+        }
+        else if(south > selectedBounds.getNorth()){
+            south = selectedBounds.getNorth();
+        }
+
+        const newBBox = this.createNewBBox(
+            south,
+            selectedBounds.getWest(),
+            selectedBounds.getNorth(),
+            selectedBounds.getEast()
+        );
+        this.props.onBBoxChange(newBBox);
     };
 
-    handleRightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const right = event.target.valueAsNumber;
-        this.props.onBBoxChange(this.props.left, this.props.bottom, right, this.props.top);
+    handleWestChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const west = event.target.valueAsNumber;
+
+        const {selectedBounds} = this.props;
+
+        const newBBox = this.createNewBBox(
+            selectedBounds.getSouth(),
+            west,
+            selectedBounds.getNorth(),
+            selectedBounds.getEast()
+        );
+
+        this.props.onBBoxChange(newBBox);
     };
 
-    handleTopChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const top = event.target.valueAsNumber;
-        this.props.onBBoxChange(this.props.left, this.props.bottom, this.props.right, top);
+    handleNorthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const north = event.target.valueAsNumber;
+        const {selectedBounds} = this.props;
+
+        const newBBox = this.createNewBBox(
+            selectedBounds.getSouth(),
+            selectedBounds.getWest(),
+            north,
+            selectedBounds.getEast()
+        );
+        this.props.onBBoxChange(newBBox);
+    };
+
+    handleEastChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const east = event.target.valueAsNumber;
+        const {selectedBounds} = this.props;
+
+        const newBBox = this.createNewBBox(
+            selectedBounds.getSouth(),
+            selectedBounds.getWest(),
+            selectedBounds.getNorth(),
+            east
+        );
+        this.props.onBBoxChange(newBBox);
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes, selectedBounds } = this.props;
         return (
             <div>
                 <TextField
-                    id={'bbox_left'}
-                    label={'Left'}
-                    variant={'outlined'}
-                    type={"number"}
-                    className={classes.searchField}
-                    onChange={this.handleLeftChange}
-                    value={this.props.left}
-                />
-                <TextField
                     id={'bbox_bottom'}
-                    label={'Bottom'}
+                    label={'South'}
                     variant={'outlined'}
                     type={"number"}
                     className={classes.searchField}
-                    onChange={this.handleBottomChange}
-                    value={this.props.bottom}
+                    onChange={this.handleSouthChange}
+                    value={selectedBounds.getSouth()}
                 />
                 <TextField
-                    id={'bbox_right'}
-                    label={'Right'}
+                    id={'bbox_left'}
+                    label={'West'}
                     variant={'outlined'}
                     type={"number"}
                     className={classes.searchField}
-                    onChange={this.handleRightChange}
-                    value={this.props.right}
+                    onChange={this.handleWestChange}
+                    value={selectedBounds.getWest()}
                 />
                 <TextField
                     id={'bbox_top'}
-                    label={'Top'}
+                    label={'North'}
                     variant={'outlined'}
                     type={"number"}
                     className={classes.searchField}
-                    onChange={this.handleTopChange}
-                    value={this.props.top}
+                    onChange={this.handleNorthChange}
+                    value={selectedBounds.getNorth()}
+                />
+                <TextField
+                    id={'bbox_right'}
+                    label={'East'}
+                    variant={'outlined'}
+                    type={"number"}
+                    className={classes.searchField}
+                    onChange={this.handleEastChange}
+                    value={selectedBounds.getEast()}
                 />
             </div>
         )
