@@ -1,29 +1,23 @@
 import { AdvancedSearchState } from "../states/advancedSearchState";
 
 import {
-    AdvancedSearchAction, BOTTOM_CHANGE, LEFT_CHANGE,
-    LOG_CHANGE, RIGHT_CHANGE, TOP_CHANGE
+    AdvancedSearchAction,
+    BBOX_CHANGE, UPDATE_SELECTED_WAVELENGTH
 } from "../actions/advancedSearchActions";
 
 import { newAdvancedSearchState } from "../states/advancedSearchState";
 
-const initialState = newAdvancedSearchState()
+const initialState = newAdvancedSearchState();
 
 export function advancedSearchReducer(state: AdvancedSearchState, action: AdvancedSearchAction) {
     if (typeof state === 'undefined') {
         state = initialState;
     }
     switch (action.type) {
-        case LOG_CHANGE:
-            return {...state, filterLog: action.filterLog};
-        case LEFT_CHANGE:
-            return {...state, left: action.left};
-        case BOTTOM_CHANGE:
-            return {...state, bottom: action.bottom};
-        case RIGHT_CHANGE:
-            return {...state, right: action.right};
-        case TOP_CHANGE:
-            return {...state, top: action.top};
+        case BBOX_CHANGE:
+            return {...state, selectedBounds: action.selectedBounds};
+        case UPDATE_SELECTED_WAVELENGTH:
+            return {...state, selectedWavelength: action.selectedWavelength};
     }
     return state;
 }
