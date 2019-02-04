@@ -41,7 +41,7 @@ export function findDatasets(apiServerUrl: string, datasetQuery: DatasetQuery): 
  * Generates a URL query string from a DatasetQuery which contains the 'value' state of the search form.
  * @param datasetQuery
  */
-export function collectComponents(datasetQuery: DatasetQuery){
+export function collectComponents(datasetQuery: DatasetQuery) {
 
     const queryComponents: QueryComponent[] = [];
     collectSearchExprComponent(datasetQuery, queryComponents);
@@ -59,9 +59,7 @@ export function collectComponents(datasetQuery: DatasetQuery){
 
 function collectDatasetIds(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
     if (queryParameters.datasetIds) {
-        for (const id of queryParameters.datasetIds) {
-            queryComponents.push(['id', id]);
-        }
+        queryComponents.push(['id_list', JSON.stringify(queryParameters.datasetIds)]);
     }
 }
 
