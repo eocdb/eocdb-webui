@@ -15,6 +15,7 @@ export interface DatasetQuery {
     productGroupNames?: string[];
     measurementType?: MeasurementType;
     wavelengthsMode?: WavelengthsMode;
+    datasetIds?: string[];
     offset?: number;
     count?: number;
     geojson?: boolean;
@@ -22,7 +23,26 @@ export interface DatasetQuery {
 
 type QueryComponent = [string, string];
 
+
+/**
+ *
+ * @param apiServerUrl: URL of the OCDB API
+ * @param datasetQuery: query parameters to pass to the search dataset get request
+ */
+export function findDatasets(apiServerUrl: string, datasetQuery: DatasetQuery): Promise<QueryResult> {
+
+    const queryComponents = collectComponents(datasetQuery);
+
+    return callJsonApi<QueryResult>(apiServerUrl + '/datasets', queryComponents);
+}
+
+
+/**
+ * Generates a URL query string from a DatasetQuery which contains the 'value' state of the search form.
+ * @param datasetQuery
+ */
 export function collectComponents(datasetQuery: DatasetQuery){
+
     const queryComponents: QueryComponent[] = [];
     collectSearchExprComponent(datasetQuery, queryComponents);
     collectTimeComponent(datasetQuery, queryComponents);
@@ -32,13 +52,17 @@ export function collectComponents(datasetQuery: DatasetQuery){
     collectWavelengthsTypeComponent(datasetQuery, queryComponents);
     collectOffsetCountComponents(datasetQuery, queryComponents);
     collectGeoJsonComponent(datasetQuery, queryComponents);
+    collectDatasetIds(datasetQuery, queryComponents);
     return queryComponents;
 }
 
-export function searchDatasets(apiServerUrl: string, datasetQuery: DatasetQuery): Promise<QueryResult> {
-    const queryComponents = collectComponents(datasetQuery);
 
-    return callJsonApi<QueryResult>(apiServerUrl + '/datasets', queryComponents);
+function collectDatasetIds(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
+    if (queryParameters.datasetIds) {
+        for (const id of queryParameters.datasetIds) {
+            queryComponents.push(['id', id]);
+        }
+    }
 }
 
 
