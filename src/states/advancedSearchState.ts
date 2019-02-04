@@ -1,20 +1,16 @@
-import { AdvancedSearchItem } from "../types/advancedSearchDialog";
+import { LatLng, LatLngBounds } from "leaflet";
+import { WavelengthsMode } from "../api/findDatasets";
 
 export interface AdvancedSearchState {
-    left: number;
-    bottom: number;
-    right: number;
-    top: number;
-    filterLog: AdvancedSearchItem[];
+    selectedBounds: LatLngBounds;
+    selectedWavelength: WavelengthsMode;
 }
 
+export const SELECTED_BOUNDS_DEFAULT = new LatLngBounds(new LatLng(0, 0), new LatLng(0, 0));
 
-export function newAdvancedSearchState() {
+export function newAdvancedSearchState(): AdvancedSearchState  {
     return {
-        left: 0,
-        bottom: 0,
-        right: 0,
-        top: 0,
-        filterLog: [],
+        selectedBounds: SELECTED_BOUNDS_DEFAULT,
+        selectedWavelength: 'all',
     };
 }
