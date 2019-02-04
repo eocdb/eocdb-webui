@@ -5,6 +5,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 import Select from "@material-ui/core/Select/Select";
 import FormControl from "@material-ui/core/FormControl/FormControl";
+import { SelectItem } from "./SelectItems";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -21,19 +22,20 @@ const styles = (theme: Theme) => createStyles({
     },
 });
 
-interface WaveLengthSelectProps extends WithStyles<typeof styles> {
-    currentSelect: string;
-    //onChange: () => void;
+interface SimpleSelectProps extends WithStyles<typeof styles> {
+    name: string;
+    selectedItem: string;
+    items: SelectItem[];
+    onChange: (selectedItem: string) => void;
 }
 
-class WaveLengthSelect extends React.Component<WaveLengthSelectProps> {
-    constructor(props: WaveLengthSelectProps) {
+class SimpleSelect extends React.Component<SimpleSelectProps> {
+    constructor(props: SimpleSelectProps) {
         super(props);
-
     }
 
     handleOnChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(event);
+        this.props.onChange(event.target.value);
     };
 
     render() {
@@ -41,19 +43,20 @@ class WaveLengthSelect extends React.Component<WaveLengthSelectProps> {
         return (
             <FormControl className={classes.formControl}>
                 <Select
-                    value={this.props.currentSelect}
-                    name={'Wavelength'}
+                    value={this.props.selectedItem}
+                    name={this.props.name}
                     onChange={this.handleOnChange}
                     inputProps={{
-                        name: 'WaveLength',
-                        id: 'wavelength',
+                        name: this.props.name,
+                        id: this.props.name.toLocaleLowerCase(),
                     }}
                 >
-                    <MenuItem value="">
-                        <em>All</em>
+                    <MenuItem value={"all"}>
+                        <em>all</em>
                     </MenuItem>
-                    <MenuItem value={'Multispectral'}>Multispectral</MenuItem>
-                    <MenuItem value={'Hyperspectral'}>Hyperspectral</MenuItem>
+                    {this.props.items.map((item: SelectItem) => {
+                        return (<MenuItem key={item.key} value={item.key}>{item.label}</MenuItem>);
+                    })}
                 </Select>
             </FormControl>
         );
@@ -61,4 +64,4 @@ class WaveLengthSelect extends React.Component<WaveLengthSelectProps> {
 }
 
 
-export default withStyles(styles)(WaveLengthSelect)
+export default withStyles(styles)(SimpleSelect)
