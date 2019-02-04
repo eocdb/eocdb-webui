@@ -15,8 +15,7 @@ import { DatasetQuery } from '../../api/index';
 import { StoreInfo } from '../../types/dataset';
 import MultipleSelect from './MultipleSelect';
 import DataTable from "../../containers/search/DataTable";
-import AdvancedSearchDialog from "../../containers/search/AdvancedSeachDialog";
-import { AdvancedSearchItem } from "../../types/advancedSearchDialog";
+import AdvancedSearchDialog from "../../containers/search/AdvancedSearchDialog";
 import AdvancedSearchLog from "../../containers/search/AdvancedSearchLog";
 
 
@@ -57,9 +56,6 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     productGroupsOpen: boolean;
     openProductGroups: () => void;
     closeProductGroups: () => void;
-
-    advancedFilterLog: AdvancedSearchItem[];
-    advancedFilterChange: (filterLog: AdvancedSearchItem[]) => void;
 
     loading: boolean;
     startLoading: () => void;
@@ -169,7 +165,6 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         <AdvancedSearchDialog
                             open={this.props.advancedSearchDialogOpen}
                             onClose={this.props.closeAdvancedSearchDialog}
-                            logChange={this.props.advancedFilterChange}
                         />
 
                     </Grid>
