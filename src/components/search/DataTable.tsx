@@ -1,8 +1,5 @@
 import * as React from 'react';
-
-
-const path = require('path');
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { withStyles, WithTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -26,6 +23,9 @@ import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
 import Typography from "@material-ui/core/Typography/Typography";
 import Grid from "@material-ui/core/Grid/Grid";
+import green from "@material-ui/core/colors/green";
+
+const path = require('path');
 
 
 const actionsStyles = (theme: Theme) => createStyles({
@@ -128,6 +128,14 @@ const styles = (theme: Theme) => createStyles(
             width: '100%',
             border: '1px solid red',
         },
+        buttonProgress: {
+            color: green[500],
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            marginTop: -12,
+            marginLeft: -12,
+        },
     });
 
 
@@ -155,6 +163,9 @@ export interface DataTableProps extends WithStyles<typeof styles> {
     updateSelectedDatasets: (selectedDatasets: string[]) => void;
 
     startLoading: () => void;
+
+    downloadDatasets: (selectedDatasets: string[]) => void;
+    downloading: boolean;
 }
 
 
@@ -221,20 +232,12 @@ class DataTable extends React.Component<DataTableProps> {
         this.props.updateSelectedDatasets(clonedArray);
     };
 
-    generateDownloadUrl = (): string => {
-        const selectedIds = this.props.selectedDatasets;
-        let url = this.props.apiServerUrl + "/store/download?";
-        if(selectedIds.length > 0){
-            url = url + 'id='
-        }
-        const ids = selectedIds.join('&id=');
-        console.log(url + ids);
-
-        return url + ids;
-    };
-
     isSelected = (id: string) => {
         return this.props.selectedDatasets.indexOf(id) !== -1;
+    };
+
+    handleDownloadClick = (selectedDatasets: string[]) => {
+        this.props.downloadDatasets(selectedDatasets);
     };
 
     render() {
@@ -242,9 +245,6 @@ class DataTable extends React.Component<DataTableProps> {
         const {datasets, total_count} = data;
         const numSelected = selectedDatasets.length;
         const hrefStyle: React.CSSProperties = {color: 'black', textDecoration: "none"};
-        const downloadUrl = this.generateDownloadUrl();
-
-        // const MyLink = (props: any)=> {return (<Link to="http://www.gwdg.de" {...props} />);};
 
         return (
             <Paper className={classes.root}>
@@ -259,10 +259,12 @@ class DataTable extends React.Component<DataTableProps> {
                             key={"btn_download33"}
                             className={classes.button}
                             disabled={numSelected == 0}
-                            href={downloadUrl}
+                            onClick={() => this.handleDownloadClick(selectedDatasets)}
                     >
                         Download
                         <Icon className={classes.rightIcon}>archive</Icon>
+                        {this.props.downloading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                        <Icon className={classes.rightIcon}>search</Icon>
                     </Button>
                     <FormControlLabel
                         className={classes.button}
@@ -315,7 +317,7 @@ class DataTable extends React.Component<DataTableProps> {
                                     <TableCell component="th" scope="row">
                                         <Typography variant="button" gutterBottom>
                                             <a
-                                                href={this.props.apiServerUrl + "/store/download?expr=path%3A%20*" + fileName +  "*"}
+                                                href={this.props.apiServerUrl + "/store/download?id=" + row.id}
                                                 download={fileName + '.zip'}
                                                 style={hrefStyle}
                                             >
