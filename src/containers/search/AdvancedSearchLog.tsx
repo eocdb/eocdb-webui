@@ -1,19 +1,19 @@
 import { connect } from "react-redux";
 import { AppState } from "../../states/appState";
 import AdvancedSearchLog from "../../components/search/AdvancedSearchLog";
-import { leftChange, rightChange } from "../../actions/advancedSearchActions";
+import { bboxChange, updateSelectedWavelength } from "../../actions/advancedSearchActions";
 
 
 const mapStateToProps = (state: AppState) => {
     return {
-        left: state.advancedSearchState.left,
-        right: state.advancedSearchState.right,
+        selectedBounds: state.advancedSearchState.selectedBounds,
+        selectedWavelength: state.advancedSearchState.selectedWavelength,
     };
 };
 
 const mapDispatchToProps = {
-    leftChange,
-    rightChange,
+    onBBoxChange: bboxChange,
+    onWavelengthSelect: updateSelectedWavelength,
 };
 
 
