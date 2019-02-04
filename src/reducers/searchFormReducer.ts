@@ -1,7 +1,7 @@
 import { SearchFormState, newSearchFormState } from '../states/searchFormState';
 import {
     SearchFormAction, START_LOADING, STOP_LOADING,
-    UPDATE_DATASET_QUERY,
+    UPDATE_DATASET_QUERY, UPDATE_DOWNLOADED_DATASETS,
     UPDATE_FOUND_DATASETS,
     UPDATE_SEARCH_HISTORY
 } from '../actions/searchFormActions';
@@ -25,8 +25,12 @@ export function searchFormReducer(state: SearchFormState, action: SearchFormActi
         case START_LOADING: {
             return {...state, loading: action.loading}
         }
-        case STOP_LOADING:
+        case STOP_LOADING: {
             return {...state, loading: action.loading}
+        }
+        case UPDATE_DOWNLOADED_DATASETS: {
+            return {...state, downloading: action.downloading}
+        }
     }
     return state;
 }
