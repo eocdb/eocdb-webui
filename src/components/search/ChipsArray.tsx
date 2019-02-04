@@ -23,7 +23,7 @@ const styles = (theme: Theme) => createStyles({
 
 interface ChipsArrayProps extends WithStyles<typeof styles> {
     chipData: ChipEntry[];
-    onDelete: () => void;
+    onDelete: (key: string) => void;
 }
 
 class ChipsArray extends React.PureComponent<ChipsArrayProps> {
@@ -31,9 +31,8 @@ class ChipsArray extends React.PureComponent<ChipsArrayProps> {
         super(props);
     }
 
-    handleDelete = (chip: any) => {
-        console.log(chip);
-        //this.props.onDelete(chip);
+    handleDelete = (key: string) => {
+        this.props.onDelete(key);
     };
 
     render() {
@@ -53,7 +52,7 @@ class ChipsArray extends React.PureComponent<ChipsArrayProps> {
                                 <Chip
                                     key={chip.key}
                                     label={chip.label}
-                                    onDelete={this.handleDelete}
+                                    onDelete={() => this.handleDelete(chip.key)}
                                     className={classes.chip}
                                 />
                             );
