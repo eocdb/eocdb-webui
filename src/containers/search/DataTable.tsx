@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 
 import { AppState } from '../../states/appState';
 import {
-    closeMetaInfoDialog,
-    openMetaInfoDialog,
+    closeMetaInfoDialog, downloadDatasets,
+    openMetaInfoDialog, startDownloading,
     updateDataPage,
     updateDataRowsPerPage,
     updateDataset,
@@ -11,7 +11,7 @@ import {
     updateSelectedDatasets,
 } from '../../actions/dataTableActions';
 import DataTable from '../../components/search/DataTable';
-import { downloadDatasets, searchDatasets, startLoading } from "../../actions/searchFormActions";
+import { searchDatasets, startLoading } from "../../actions/searchFormActions";
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -28,7 +28,7 @@ const mapStateToProps = (state: AppState) => {
 
         apiServerUrl: state.configState.apiServerUrl,
 
-        downloading: state.searchFormState.downloading,
+        downloading: state.dataTableState.downloading,
     };
 };
 
@@ -43,6 +43,7 @@ const mapDispatchToProps = {
     updateSelectedDatasets,
     downloadDatasets,
     startLoading,
+    startDownloading,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataTable);
