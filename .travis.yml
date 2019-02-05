@@ -2,10 +2,10 @@ language: node_js
 node_js:
   - "stable"
 cache:
+  yarn: true
   directories:
     - node_modules
 script:
-  - npm install --global yarn
   - yarn install
   - yarn run build
 deploy:
