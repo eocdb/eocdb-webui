@@ -149,51 +149,12 @@ export function updateFoundDatasets(foundDatasets: QueryResult): UpdateFoundData
 }
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export function downloadDatasets() {
-    return (dispatch: Dispatch<UpdateDownloadedDatasets | MessageLogAction>, getState: ()
-        => AppState) => {
-        const state = getState();
-        const apiServerUrl = state.configState.apiServerUrl;
-        let datasetQuery = state.searchFormState.datasetQuery;
-
-        datasetQuery = collectDatasetQuery(state, datasetQuery);
-
-        return api.downloadStoreFilesByIds(apiServerUrl, datasetQuery)
-            .then(() => {
-                dispatch(updateDownloadedDatasets());
-            })
-            .catch((error: string) => {
-                dispatch(postMessage('error', error + ''));
-            });
-    };
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const UPDATE_DOWNLOADED_DATASETS = 'UPDATE_DOWNLOADED_DATASETS';
-export type UPDATE_DOWNLOADED_DATASETS = typeof UPDATE_DOWNLOADED_DATASETS;
-
-export interface UpdateDownloadedDatasets {
-    type: UPDATE_DOWNLOADED_DATASETS;
-    downloading: boolean;
-}
-
-export function updateDownloadedDatasets(): UpdateDownloadedDatasets {
-    return {
-        type: UPDATE_DOWNLOADED_DATASETS,
-        downloading: false,
-    };
-}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type SearchFormAction = UpdateDatasetQuery
     | UpdateFoundDatasets
-    | UpdateDownloadedDatasets
     | UpdateSearchHistory
     | StartLoading
     | StopLoading;
