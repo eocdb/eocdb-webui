@@ -6,7 +6,12 @@ import {
     OPEN_METAINFO_DIALOG,
     OPEN_PLOT_DIALOG,
     CLOSE_PLOT_DIALOG,
-    DataTableAction, UPDATE_DOWNLOAD_DOCS, UPDATE_DATASET, UPDATE_SELECTED_DATASETS,
+    DataTableAction,
+    UPDATE_DOWNLOAD_DOCS,
+    UPDATE_DATASET,
+    UPDATE_SELECTED_DATASETS,
+    STOP_DOWNLOADING,
+    START_DOWNLOADING,
 } from "../actions/dataTableActions";
 
 
@@ -43,6 +48,12 @@ export function dataTableReducer(state: DataTableState, action: DataTableAction)
         }
         case UPDATE_SELECTED_DATASETS: {
             return {...state, selectedDatasets: action.selectedDatasets}
+        }
+        case START_DOWNLOADING:{
+            return {...state, downloading: action.downloading}
+        }
+        case STOP_DOWNLOADING:{
+            return {...state, downloading: action.downloading}
         }
     }
     return state;
