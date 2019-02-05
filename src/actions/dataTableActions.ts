@@ -157,6 +157,63 @@ export function _updateDataset(dataset: Dataset): UpdateDataset {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export function downloadDatasets() {
+    return (dispatch: Dispatch<UpdateSelectedDatasets | StopDownloading | MessageLogAction>, getState: ()
+        => AppState) => {
+        const state = getState();
+        const apiServerUrl = state.configState.apiServerUrl;
+        const datasetIds = state.dataTableState.selectedDatasets;
+        const downloadDocs = state.dataTableState.downloadDocs;
+
+        return api.downloadStoreFilesByIds(apiServerUrl, datasetIds, downloadDocs)
+            .then(() => {
+                dispatch(stopDownloading());
+            })
+            .catch((error: string) => {
+                dispatch(postMessage('error', error + ''));
+            });
+    };
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const START_DOWNLOADING = 'START_DOWNLOADING';
+export type START_DOWNLOADING = typeof START_DOWNLOADING;
+
+export interface StartDownloading {
+    type: START_DOWNLOADING;
+    downloading: boolean;
+}
+
+export function startDownloading(): StartDownloading {
+    return {
+        type: START_DOWNLOADING,
+        downloading: true,
+    };
+}
+
+
+export const STOP_DOWNLOADING = 'STOP_DOWNLOADING';
+export type STOP_DOWNLOADING = typeof STOP_DOWNLOADING;
+
+export interface StopDownloading {
+    type: STOP_DOWNLOADING;
+    downloading: boolean;
+}
+
+export function stopDownloading(): StopDownloading {
+    return {
+        type: STOP_DOWNLOADING,
+        downloading: false,
+    };
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type DataTableAction = UpdateDataPage
     | UpdateDataRowsPerPage
@@ -168,4 +225,6 @@ export type DataTableAction = UpdateDataPage
     | ClosePlotDialog
     | UpdateDataset
     | UpdateDownloadDocs
-    | UpdateSelectedDatasets;
+    | UpdateSelectedDatasets
+    | StartDownloading
+    | StopDownloading;
