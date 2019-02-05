@@ -6,11 +6,13 @@ export interface DataTableState {
 
     metaInfoDialogOpen: boolean;
     plotDialogOpen: boolean;
-    downloadDocs: boolean;
 
     dataset: Dataset;
 
     selectedDatasets: string[];
+    downloadDocs: boolean;
+
+    downloading: boolean;
 }
 
 export function newDataTableState() {
@@ -33,5 +35,6 @@ export function newDataTableState() {
             times: [],
         },
         selectedDatasets: [],
+        downloading: false,
     }
 }
