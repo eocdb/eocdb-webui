@@ -163,6 +163,7 @@ export interface DataTableProps extends WithStyles<typeof styles> {
     updateSelectedDatasets: (selectedDatasets: string[]) => void;
 
     startLoading: () => void;
+    startDownloading: () => void;
 
     downloadDatasets: (selectedDatasets: string[]) => void;
     downloading: boolean;
@@ -207,13 +208,10 @@ class DataTable extends React.Component<DataTableProps> {
         this.props.updateSelectedDatasets(selectedDatasets);
     };
 
-    handleUpdateDownloadDocs(event: React.ChangeEvent<HTMLInputElement>) {
+    handleUpdateDownloadDocs = (event: React.ChangeEvent<HTMLInputElement>) => {
         let checked = event.target.checked;
-
-        if (this.props) {
-            this.props.updateDownloadDocs(checked);
-        }
-    }
+        this.props.updateDownloadDocs(checked);
+    };
 
     handleRowClicked = (event: React.ChangeEvent<HTMLInputElement>, selectedDatasets: string[]) => {
         const id = event.target.value;
@@ -237,6 +235,7 @@ class DataTable extends React.Component<DataTableProps> {
     };
 
     handleDownloadClick = (selectedDatasets: string[]) => {
+        this.props.startDownloading();
         this.props.downloadDatasets(selectedDatasets);
     };
 
