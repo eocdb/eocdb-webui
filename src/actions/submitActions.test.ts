@@ -6,7 +6,7 @@ import {
     UPDATE_DATA_FILES,
     updateDataFiles,
     updateDocFiles,
-    UPDATE_DOC_FILES,
+    UPDATE_DOC_FILES, UPDATE_SUBMISSION_ID, updateSubmissionId,
 }
     from "./submitActions";
 
@@ -25,6 +25,15 @@ describe("submitActions", () => {
         };
 
         expect(closeSubmitSteps()).toEqual(expectedAction);
+    });
+
+    it("updateSubmissionId", () => {
+        const expectedAction = {
+            type: UPDATE_SUBMISSION_ID,
+            submissionId: '',
+        };
+
+        expect(updateSubmissionId('')).toEqual(expectedAction);
     });
 
     it("updateDataFiles", () => {

@@ -4,6 +4,8 @@ describe('submitState', () => {
     it('newSubmitState', () => {
         const expected = {
             submitStepsOpen: false,
+
+            submissionId: '',
             dataFiles: [],
             docFiles: [],
         };

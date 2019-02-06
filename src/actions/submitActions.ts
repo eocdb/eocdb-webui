@@ -1,9 +1,9 @@
 /**
-* @file submitActions.ts
-* @brief Actions for submitting data files (SubmitPanel.tsx)
-* @author: Brockmann Consult
-* @date 14/01/2019
-*/
+ * @file submitActions.ts
+ * @brief Actions for submitting data files (SubmitPanel.tsx)
+ * @author: Brockmann Consult
+ * @date 14/01/2019
+ */
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,6 +44,24 @@ export function openSubmitSteps(): OpenSubmitSteps {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+export const UPDATE_SUBMISSION_ID = 'UPDATE_SUBMISSION_ID';
+export type UPDATE_SUBMISSION_ID = typeof UPDATE_SUBMISSION_ID;
+
+export interface UpdateSubmissionId {
+    type: UPDATE_SUBMISSION_ID;
+    submissionId: string;
+}
+
+export function updateSubmissionId(submissionId: string): UpdateSubmissionId {
+    return {
+        type: UPDATE_SUBMISSION_ID,
+        submissionId
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const UPDATE_DATA_FILES = 'UPDATE_DATA_FILES';
 export type UPDATE_DATA_FILES = typeof UPDATE_DATA_FILES;
 
@@ -52,7 +70,7 @@ export interface UpdateDataFiles {
     dataFiles: File[];
 }
 
-export function updateDataFiles(dataFiles: File[]): UpdateDataFiles{
+export function updateDataFiles(dataFiles: File[]): UpdateDataFiles {
     return {
         type: UPDATE_DATA_FILES,
         dataFiles
@@ -70,7 +88,7 @@ export interface UpdateDocFiles {
     docFiles: File[];
 }
 
-export function updateDocFiles(docFiles: File[]): UpdateDocFiles{
+export function updateDocFiles(docFiles: File[]): UpdateDocFiles {
     return {
         type: UPDATE_DOC_FILES,
         docFiles
@@ -101,6 +119,7 @@ export function submitFiles(dataFiles: File[], docFiles: File[]): SubmitFiles {
 
 export type SubmitAction = OpenSubmitSteps
     | CloseSubmitSteps
+    | UpdateSubmissionId
     | UpdateDataFiles
     | UpdateDocFiles
     | SubmitFiles;

@@ -5,7 +5,8 @@ import {
     UPDATE_DATA_FILES,
     SUBMIT_FILES,
     SubmitAction,
-    UPDATE_DOC_FILES
+    UPDATE_DOC_FILES,
+    UPDATE_SUBMISSION_ID
 } from "../actions/submitActions";
 
 const initialState = newSubmitState();
@@ -16,6 +17,8 @@ export function submitReducer(state: SubmitState = initialState, action: SubmitA
             return {...state, submitStepsOpen: true};
         case CLOSE_SUBMIT_STEPS:
             return {...state, submitStepsOpen: false};
+        case UPDATE_SUBMISSION_ID:
+            return {...state, submissionId: state.submissionId};
         case UPDATE_DATA_FILES:
             return {...state, dataFiles: state.dataFiles};
         case UPDATE_DOC_FILES:

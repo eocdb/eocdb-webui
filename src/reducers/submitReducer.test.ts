@@ -3,7 +3,13 @@ import {
     CLOSE_SUBMIT_STEPS,
     OPEN_SUBMIT_STEPS,
     SUBMIT_FILES,
-    SubmitFiles, UPDATE_DATA_FILES, UPDATE_DOC_FILES, UpdateDataFiles, UpdateDocFiles
+    SubmitFiles,
+    UPDATE_DATA_FILES,
+    UPDATE_DOC_FILES,
+    UPDATE_SUBMISSION_ID,
+    UpdateDataFiles,
+    UpdateDocFiles,
+    UpdateSubmissionId
 } from "../actions/submitActions";
 
 
@@ -17,6 +23,15 @@ describe('submitStepsReducer', () => {
     it('submitReducer to close submit steps', () => {
         const result = submitReducer(undefined, {type: CLOSE_SUBMIT_STEPS});
         expect(result.submitStepsOpen).toEqual(false);
+    });
+
+    it('reducing updateSubmissionId', () => {
+        const action: UpdateSubmissionId = {
+            type: UPDATE_SUBMISSION_ID,
+            submissionId: '',
+        };
+        const result = submitReducer(undefined, action);
+        expect(result.submissionId).toEqual('');
     });
 
     it('reducing updateDataFiles', () => {
