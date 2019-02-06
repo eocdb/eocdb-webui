@@ -2,9 +2,10 @@ import { newSubmitState, SubmitState } from "../states/submitState";
 import {
     CLOSE_SUBMIT_STEPS,
     OPEN_SUBMIT_STEPS,
-    SET_ACTIVE_STEP_DOWN,
-    SET_ACTIVE_STEP_UP,
-    SubmitAction
+    UPDATE_DATA_FILES,
+    SUBMIT_FILES,
+    SubmitAction,
+    UPDATE_DOC_FILES
 } from "../actions/submitActions";
 
 const initialState = newSubmitState();
@@ -15,10 +16,12 @@ export function submitReducer(state: SubmitState = initialState, action: SubmitA
             return {...state, submitStepsOpen: true};
         case CLOSE_SUBMIT_STEPS:
             return {...state, submitStepsOpen: false};
-        case SET_ACTIVE_STEP_UP:
-            return {...state, activeStep: (state.activeStep + 1)};
-        case SET_ACTIVE_STEP_DOWN:
-            return {...state, activeStep: (state.activeStep - 1)};
+        case UPDATE_DATA_FILES:
+            return {...state, dataFiles: state.dataFiles};
+        case UPDATE_DOC_FILES:
+            return {...state, dataFiles: state.docFiles};
+        case SUBMIT_FILES:
+            return {...state, acceptedFiles: state.docFiles, dataFiles: state.docFiles};
         default:
             return state;
     }

@@ -8,44 +8,9 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const SET_ACTIVE_STEP_UP = 'SET_ACTIVE_STEP_UP';
-export type SET_ACTIVE_STEP_UP = typeof SET_ACTIVE_STEP_UP;
-
-export interface SetActiveStepUp {
-    type: SET_ACTIVE_STEP_UP;
-}
-
-
-/**
- * Set submit step
- */
-export function setActiveStepUp(): SetActiveStepUp {
-    return {type: SET_ACTIVE_STEP_UP};
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const SET_ACTIVE_STEP_DOWN = 'SET_ACTIVE_STEP_DOWN';
-export type SET_ACTIVE_STEP_DOWN = typeof SET_ACTIVE_STEP_DOWN;
-
-export interface SetActiveStepDown {
-    type: SET_ACTIVE_STEP_DOWN;
-}
-
-
-/**
- * Set submit step
- */
-export function setActiveStepDown(): SetActiveStepDown {
-    return {type: SET_ACTIVE_STEP_DOWN};
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 export const CLOSE_SUBMIT_STEPS = 'CLOSE_SUBMIT_STEPS';
 export type CLOSE_SUBMIT_STEPS = typeof CLOSE_SUBMIT_STEPS;
+
 
 export interface CloseSubmitSteps {
     type: CLOSE_SUBMIT_STEPS;
@@ -79,4 +44,63 @@ export function openSubmitSteps(): OpenSubmitSteps {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type SubmitAction = OpenSubmitSteps | CloseSubmitSteps | SetActiveStepUp | SetActiveStepDown ;
+export const UPDATE_DATA_FILES = 'UPDATE_DATA_FILES';
+export type UPDATE_DATA_FILES = typeof UPDATE_DATA_FILES;
+
+export interface UpdateDataFiles {
+    type: UPDATE_DATA_FILES;
+    dataFiles: File[];
+}
+
+export function updateDataFiles(dataFiles: File[]): UpdateDataFiles{
+    return {
+        type: UPDATE_DATA_FILES,
+        dataFiles
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_DOC_FILES = 'UPDATE_DOC_FILES';
+export type UPDATE_DOC_FILES = typeof UPDATE_DOC_FILES;
+
+export interface UpdateDocFiles {
+    type: UPDATE_DOC_FILES;
+    docFiles: File[];
+}
+
+export function updateDocFiles(docFiles: File[]): UpdateDocFiles{
+    return {
+        type: UPDATE_DOC_FILES,
+        docFiles
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const SUBMIT_FILES = 'SUBMIT_FILES';
+export type SUBMIT_FILES = typeof SUBMIT_FILES;
+
+export interface SubmitFiles {
+    type: SUBMIT_FILES;
+    dataFiles: File[];
+    docFiles: File[];
+}
+
+
+export function submitFiles(dataFiles: File[], docFiles: File[]): SubmitFiles {
+    return {
+        type: SUBMIT_FILES,
+        dataFiles,
+        docFiles,
+    }
+}
+
+
+export type SubmitAction = OpenSubmitSteps
+    | CloseSubmitSteps
+    | UpdateDataFiles
+    | UpdateDocFiles
+    | SubmitFiles;

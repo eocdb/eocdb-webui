@@ -84,7 +84,7 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
 
     const selectedBoundsAdvanced = state.advancedSearchState.selectedBounds;
 
-    if (!selectedBoundsAdvanced.equals(SELECTED_BOUNDS_DEFAULT)) {
+    if (selectedBoundsAdvanced && !selectedBoundsAdvanced.equals(SELECTED_BOUNDS_DEFAULT)) {
         datasetQuery = {...datasetQuery, region: selectedBoundsAdvanced.toBBoxString()};
     }
 

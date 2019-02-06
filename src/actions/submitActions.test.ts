@@ -1,13 +1,12 @@
 import {
     CLOSE_SUBMIT_STEPS,
     OPEN_SUBMIT_STEPS,
-    SET_ACTIVE_STEP_DOWN,
-    SET_ACTIVE_STEP_UP,
-
     closeSubmitSteps,
     openSubmitSteps,
-    setActiveStepDown,
-    setActiveStepUp
+    UPDATE_DATA_FILES,
+    updateDataFiles,
+    updateDocFiles,
+    UPDATE_DOC_FILES,
 }
     from "./submitActions";
 
@@ -28,19 +27,22 @@ describe("submitActions", () => {
         expect(closeSubmitSteps()).toEqual(expectedAction);
     });
 
-    it("setActiveStepUp", () => {
+    it("updateDataFiles", () => {
         const expectedAction = {
-            type: SET_ACTIVE_STEP_UP,
+            type: UPDATE_DATA_FILES,
+            dataFiles: [],
         };
 
-        expect(setActiveStepUp()).toEqual(expectedAction);
+        expect(updateDataFiles([])).toEqual(expectedAction);
     });
 
-    it("setActiveStepDown", () => {
+    it("updateDocFiles", () => {
         const expectedAction = {
-            type: SET_ACTIVE_STEP_DOWN,
+            type: UPDATE_DOC_FILES,
+            docFiles: [],
         };
 
-        expect(setActiveStepDown()).toEqual(expectedAction);
+        expect(updateDocFiles([])).toEqual(expectedAction);
     });
+
 });

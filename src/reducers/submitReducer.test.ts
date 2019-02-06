@@ -2,9 +2,10 @@ import { submitReducer } from "./submitReducer";
 import {
     CLOSE_SUBMIT_STEPS,
     OPEN_SUBMIT_STEPS,
-    SET_ACTIVE_STEP_DOWN,
-    SET_ACTIVE_STEP_UP
+    SUBMIT_FILES,
+    SubmitFiles, UPDATE_DATA_FILES, UPDATE_DOC_FILES, UpdateDataFiles, UpdateDocFiles
 } from "../actions/submitActions";
+
 
 
 describe('submitStepsReducer', () => {
@@ -18,14 +19,33 @@ describe('submitStepsReducer', () => {
         expect(result.submitStepsOpen).toEqual(false);
     });
 
-    it('submitReducer to get to proceed to the next step', () => {
-        const result = submitReducer(undefined, {type: SET_ACTIVE_STEP_UP});
-        expect(result.activeStep).toEqual(1);
+    it('reducing updateDataFiles', () => {
+        const action: UpdateDataFiles = {
+            type: UPDATE_DATA_FILES,
+            dataFiles: [],
+        };
+        const result = submitReducer(undefined, action);
+        expect(result.dataFiles.length).toEqual(0);
     });
 
-    it('submitReducer to get to proceed to the next step', () => {
-        const result = submitReducer({activeStep: 2, submitStepsOpen: true}, {type: SET_ACTIVE_STEP_DOWN});
-        expect(result.activeStep).toEqual(1);
+    it('reducing updateDocFiles', () => {
+        const action: UpdateDocFiles = {
+            type: UPDATE_DOC_FILES,
+            docFiles: [],
+        };
+        const result = submitReducer(undefined, action);
+        expect(result.dataFiles.length).toEqual(0);
     });
+    it('submitReducer to submit files', () => {
+        const action: SubmitFiles = {
+            type: SUBMIT_FILES,
+            dataFiles: [],
+            docFiles: [],
+        };
+        const result = submitReducer(undefined, action);
+        expect(result.dataFiles.length).toEqual(0);
+        expect(result.docFiles.length).toEqual(0);
+    });
+
 });
 

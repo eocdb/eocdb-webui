@@ -10,6 +10,7 @@ import { SearchHistoryItem } from "../../types/dataset";
 import List from "@material-ui/core/List/List";
 
 
+// noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({
     root: {
         display: 'flex',
@@ -29,7 +30,7 @@ class SearchHistory extends React.PureComponent<SearchHistoryProps>{
 
     render(){
         let res = [];
-        console.log(this.props.searchHistory);
+        //console.log(this.props.searchHistory);
 
         for (let i = 0; i <this.props.searchHistory.length; i++) {
             const item = this.props.searchHistory[i];

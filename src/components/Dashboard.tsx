@@ -150,7 +150,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     };
 
     handleConfigOpen = () => {
-        console.log('test');
+        //console.log('test');
         this.props.openConfigDialog();
     };
 

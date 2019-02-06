@@ -57,7 +57,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
     }
 
     handleWaveLengthSelect = (item: string) => {
-        console.log(item);
+        //console.log(item);
         this.props.onWavelengthSelect(item);
     };
 
