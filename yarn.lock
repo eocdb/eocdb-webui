@@ -5026,10 +5026,10 @@ material-design-icons@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/material-design-icons/-/material-design-icons-3.0.1.tgz#9a71c48747218ebca51e51a66da682038cdcb7bf"
 
-material-ui-dropzone@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/material-ui-dropzone/-/material-ui-dropzone-2.3.0.tgz#3952af43bf928db87660797865e1b1e33f63c0c4"
-  integrity sha512-LsGDJmpXFZhiJIeFviwKqLHBgKXgUWX7LY16CsVSs7EDKhzD/UmWOLPfPopfnhZTKbFKJ6e2x38C5V89nGl4Lg==
+material-ui-dropzone@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/material-ui-dropzone/-/material-ui-dropzone-2.3.1.tgz#60e00095785e2b39830f049a6aa01dcb34b6d5f4"
+  integrity sha512-1TtKpQI/nZVTh+cioP/Om/FH9LoEy6fqdadF4nEwsPCEm1cSvW4U0+liP8wME63/xdyvq6D8g7VTFKQNnTi8LQ==
   dependencies:
     react-dropzone "^7.0.1"
 
