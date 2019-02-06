@@ -217,7 +217,7 @@ class DataTable extends React.Component<DataTableProps> {
         const id = event.target.value;
         const idx = selectedDatasets.indexOf(id);
         const clonedArray  = Object.assign([], selectedDatasets);
-        console.log(clonedArray);
+        //console.log(clonedArray);
         if(event.target.checked) {
             if (idx === -1) {
                 clonedArray.push(id);
