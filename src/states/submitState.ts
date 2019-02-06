@@ -1,11 +1,15 @@
 export interface SubmitState {
     submitStepsOpen: boolean;
-    activeStep: number;
+
+    dataFiles: File[];
+    docFiles: File[];
 }
 
 export function newSubmitState() {
     return {
         submitStepsOpen: false,
-        activeStep: 0,
+
+        dataFiles: [],
+        docFiles: [],
     }
 }

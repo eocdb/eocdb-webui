@@ -4,7 +4,8 @@ describe('submitState', () => {
     it('newSubmitState', () => {
         const expected = {
             submitStepsOpen: false,
-            activeStep: 0,
+            dataFiles: [],
+            docFiles: [],
         };
 
         expect(newSubmitState()).toEqual(expected);
