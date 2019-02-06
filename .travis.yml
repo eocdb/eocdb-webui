@@ -8,6 +8,9 @@ cache:
 script:
   - yarn install
   - yarn run build
+  - yarn run test
+after_success:
+  - codecov
 deploy:
   provider: pages
   skip_cleanup: true
