@@ -7,9 +7,11 @@ interface MockProps {
     show: boolean;
     closeSubmitSteps: () => void;
 
-    setActiveStepUp: () => void;
-    setActiveStepDown: () => void;
-    activeStep: number;
+    dataFiles: File[];
+    docFiles: File[];
+
+    onDatafilesChange: () => void;
+    onDocfilesChange: () => void;
 }
 
 
@@ -17,9 +19,11 @@ const props: MockProps = {
     show: true,
     closeSubmitSteps: jest.fn(),
 
-    setActiveStepUp: jest.fn(),
-    setActiveStepDown: jest.fn(),
-    activeStep: 0,
+    dataFiles: [],
+    docFiles: [],
+
+    onDatafilesChange: jest.fn(),
+    onDocfilesChange: jest.fn(),
 };
 
 
@@ -36,7 +40,6 @@ describe('<SubmitSteps />', () => {
 
     it('SubmitPanel renders children', () => {
         const enzymeWrapper = mount(<SubmitSteps {...props} />);
-        expect(enzymeWrapper.find('Stepper').length).toBe(1);
-        expect(enzymeWrapper.find('Step').length).toBe(1);
+        expect(enzymeWrapper.find('FileUpload').length).toBe(2);
     });
 });

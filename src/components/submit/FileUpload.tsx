@@ -1,10 +1,8 @@
 import * as React from 'react';
-import Dropzone from 'react-dropzone'
-import Typography from "@material-ui/core/Typography/Typography";
+import { DropzoneArea } from 'material-ui-dropzone';
 import { Theme, WithStyles } from "@material-ui/core";
 import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
-import { FileCopy } from "@material-ui/icons";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -26,16 +24,7 @@ class FileUpload extends React.Component<FileUploadProps> {
 
     render() {
         return (
-            <Dropzone
-                onDrop={this.props.onDrop}
-            >
-                {this.props.files.map((file: File) => {
-                    return (<Typography key={file.name}>
-                        <FileCopy/>
-                        {file.name}
-                    </Typography>);
-                })}
-            </Dropzone>
+            <DropzoneArea />
         );
     }
 }
