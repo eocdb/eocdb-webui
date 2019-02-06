@@ -8,7 +8,7 @@ cache:
 script:
   - yarn install
   - yarn run build
-  #- yarn run test
+  - yarn run test
 after_success:
   - codecov
 deploy:
