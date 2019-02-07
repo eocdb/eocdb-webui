@@ -1,25 +1,25 @@
 import * as React from 'react';
-import SubmitPanel from "./SubmitPanel";
+import SubmitPanel from "./SubmissionPanel";
 import { createShallow } from '@material-ui/core/test-utils';
 
 
 interface MockProps {
     show: boolean;
-    submitStepsOpen: boolean;
-    openSubmitSteps: () => void;
-    closeSubmitSteps: () => void;
+    submissionOpen: boolean;
+    openSubmission: () => void;
+    closeSubmission: () => void;
 }
 
 
 const props: MockProps = {
     show: true,
-    submitStepsOpen: false,
-    openSubmitSteps: jest.fn(),
-    closeSubmitSteps: jest.fn(),
+    submissionOpen: false,
+    openSubmission: jest.fn(),
+    closeSubmission: jest.fn(),
 };
 
 
-describe('<SubmitPanel />', () => {
+describe('<SubmissionPanel />', () => {
     let mount: any;
 
     beforeEach(() => {
@@ -27,7 +27,7 @@ describe('<SubmitPanel />', () => {
     });
 
 
-    it('SubmitPanel renders children', () => {
+    it('SubmissionPanel renders children', () => {
         const enzymeWrapper = mount(<SubmitPanel {...props} />);
         expect(enzymeWrapper.find('SubmitPanel').length).toBe(1);
     });
