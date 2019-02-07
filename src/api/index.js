@@ -4,4 +4,5 @@ export { uploadStoreFiles } from './uploadStoreFiles';
 export { loginUser } from './loginUser';
 export { getStoreInfo } from './getStoreInfo';
 export { getDatasetById } from './getDatasetById';
+export { getSubmissionFilesForUser } from './getSubmissionFilesForUser'
 export { HTTPError } from './errors';
