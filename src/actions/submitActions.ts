@@ -4,10 +4,11 @@ import { postMessage, MessageLogAction } from "./messageLogActions";
 import { AppState } from "../states/appState";
 import { DatasetValidationResult, UploadData } from "../api/uploadStoreFiles";
 import { StopLoading, UpdateSearchHistory } from "./searchFormActions";
+import { SubmissionForUserResult } from "../api/getSubmissionFilesForUser";
 
 /**
  * @file submitActions.ts
- * @brief Actions for submitting data files (SubmitPanel.tsx)
+ * @brief Actions for submitting data files (SubmissionPanel.tsx)
  * @author: Brockmann Consult
  * @date 14/01/2019
  */
@@ -66,6 +67,22 @@ export function updateSubmissionId(submissionId: string): UpdateSubmissionId {
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_PATH = 'UPDATE_PATH';
+export type UPDATE_PATH = typeof UPDATE_PATH;
+
+export interface UpdatePath {
+    type: UPDATE_PATH;
+    path: string;
+}
+
+export function updatePath(path: string): UpdatePath {
+    return {
+        type: UPDATE_PATH,
+        path
+    }
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -102,6 +119,22 @@ export function updateDocFiles(docFiles: File[]): UpdateDocFiles {
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+export const CLEAR_FORM = 'CLEAR_FORM';
+export type CLEAR_FORM = typeof CLEAR_FORM;
+
+export interface ClearForm {
+    type: CLEAR_FORM;
+}
+
+export function clearForm(): ClearForm {
+    return {
+        type: CLEAR_FORM,
+    }
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -132,11 +165,60 @@ export function submitFiles() {
             dataFiles: state.submitState.dataFiles,
             docFiles: state.submitState.docFiles,
             submissionId: state.submitState.submissionId,
+            path: state.submitState.path,
         };
 
         return api.uploadStoreFiles(apiServerUrl, uploadData)
             .then((datasetValidationResults: DatasetValidationResult[]) => {
                 dispatch(_submitFiles(datasetValidationResults));
+            })
+            .then(() => {
+                dispatch(postMessage("success", 'Files Loaded'));
+            })
+            .catch((error: string) => {
+                dispatch(postMessage('error', error + ''));
+            });
+    };
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_SUBMISSIONS_FOR_USER = 'UPDATE_SUBMISSIONS_FOR_USER';
+export type UPDATE_SUBMISSIONS_FOR_USER = typeof UPDATE_SUBMISSIONS_FOR_USER;
+
+export interface UpdateSubmissionsForUser {
+    type: UPDATE_SUBMISSIONS_FOR_USER;
+    submissions: SubmissionForUserResult[];
+}
+
+
+export function _updateSubmissionsForUser(submissions: SubmissionForUserResult[]): UpdateSubmissionsForUser {
+    return {
+        type: UPDATE_SUBMISSIONS_FOR_USER,
+        submissions
+    }
+}
+
+
+export function updateSubmissionsForUser() {
+    return (dispatch: Dispatch<UpdateSubmissionsForUser | MessageLogAction>, getState: ()
+        => AppState) => {
+        const state = getState();
+        const apiServerUrl = state.configState.apiServerUrl;
+        const user = state.sessionState.user;
+
+        let userid = 0;
+        if (user) {
+            userid = user.id;
+        }
+
+        return api.getSubmissionFilesForUser(apiServerUrl, userid)
+            .then((submissions: SubmissionForUserResult[]) => {
+                dispatch(_updateSubmissionsForUser(submissions));
+            })
+            .then(() => {
+                dispatch(postMessage("success", 'Files Loaded'));
             })
             .catch((error: string) => {
                 dispatch(postMessage('error', error + ''));
@@ -147,6 +229,9 @@ export function submitFiles() {
 export type SubmitAction = OpenSubmitSteps
     | CloseSubmitSteps
     | UpdateSubmissionId
+    | UpdatePath
     | UpdateDataFiles
     | UpdateDocFiles
+    | ClearForm
+    | UpdateSubmissionsForUser
     | SubmitFiles;

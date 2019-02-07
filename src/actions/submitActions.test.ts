@@ -6,7 +6,7 @@ import {
     UPDATE_DATA_FILES,
     updateDataFiles,
     updateDocFiles,
-    UPDATE_DOC_FILES, UPDATE_SUBMISSION_ID, updateSubmissionId, SUBMIT_FILES, _submitFiles,
+    UPDATE_DOC_FILES, UPDATE_SUBMISSION_ID, updateSubmissionId, SUBMIT_FILES, _submitFiles, CLEAR_FORM, clearForm,
 }
     from "./submitActions";
 
@@ -52,6 +52,14 @@ describe("submitActions", () => {
         };
 
         expect(updateDocFiles([])).toEqual(expectedAction);
+    });
+
+    it("clearForm", () => {
+        const expectedAction = {
+            type: CLEAR_FORM,
+        };
+
+        expect(clearForm()).toEqual(expectedAction);
     });
 
     it("_submitFiles", () => {
