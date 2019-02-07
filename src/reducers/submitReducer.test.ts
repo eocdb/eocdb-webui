@@ -13,16 +13,15 @@ import {
 } from "../actions/submitActions";
 
 
-
 describe('submitStepsReducer', () => {
     it('submitReducer to open submit steps', () => {
         const result = submitReducer(undefined, {type: OPEN_SUBMIT_STEPS});
-        expect(result.submitStepsOpen).toEqual(true);
+        expect(result.submissionOpen).toEqual(true);
     });
 
     it('submitReducer to close submit steps', () => {
         const result = submitReducer(undefined, {type: CLOSE_SUBMIT_STEPS});
-        expect(result.submitStepsOpen).toEqual(false);
+        expect(result.submissionOpen).toEqual(false);
     });
 
     it('reducing updateSubmissionId', () => {
@@ -51,11 +50,11 @@ describe('submitStepsReducer', () => {
         const result = submitReducer(undefined, action);
         expect(result.dataFiles.length).toEqual(0);
     });
+
     it('submitReducer to submit files', () => {
         const action: SubmitFiles = {
             type: SUBMIT_FILES,
-            dataFiles: [],
-            docFiles: [],
+            datasetValidationResults: [],
         };
         const result = submitReducer(undefined, action);
         expect(result.dataFiles.length).toEqual(0);
