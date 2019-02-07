@@ -6,6 +6,7 @@ import { DatasetValidationResult, UploadData } from "../api/uploadStoreFiles";
 import { StopLoading, UpdateSearchHistory } from "./searchFormActions";
 import { SubmissionForUserResult } from "../api/getSubmissionFilesForUser";
 
+
 /**
  * @file submitActions.ts
  * @brief Actions for submitting data files (SubmissionPanel.tsx)
@@ -226,6 +227,55 @@ export function updateSubmissionsForUser() {
     };
 }
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+export const SET_SUBMISSION_STATUS = 'SET_SUBMISSION_STATUS';
+export type SET_SUBMISSION_STATUS = typeof SET_SUBMISSION_STATUS;
+
+export interface SetSubmissionStatus {
+    type: SET_SUBMISSION_STATUS;
+    submissionId: string;
+    status: SubmissionFileStatus;
+}
+
+
+export function _setSubmissionStatus(submissionId: string, status: SubmissionFileStatus): SetSubmissionStatus {
+    return {
+        type: SET_SUBMISSION_STATUS,
+        submissionId,
+        status,
+    }
+}
+
+export function setSubmissionStatus() {
+    return (dispatch: Dispatch<SetSubmissionStatus | MessageLogAction>, getState: ()
+        => AppState) => {
+        const state = getState();
+        const apiServerUrl = state.configState.apiServerUrl;
+        const user = state.sessionState.user;
+
+        let userid = 0;
+        if (user) {
+            userid = user.id;
+        }
+
+        return api.getSubmissionFilesForUser(apiServerUrl, userid)
+            .then((submissions: SubmissionForUserResult[]) => {
+                dispatch(_updateSubmissionsForUser(submissions));
+            })
+            .then(() => {
+                dispatch(postMessage("success", 'Files Loaded'));
+            })
+            .catch((error: string) => {
+                dispatch(postMessage('error', error + ''));
+            });
+    };
+}
+*/
+
+
 export type SubmitAction = OpenSubmitSteps
     | CloseSubmitSteps
     | UpdateSubmissionId
@@ -235,3 +285,4 @@ export type SubmitAction = OpenSubmitSteps
     | ClearForm
     | UpdateSubmissionsForUser
     | SubmitFiles;
+    // | SetSubmissionStatus;
