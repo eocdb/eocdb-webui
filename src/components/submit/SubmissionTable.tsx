@@ -8,10 +8,13 @@ import TableCell from "@material-ui/core/TableCell/TableCell";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import Paper from "@material-ui/core/Paper/Paper";
-// import Icon from "@material-ui/core/Icon/Icon";
 import Button from "@material-ui/core/Button/Button";
 import { CloudUpload } from "@material-ui/icons";
 import Grid from "@material-ui/core/Grid";
+import TableBody from "@material-ui/core/TableBody";
+import { SubmissionForUserResult } from "../../api/getSubmissionFilesForUser";
+import Icon from '@material-ui/core/Icon/Icon';
+
 
 
 const styles = (theme: Theme) => createStyles(
@@ -33,14 +36,16 @@ const styles = (theme: Theme) => createStyles(
     });
 
 
-interface SubmitTableProps extends WithStyles<typeof styles> {
+interface SubmissionTableProps extends WithStyles<typeof styles> {
     show: boolean;
     openSubmitSteps: () => void;
+
+    submissions: SubmissionForUserResult[];
 }
 
 
-class SubmitTable extends React.PureComponent<SubmitTableProps> {
-    constructor(props: SubmitTableProps) {
+class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
+    constructor(props: SubmissionTableProps) {
         super(props);
     }
 
@@ -49,11 +54,11 @@ class SubmitTable extends React.PureComponent<SubmitTableProps> {
     };
 
     render() {
-        if(!this.props.show){
+        if (!this.props.show) {
             return null;
         }
 
-        const classes = this.props.classes;
+        const {classes, submissions} = this.props;
 
         return (
             <Paper className={classes.root}>
@@ -78,11 +83,39 @@ class SubmitTable extends React.PureComponent<SubmitTableProps> {
                                 />
                             </TableCell>
                             <TableCell>Upload ID</TableCell>
-                            <TableCell>Date</TableCell>
+                            <TableCell>SubmissionId</TableCell>
                             <TableCell>File(s)</TableCell>
                             <TableCell>Status</TableCell>
                         </TableRow>
                     </TableHead>
+                    <TableBody>
+                        {submissions.map((row: SubmissionForUserResult) => {
+                            return (
+                                <TableRow
+                                    hover
+                                    role="checkbox"
+                                    key={row.index}
+                                    tabIndex={-1}
+                                >
+                                    <TableCell component="th" scope="row">
+                                        {row.index}
+                                    </TableCell>
+                                    <TableCell>
+                                        {row.submissionId}
+                                    </TableCell>
+                                    <TableCell>
+                                        {row.fileName}
+                                    </TableCell>
+                                    <TableCell>
+                                        {row.status}
+                                    </TableCell>
+                                    <TableCell>
+                                        <Button><Icon className={classes.rightIcon}>bar_chart</Icon></Button>
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
                 </Table>
             </Paper>
         );
@@ -90,4 +123,4 @@ class SubmitTable extends React.PureComponent<SubmitTableProps> {
 }
 
 
-export default withStyles(styles)(SubmitTable);
+export default withStyles(styles)(SubmissionTable);
