@@ -5,12 +5,14 @@ import FileUpload from "./FileUpload";
 
 interface MockProps {
     onChange: () => void;
+    label: string;
     files: File[];
 }
 
 
 const props: MockProps = {
     onChange: jest.fn(),
+    label: '',
     files: [],
 };
 
