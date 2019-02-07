@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 
 import { AppState } from "../../states/appState";
 import SubmitSteps from "../../components/submit/SubmitSteps";
-import { updateDataFiles, updateDocFiles, updateSubmissionId } from "../../actions/submitActions";
+import {submitFiles, updateDataFiles, updateDocFiles, updateSubmissionId} from "../../actions/submitActions";
 
 
 const mapStateToProps = (state: AppState) => {
@@ -18,6 +18,7 @@ const mapDispatchToProps = {
     onSubmissionIdChange: updateSubmissionId,
     onDatafilesChange: updateDataFiles,
     onDocfilesChange: updateDocFiles,
+    onFileSubmit: submitFiles,
 };
 
 

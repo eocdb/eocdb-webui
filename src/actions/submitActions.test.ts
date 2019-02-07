@@ -6,7 +6,7 @@ import {
     UPDATE_DATA_FILES,
     updateDataFiles,
     updateDocFiles,
-    UPDATE_DOC_FILES, UPDATE_SUBMISSION_ID, updateSubmissionId,
+    UPDATE_DOC_FILES, UPDATE_SUBMISSION_ID, updateSubmissionId, SUBMIT_FILES, _submitFiles,
 }
     from "./submitActions";
 
@@ -52,6 +52,15 @@ describe("submitActions", () => {
         };
 
         expect(updateDocFiles([])).toEqual(expectedAction);
+    });
+
+    it("_submitFiles", () => {
+        const expectedAction = {
+            type: SUBMIT_FILES,
+            datasetValidationResults: [],
+        };
+
+        expect(_submitFiles([])).toEqual(expectedAction);
     });
 
 });

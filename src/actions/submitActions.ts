@@ -1,3 +1,9 @@
+import { Dispatch } from "redux";
+import { MessageLogAction } from "./messageLogActions";
+import { AppState } from "../states/appState";
+import {DatasetValidationResult, UploadData} from "../api/uploadStoreFiles";
+import {StopLoading, UUpdateSearchHistory} from "./searchFormActions";
+
 /**
  * @file submitActions.ts
  * @brief Actions for submitting data files (SubmitPanel.tsx)
@@ -103,19 +109,39 @@ export type SUBMIT_FILES = typeof SUBMIT_FILES;
 
 export interface SubmitFiles {
     type: SUBMIT_FILES;
-    dataFiles: File[];
-    docFiles: File[];
+    datasetValidationResults: DatasetValidationResult[];
 }
 
 
-export function submitFiles(dataFiles: File[], docFiles: File[]): SubmitFiles {
+export function _submitFiles(datasetValidationResults: DatasetValidationResult[]): SubmitFiles {
     return {
         type: SUBMIT_FILES,
-        dataFiles,
-        docFiles,
+        datasetValidationResults
     }
 }
 
+
+export function submitFiles() {
+    return (dispatch: Dispatch<SubmitAction | MessageLogAction | UpdateSearchHistory | StopLoading>, getState: ()
+        => AppState) => {
+        const state = getState();
+        const apiServerUrl = state.configState.apiServerUrl;
+
+        const uploadData: UploadData = {
+            dataFiles: state.submitState.dataFiles,
+            docFiles: state.submitState.docFiles,
+            submissionId: state.submitState.submissionId,
+        };
+
+        return api.uploadStoreFiles(apiServerUrl, uploadData)
+            .then((datasetValidationResults: DatasetValidationResult[]) => {
+                dispatch(_submitFiles(datasetValidationResults));
+            })
+            .catch((error: string) => {
+                dispatch(postMessage('error', error + ''));
+            });
+    };
+}
 
 export type SubmitAction = OpenSubmitSteps
     | CloseSubmitSteps

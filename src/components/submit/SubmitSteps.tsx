@@ -5,6 +5,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import FileUpload from "./FileUpload";
 import TextField from "@material-ui/core/TextField";
 import * as classNames from "classnames";
+import {CloudUpload} from "@material-ui/icons";
+import Button from "@material-ui/core/Button/Button";
 //import { Cancel } from "@material-ui/icons";
 
 
@@ -41,6 +43,7 @@ interface SubmitStepsProps extends WithStyles<typeof styles> {
     onSubmissionIdChange: (submissionId: string) => void;
     onDatafilesChange: (acceptedFiles: File[]) => void;
     onDocfilesChange: (acceptedFiles: File[]) => void;
+    onFileSubmit: () => void;
 }
 
 
@@ -63,6 +66,10 @@ class SubmitSteps extends React.Component<SubmitStepsProps> {
         this.props.onDocfilesChange(acceptedFiles);
     };
 
+    handlefileSubmit = () => {
+        this.props.onFileSubmit();
+    };
+
     render() {
         if (!this.props.show) {
             return null;
@@ -72,6 +79,14 @@ class SubmitSteps extends React.Component<SubmitStepsProps> {
 
         return (
             <div className={classes.root}>
+                <Button variant="contained"
+                        color="secondary"
+                        className={classes.button}
+                        onClick={this.handleFileSubmit}
+                >
+                    New Submission
+                    <CloudUpload/>
+                </Button>
                 <TextField
                     required
                     id="outlined-dense"
