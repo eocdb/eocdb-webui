@@ -1,33 +1,49 @@
 import * as React from 'react';
 import { createMount } from '@material-ui/core/test-utils';
-import SubmitSteps from "./SubmitSteps";
+import SubmitSteps from "./Submission";
 
 
 interface MockProps {
     show: boolean;
-    closeSubmitSteps: () => void;
+    onClose: () => void;
 
     submissionId: string;
+    path: string;
     dataFiles: File[];
     docFiles: File[];
 
     onSubmissionIdChange: () => void;
+    onPathChange: () => void;
     onDatafilesChange: () => void;
     onDocfilesChange: () => void;
+
+    onFileSubmit: () => void;
+
+    onClearForm: () => void;
+
+    onError: () => void;
 }
 
 
 const props: MockProps = {
     show: true,
-    closeSubmitSteps: jest.fn(),
+    onClose: jest.fn(),
 
     submissionId: '',
+    path: '',
     dataFiles: [],
     docFiles: [],
 
     onSubmissionIdChange: jest.fn(),
+    onPathChange: jest.fn(),
     onDatafilesChange: jest.fn(),
     onDocfilesChange: jest.fn(),
+
+    onFileSubmit: jest.fn(),
+
+    onClearForm: jest.fn(),
+
+    onError: jest.fn(),
 };
 
 
@@ -42,7 +58,7 @@ describe('<SubmitSteps />', () => {
         mount.cleanUp();
     });
 
-    it('SubmitPanel renders children', () => {
+    it('SubmissionPanel renders children', () => {
         const enzymeWrapper = mount(<SubmitSteps {...props} />);
 
         expect(enzymeWrapper.find('TextField').length).toBe(1);
