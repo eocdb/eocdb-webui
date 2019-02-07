@@ -1,8 +1,9 @@
 import { Dispatch } from "redux";
-import { MessageLogAction } from "./messageLogActions";
+import * as api from '../api'
+import { postMessage, MessageLogAction } from "./messageLogActions";
 import { AppState } from "../states/appState";
-import {DatasetValidationResult, UploadData} from "../api/uploadStoreFiles";
-import {StopLoading, UUpdateSearchHistory} from "./searchFormActions";
+import { DatasetValidationResult, UploadData } from "../api/uploadStoreFiles";
+import { StopLoading, UpdateSearchHistory } from "./searchFormActions";
 
 /**
  * @file submitActions.ts
