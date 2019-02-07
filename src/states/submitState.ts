@@ -1,17 +1,28 @@
+import { DatasetValidationResult } from "../api/uploadStoreFiles";
+import { SubmissionForUserResult } from "../api/getSubmissionFilesForUser";
+
 export interface SubmitState {
-    submitStepsOpen: boolean;
+    submissionOpen: boolean;
 
     submissionId: string;
     dataFiles: File[];
     docFiles: File[];
+    path: string;
+
+    datasetValidationResults: DatasetValidationResult[];
+    foundSubmissions: SubmissionForUserResult[];
 }
 
 export function newSubmitState() {
     return {
-        submitStepsOpen: false,
+        submissionOpen: false,
 
         submissionId: '',
         dataFiles: [],
         docFiles: [],
+        path: '',
+
+        datasetValidationResults: [],
+        foundSubmissions: [],
     }
 }

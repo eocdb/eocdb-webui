@@ -8,6 +8,9 @@ describe('submitState', () => {
             submissionId: '',
             dataFiles: [],
             docFiles: [],
+
+            datasetValidationResult: [],
+            foundSubmissions: [],
         };
 
         expect(newSubmitState()).toEqual(expected);
