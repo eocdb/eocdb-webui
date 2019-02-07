@@ -12,6 +12,7 @@ const styles = (theme: Theme) => createStyles({
 
 
 interface FileUploadProps extends WithStyles<typeof styles> {
+    label: string;
     onChange: (acceptedFiles: File[]) => void;
     files: File[];
     acceptedFiles?: string[] | undefined;
@@ -25,7 +26,6 @@ class FileUpload extends React.Component<FileUploadProps> {
 
     handleOnchange = (files: File[]) => {
         this.props.onChange(files);
-        console.log(files);
     };
 
     render() {
@@ -36,6 +36,8 @@ class FileUpload extends React.Component<FileUploadProps> {
                 maxFileSize={2000000000}
                 showFileNamesInPreview={true}
                 acceptedFiles={this.props.acceptedFiles}
+                clearOnUnmount={true}
+                dropzoneText={this.props.label}
             />
         );
     }
