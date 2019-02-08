@@ -26,7 +26,6 @@ describe('<SubmissionPanel />', () => {
         mount = createShallow();
     });
 
-
     it('SubmissionPanel renders children', () => {
         const enzymeWrapper = mount(<SubmissionPanel {...props} />);
         expect(enzymeWrapper.find('SubmissionPanel').length).toBe(1);

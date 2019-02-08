@@ -61,7 +61,7 @@ describe('<SubmitSteps />', () => {
     it('SubmissionPanel renders children', () => {
         const enzymeWrapper = mount(<SubmitSteps {...props} />);
 
-        expect(enzymeWrapper.find('TextField').length).toBe(1);
+        expect(enzymeWrapper.find('TextField').length).toBe(2);
         expect(enzymeWrapper.find('FileUpload').length).toBe(2);
     });
 });
