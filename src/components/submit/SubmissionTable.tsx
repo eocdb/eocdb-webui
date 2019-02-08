@@ -12,7 +12,7 @@ import Button from "@material-ui/core/Button/Button";
 import { CloudUpload } from "@material-ui/icons";
 import Grid from "@material-ui/core/Grid";
 import TableBody from "@material-ui/core/TableBody";
-import { SubmissionForUserResult } from "../../api/getSubmissionFilesForUser";
+import { Submission } from "../../api/getSubmissionsForUser";
 import Icon from '@material-ui/core/Icon/Icon';
 
 
@@ -40,7 +40,7 @@ interface SubmissionTableProps extends WithStyles<typeof styles> {
     show: boolean;
     openSubmitSteps: () => void;
 
-    submissions: SubmissionForUserResult[];
+    submissions: Submission[];
 }
 
 
@@ -82,29 +82,25 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                     //onChange={this.handleOnSelectAllClick}
                                 />
                             </TableCell>
-                            <TableCell>Upload ID</TableCell>
                             <TableCell>SubmissionId</TableCell>
                             <TableCell>File(s)</TableCell>
                             <TableCell>Status</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {submissions.map((row: SubmissionForUserResult) => {
+                        {submissions.map((row: Submission) => {
                             return (
                                 <TableRow
                                     hover
                                     role="checkbox"
-                                    key={row.index}
+                                    key={row.submissionId}
                                     tabIndex={-1}
                                 >
                                     <TableCell component="th" scope="row">
-                                        {row.index}
-                                    </TableCell>
-                                    <TableCell>
                                         {row.submissionId}
                                     </TableCell>
                                     <TableCell>
-                                        {row.fileName}
+                                        {row.date}
                                     </TableCell>
                                     <TableCell>
                                         {row.status}
