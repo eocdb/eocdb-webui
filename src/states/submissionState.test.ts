@@ -1,7 +1,7 @@
-import { newSubmitState } from "./submitState";
+import { newSubmissionState } from "./submissionState";
 
 describe('submitState', () => {
-    it('newSubmitState', () => {
+    it('newSubmissionState', () => {
         const expected = {
             submitStepsOpen: false,
 
@@ -13,6 +13,6 @@ describe('submitState', () => {
             foundSubmissions: [],
         };
 
-        expect(newSubmitState()).toEqual(expected);
+        expect(newSubmissionState()).toEqual(expected);
     });
 });
