@@ -5,7 +5,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import Table from "@material-ui/core/Table/Table";
 import TableCell from "@material-ui/core/TableCell/TableCell";
-import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import Paper from "@material-ui/core/Paper/Paper";
 import Button from "@material-ui/core/Button/Button";
@@ -14,7 +13,8 @@ import Grid from "@material-ui/core/Grid";
 import TableBody from "@material-ui/core/TableBody";
 import { Submission } from "../../api/getSubmissionsForUser";
 import Icon from '@material-ui/core/Icon/Icon';
-
+import { User } from "../../types/user";
+import Chip from "@material-ui/core/Chip";
 
 
 const styles = (theme: Theme) => createStyles(
@@ -31,7 +31,7 @@ const styles = (theme: Theme) => createStyles(
             margin: theme.spacing.unit / 2,
         },
         link: {
-            fontcolor: 'black'
+            fontcolor: "black"
         },
     });
 
@@ -41,6 +41,7 @@ interface SubmissionTableProps extends WithStyles<typeof styles> {
     openSubmitSteps: () => void;
 
     submissions: Submission[];
+    user?: User | null;
 }
 
 
@@ -51,6 +52,18 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
 
     handleOpenSubmitSteps = () => {
         this.props.openSubmitSteps();
+    };
+
+    getColoutForStatus = (status: string) => {
+        switch (status) {
+            case 'SUBMITTED':
+                return "orange";
+            case 'VALIDATED':
+                return "red";
+            case 'APPROVED':
+                return "green";
+        }
+        return "yellow"
     };
 
     render() {
@@ -75,35 +88,34 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
-                            <TableCell padding="checkbox">
-                                <Checkbox
-                                    //indeterminate={numSelected > 0 && numSelected < rowsPerPage}
-                                    //checked={numSelected === rowsPerPage}
-                                    //onChange={this.handleOnSelectAllClick}
-                                />
-                            </TableCell>
                             <TableCell>SubmissionId</TableCell>
-                            <TableCell>File(s)</TableCell>
+                            <TableCell>Date</TableCell>
                             <TableCell>Status</TableCell>
+                            <TableCell>Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {submissions.map((row: Submission) => {
+                            const colour = this.getColoutForStatus(row.status);
+
                             return (
                                 <TableRow
                                     hover
                                     role="checkbox"
-                                    key={row.submissionId}
+                                    key={row.submission_id}
                                     tabIndex={-1}
                                 >
                                     <TableCell component="th" scope="row">
-                                        {row.submissionId}
+                                        {row.submission_id}
                                     </TableCell>
                                     <TableCell>
                                         {row.date}
                                     </TableCell>
                                     <TableCell>
-                                        {row.status}
+                                        <Chip
+                                            label={row.status}
+                                            style={{background: colour}}
+                                        />
                                     </TableCell>
                                     <TableCell>
                                         <Button><Icon className={classes.rightIcon}>bar_chart</Icon></Button>
