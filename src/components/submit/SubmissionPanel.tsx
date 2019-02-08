@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
-import SubmitTable from "../../containers/submit/SubmissionTable";
-import SubmitSteps from "../../containers/submit/Submission";
+import SubmissionTable from "../../containers/submit/SubmissionTable";
+import Submission from "../../containers/submit/Submission";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -31,12 +31,11 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
         }
         return (
             <div className={this.props.classes.root}>
-                <SubmitSteps
+                <Submission
                     show={this.props.submissionOpen}
                     onClose={this.props.closeSubmission}
-                    onOpen={this.props.openSubmission}
                 />
-                <SubmitTable
+                <SubmissionTable
                     show={!this.props.submissionOpen}
                     openSubmitSteps={this.props.openSubmission}
                 />
