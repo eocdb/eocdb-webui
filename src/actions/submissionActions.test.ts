@@ -6,9 +6,19 @@ import {
     UPDATE_DATA_FILES,
     updateDataFiles,
     updateDocFiles,
-    UPDATE_DOC_FILES, UPDATE_SUBMISSION_ID, updateSubmissionId, SUBMIT_FILES, _submitFiles, CLEAR_FORM, clearForm,
+    UPDATE_DOC_FILES,
+    UPDATE_SUBMISSION_ID,
+    updateSubmissionId,
+    SUBMIT_FILES,
+    _submitFiles,
+    CLEAR_FORM,
+    clearForm,
+    UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION,
+    _updateSubmissionFilesForSubmission,
+    UPDATE_SUBMISSIONS_FOR_USER,
+    _updateSubmissionsForUser,
 }
-    from "./submitActions";
+    from "./submissionActions";
 
 describe("submitActions", () => {
     it("openSubmitActions", () => {
@@ -65,10 +75,28 @@ describe("submitActions", () => {
     it("_submitFiles", () => {
         const expectedAction = {
             type: SUBMIT_FILES,
-            datasetValidationResults: [],
+            currentDatasetValidationResults: [],
         };
 
         expect(_submitFiles([])).toEqual(expectedAction);
+    });
+
+    it("_updateSubmissionsForUser", () => {
+        const expectedAction = {
+            type: UPDATE_SUBMISSIONS_FOR_USER,
+            submissions: [],
+        };
+
+        expect(_updateSubmissionsForUser([])).toEqual(expectedAction);
+    });
+
+    it("_updateSubmissionFilesForSubmission", () => {
+        const expectedAction = {
+            type: UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION,
+            submissionId: '',
+        };
+
+        expect(_updateSubmissionFilesForSubmission([])).toEqual(expectedAction);
     });
 
 });
