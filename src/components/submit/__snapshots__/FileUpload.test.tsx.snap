@@ -22,7 +22,7 @@ exports[`FileUpload FileUpload renders 1`] = `
     <p
       className="DropzoneArea-dropzoneParagraph-7"
     >
-      Drag and drop an image file here or click
+      
     </p>
     <svg
       aria-hidden="true"
