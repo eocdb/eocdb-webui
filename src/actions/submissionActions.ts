@@ -4,11 +4,12 @@ import { postMessage, MessageLogAction } from "./messageLogActions";
 import { AppState } from "../states/appState";
 import { DatasetValidationResult, UploadData } from "../api/uploadStoreFiles";
 import { StopLoading, UpdateSearchHistory } from "./searchFormActions";
-import { SubmissionForUserResult } from "../api/getSubmissionFilesForUser";
+import { Submission } from "../api/getSubmissionsForUser";
+import { SubmissionFile } from "../api/getSubmissionFilesForSubmission";
 
 
 /**
- * @file submitActions.ts
+ * @file submissionActions.ts
  * @brief Actions for submitting data files (SubmissionPanel.tsx)
  * @author: Brockmann Consult
  * @date 14/01/2019
@@ -144,14 +145,14 @@ export type SUBMIT_FILES = typeof SUBMIT_FILES;
 
 export interface SubmitFiles {
     type: SUBMIT_FILES;
-    datasetValidationResults: DatasetValidationResult[];
+    currentDatasetValidationResults: DatasetValidationResult[];
 }
 
 
-export function _submitFiles(datasetValidationResults: DatasetValidationResult[]): SubmitFiles {
+export function _submitFiles(currentDatasetValidationResults: DatasetValidationResult[]): SubmitFiles {
     return {
         type: SUBMIT_FILES,
-        datasetValidationResults
+        currentDatasetValidationResults: currentDatasetValidationResults
     }
 }
 
@@ -190,11 +191,11 @@ export type UPDATE_SUBMISSIONS_FOR_USER = typeof UPDATE_SUBMISSIONS_FOR_USER;
 
 export interface UpdateSubmissionsForUser {
     type: UPDATE_SUBMISSIONS_FOR_USER;
-    submissions: SubmissionForUserResult[];
+    submissions: Submission[];
 }
 
 
-export function _updateSubmissionsForUser(submissions: SubmissionForUserResult[]): UpdateSubmissionsForUser {
+export function _updateSubmissionsForUser(submissions: Submission[]): UpdateSubmissionsForUser {
     return {
         type: UPDATE_SUBMISSIONS_FOR_USER,
         submissions
@@ -214,8 +215,8 @@ export function updateSubmissionsForUser() {
             userid = user.id;
         }
 
-        return api.getSubmissionFilesForUser(apiServerUrl, userid)
-            .then((submissions: SubmissionForUserResult[]) => {
+        return api.getSubmissionsForUser(apiServerUrl, userid)
+            .then((submissions: Submission[]) => {
                 dispatch(_updateSubmissionsForUser(submissions));
             })
             .then(() => {
@@ -227,6 +228,42 @@ export function updateSubmissionsForUser() {
     };
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION = 'UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION';
+export type UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION = typeof UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION;
+
+export interface UpdateSubmissionsFilesForSubmission {
+    type: UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION;
+    submissionFiles: SubmissionFile[];
+}
+
+export function _updateSubmissionFilesForSubmission(submissionFiles: SubmissionFile[]): UpdateSubmissionsFilesForSubmission {
+    return {
+        type: UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION,
+        submissionFiles: submissionFiles,
+    }
+}
+
+export function updateSubmissionFilesForSubmission(){
+    return (dispatch: Dispatch<UpdateSubmissionsFilesForSubmission | MessageLogAction>, getState: ()
+        => AppState) => {
+        const state = getState();
+        const apiServerUrl = state.configState.apiServerUrl;
+        const submissionId = state.submitState.submissionId;
+
+        return api.getSubmissionFilesForSubmission(apiServerUrl, submissionId)
+            .then((submissionFiles: SubmissionFile[]) => {
+                dispatch(_updateSubmissionFilesForSubmission(submissionFiles));
+            })
+            .then(() => {
+                dispatch(postMessage('success', 'Submission Files Loaded'))
+            })
+            .catch((error: string) => {
+                dispatch(postMessage('error', error + ''));
+            });
+    }
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -261,7 +298,7 @@ export function setSubmissionStatus() {
             userid = user.id;
         }
 
-        return api.getSubmissionFilesForUser(apiServerUrl, userid)
+        return api.getSubmissionsForUser(apiServerUrl, userid)
             .then((submissions: SubmissionForUserResult[]) => {
                 dispatch(_updateSubmissionsForUser(submissions));
             })
@@ -284,5 +321,6 @@ export type SubmitAction = OpenSubmitSteps
     | UpdateDocFiles
     | ClearForm
     | UpdateSubmissionsForUser
+    | UpdateSubmissionsFilesForSubmission
     | SubmitFiles;
     // | SetSubmissionStatus;
