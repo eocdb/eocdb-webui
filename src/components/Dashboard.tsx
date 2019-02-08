@@ -19,6 +19,7 @@ import DashPanels from './DashPanels';
 import LoginDialog from '../containers/user/LoginDialog'; // TODO: dependency issue here!
 import ConfigDialog from './admin/ConfigDialog';
 import SearchHistory from "../containers/search/SearchHistory";
+import { User } from "../types/user";
 
 
 const drawerWidth = 240;
@@ -120,6 +121,9 @@ interface DashboardProps extends WithStyles<typeof styles> {
 
     apiServerUrl: string;
     apiServerUrlChange: (url: string) => void;
+
+    user?: User | null;
+    updateSubmissions: () => void;
 }
 
 
@@ -221,7 +225,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         </IconButton>
                     </div>
                     <Divider/>
-                    <DrawerItems handleClick={this.handleDrawerChanged}/>
+                    <DrawerItems updateSubmissions={this.props.updateSubmissions} user={this.props.user} handleClick={this.handleDrawerChanged}/>
                     <Divider/>
 
                     <SearchHistory />
