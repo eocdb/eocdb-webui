@@ -8,7 +8,7 @@ import createStyles from "@material-ui/core/styles/createStyles";
 import { WithStyles } from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import { SubmissionForUserResult } from "../../api/getSubmissionFilesForUser";
+import { Submission } from "../../api/getSubmissionsForUser";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -38,7 +38,7 @@ export interface SubmissionIssueDialogProps extends WithStyles<typeof styles> {
     open: boolean;
     onClose: () => void;
 
-    submissions: SubmissionForUserResult[];
+    submissions: Submission[];
 }
 
 
@@ -72,7 +72,6 @@ class SubmissionIssueDialog extends React.Component<SubmissionIssueDialogProps> 
         );
     }
 }
-
 
 export default withStyles(styles)(SubmissionIssueDialog);
 
