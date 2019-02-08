@@ -7,7 +7,7 @@ import { SessionState } from './sessionState';
 import { DataState } from "./dataState";
 import { DataTableState } from "./dataTableState";
 import { AdvancedSearchState } from "./advancedSearchState";
-import { SubmitState } from "./submitState";
+import { SubmissionState } from "./submissionState";
 
 export interface AppState {
     configState:  ConfigState;
@@ -19,5 +19,5 @@ export interface AppState {
     dataState: DataState;
     dataTableState: DataTableState;
     advancedSearchState: AdvancedSearchState;
-    submitState: SubmitState;
+    submitState: SubmissionState;
 }
