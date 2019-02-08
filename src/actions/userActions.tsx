@@ -2,18 +2,24 @@ import { Dispatch } from 'redux';
 import * as api from '../api'
 import { AppState } from '../states/appState';
 import { User } from '../types/user';
+import { MessageLogAction, postMessage } from "./messageLogActions";
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export function loginUser(name: string, password: string) {
-    return (dispatch: Dispatch<LoginUser | StartUserLogin>, getState: () => AppState) => {
+    return (dispatch: Dispatch<LoginUser | StartUserLogin | MessageLogAction>, getState: () => AppState) => {
         dispatch(_startUserLogin());
         api.loginUser(getState().configState.apiServerUrl, name, password)
            .then((user: User) => {
                dispatch(_loginUser(user, null));
            })
-           .catch(error => {
+           .then(() => {
+                dispatch(postMessage('success', 'Login successful'));
+           })
+           .catch((error: string) => {
                dispatch(_loginUser(null, `${error}`));
+               dispatch(postMessage('error', error + ''));
            });
     };
 }
