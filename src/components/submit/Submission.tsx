@@ -118,7 +118,6 @@ class Submission extends React.Component<SubmitStepsProps> {
                             onClick={this.props.onClearForm}
                     >
                         Clear
-                        <CloudUpload/>
                     </Button>
                     <Button onClick={this.props.onClose}
                             aria-label="Close"
