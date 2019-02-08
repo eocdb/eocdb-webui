@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
 import { AppState } from "../../states/appState";
-import { closeSubmitSteps, openSubmitSteps } from "../../actions/submitActions";
+import { closeSubmitSteps, openSubmitSteps } from "../../actions/submissionActions";
 import SubmissionPanel from "../../components/submit/SubmissionPanel";
 
 

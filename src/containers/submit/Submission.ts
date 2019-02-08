@@ -9,7 +9,7 @@ import {
     updateDocFiles,
     updatePath,
     updateSubmissionId
-} from "../../actions/submitActions";
+} from "../../actions/submissionActions";
 
 
 const mapStateToProps = (state: AppState) => {
