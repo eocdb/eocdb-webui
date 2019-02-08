@@ -1,5 +1,5 @@
 import * as React from 'react';
-import SubmitPanel from "./SubmissionPanel";
+import SubmissionPanel from "./SubmissionPanel";
 import { createShallow } from '@material-ui/core/test-utils';
 
 
@@ -28,7 +28,7 @@ describe('<SubmissionPanel />', () => {
 
 
     it('SubmissionPanel renders children', () => {
-        const enzymeWrapper = mount(<SubmitPanel {...props} />);
-        expect(enzymeWrapper.find('SubmitPanel').length).toBe(1);
+        const enzymeWrapper = mount(<SubmissionPanel {...props} />);
+        expect(enzymeWrapper.find('SubmissionPanel').length).toBe(1);
     });
 });

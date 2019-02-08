@@ -34,6 +34,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                 <SubmitSteps
                     show={this.props.submissionOpen}
                     onClose={this.props.closeSubmission}
+                    onOpen={this.props.openSubmission}
                 />
                 <SubmitTable
                     show={!this.props.submissionOpen}
