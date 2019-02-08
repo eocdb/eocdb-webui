@@ -8,7 +8,7 @@ import {
     updateDataFiles,
     updateDocFiles,
     updatePath,
-    updateSubmissionId
+    updateSubmissionId, updateSubmissionsForUser
 } from "../../actions/submissionActions";
 
 
@@ -28,8 +28,8 @@ const mapDispatchToProps = {
     onDatafilesChange: updateDataFiles,
     onDocfilesChange: updateDocFiles,
     onFileSubmit: submitFiles,
-    //onError: postMessage,
     onClearForm: clearForm,
+    updateSubmissions: updateSubmissionsForUser,
 };
 
 
