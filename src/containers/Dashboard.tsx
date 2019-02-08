@@ -12,6 +12,7 @@ import {
 import { configServer } from '../actions/configActions'
 import Dashboard from '../components/Dashboard';
 import { loginUser } from '../actions/userActions';
+import { updateSubmissionsForUser } from "../actions/submissionActions";
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -19,6 +20,7 @@ const mapStateToProps = (state: AppState) => {
         loginDialogOpen: state.dashboardState.loginDialogOpen,
         configDialogOpen: state.dashboardState.configDialogOpen,
         apiServerUrl: state.configState.apiServerUrl,
+        user: state.sessionState.user,
     }
 };
 
@@ -32,6 +34,8 @@ const mapDispatchToProps = {
 
     loginUser,
     openRegistrationDialog,
+
+    updateSubmissions: updateSubmissionsForUser,
 
     apiServerUrlChange: configServer, // TODO: rename apiServerUrlChange --> configServer
 };
