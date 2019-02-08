@@ -3,8 +3,8 @@ import { SubmissionFile } from "./getSubmissionFilesForSubmission";
 
 
 export interface Submission {
-    submissionId: string;
-    userId: number;
+    submission_id: string;
+    user_id: number;
     date: string;
     status: string;
     files: SubmissionFile[];
