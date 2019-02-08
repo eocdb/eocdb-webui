@@ -93,7 +93,7 @@ describe("submitActions", () => {
     it("_updateSubmissionFilesForSubmission", () => {
         const expectedAction = {
             type: UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION,
-            submissionId: '',
+            submissionFiles: [],
         };
 
         expect(_updateSubmissionFilesForSubmission([])).toEqual(expectedAction);

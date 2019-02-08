@@ -3,13 +3,15 @@ import { newSubmissionState } from "./submissionState";
 describe('submitState', () => {
     it('newSubmissionState', () => {
         const expected = {
-            submitStepsOpen: false,
+            submissionOpen: false,
 
             submissionId: '',
             dataFiles: [],
             docFiles: [],
+            path: '',
 
-            datasetValidationResult: [],
+            currentDatasetValidationResults: [],
+            currentSubmissionFiles: [],
             foundSubmissions: [],
         };
 

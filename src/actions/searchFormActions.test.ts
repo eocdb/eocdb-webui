@@ -142,8 +142,9 @@ describe('searchFormActions', () => {
         const expectedActions = [
             {foundDatasets: {todos: ["do something"]}, type: UPDATE_FOUND_DATASETS},
             {searchHistory: [], type: UPDATE_SEARCH_HISTORY},
-            {loading: false, type: STOP_LOADING}]
-        ;
+            {loading: false, type: STOP_LOADING},
+            {messageText: "Data Loaded", messageType: "success", type: "POST_MESSAGE"}
+            ];
 
         const store = mockStore(initState);
 
