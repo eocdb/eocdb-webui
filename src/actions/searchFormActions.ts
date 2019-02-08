@@ -125,6 +125,9 @@ export function searchDatasets() {
             .then(() => {
                 dispatch(stopLoading());
             })
+            .then(() => {
+                dispatch(postMessage('success', 'Data Loaded'));
+            })
             .catch((error: string) => {
                 dispatch(postMessage('error', error + ''));
             });
