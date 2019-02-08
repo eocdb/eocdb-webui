@@ -18,6 +18,7 @@ interface MockProps {
     onDocfilesChange: () => void;
 
     onFileSubmit: () => void;
+    updateSubmissions: () => void;
 
     onClearForm: () => void;
 
@@ -40,6 +41,7 @@ const props: MockProps = {
     onDocfilesChange: jest.fn(),
 
     onFileSubmit: jest.fn(),
+    updateSubmissions: jest.fn(),
 
     onClearForm: jest.fn(),
 

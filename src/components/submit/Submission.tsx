@@ -46,6 +46,7 @@ interface SubmitStepsProps extends WithStyles<typeof styles> {
     onDatafilesChange: (acceptedFiles: File[]) => void;
     onDocfilesChange: (acceptedFiles: File[]) => void;
     onFileSubmit: () => void;
+    updateSubmissions: () => void;
 
     onClearForm: () => void;
 
@@ -91,6 +92,7 @@ class Submission extends React.Component<SubmitStepsProps> {
         } else {
             this.props.onFileSubmit();
             this.props.onClearForm();
+            this.props.updateSubmissions();
         }
     };
 
