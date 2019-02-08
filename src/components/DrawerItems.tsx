@@ -7,17 +7,25 @@ import List from '@material-ui/core/List/List';
 import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
+import { User } from "../types/user";
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({});
 
 interface DrawerItemsProps extends WithStyles<typeof styles> {
     handleClick: (currentDrawer: string) => void;
+    updateSubmissions: () => void;
+    user?: User | null;
 }
 
 class DrawerItems extends React.PureComponent<DrawerItemsProps> {
+    handleSubmitClick = () => {
+        this.props.handleClick('Submit');
+        this.props.updateSubmissions();
+    };
 
     render() {
+        const hasLoggedInUser = !this.props.user;
         return (
             <List>
                 <div>
@@ -39,7 +47,7 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
                         </ListItemIcon>
                         <ListItemText primary="Browse"/>
                     </ListItem>
-                    <ListItem key={'Submit'} onClick={() => this.props.handleClick('Submit')} button>
+                    <ListItem disabled={hasLoggedInUser} key={'Submit'} onClick={this.handleSubmitClick} button>
                         <ListItemIcon>
                             <CloudUpload/>
                         </ListItemIcon>
