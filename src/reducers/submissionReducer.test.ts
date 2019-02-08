@@ -1,4 +1,4 @@
-import { submitReducer } from "./submitReducer";
+import { submissionReducer } from "./submissionReducer";
 import {
     CLOSE_SUBMIT_STEPS,
     OPEN_SUBMIT_STEPS,
@@ -10,17 +10,17 @@ import {
     UpdateDataFiles,
     UpdateDocFiles,
     UpdateSubmissionId
-} from "../actions/submitActions";
+} from "../actions/submissionActions";
 
 
 describe('submitStepsReducer', () => {
-    it('submitReducer to open submit steps', () => {
-        const result = submitReducer(undefined, {type: OPEN_SUBMIT_STEPS});
+    it('submissionReducer to open submit steps', () => {
+        const result = submissionReducer(undefined, {type: OPEN_SUBMIT_STEPS});
         expect(result.submissionOpen).toEqual(true);
     });
 
-    it('submitReducer to close submit steps', () => {
-        const result = submitReducer(undefined, {type: CLOSE_SUBMIT_STEPS});
+    it('submissionReducer to close submit steps', () => {
+        const result = submissionReducer(undefined, {type: CLOSE_SUBMIT_STEPS});
         expect(result.submissionOpen).toEqual(false);
     });
 
@@ -29,7 +29,7 @@ describe('submitStepsReducer', () => {
             type: UPDATE_SUBMISSION_ID,
             submissionId: '',
         };
-        const result = submitReducer(undefined, action);
+        const result = submissionReducer(undefined, action);
         expect(result.submissionId).toEqual('');
     });
 
@@ -38,7 +38,7 @@ describe('submitStepsReducer', () => {
             type: UPDATE_DATA_FILES,
             dataFiles: [],
         };
-        const result = submitReducer(undefined, action);
+        const result = submissionReducer(undefined, action);
         expect(result.dataFiles.length).toEqual(0);
     });
 
@@ -47,16 +47,16 @@ describe('submitStepsReducer', () => {
             type: UPDATE_DOC_FILES,
             docFiles: [],
         };
-        const result = submitReducer(undefined, action);
+        const result = submissionReducer(undefined, action);
         expect(result.dataFiles.length).toEqual(0);
     });
 
-    it('submitReducer to submit files', () => {
+    it('submissionReducer to submit files', () => {
         const action: SubmitFiles = {
             type: SUBMIT_FILES,
-            datasetValidationResults: [],
+            currentDatasetValidationResults: [],
         };
-        const result = submitReducer(undefined, action);
+        const result = submissionReducer(undefined, action);
         expect(result.dataFiles.length).toEqual(0);
         expect(result.docFiles.length).toEqual(0);
     });
