@@ -1,4 +1,4 @@
-import { newSubmitState, SubmitState } from "../states/submitState";
+import { newSubmissionState, SubmissionState } from "../states/submissionState";
 import {
     CLOSE_SUBMIT_STEPS,
     OPEN_SUBMIT_STEPS,
@@ -6,13 +6,17 @@ import {
     SUBMIT_FILES,
     SubmitAction,
     UPDATE_DOC_FILES,
-    UPDATE_SUBMISSION_ID, UPDATE_PATH, UPDATE_SUBMISSIONS_FOR_USER, CLEAR_FORM
-} from "../actions/submitActions";
+    UPDATE_SUBMISSION_ID,
+    UPDATE_PATH,
+    UPDATE_SUBMISSIONS_FOR_USER,
+    CLEAR_FORM,
+    UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION
+} from "../actions/submissionActions";
 
 
-const initialState = newSubmitState();
+const initialState = newSubmissionState();
 
-export function submitReducer(state: SubmitState = initialState, action: SubmitAction) {
+export function submissionReducer(state: SubmissionState = initialState, action: SubmitAction) {
     switch (action.type) {
         case OPEN_SUBMIT_STEPS:
             return {...state, submissionOpen: true};
@@ -30,8 +34,10 @@ export function submitReducer(state: SubmitState = initialState, action: SubmitA
             return {...state, docFiles: [], dataFiles: [], submissionId: '', path: ''};
         case UPDATE_SUBMISSIONS_FOR_USER:
             return {...state, foundSubmissions: action.submissions};
+        case UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION:
+            return {...state, currentSubmissionFiles: action.submissionFiles};
         case SUBMIT_FILES:
-            return {...state, datasetValidationResults: action.datasetValidationResults};
+            return {...state, currentDatasetValidationResults: action.currentDatasetValidationResults};
         default:
             return state;
     }
