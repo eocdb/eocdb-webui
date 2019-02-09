@@ -18,6 +18,69 @@ import { SubmissionFile } from "../api/getSubmissionFilesForSubmission";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+export const OPEN_SUBMISSION_FILES_DIALOG = 'OPEN_SUBMISSION_FILES_DIALOG';
+export type OPEN_SUBMISSION_FILES_DIALOG = typeof OPEN_SUBMISSION_FILES_DIALOG;
+
+
+export interface OpenSubmissionFilesDialog {
+    type: OPEN_SUBMISSION_FILES_DIALOG;
+}
+
+export function openSubmissionFilesDialog(): OpenSubmissionFilesDialog{
+    return{
+        type: OPEN_SUBMISSION_FILES_DIALOG
+    }
+}
+
+
+export const CLOSE_SUBMISSION_FILES_DIALOG = 'CLOSE_SUBMISSION_FILES_DIALOG';
+export type CLOSE_SUBMISSION_FILES_DIALOG = typeof CLOSE_SUBMISSION_FILES_DIALOG;
+
+
+export interface CloseSubmissionFilesDialog {
+    type: CLOSE_SUBMISSION_FILES_DIALOG;
+}
+
+export function closeSubmissionFilesDialog(): CloseSubmissionFilesDialog{
+    return{
+        type: CLOSE_SUBMISSION_FILES_DIALOG
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const OPEN_SUBMISSION_ISSUES_DIALOG = 'OPEN_SUBMISSION_ISSUES_DIALOG';
+export type OPEN_SUBMISSION_ISSUES_DIALOG = typeof OPEN_SUBMISSION_ISSUES_DIALOG;
+
+
+export interface OpenSubmissionIssuesDialog {
+    type: OPEN_SUBMISSION_ISSUES_DIALOG;
+}
+
+export function openSubmissionIssuesDialog(): OpenSubmissionIssuesDialog{
+    return{
+        type: OPEN_SUBMISSION_ISSUES_DIALOG
+    }
+}
+
+
+export const CLOSE_SUBMISSION_ISSUES_DIALOG = 'CLOSE_SUBMISSION_ISSUES_DIALOG';
+export type CLOSE_SUBMISSION_ISSUES_DIALOG = typeof CLOSE_SUBMISSION_ISSUES_DIALOG;
+
+
+export interface CloseSubmissionIssuesDialog {
+    type: CLOSE_SUBMISSION_ISSUES_DIALOG;
+}
+
+export function closeSubmissionIssuesDialog(): CloseSubmissionIssuesDialog{
+    return{
+        type: CLOSE_SUBMISSION_ISSUES_DIALOG
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const CLOSE_SUBMIT_STEPS = 'CLOSE_SUBMIT_STEPS';
 export type CLOSE_SUBMIT_STEPS = typeof CLOSE_SUBMIT_STEPS;
 
@@ -315,6 +378,10 @@ export function setSubmissionStatus() {
 
 export type SubmitAction = OpenSubmitSteps
     | CloseSubmitSteps
+    | OpenSubmissionFilesDialog
+    | CloseSubmissionFilesDialog
+    | OpenSubmissionIssuesDialog
+    | CloseSubmissionIssuesDialog
     | UpdateSubmissionId
     | UpdatePath
     | UpdateDataFiles

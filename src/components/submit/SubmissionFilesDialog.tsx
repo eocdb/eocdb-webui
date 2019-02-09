@@ -1,13 +1,22 @@
 import * as React from "react";
-import { Theme, withStyles } from '@material-ui/core/styles';
+import {Theme, withStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import Slide, { SlideProps } from '@material-ui/core/Slide';
+import Slide, {SlideProps} from '@material-ui/core/Slide';
 
 import createStyles from "@material-ui/core/styles/createStyles";
-import { WithStyles } from "@material-ui/core";
+import {WithStyles} from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
+import Paper from "@material-ui/core/Paper/Paper";
+import Table from "@material-ui/core/Table/Table";
+import TableHead from "@material-ui/core/TableHead/TableHead";
+import TableCell from "@material-ui/core/TableCell/TableCell";
+import TableRow from "@material-ui/core/TableRow/TableRow";
+import TableBody from "@material-ui/core/TableBody/TableBody";
+import Icon from "@material-ui/core/Icon/Icon";
+import SubmissionIssueDialog from "./SubmissionIssueDialog";
+import {SubmissionFile} from "../../api/getSubmissionFilesForSubmission";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -38,7 +47,7 @@ export interface SubmissionfilesDialogProps extends WithStyles<typeof styles> {
     onClose: () => void;
 
     submissionId: string;
-    //submissions: SubmissionFileRefs[];
+    submissionFiles: SubmissionFile[];
 }
 
 
@@ -58,17 +67,53 @@ class SubmissionFilesDialog extends React.Component<SubmissionfilesDialogProps> 
                     TransitionComponent={Transition}
                 >
                     <DialogTitle id="form-dialog-title">Submission Files for {this.props.submissionId}</DialogTitle>
-                    <DialogActions className={classes.appBar}>
-                        <Button onClick={this.props.onClose}
-                                aria-label="Close"
-                                variant="contained"
-                                color="secondary"
-                        >
-                            Close
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
+                    <Paper className={classes.root}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>SubmissionId</TableCell>
+                                    <TableCell>FileName</TableCell>
+                                    <TableCell>Date</TableCell>
+                                    <TableCell>Status</TableCell>
+                                    <TableCell>Action</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {this.props.submissionFiles.map((row: SubmissionFile) => {
+                                    return (
+                                        <TableRow>
+                                            <TableCell>
+                                                {row.submissionId}
+                                            </TableCell>
+                                            <TableCell>
+                                                <Button
+                                                    onClick={this.props.openSubmisssionIssuesDialog}
+                                                >
+                                                    <Icon className={classes.rightIcon}>bar_chart</Icon>
+                                                </Button>
+                                                <SubmissionIssueDialog
+                                                    submissionId={row.submission_id}
+                                                    onClose={this.props.closeSubmisssionIssuesDialog}
+                                                    open={this.props.submisssionIssuesDialogOpen}
+                                                />
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                })}
+                        </TableBody>
+                    </Table>
+                </Paper>
+                <DialogActions className={classes.appBar}>
+                    <Button onClick={this.props.onClose}
+                            aria-label="Close"
+                            variant="contained"
+                            color="secondary"
+                    >
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            < / div >
         );
     }
 }

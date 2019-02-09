@@ -10,7 +10,10 @@ import {
     UPDATE_PATH,
     UPDATE_SUBMISSIONS_FOR_USER,
     CLEAR_FORM,
-    UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION
+    UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION,
+    OPEN_SUBMISSION_FILES_DIALOG,
+    CLOSE_SUBMISSION_FILES_DIALOG,
+    OPEN_SUBMISSION_ISSUES_DIALOG, CLOSE_SUBMISSION_ISSUES_DIALOG
 } from "../actions/submissionActions";
 
 
@@ -22,6 +25,14 @@ export function submissionReducer(state: SubmissionState = initialState, action:
             return {...state, submissionOpen: true};
         case CLOSE_SUBMIT_STEPS:
             return {...state, submissionOpen: false};
+        case OPEN_SUBMISSION_FILES_DIALOG:
+            return {...state, submissionFilesDialogOpen: true};
+        case CLOSE_SUBMISSION_FILES_DIALOG:
+            return {...state, submissionFilesDialogOpen: false};
+        case OPEN_SUBMISSION_ISSUES_DIALOG:
+            return {...state, submissionFilesDialogOpen: true};
+        case CLOSE_SUBMISSION_ISSUES_DIALOG:
+            return {...state, submissionFilesDialogOpen: false};
         case UPDATE_SUBMISSION_ID:
             return {...state, submissionId: action.submissionId};
         case UPDATE_PATH:

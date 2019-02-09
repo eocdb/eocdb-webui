@@ -14,11 +14,16 @@ export interface SubmissionState {
     currentSubmissionFiles: SubmissionFile[];
 
     foundSubmissions: Submission[];
+
+    submissionFilesDialogOpen: boolean;
+    submissionIssuesDialogOpen: boolean;
 }
 
 export function newSubmissionState() {
     return {
         submissionOpen: false,
+        submissionFilesDialogOpen: false,
+        submissionIssuesDialogOpen: false,
 
         submissionId: '',
         dataFiles: [],

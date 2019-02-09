@@ -15,6 +15,7 @@ import { Submission } from "../../api/getSubmissionsForUser";
 import Icon from '@material-ui/core/Icon/Icon';
 import { User } from "../../types/user";
 import Chip from "@material-ui/core/Chip";
+import SubmissionFilesDialog from "./SubmissionFilesDialog";
 
 
 const styles = (theme: Theme) => createStyles(
@@ -39,6 +40,10 @@ const styles = (theme: Theme) => createStyles(
 interface SubmissionTableProps extends WithStyles<typeof styles> {
     show: boolean;
     openSubmitSteps: () => void;
+
+    submisssionFilesDialogOpen: boolean;
+    openSubmisssionFilesDialog: () => void;
+    closeSubmisssionFilesDialog: () => void;
 
     submissions: Submission[];
     user?: User | null;
@@ -118,7 +123,17 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button><Icon className={classes.rightIcon}>bar_chart</Icon></Button>
+                                        <Button
+                                            onClick={this.props.openSubmisssionFilesDialog}
+                                        >
+                                            <Icon className={classes.rightIcon}>bar_chart</Icon>
+                                        </Button>
+                                        <SubmissionFilesDialog
+                                            submissionId={row.submission_id}
+                                            submissionFiles={row.files}
+                                            onClose={this.props.closeSubmisssionFilesDialog}
+                                            open={this.props.submisssionFilesDialogOpen}
+                                        />
                                     </TableCell>
                                 </TableRow>
                             );
