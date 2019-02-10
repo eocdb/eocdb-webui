@@ -30,9 +30,9 @@ export function submissionReducer(state: SubmissionState = initialState, action:
         case CLOSE_SUBMISSION_FILES_DIALOG:
             return {...state, submissionFilesDialogOpen: false};
         case OPEN_SUBMISSION_ISSUES_DIALOG:
-            return {...state, submissionFilesDialogOpen: true};
+            return {...state, submissionIssuesDialogOpen: true};
         case CLOSE_SUBMISSION_ISSUES_DIALOG:
-            return {...state, submissionFilesDialogOpen: false};
+            return {...state, submissionIssuesDialogOpen: false};
         case UPDATE_SUBMISSION_ID:
             return {...state, submissionId: action.submissionId};
         case UPDATE_PATH:

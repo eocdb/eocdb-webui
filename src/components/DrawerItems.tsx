@@ -25,8 +25,8 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
     };
 
     render() {
-        //const hasLoggedInUser = !this.props.user;
-        const hasLoggedInUser = false;
+        const hasLoggedInUser = !this.props.user;
+        //const hasLoggedInUser = false;
         return (
             <List>
                 <div>

@@ -4,8 +4,8 @@ import { DatasetValidationResult } from "./uploadStoreFiles";
 
 export interface SubmissionFile {
     index: number;
-    submissionId: string;
-    fileName: string;
+    submission_id: string;
+    filename: string;
     status: string;
     result: DatasetValidationResult;
 }

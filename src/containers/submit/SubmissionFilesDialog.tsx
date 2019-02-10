@@ -5,7 +5,7 @@ import {
     closeSubmissionIssuesDialog,
 } from "../../actions/submissionActions";
 
-import SubmissionIssueDialog from "../../components/submit/SubmissionIssueDialog";
+import SubmissionFilesDialog from "../../components/submit/SubmissionFilesDialog";
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -20,4 +20,4 @@ const mapDispatchToProps = {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(SubmissionIssueDialog)
+export default connect(mapStateToProps, mapDispatchToProps)(SubmissionFilesDialog)

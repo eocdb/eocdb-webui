@@ -8,7 +8,6 @@ import createStyles from "@material-ui/core/styles/createStyles";
 import { WithStyles } from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import { Submission } from "../../api/getSubmissionsForUser";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -38,7 +37,7 @@ export interface SubmissionIssueDialogProps extends WithStyles<typeof styles> {
     open: boolean;
     onClose: () => void;
 
-    submissions: Submission[];
+    submissionId: string;
 }
 
 

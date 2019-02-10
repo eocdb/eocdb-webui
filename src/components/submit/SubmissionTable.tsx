@@ -15,7 +15,7 @@ import { Submission } from "../../api/getSubmissionsForUser";
 import Icon from '@material-ui/core/Icon/Icon';
 import { User } from "../../types/user";
 import Chip from "@material-ui/core/Chip";
-import SubmissionFilesDialog from "./SubmissionFilesDialog";
+import SubmissionFilesDialog from "../../containers/submit/SubmissionFilesDialog";
 
 
 const styles = (theme: Theme) => createStyles(
@@ -41,9 +41,9 @@ interface SubmissionTableProps extends WithStyles<typeof styles> {
     show: boolean;
     openSubmitSteps: () => void;
 
-    submisssionFilesDialogOpen: boolean;
-    openSubmisssionFilesDialog: () => void;
-    closeSubmisssionFilesDialog: () => void;
+    submissionFilesDialogOpen: boolean;
+    openSubmissionFilesDialog: () => void;
+    closeSubmissionFilesDialog: () => void;
 
     submissions: Submission[];
     user?: User | null;
@@ -102,7 +102,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                     <TableBody>
                         {submissions.map((row: Submission) => {
                             const colour = this.getColoutForStatus(row.status);
-
+                            console.log(row);
                             return (
                                 <TableRow
                                     hover
@@ -124,15 +124,16 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                     </TableCell>
                                     <TableCell>
                                         <Button
-                                            onClick={this.props.openSubmisssionFilesDialog}
+                                            onClick={this.props.openSubmissionFilesDialog}
                                         >
                                             <Icon className={classes.rightIcon}>bar_chart</Icon>
                                         </Button>
                                         <SubmissionFilesDialog
+                                            key={row.submission_id}
                                             submissionId={row.submission_id}
-                                            submissionFiles={row.files}
-                                            onClose={this.props.closeSubmisssionFilesDialog}
-                                            open={this.props.submisssionFilesDialogOpen}
+                                            submissionFiles={row.file_refs ? row.file_refs : []}
+                                            onClose={this.props.closeSubmissionFilesDialog}
+                                            open={this.props.submissionFilesDialogOpen}
                                         />
                                     </TableCell>
                                 </TableRow>

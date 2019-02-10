@@ -8,6 +8,7 @@ export interface Submission {
     date: string;
     status: string;
     files: SubmissionFile[];
+    file_refs: SubmissionFile[];
 }
 
 /**

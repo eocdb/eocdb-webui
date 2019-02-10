@@ -21,6 +21,8 @@ import {SubmissionFile} from "../../api/getSubmissionFilesForSubmission";
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({
+    root: {
+    },
     appBar: {
         position: 'relative',
     },
@@ -42,17 +44,20 @@ function Transition(props: SlideProps) {
 }
 
 
-export interface SubmissionfilesDialogProps extends WithStyles<typeof styles> {
+export interface SubmissionFilesDialogProps extends WithStyles<typeof styles> {
     open: boolean;
     onClose: () => void;
 
     submissionId: string;
     submissionFiles: SubmissionFile[];
+    submissionIssuesDialogOpen: boolean;
+    openSubmissionIssuesDialog: () => void;
+    closeSubmissionIssuesDialog: () => void;
 }
 
 
-class SubmissionFilesDialog extends React.Component<SubmissionfilesDialogProps> {
-    constructor(props: SubmissionfilesDialogProps) {
+class SubmissionFilesDialog extends React.Component<SubmissionFilesDialogProps> {
+    constructor(props: SubmissionFilesDialogProps) {
         super(props);
     }
 
@@ -73,28 +78,34 @@ class SubmissionFilesDialog extends React.Component<SubmissionfilesDialogProps> 
                                 <TableRow>
                                     <TableCell>SubmissionId</TableCell>
                                     <TableCell>FileName</TableCell>
-                                    <TableCell>Date</TableCell>
                                     <TableCell>Status</TableCell>
                                     <TableCell>Action</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {this.props.submissionFiles.map((row: SubmissionFile) => {
+                                    console.log(row);
                                     return (
                                         <TableRow>
                                             <TableCell>
-                                                {row.submissionId}
+                                                {row.submission_id}
+                                            </TableCell>
+                                            <TableCell>
+                                                {row.filename}
+                                            </TableCell>
+                                            <TableCell>
+                                                {row.status}
                                             </TableCell>
                                             <TableCell>
                                                 <Button
-                                                    onClick={this.props.openSubmisssionIssuesDialog}
+                                                    onClick={this.props.openSubmissionIssuesDialog}
                                                 >
                                                     <Icon className={classes.rightIcon}>bar_chart</Icon>
                                                 </Button>
                                                 <SubmissionIssueDialog
                                                     submissionId={row.submission_id}
-                                                    onClose={this.props.closeSubmisssionIssuesDialog}
-                                                    open={this.props.submisssionIssuesDialogOpen}
+                                                    onClose={this.props.closeSubmissionIssuesDialog}
+                                                    open={this.props.submissionIssuesDialogOpen}
                                                 />
                                             </TableCell>
                                         </TableRow>
@@ -113,7 +124,7 @@ class SubmissionFilesDialog extends React.Component<SubmissionfilesDialogProps> 
                     </Button>
                 </DialogActions>
             </Dialog>
-            < / div >
+            </div>
         );
     }
 }
