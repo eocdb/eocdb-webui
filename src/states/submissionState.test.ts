@@ -9,6 +9,8 @@ describe('submitState', () => {
             dataFiles: [],
             docFiles: [],
             path: '',
+            submissionFilesDialogOpen: false,
+            submissionIssuesDialogOpen: false,
 
             currentDatasetValidationResults: [],
             currentSubmissionFiles: [],
