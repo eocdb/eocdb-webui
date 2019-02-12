@@ -199,7 +199,7 @@ class DataTable extends React.Component<DataTableProps> {
 
     handleOnSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         let selectedDatasets: string[] = [];
-        if(event.target.checked) {
+        if (event.target.checked) {
             selectedDatasets = this.props.data.datasets.map(row => {
                 return row.id;
             });
@@ -213,21 +213,25 @@ class DataTable extends React.Component<DataTableProps> {
         this.props.updateDownloadDocs(checked);
     };
 
-    handleRowClicked = (event: React.ChangeEvent<HTMLInputElement>, selectedDatasets: string[]) => {
-        const id = event.target.value;
-        const idx = selectedDatasets.indexOf(id);
-        const clonedArray  = Object.assign([], selectedDatasets);
-        //console.log(clonedArray);
-        if(event.target.checked) {
-            if (idx === -1) {
-                clonedArray.push(id);
-            }
-        }
-        else{
-            clonedArray.splice(idx, 1);
+
+    handleClick = (event: React.MouseEvent, id: string, selected: string[]) => {
+        const selectedIndex = selected.indexOf(id);
+        let newSelected: string[] = [];
+
+        if (selectedIndex === -1) {
+            newSelected = newSelected.concat(selected, id);
+        } else if (selectedIndex === 0) {
+            newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+            newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelected = newSelected.concat(
+                selected.slice(0, selectedIndex),
+                selected.slice(selectedIndex + 1),
+            );
         }
 
-        this.props.updateSelectedDatasets(clonedArray);
+        this.props.updateSelectedDatasets(newSelected);
     };
 
     isSelected = (id: string) => {
@@ -262,7 +266,7 @@ class DataTable extends React.Component<DataTableProps> {
                     >
                         Download
                         <Icon className={classes.rightIcon}>archive</Icon>
-                        {this.props.downloading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                        {this.props.downloading && <CircularProgress size={24} className={classes.buttonProgress}/>}
                     </Button>
                     <FormControlLabel
                         className={classes.button}
@@ -292,22 +296,22 @@ class DataTable extends React.Component<DataTableProps> {
                     </TableHead>
                     <TableBody>
                         {datasets.map(row => {
-                            const isSelected = false;
-
                             const fileName = path.basename(row.path);
                             const dirName = path.dirname(row.path);
+
+
                             return (
                                 <TableRow
                                     hover
                                     role="checkbox"
                                     key={row.id}
-                                    aria-checked={isSelected}
+                                    aria-checked={this.isSelected(row.id)}
                                     tabIndex={-1}
-                                    selected={isSelected}
+                                    selected={this.isSelected(row.id)}
+                                    onClick={(event) => this.handleClick(event, row.id, selectedDatasets)}
                                 >
                                     <TableCell padding="checkbox">
                                         <Checkbox
-                                            onChange={(event) => this.handleRowClicked(event, selectedDatasets)}
                                             checked={this.isSelected(row.id)}
                                             value={row.id}
                                         />

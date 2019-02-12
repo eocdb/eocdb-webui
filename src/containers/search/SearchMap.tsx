@@ -3,18 +3,21 @@ import { AppState } from '../../states/appState';
 
 import { updateSelectedRegions } from '../../actions/searchMapActions';
 import SearchMap from '../../components/search/SearchMap';
+import { updateSelectedDatasets } from "../../actions/dataTableActions";
 
 const mapStateToProps = (state: AppState) => {
     return {
         position: state.searchMapState.position,
         zoom: state.searchMapState.zoom,
         testMarkerCluster: true,
-        measurementPoints: state.searchFormState.foundDatasets.locations,
+        foundDatasets: state.searchFormState.foundDatasets,
+        selectedDatasets: state.dataTableState.selectedDatasets,
     }
 };
 
 const mapDispatchToProps = {
     updateSelectedRegions,
+    updateSelectedDatasets,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchMap);

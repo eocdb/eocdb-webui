@@ -3,11 +3,14 @@ import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
 import { FeatureGroup, Map, Marker, Popup, TileLayer } from 'react-leaflet'
-import { LatLng, LatLngBounds } from 'leaflet';
+import { Icon, LatLng, LatLngBounds } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
-
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import 'react-leaflet-markercluster/dist/styles.css';
+import { QueryResult } from "../../types/dataset";
+
+import markerInv from './marker_inv.png';
+import marker from './marker.png';
 
 // FIXME: forman did not find any typedefs for 'react-leaflet-draw', 2018.11.xx
 // import EditControl from "react-leaflet-draw";
@@ -25,8 +28,11 @@ interface SearchMapProps extends WithStyles<typeof styles> {
     updateSelectedRegions: (selectedRegions: GeoJsonObject, selectedBounds?: LatLngBounds) => void;
     testMarkerCluster?: boolean;
 
-    measurementPoints: {};
+    foundDatasets: QueryResult;
     drawMeasurementPoints?: boolean;
+
+    updateSelectedDatasets: (selectedDatasets: string[]) => void;
+    selectedDatasets: string[];
 }
 
 const DRAW_OPTIONS = {
@@ -43,22 +49,56 @@ const DRAW_OPTIONS = {
 class SearchMap extends React.PureComponent<SearchMapProps> {
     private editableFeatureGroupRef: any = null;
 
-    createMarker(lat: number, lon: number, key: number, dsId: number) {
-        return <Marker key={key} position={new LatLng(lat, lon)}><Popup>DS-ID {dsId}<br/>Key {key}</Popup></Marker>;
+    createMarker(lat: number, lon: number, key: number, dsId: string) {
+        if(this.props.selectedDatasets.indexOf(dsId) >= 0){
+            const icon = new Icon({iconUrl: markerInv});
+            return <Marker onclick={() => this.handleMarkerClick(dsId)} key={key}
+                           icon={icon}
+                           position={new LatLng(lat, lon)}><Popup>DS-ID {dsId}<br/>Key {key}</Popup></Marker>;
+        }
+        else {
+            const icon = new Icon({iconUrl: marker});
+            return <Marker onclick={() => this.handleMarkerClick(dsId)} key={key}
+                           icon={icon}
+                           position={new LatLng(lat, lon)}><Popup>DS-ID {dsId}<br/>Key {key}</Popup></Marker>;
+        }
+    }
+
+    handleMarkerClick(id: string){
+        const selected = this.props.selectedDatasets;
+        let newSelected = [];
+
+        let found = false;
+        for(let s of selected){
+            if(s!==id){
+                newSelected.push(s);
+            }
+            else{
+                found=true;
+            }
+        }
+
+        if(!found){
+            newSelected.push(id);
+        }
+
+        this.props.updateSelectedDatasets(newSelected);
     }
 
     renderMeasurementPointCluster(){
         let i = 0;
         let markers = [];
-        for(let f in this.props.measurementPoints) {
-            let feat_str = this.props.measurementPoints[f];
+        console.log(this.props.foundDatasets.datasets);
+        for(let f in this.props.foundDatasets.locations) {
+            let feat_str = this.props.foundDatasets.locations[f];
+
             feat_str = feat_str.replace(new RegExp("'", 'g'), '"');
             const feats = JSON.parse(feat_str)['features'];
             let last_coords = [];
             for(let feat=0; feat<feats.length; feat++) {
                 const coords = feats[0]['geometry']['coordinates'];
                 if(last_coords != coords) {
-                    const marker = this.createMarker(coords[1], coords[0], i, i);
+                    const marker = this.createMarker(coords[1], coords[0], i, f);
                     markers.push(marker);
                     i += 1;
                 }
