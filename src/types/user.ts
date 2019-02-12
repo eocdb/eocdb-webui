@@ -1,4 +1,4 @@
-export type UserRole = 'ADMIN' | 'SUBMIT' | 'GUEST';
+export type UserRole = 'admin' | 'submit' | 'guest';
 
 export interface User {
     // Mandatory user info

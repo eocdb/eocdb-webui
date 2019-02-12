@@ -93,6 +93,7 @@ class Submission extends React.Component<SubmitStepsProps> {
             this.props.onFileSubmit();
             this.props.onClearForm();
             this.props.updateSubmissions();
+            this.props.onClose();
         }
     };
 

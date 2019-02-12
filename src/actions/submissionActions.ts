@@ -293,6 +293,26 @@ export function updateSubmissionsForUser() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+export const UPDATE_CURRENT_SUBMISSION = 'UPDATE_CURRENT_SUBMISSION';
+export type UPDATE_CURRENT_SUBMISSION = typeof UPDATE_CURRENT_SUBMISSION;
+
+export interface UpdateCurrentSubmission {
+    type: UPDATE_CURRENT_SUBMISSION;
+    currentSubmissionId: string;
+    currentSubmissionFiles: SubmissionFile[];
+}
+
+export function updateCurrentSubmission(currentSubmissionId: string, currentSubmissionFiles: SubmissionFile[])
+    : UpdateCurrentSubmission {
+    return {
+        type: UPDATE_CURRENT_SUBMISSION,
+        currentSubmissionId,
+        currentSubmissionFiles,
+    }
+}
+
+
 export const UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION = 'UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION';
 export type UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION = typeof UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION;
 
@@ -383,6 +403,7 @@ export type SubmitAction = OpenSubmitSteps
     | OpenSubmissionIssuesDialog
     | CloseSubmissionIssuesDialog
     | UpdateSubmissionId
+    | UpdateCurrentSubmission
     | UpdatePath
     | UpdateDataFiles
     | UpdateDocFiles

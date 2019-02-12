@@ -25,8 +25,23 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
     };
 
     render() {
-        const hasLoggedInUser = !this.props.user;
-        //const hasLoggedInUser = false;
+        let submitAllowed = false;
+
+        if(this.props.user){
+            if(this.props.user.roles.indexOf('submit') > -1){
+                submitAllowed = true;
+            }
+        }
+
+        let adminAllowed = false;
+
+        if(this.props.user){
+            if(this.props.user.roles.indexOf('admin') > -1){
+                adminAllowed = true;
+            }
+        }
+
+        console.log(this.props.user);
         return (
             <List>
                 <div>
@@ -48,13 +63,13 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
                         </ListItemIcon>
                         <ListItemText primary="Browse"/>
                     </ListItem>
-                    <ListItem disabled={hasLoggedInUser} key={'Submit'} onClick={this.handleSubmitClick} button>
+                    <ListItem disabled={!submitAllowed} key={'Submit'} onClick={this.handleSubmitClick} button>
                         <ListItemIcon>
                             <CloudUpload/>
                         </ListItemIcon>
                         <ListItemText primary="Submit"/>
                     </ListItem>
-                    <ListItem key={'Admin'} onClick={() => this.props.handleClick('Admin')} button>
+                    <ListItem disabled={!adminAllowed}  key={'Admin'} onClick={() => this.props.handleClick('Admin')} button>
                         <ListItemIcon>
                             <SettingsApplications/>
                         </ListItemIcon>

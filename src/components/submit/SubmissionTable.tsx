@@ -16,6 +16,7 @@ import Icon from '@material-ui/core/Icon/Icon';
 import { User } from "../../types/user";
 import Chip from "@material-ui/core/Chip";
 import SubmissionFilesDialog from "../../containers/submit/SubmissionFilesDialog";
+import { SubmissionFile } from "../../api/getSubmissionFilesForSubmission";
 
 
 const styles = (theme: Theme) => createStyles(
@@ -45,6 +46,10 @@ interface SubmissionTableProps extends WithStyles<typeof styles> {
     openSubmissionFilesDialog: () => void;
     closeSubmissionFilesDialog: () => void;
 
+    updateCurrentSubmission: (currentSubmissionId: string, currentSubmissionFiles: SubmissionFile[]) => void;
+    currentSubmissionId: string;
+    currentSubmissionFiles: SubmissionFile[];
+
     submissions: Submission[];
     user?: User | null;
 }
@@ -57,6 +62,11 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
 
     handleOpenSubmitSteps = () => {
         this.props.openSubmitSteps();
+    };
+
+    handleOpenSubmissionFilesDialog = (currentSubmissionId: string, currentSubmissionFiles: SubmissionFile[]) => {
+        this.props.openSubmissionFilesDialog();
+        this.props.updateCurrentSubmission(currentSubmissionId, currentSubmissionFiles);
     };
 
     getColoutForStatus = (status: string) => {
@@ -80,6 +90,13 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
 
         return (
             <Paper className={classes.root}>
+                <SubmissionFilesDialog
+                    key={this.props.currentSubmissionId}
+                    submissionId={this.props.currentSubmissionId}
+                    submissionFiles={this.props.currentSubmissionFiles}
+                    onClose={this.props.closeSubmissionFilesDialog}
+                    open={this.props.submissionFilesDialogOpen}
+                />
                 <Grid container justify={"flex-end"}>
                     <Button variant="contained"
                             color="secondary"
@@ -124,17 +141,13 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                     </TableCell>
                                     <TableCell>
                                         <Button
-                                            onClick={this.props.openSubmissionFilesDialog}
+                                            onClick={() => this.handleOpenSubmissionFilesDialog(
+                                                row.submission_id,
+                                                row.file_refs
+                                            )}
                                         >
                                             <Icon className={classes.rightIcon}>bar_chart</Icon>
                                         </Button>
-                                        <SubmissionFilesDialog
-                                            key={row.submission_id}
-                                            submissionId={row.submission_id}
-                                            submissionFiles={row.file_refs ? row.file_refs : []}
-                                            onClose={this.props.closeSubmissionFilesDialog}
-                                            open={this.props.submissionFilesDialogOpen}
-                                        />
                                     </TableCell>
                                 </TableRow>
                             );

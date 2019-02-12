@@ -12,6 +12,7 @@ export interface SubmissionState {
 
     currentDatasetValidationResults: DatasetValidationResult[];
     currentSubmissionFiles: SubmissionFile[];
+    currentSubmissionId: string;
 
     foundSubmissions: Submission[];
 
@@ -32,6 +33,8 @@ export function newSubmissionState() {
 
         currentDatasetValidationResults: [],
         currentSubmissionFiles: [],
+        currentSubmissionId: '',
+
         foundSubmissions: [],
     }
 }

@@ -4,6 +4,7 @@ import SubmissionTable from "../../components/submit/SubmissionTable";
 import {
     openSubmissionFilesDialog,
     closeSubmissionFilesDialog,
+    updateCurrentSubmission,
 } from "../../actions/submissionActions";
 
 const mapStateToProps = (state: AppState) => {
@@ -11,6 +12,8 @@ const mapStateToProps = (state: AppState) => {
         submissions: state.submitState.foundSubmissions,
         user: state.sessionState.user,
         submissionFilesDialogOpen: state.submitState.submissionFilesDialogOpen,
+        currentSubmissionId: state.submitState.currentSubmissionId,
+        currentSubmissionFiles: state.submitState.currentSubmissionFiles,
     };
 };
 
@@ -18,6 +21,7 @@ const mapStateToProps = (state: AppState) => {
 const mapDispatchToProps = {
     openSubmissionFilesDialog,
     closeSubmissionFilesDialog,
+    updateCurrentSubmission,
 };
 
 

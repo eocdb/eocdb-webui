@@ -3,10 +3,10 @@ import {
     CLOSE_SUBMIT_STEPS,
     OPEN_SUBMIT_STEPS,
     SUBMIT_FILES,
-    SubmitFiles,
+    SubmitFiles, UPDATE_CURRENT_SUBMISSION,
     UPDATE_DATA_FILES,
     UPDATE_DOC_FILES,
-    UPDATE_SUBMISSION_ID,
+    UPDATE_SUBMISSION_ID, UpdateCurrentSubmission,
     UpdateDataFiles,
     UpdateDocFiles,
     UpdateSubmissionId
@@ -50,6 +50,18 @@ describe('submitStepsReducer', () => {
         const result = submissionReducer(undefined, action);
         expect(result.dataFiles.length).toEqual(0);
     });
+
+    it('reducing updateCurrentSubmission', () => {
+        const action: UpdateCurrentSubmission = {
+            type: UPDATE_CURRENT_SUBMISSION,
+            currentSubmissionId: '',
+            currentSubmissionFiles: [],
+        };
+        const result = submissionReducer(undefined, action);
+        expect(result.currentSubmissionId).toEqual('');
+        expect(result.currentSubmissionFiles).toEqual([]);
+    });
+
 
     it('submissionReducer to submit files', () => {
         const action: SubmitFiles = {
