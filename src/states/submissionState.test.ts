@@ -14,6 +14,7 @@ describe('submitState', () => {
 
             currentDatasetValidationResults: [],
             currentSubmissionFiles: [],
+            currentSubmissionId: '',
             foundSubmissions: [],
         };
 
