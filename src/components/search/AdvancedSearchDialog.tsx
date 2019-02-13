@@ -14,6 +14,7 @@ import BBoxInput from "./BBoxInput";
 import { LatLngBounds } from "leaflet";
 import { WavelengthsMode } from "../../api/findDatasets";
 import { wavelengthItems } from "./SelectItems";
+import MinMaxInputSlider from "./MinMaxInputSlider";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -43,11 +44,15 @@ export interface AdvancedSearchDialogProps extends WithStyles<typeof styles> {
     open: boolean;
     onClose: () => void;
 
-    onBBoxChange: (selectedBounds: LatLngBounds) => void;
+    updateBBox: (selectedBounds: LatLngBounds) => void;
     selectedBounds: LatLngBounds;
 
-    onWavelengthSelect: (item: string) => void;
+    updateWavelength: (item: string) => void;
     selectedWavelength: WavelengthsMode;
+
+    updateWaterDepth: (waterDepthMin: number, waterDepthMax: number) => void;
+    waterDepthMin: number;
+    waterDepthMax: number;
 }
 
 
@@ -58,7 +63,11 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
 
     handleWaveLengthSelect = (item: string) => {
         //console.log(item);
-        this.props.onWavelengthSelect(item);
+        this.props.updateWavelength(item);
+    };
+
+    handleWaterDepthChange = (waterDepthMin: number, waterDepthMax: number) => {
+        this.props.updateWaterDepth(waterDepthMin, waterDepthMax);
     };
 
     render() {
@@ -75,7 +84,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                     <Grid spacing={16} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
                         <Grid item xs={12}>
                             <BBoxInput
-                                onBBoxChange={this.props.onBBoxChange}
+                                onBBoxChange={this.props.updateBBox}
                                 selectedBounds={this.props.selectedBounds}
                             />
                         </Grid>
@@ -87,6 +96,16 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                                 onChange={this.handleWaveLengthSelect}
                             />
                         </Grid>
+                        <Grid item xs={12}>
+                            <MinMaxInputSlider
+                                valueMin={this.props.waterDepthMin}
+                                valueMax={this.props.waterDepthMax}
+                                onChange={this.handleWaterDepthChange}
+
+                                label={'Water Depth'}
+                            />
+                        </Grid>
+
                     </Grid>
                     <DialogActions className={classes.appBar}>
                         <Button onClick={this.props.onClose}

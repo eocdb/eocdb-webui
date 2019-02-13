@@ -17,6 +17,7 @@ import TableBody from "@material-ui/core/TableBody/TableBody";
 import Icon from "@material-ui/core/Icon/Icon";
 import SubmissionIssueDialog from "./SubmissionIssueDialog";
 import {SubmissionFile} from "../../api/getSubmissionFilesForSubmission";
+import Chip from "@material-ui/core/Chip";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -61,6 +62,19 @@ class SubmissionFilesDialog extends React.Component<SubmissionFilesDialogProps> 
         super(props);
     }
 
+    getColoutForStatus = (status: string) => {
+        switch (status) {
+            case 'OK':
+                return "green";
+            case 'WARNING':
+                return "orange";
+            case 'ERROR':
+                return "red";
+        }
+        return "yellow"
+    };
+
+
     render() {
         const {classes} = this.props;
         return (
@@ -84,9 +98,10 @@ class SubmissionFilesDialog extends React.Component<SubmissionFilesDialogProps> 
                             </TableHead>
                             <TableBody>
                                 {this.props.submissionFiles.map((row: SubmissionFile) => {
+                                    const colour = this.getColoutForStatus(row.status);
                                     console.log(row);
                                     return (
-                                        <TableRow>
+                                        <TableRow key={row.submission_id}>
                                             <TableCell>
                                                 {row.submission_id}
                                             </TableCell>
@@ -94,7 +109,10 @@ class SubmissionFilesDialog extends React.Component<SubmissionFilesDialogProps> 
                                                 {row.filename}
                                             </TableCell>
                                             <TableCell>
-                                                {row.status}
+                                                <Chip
+                                                    label={row.status}
+                                                    style={{background: colour}}
+                                                />
                                             </TableCell>
                                             <TableCell>
                                                 <Button

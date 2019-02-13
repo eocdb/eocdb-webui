@@ -119,7 +119,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                     <TableBody>
                         {submissions.map((row: Submission) => {
                             const colour = this.getColoutForStatus(row.status);
-                            console.log(row);
+
                             return (
                                 <TableRow
                                     hover

@@ -24,6 +24,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabe
 import Typography from "@material-ui/core/Typography/Typography";
 import Grid from "@material-ui/core/Grid/Grid";
 import green from "@material-ui/core/colors/green";
+import PlotDialog from "./PlotDialog";
 
 const path = require('path');
 
@@ -152,6 +153,12 @@ export interface DataTableProps extends WithStyles<typeof styles> {
     openMetaInfoDialog: () => void;
     closeMetaInfoDialog: () => void;
 
+
+    plotDialogOpen: boolean;
+    openPlotDialog: () => void;
+    closePlotDialog: () => void;
+
+
     updateDataset: (datasetId: string) => void;
     dataset: Dataset;
 
@@ -195,6 +202,15 @@ class DataTable extends React.Component<DataTableProps> {
 
     handleMetaInfoClose = () => {
         this.props.closeMetaInfoDialog();
+    };
+
+    handlePlotOpen = (id: string) => {
+        this.props.openPlotDialog();
+        this.props.updateDataset(id);
+    };
+
+    handlePlotClose = () => {
+        this.props.closePlotDialog();
     };
 
     handleOnSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -254,6 +270,11 @@ class DataTable extends React.Component<DataTableProps> {
                 <MetaInfoDialog
                     open={this.props.metaInfoDialogOpen}
                     handleClose={this.handleMetaInfoClose}
+                    dataset={this.props.dataset}
+                />
+                <PlotDialog
+                    open={this.props.plotDialogOpen}
+                    handleClose={this.handlePlotClose}
                     dataset={this.props.dataset}
                 />
                 <Grid container justify={"flex-end"}>
@@ -337,7 +358,12 @@ class DataTable extends React.Component<DataTableProps> {
                                         >
                                             <Settings/>
                                         </IconButton>
-                                        <Button><Icon className={classes.rightIcon}>bar_chart</Icon></Button>
+                                        <Button
+                                            color={"inherit"}
+                                            onClick={() => this.handlePlotOpen(row.id)}
+                                        >
+                                            <Icon className={classes.rightIcon}>bar_chart</Icon>
+                                        </Button>
                                     </TableCell>
                                 </TableRow>
                             );

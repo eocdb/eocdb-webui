@@ -3,7 +3,7 @@ import { AppState } from "../../states/appState";
 import AdvancedSearchDialog from "../../components/search/AdvancedSearchDialog";
 import {
     bboxChange,
-    updateSelectedWavelength
+    updateSelectedWavelength, updateWaterDepth
 }
     from "../../actions/advancedSearchActions";
 
@@ -12,6 +12,8 @@ const mapStateToProps = (state: AppState) => {
     return {
         selectedBounds: state.advancedSearchState.selectedBounds,
         selectedWavelength: state.advancedSearchState.selectedWavelength,
+        waterDepthMin: state.advancedSearchState.waterDepthMin,
+        waterDepthMax: state.advancedSearchState.waterDepthMax,
     };
 };
 
@@ -19,6 +21,7 @@ const mapStateToProps = (state: AppState) => {
 const mapDispatchToProps = {
     onBBoxChange: bboxChange,
     onWavelengthSelect: updateSelectedWavelength,
+    updateWaterDepth
 };
 
 

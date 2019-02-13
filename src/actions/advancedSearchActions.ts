@@ -29,4 +29,20 @@ export function updateSelectedWavelength(selectedWavelength: string): UpdateSele
 }
 
 
-export type AdvancedSearchAction = BboxChange | UpdateSelectedWavelength;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_WATERDEPTH = 'UPDATE_WATERDEPTH ';
+export type UPDATE_WATERDEPTH  = typeof UPDATE_WATERDEPTH ;
+
+export interface UpdateWaterDepth {
+    type: UPDATE_WATERDEPTH ;
+    waterDepthMin: number;
+    waterDepthMax: number;
+}
+
+export function updateWaterDepth(waterDepthMin: number, waterDepthMax: number): UpdateWaterDepth {
+    return {type: UPDATE_WATERDEPTH , waterDepthMin, waterDepthMax};
+}
+
+
+export type AdvancedSearchAction = BboxChange | UpdateSelectedWavelength | UpdateWaterDepth;

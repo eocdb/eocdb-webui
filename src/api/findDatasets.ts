@@ -4,6 +4,7 @@ import { QueryResult } from '../types/dataset';
 export type ProductMode = 'contains' | 'same_cruise' | 'dont_apply';
 export type MeasurementType = 'all';
 export type WavelengthsMode = 'all' | 'multispectral' | 'hyperspectral';
+export type WaterDepth = [string, string];
 
 export interface DatasetQuery {
     searchExpr?: string;

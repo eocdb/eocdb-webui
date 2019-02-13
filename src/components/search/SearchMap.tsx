@@ -7,7 +7,7 @@ import { Icon, LatLng, LatLngBounds } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import 'react-leaflet-markercluster/dist/styles.css';
-import { QueryResult } from "../../types/dataset";
+import { DatasetRef, QueryResult } from "../../types/dataset";
 
 import markerInv from './marker_inv.png';
 import marker from './marker.png';
@@ -33,6 +33,8 @@ interface SearchMapProps extends WithStyles<typeof styles> {
 
     updateSelectedDatasets: (selectedDatasets: string[]) => void;
     selectedDatasets: string[];
+
+    updatePosition: (position: LatLng) => void;
 }
 
 const DRAW_OPTIONS = {
@@ -44,63 +46,69 @@ const DRAW_OPTIONS = {
     circlemarker: false
 };
 
+//const average = (arr: number[]) => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
+
 //let MARKERS: React.ReactNode[] | null = null;
 
 class SearchMap extends React.PureComponent<SearchMapProps> {
     private editableFeatureGroupRef: any = null;
 
-    createMarker(lat: number, lon: number, key: number, dsId: string) {
-        if(this.props.selectedDatasets.indexOf(dsId) >= 0){
+    createMarker(lat: number, lon: number, key: string, dsId: string) {
+        if (this.props.selectedDatasets.indexOf(dsId) >= 0) {
             const icon = new Icon({iconUrl: markerInv});
             return <Marker onclick={() => this.handleMarkerClick(dsId)} key={key}
                            icon={icon}
-                           position={new LatLng(lat, lon)}><Popup>DS-ID {dsId}<br/>Key {key}</Popup></Marker>;
-        }
-        else {
+                           position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
+        } else {
             const icon = new Icon({iconUrl: marker});
             return <Marker onclick={() => this.handleMarkerClick(dsId)} key={key}
                            icon={icon}
-                           position={new LatLng(lat, lon)}><Popup>DS-ID {dsId}<br/>Key {key}</Popup></Marker>;
+                           position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
         }
     }
 
-    handleMarkerClick(id: string){
+    handleMarkerClick(id: string) {
         const selected = this.props.selectedDatasets;
         let newSelected = [];
 
         let found = false;
-        for(let s of selected){
-            if(s!==id){
+        for (let s of selected) {
+            if (s !== id) {
                 newSelected.push(s);
-            }
-            else{
-                found=true;
+            } else {
+                found = true;
             }
         }
 
-        if(!found){
+        if (!found) {
             newSelected.push(id);
         }
 
         this.props.updateSelectedDatasets(newSelected);
     }
 
-    renderMeasurementPointCluster(){
-        let i = 0;
+    getDatasetRef = (id: string): DatasetRef | undefined => {
+        return this.props.foundDatasets.datasets.find((dr: DatasetRef) => {
+            return dr.id === id;
+        });
+    };
+
+    renderMeasurementPointCluster() {
         let markers = [];
-        console.log(this.props.foundDatasets.datasets);
-        for(let f in this.props.foundDatasets.locations) {
+
+        for (let f in this.props.foundDatasets.locations) {
             let feat_str = this.props.foundDatasets.locations[f];
+
+            const dr = this.getDatasetRef(f);
 
             feat_str = feat_str.replace(new RegExp("'", 'g'), '"');
             const feats = JSON.parse(feat_str)['features'];
             let last_coords = [];
-            for(let feat=0; feat<feats.length; feat++) {
+            for (let feat = 0; feat < feats.length; feat++) {
                 const coords = feats[0]['geometry']['coordinates'];
-                if(last_coords != coords) {
-                    const marker = this.createMarker(coords[1], coords[0], i, f);
+                if (last_coords != coords) {
+                    const marker = this.createMarker(coords[1], coords[0], dr ? dr.path : 'unknown', f);
                     markers.push(marker);
-                    i += 1;
                 }
                 last_coords = coords;
             }
