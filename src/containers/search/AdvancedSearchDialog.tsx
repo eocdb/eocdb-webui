@@ -2,11 +2,12 @@ import { connect } from "react-redux";
 import { AppState } from "../../states/appState";
 import AdvancedSearchDialog from "../../components/search/AdvancedSearchDialog";
 import {
-    bboxChange,
-    updateSelectedWavelength, updateWaterDepth
+    updateBBox,
+    updateWavelength,
+    updateWaterDepth,
+    updateOptShallow,
 }
     from "../../actions/advancedSearchActions";
-
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -14,14 +15,16 @@ const mapStateToProps = (state: AppState) => {
         selectedWavelength: state.advancedSearchState.selectedWavelength,
         waterDepthMin: state.advancedSearchState.waterDepthMin,
         waterDepthMax: state.advancedSearchState.waterDepthMax,
+        selectedOptShallow: state.advancedSearchState.selectedOptShallow,
     };
 };
 
 
 const mapDispatchToProps = {
-    onBBoxChange: bboxChange,
-    onWavelengthSelect: updateSelectedWavelength,
-    updateWaterDepth
+    updateBBox,
+    updateWavelength,
+    updateWaterDepth,
+    updateOptShallow,
 };
 
 

@@ -6,6 +6,7 @@ export interface AdvancedSearchState {
     selectedWavelength: WavelengthsMode;
     waterDepthMin: number;
     waterDepthMax: number;
+    selectedOptShallow: string;
 }
 
 export const SELECTED_BOUNDS_DEFAULT = new LatLngBounds(new LatLng(0, 0), new LatLng(0, 0));
@@ -16,5 +17,6 @@ export function newAdvancedSearchState(): AdvancedSearchState  {
         selectedWavelength: 'all',
         waterDepthMin: 0,
         waterDepthMax: 1000,
+        selectedOptShallow: '',
     };
 }

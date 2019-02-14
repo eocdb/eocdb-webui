@@ -14,11 +14,15 @@ const styles = (theme: Theme) => createStyles({
 });
 
 interface AdvancedSearchLogProps extends WithStyles<typeof styles> {
-    onBBoxChange: (selectedBounds: LatLngBounds) => void;
+    updateBBox: (selectedBounds: LatLngBounds) => void;
     selectedBounds: LatLngBounds;
 
-    onWavelengthSelect: (item: string) => void;
+    updateWavelength: (item: string) => void;
     selectedWavelength: WavelengthsMode;
+
+    updateWaterDepth: (waterDepthMin: number, waterDepthMax: number) => void;
+    waterDepthMin: number;
+    waterDepthMax: number;
 }
 
 class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
@@ -45,10 +49,13 @@ class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
     handleFilterDelete = (key: string) => {
         switch (key) {
             case 'bbox': {
-                return this.props.onBBoxChange(SELECTED_BOUNDS_DEFAULT);
+                return this.props.updateBBox(SELECTED_BOUNDS_DEFAULT);
             }
             case 'wavelength': {
-                return this.props.onWavelengthSelect("all");
+                return this.props.updateWavelength("all");
+            }
+            case 'waterdepth': {
+                return this.props.updateWaterDepth(0, 1000);
             }
         }
     };

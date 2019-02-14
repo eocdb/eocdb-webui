@@ -2,30 +2,44 @@ import { LatLngBounds } from "leaflet";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const BBOX_CHANGE = 'BBOX_CHANGE';
-export type BBOX_CHANGE = typeof BBOX_CHANGE;
+export const UPDATE_BBOX = 'UPDATE_BBOX';
+export type UPDATE_BBOX = typeof UPDATE_BBOX;
 
-export interface BboxChange {
-    type: BBOX_CHANGE;
+export interface UpdateBBox {
+    type: UPDATE_BBOX;
     selectedBounds: LatLngBounds;
 }
 
-export function bboxChange(selectedBounds: LatLngBounds): BboxChange {
-    return {type: BBOX_CHANGE, selectedBounds};
+export function updateBBox(selectedBounds: LatLngBounds): UpdateBBox {
+    return {type: UPDATE_BBOX, selectedBounds};
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const UPDATE_SELECTED_WAVELENGTH = 'UPDATE_SELECTED_WAVELENGTH ';
-export type UPDATE_SELECTED_WAVELENGTH  = typeof UPDATE_SELECTED_WAVELENGTH ;
+export const UPDATE_WAVELENGTH = 'UPDATE_WAVELENGTH ';
+export type UPDATE_WAVELENGTH  = typeof UPDATE_WAVELENGTH ;
 
-export interface UpdateSelectedWavelength {
-    type: UPDATE_SELECTED_WAVELENGTH ;
+export interface UpdateWavelength {
+    type: UPDATE_WAVELENGTH ;
     selectedWavelength: string;
 }
 
-export function updateSelectedWavelength(selectedWavelength: string): UpdateSelectedWavelength {
-    return {type: UPDATE_SELECTED_WAVELENGTH , selectedWavelength};
+export function updateWavelength(selectedWavelength: string): UpdateWavelength {
+    return {type: UPDATE_WAVELENGTH , selectedWavelength};
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_OPTSHALLOW = 'UPDATE_OPTSHALLOW ';
+export type UPDATE_OPTSHALLOW  = typeof UPDATE_OPTSHALLOW ;
+
+export interface UpdateOptShallow {
+    type: UPDATE_OPTSHALLOW ;
+    selectedOptShallow: string;
+}
+
+export function updateOptShallow(selectedOptShallow: string): UpdateOptShallow {
+    return {type: UPDATE_OPTSHALLOW , selectedOptShallow};
 }
 
 
@@ -42,7 +56,7 @@ export interface UpdateWaterDepth {
 
 export function updateWaterDepth(waterDepthMin: number, waterDepthMax: number): UpdateWaterDepth {
     return {type: UPDATE_WATERDEPTH , waterDepthMin, waterDepthMax};
-}
+} 
 
 
-export type AdvancedSearchAction = BboxChange | UpdateSelectedWavelength | UpdateWaterDepth;
+export type AdvancedSearchAction = UpdateBBox | UpdateWavelength | UpdateWaterDepth | UpdateOptShallow;

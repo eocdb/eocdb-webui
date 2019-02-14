@@ -8,6 +8,7 @@ describe('advancedSearchState', () => {
             selectedWavelength: 'all',
             waterDepthMin: 0,
             waterDepthMax: 1000,
+            selectedOptShallow: '',
         };
 
         expect(newAdvancedSearchState()).toEqual(expected);

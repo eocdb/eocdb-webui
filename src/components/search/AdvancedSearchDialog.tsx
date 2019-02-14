@@ -15,6 +15,8 @@ import { LatLngBounds } from "leaflet";
 import { WavelengthsMode } from "../../api/findDatasets";
 import { wavelengthItems } from "./SelectItems";
 import MinMaxInputSlider from "./MinMaxInputSlider";
+import RadioSelect, {RadioItem} from "./RadioSelect";
+import MultipleSelectTextField from "./MultipleSelectTextField";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -53,8 +55,28 @@ export interface AdvancedSearchDialogProps extends WithStyles<typeof styles> {
     updateWaterDepth: (waterDepthMin: number, waterDepthMax: number) => void;
     waterDepthMin: number;
     waterDepthMax: number;
+
+    updateOptShallow: (optShallow: string) => void;
+    selectedOptShallow: string;
 }
 
+const items: RadioItem[] = [
+    {
+        name: 'Yes',
+        value: 'yes',
+        label: 'Yes',
+    },
+    {
+        name: 'No',
+        value: 'no',
+        label: 'No',
+    },
+    {
+        name: 'Exclusively',
+        value: 'exclusively',
+        label: 'Exclusively',
+    }
+];
 
 class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
     constructor(props: AdvancedSearchDialogProps) {
@@ -105,7 +127,15 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                                 label={'Water Depth'}
                             />
                         </Grid>
-
+                        <Grid item xs={12}>
+                            <RadioSelect items={items}
+                                         selectedValue={this.props.selectedOptShallow}
+                                         onChange={this.props.updateOptShallow}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <MultipleSelectTextField />
+                        </Grid>
                     </Grid>
                     <DialogActions className={classes.appBar}>
                         <Button onClick={this.props.onClose}

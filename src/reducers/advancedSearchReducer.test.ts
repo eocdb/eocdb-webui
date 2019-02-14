@@ -1,8 +1,12 @@
 import {
-    BBOX_CHANGE,
-    BboxChange,
-    UPDATE_SELECTED_WAVELENGTH, UPDATE_WATERDEPTH,
-    UpdateSelectedWavelength, UpdateWaterDepth
+    UPDATE_BBOX,
+    UpdateBBox,
+    UPDATE_WAVELENGTH,
+    UPDATE_WATERDEPTH,
+    UpdateWavelength,
+    UpdateWaterDepth,
+    UPDATE_OPTSHALLOW,
+    UpdateOptShallow
 } from "../actions/advancedSearchActions";
 import { SELECTED_BOUNDS_DEFAULT } from "../states/advancedSearchState";
 import { advancedSearchReducer } from "./advancedSearchReducer";
@@ -11,8 +15,8 @@ import { advancedSearchReducer } from "./advancedSearchReducer";
 
 describe('advancedSearchReducer', () => {
     it('submissionReducer to update BBOX', () => {
-        const action: BboxChange = {
-            type: BBOX_CHANGE,
+        const action: UpdateBBox = {
+            type: UPDATE_BBOX,
             selectedBounds: SELECTED_BOUNDS_DEFAULT,
         };
 
@@ -21,8 +25,8 @@ describe('advancedSearchReducer', () => {
     });
 
     it('submissionReducer to update BBOX', () => {
-        const action: BboxChange = {
-            type: BBOX_CHANGE,
+        const action: UpdateBBox = {
+            type: UPDATE_BBOX,
             selectedBounds: SELECTED_BOUNDS_DEFAULT,
         };
 
@@ -31,8 +35,8 @@ describe('advancedSearchReducer', () => {
     });
 
     it('submissionReducer to UpdateSelectedWavelength', () => {
-        const action: UpdateSelectedWavelength = {
-            type: UPDATE_SELECTED_WAVELENGTH ,
+        const action: UpdateWavelength = {
+            type: UPDATE_WAVELENGTH ,
             selectedWavelength: '',
         };
 
@@ -52,6 +56,14 @@ describe('advancedSearchReducer', () => {
         expect(result.waterDepthMax).toEqual(1000);
     });
 
+    it('submissionReducer to UpdateSelectedOptShallow', () => {
+        const action: UpdateOptShallow = {
+            type: UPDATE_OPTSHALLOW ,
+            selectedOptShallow: '',
+        };
 
+        const result = advancedSearchReducer(undefined, action);
+        expect(result.selectedOptShallow).toEqual('');
+    });
 });
 
