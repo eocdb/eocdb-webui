@@ -7,6 +7,7 @@ import Select from "@material-ui/core/Select/Select";
 import FormControl from "@material-ui/core/FormControl/FormControl";
 import { SelectItem } from "./SelectItems";
 import InputLabel from "@material-ui/core/InputLabel";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -23,15 +24,19 @@ const styles = (theme: Theme) => createStyles({
     },
 });
 
-interface SimpleSelectProps extends WithStyles<typeof styles> {
+interface OutlinedSelectProps extends WithStyles<typeof styles> {
     name: string;
     selectedItem: string;
     items: SelectItem[];
     onChange: (selectedItem: string) => void;
+    labelWidth: number;
+    label: string;
 }
 
-class SimpleSelect extends React.Component<SimpleSelectProps> {
-    constructor(props: SimpleSelectProps) {
+
+
+export class OutlinedSelect extends React.Component<OutlinedSelectProps> {
+    constructor(props: OutlinedSelectProps) {
         super(props);
     }
 
@@ -42,19 +47,25 @@ class SimpleSelect extends React.Component<SimpleSelectProps> {
     render() {
         const { classes } = this.props;
         return (
-            <FormControl className={classes.formControl}>
-                <InputLabel htmlFor={this.props.name.toLocaleLowerCase()}>{this.props.name.toLocaleLowerCase()}</InputLabel>
+            <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel
+                    htmlFor="outlined-age-simple"
+                >
+                    {this.props.label}
+                </InputLabel>
                 <Select
                     value={this.props.selectedItem}
-                    name={this.props.name}
                     onChange={this.handleOnChange}
-                    inputProps={{
-                        name: this.props.name,
-                        id: this.props.name.toLocaleLowerCase(),
-                    }}
+                    input={
+                        <OutlinedInput
+                            labelWidth={this.props.labelWidth}
+                            name="age"
+                            id="outlined-age-simple"
+                        />
+                    }
                 >
-                    <MenuItem value={"all"}>
-                        <em>all</em>
+                    <MenuItem value="">
+                        <em>None</em>
                     </MenuItem>
                     {this.props.items.map((item: SelectItem) => {
                         return (<MenuItem key={item.key} value={item.key}>{item.label}</MenuItem>);
@@ -65,7 +76,4 @@ class SimpleSelect extends React.Component<SimpleSelectProps> {
     }
 }
 
-
-
-
-export default withStyles(styles)(SimpleSelect)
+export default withStyles(styles)(OutlinedSelect)

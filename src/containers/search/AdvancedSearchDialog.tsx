@@ -13,8 +13,7 @@ const mapStateToProps = (state: AppState) => {
     return {
         selectedBounds: state.advancedSearchState.selectedBounds,
         selectedWavelength: state.advancedSearchState.selectedWavelength,
-        waterDepthMin: state.advancedSearchState.waterDepthMin,
-        waterDepthMax: state.advancedSearchState.waterDepthMax,
+        waterDepth: state.advancedSearchState.waterDepth,
         selectedOptShallow: state.advancedSearchState.selectedOptShallow,
     };
 };

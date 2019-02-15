@@ -13,7 +13,9 @@ import {
     updateDataset,
     updateDownloadDocs,
     updateSelectedDatasets,
+    updatePlotState,
 } from '../../actions/dataTableActions';
+
 import DataTable from '../../components/search/DataTable';
 import { searchDatasets, startLoading } from "../../actions/searchFormActions";
 
@@ -34,6 +36,8 @@ const mapStateToProps = (state: AppState) => {
         apiServerUrl: state.configState.apiServerUrl,
 
         downloading: state.dataTableState.downloading,
+
+        plotState: state.dataTableState.plotState,
     };
 };
 
@@ -51,6 +55,7 @@ const mapDispatchToProps = {
     downloadDatasets,
     startLoading,
     startDownloading,
+    updatePlotState,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataTable);

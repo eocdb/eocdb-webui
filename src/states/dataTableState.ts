@@ -1,5 +1,21 @@
 import { Dataset } from "../types/dataset";
 
+
+export interface PlotRecord {
+    x: number;
+    y: number;
+    z: number|null;
+}
+
+
+export interface PlotState{
+    selectedXField: string;
+    selectedYField: string;
+    selectedZField: string;
+
+    plotRecords: PlotRecord[];
+}
+
 export interface DataTableState {
     page: number;
     rowsPerPage: number;
@@ -13,6 +29,8 @@ export interface DataTableState {
     downloadDocs: boolean;
 
     downloading: boolean;
+
+    plotState: PlotState;
 }
 
 export function newDataTableState() {
@@ -36,5 +54,12 @@ export function newDataTableState() {
         },
         selectedDatasets: [],
         downloading: false,
+
+        plotState: {
+            selectedXField: '',
+            selectedYField: '',
+            selectedZField: '',
+            plotRecords: [],
+        }
     }
 }

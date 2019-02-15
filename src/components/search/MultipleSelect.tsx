@@ -4,19 +4,12 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import InputLabel from '@material-ui/core/InputLabel/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 import Select from '@material-ui/core/Select/Select';
-import { ProductGroup } from '../../types/dataset';
 import Chip from '@material-ui/core/Chip/Chip';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from "@material-ui/core/FormControl/FormControl";
-import Input from "@material-ui/core/Input";
-import Dialog from '@material-ui/core/Dialog';
-import { Transition } from "react-transition-group";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
 import Checkbox from "@material-ui/core/Checkbox";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 
 
 const styles = (theme: Theme) => createStyles(
@@ -25,22 +18,15 @@ const styles = (theme: Theme) => createStyles(
             display: 'flex',
             flexWrap: 'wrap',
         },
-        formControl: {
-            minWidth: 300,
-            maxWidth: 400,
-        },
-        chips: {
-            display: 'flex',
-            flexWrap: 'wrap',
-        },
-        multipleSelect: {
-            labelWidth: 250,
-        },
         chip: {
-            margin: theme.spacing.unit / 4,
+            margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
         },
-        noLabel: {
-            marginTop: theme.spacing.unit * 3,
+        formControl: {
+            minWidth: 200,
+
+        },
+        select: {
+            minHeight: 20,
         },
         fontRegular: {
             fontWeight: theme.typography.fontWeightRegular,
@@ -54,14 +40,12 @@ const styles = (theme: Theme) => createStyles(
 interface MultipleSelectProps extends WithStyles<typeof styles> {
     open: boolean;
     onClose: () => void;
-    productGroups: ProductGroup[];
+    items: string[];
 
-    productGroupsChange: (productGroups: string[]) => void;
+    onChange: (selectedItems: string[]) => void;
+    selectedItems: string[];
 }
 
-interface MultipleSelectState {
-    groups: string[];
-}
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -74,13 +58,18 @@ const MenuProps = {
     },
 };
 
-class MultipleSelect extends React.Component<MultipleSelectProps, MultipleSelectState> {
+interface TestState {
+    labelWidth: number;
+}
+
+class MultipleSelect extends React.Component<MultipleSelectProps, TestState> {
     constructor(props: MultipleSelectProps) {
         super(props);
 
         this.state = {
-            groups: []
+            labelWidth: 0,
         };
+
     }
 
     handleClose = () => {
@@ -100,30 +89,39 @@ class MultipleSelect extends React.Component<MultipleSelectProps, MultipleSelect
             value.push(options);
         }
 
-        this.setState({groups: value});
-        this.props.productGroupsChange(value);
+        this.props.onChange(value);
 
     };
 
+    handleDelete(value: string) {
+        const items = Object.assign(this.props.selectedItems);
+        const index = items.indexOf(value, 0);
+        if (index > -1) {
+            items.splice(index, 1);
+        }
+
+        this.props.onChange(items);
+    }
+
     getStyles = (name: string) => {
-        return (this.state.groups.indexOf(name) === -1
+        return (this.props.selectedItems.indexOf(name) === -1
             ? this.props.classes.fontRegular
             : this.props.classes.fontMedium)
     };
 
     renderItems = () => {
-        const pgs = this.props.productGroups;
+        const pgs = this.props.items;
 
         let items = [];
         for (let pg of pgs) {
             items.push(
                 <MenuItem
-                    key={pg.name}
-                    value={pg.name}
-                    className={classNames(this.getStyles(pg.name))}
+                    key={pg}
+                    value={pg}
+                    className={classNames(this.getStyles(pg))}
                 >
-                    <Checkbox checked={this.state.groups.indexOf(pg.name) > -1} />
-                    {pg.name}
+                    <Checkbox checked={this.props.selectedItems.indexOf(pg) > -1}/>
+                    {pg}
                 </MenuItem>
             )
         }
@@ -133,9 +131,15 @@ class MultipleSelect extends React.Component<MultipleSelectProps, MultipleSelect
     renderSelectedValues = (selected: string[]) => {
         const {classes} = this.props;
         return (
-            <div className={classes.chips}>
+            <div>
                 {selected.map(value => (
-                    <Chip key={value} label={value} className={classes.chip}/>
+                    <Chip
+                        //style={{height: '13pt'}}
+                        className={classes.chip}
+                        key={value}
+                        label={value}
+                        onDelete={() => this.handleDelete(value)}
+                    />
                 ))}
             </div>
         );
@@ -145,40 +149,27 @@ class MultipleSelect extends React.Component<MultipleSelectProps, MultipleSelect
         const {classes} = this.props;
         return (
             <div className={classes.root}>
-                <Dialog
-                    disableBackdropClick
-                    disableEscapeKeyDown
-                    open={this.props.open}
-                    onClose={this.props.onClose}
-                    TransitionComponent={Transition}
-                >
-                    <DialogTitle>Fill the form</DialogTitle>
-                    <DialogContent>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="select-multiple">Product Groups</InputLabel>
-                            <Select
-                                multiple
-                                value={this.state.groups}
-                                onChange={this.handleChange}
-                                input={<Input
-                                    id="select-multiple"
-                                />}
-                                MenuProps={MenuProps}
-                                renderValue={this.renderSelectedValues}
-                            >
-                                {this.renderItems()}
-                            </Select>
-                        </FormControl>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={this.handleClose} color="primary">
-                            Ok
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel
+                        htmlFor="select-multiple"
+                    >
+                        Product Groups
+                    </InputLabel>
+                    <Select
+                        className={classes.select}
+                        multiple
+                        value={this.props.selectedItems}
+                        onChange={this.handleChange}
+                        input={<OutlinedInput
+                            id="select-multiple"
+                            labelWidth={130}
+                        />}
+                        MenuProps={MenuProps}
+                        renderValue={this.renderSelectedValues}
+                    >
+                        {this.renderItems()}
+                    </Select>
+                </FormControl>
             </div>
         );
     }

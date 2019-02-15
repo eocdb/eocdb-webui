@@ -3,6 +3,7 @@ import { Dispatch } from "redux";
 import { MessageLogAction, postMessage } from "./messageLogActions";
 import { AppState } from "../states/appState";
 import * as api from '../api'
+import { PlotState } from "../states/dataTableState";
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -215,6 +216,25 @@ export function stopDownloading(): StopDownloading {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+export const UPDATE_PLOT_STATE = 'UPDATE_PLOT_STATE';
+export type UPDATE_PLOT_STATE = typeof UPDATE_PLOT_STATE;
+
+export interface UpdatePlotState {
+    type: UPDATE_PLOT_STATE;
+    plotState: PlotState;
+}
+
+export function updatePlotState(plotState: PlotState): UpdatePlotState {
+    return {
+        type: UPDATE_PLOT_STATE,
+        plotState,
+    };
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export type DataTableAction = UpdateDataPage
     | UpdateDataRowsPerPage
     | OpenMetaInfoDialog
@@ -227,4 +247,5 @@ export type DataTableAction = UpdateDataPage
     | UpdateDownloadDocs
     | UpdateSelectedDatasets
     | StartDownloading
-    | StopDownloading;
+    | StopDownloading
+    | UpdatePlotState;

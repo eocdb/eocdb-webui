@@ -12,7 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import SearchMap from '../../containers/search/SearchMap';
 import { DatasetQuery } from '../../api/index';
-import { StoreInfo } from '../../types/dataset';
+import { ProductGroup, StoreInfo } from '../../types/dataset';
 import MultipleSelect from './MultipleSelect';
 import DataTable from "../../containers/search/DataTable";
 import AdvancedSearchDialog from "../../containers/search/AdvancedSearchDialog";
@@ -87,6 +87,13 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         this.props.searchDatasets();
     };
 
+    getProductGroups = () => {
+        return this.props.serverInfo['productGroups'].map(
+            (pg: ProductGroup) => {
+                return pg.name;
+            })
+    };
+
     render() {
         if (!this.props.show) {
             return null;
@@ -125,18 +132,12 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             value={endDate}
                             onChange={this.handleEndDateChange}
                         />
-                        <Button
-                            variant="outlined"
-                            className={classes.filterButton}
-                            onClick={this.props.openProductGroups}
-                        >
-                            Product Groups
-                        </Button>
                         <MultipleSelect
                             open={this.props.productGroupsOpen}
                             onClose={this.props.closeProductGroups}
-                            productGroups={this.props.serverInfo['productGroups']}
-                            productGroupsChange={this.handleProductGroupsChange}
+                            items={this.getProductGroups()}
+                            onChange={this.handleProductGroupsChange}
+                            selectedItems={this.props.datasetQuery.productGroupNames}
                         />
                         <TextField
                             id={'lucene-search'}
@@ -159,7 +160,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                                 className={classes.button}
                                 onClick={this.handleSearchDatasets}>
                             Search
-                            {this.props.loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                            {this.props.loading && <CircularProgress size={24} className={classes.buttonProgress}/>}
                             <Icon className={classes.rightIcon}>search</Icon>
                         </Button>
                         <AdvancedSearchDialog

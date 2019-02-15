@@ -50,7 +50,7 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
     };
 
     render() {
-
+        console.log(this.props.dataset);
         return (
             <Dialog
                 open={this.props.open}

@@ -47,13 +47,11 @@ describe('advancedSearchReducer', () => {
     it('submissionReducer to UpdateWaterDepth', () => {
         const action: UpdateWaterDepth = {
             type: UPDATE_WATERDEPTH,
-            waterDepthMin: 0,
-            waterDepthMax: 1000,
+            waterDepth: [0, 1000],
         };
 
         const result = advancedSearchReducer(undefined, action);
-        expect(result.waterDepthMin).toEqual(0);
-        expect(result.waterDepthMax).toEqual(1000);
+        expect(result.waterDepth).toEqual([0, 1000]);
     });
 
     it('submissionReducer to UpdateSelectedOptShallow', () => {

@@ -12,6 +12,7 @@ import {
     UPDATE_SELECTED_DATASETS,
     STOP_DOWNLOADING,
     START_DOWNLOADING,
+    UPDATE_PLOT_STATE,
 } from "../actions/dataTableActions";
 
 
@@ -55,6 +56,8 @@ export function dataTableReducer(state: DataTableState, action: DataTableAction)
         case STOP_DOWNLOADING:{
             return {...state, downloading: action.downloading}
         }
+        case UPDATE_PLOT_STATE:
+            return {...state, plotState: action.plotState}
     }
     return state;
 }

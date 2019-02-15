@@ -20,9 +20,8 @@ interface AdvancedSearchLogProps extends WithStyles<typeof styles> {
     updateWavelength: (item: string) => void;
     selectedWavelength: WavelengthsMode;
 
-    updateWaterDepth: (waterDepthMin: number, waterDepthMax: number) => void;
-    waterDepthMin: number;
-    waterDepthMax: number;
+    updateWaterDepth: (waterDepth: number[]) => void;
+    waterDepth: number[];
 }
 
 class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
@@ -55,7 +54,7 @@ class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
                 return this.props.updateWavelength("all");
             }
             case 'waterdepth': {
-                return this.props.updateWaterDepth(0, 1000);
+                return this.props.updateWaterDepth([0, 1000]);
             }
         }
     };

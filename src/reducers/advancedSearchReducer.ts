@@ -16,7 +16,7 @@ export function advancedSearchReducer(state: AdvancedSearchState = initialState,
         case UPDATE_WAVELENGTH:
             return {...state, selectedWavelength: action.selectedWavelength};
         case UPDATE_WATERDEPTH: {
-            return {...state, waterDepthMin: action.waterDepthMin, waterDepthMax: action.waterDepthMax};
+            return {...state, waterDepth: action.waterDepth};
         }
         case UPDATE_OPTSHALLOW: {
             return {...state, selectedOptShallow: action.selectedOptShallow};

@@ -15,12 +15,18 @@ import { LatLngBounds } from "leaflet";
 import { WavelengthsMode } from "../../api/findDatasets";
 import { wavelengthItems } from "./SelectItems";
 import MinMaxInputSlider from "./MinMaxInputSlider";
-import RadioSelect, {RadioItem} from "./RadioSelect";
+import RadioSelect, { RadioItem } from "./RadioSelect";
 import MultipleSelectTextField from "./MultipleSelectTextField";
 
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({
+    dialogContent: {
+        marginLeft: theme.spacing.unit * 4,
+        marginRight: theme.spacing.unit * 4,
+        marginTop: theme.spacing.unit * 4,
+        marginBottom: theme.spacing.unit * 4,
+    },
     appBar: {
         position: 'relative',
     },
@@ -52,9 +58,8 @@ export interface AdvancedSearchDialogProps extends WithStyles<typeof styles> {
     updateWavelength: (item: string) => void;
     selectedWavelength: WavelengthsMode;
 
-    updateWaterDepth: (waterDepthMin: number, waterDepthMax: number) => void;
-    waterDepthMin: number;
-    waterDepthMax: number;
+    updateWaterDepth: (waterDepth: number[]) => void;
+    waterDepth: number[];
 
     updateOptShallow: (optShallow: string) => void;
     selectedOptShallow: string;
@@ -88,22 +93,22 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
         this.props.updateWavelength(item);
     };
 
-    handleWaterDepthChange = (waterDepthMin: number, waterDepthMax: number) => {
-        this.props.updateWaterDepth(waterDepthMin, waterDepthMax);
+    handleWaterDepthChange = (waterDepth: number[]) => {
+        this.props.updateWaterDepth(waterDepth);
     };
 
     render() {
         const {classes} = this.props;
         return (
-            <div>
-                <Dialog
-                    fullScreen
-                    open={this.props.open}
-                    onClose={this.props.onClose}
-                    TransitionComponent={Transition}
-                >
+            <Dialog
+                fullScreen
+                open={this.props.open}
+                onClose={this.props.onClose}
+                TransitionComponent={Transition}
+            >
+                <div className={classes.dialogContent}>
                     <DialogTitle id="form-dialog-title">Advanced Search</DialogTitle>
-                    <Grid spacing={16} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
+                    <Grid spacing={32} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
                         <Grid item xs={12}>
                             <BBoxInput
                                 onBBoxChange={this.props.updateBBox}
@@ -120,8 +125,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                         </Grid>
                         <Grid item xs={12}>
                             <MinMaxInputSlider
-                                valueMin={this.props.waterDepthMin}
-                                valueMax={this.props.waterDepthMax}
+                                value={this.props.waterDepth}
                                 onChange={this.handleWaterDepthChange}
 
                                 label={'Water Depth'}
@@ -134,9 +138,10 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <MultipleSelectTextField />
+                            <MultipleSelectTextField/>
                         </Grid>
                     </Grid>
+
                     <DialogActions className={classes.appBar}>
                         <Button onClick={this.props.onClose}
                                 aria-label="Close"
@@ -146,8 +151,8 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                             Close
                         </Button>
                     </DialogActions>
-                </Dialog>
-            </div>
+                </div>
+            </Dialog>
         );
     }
 }

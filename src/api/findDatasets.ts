@@ -13,7 +13,7 @@ export interface DatasetQuery {
     region?: string;
     productMode?: ProductMode;
     productNames?: string[];
-    productGroupNames?: string[];
+    productGroupNames: string[];
     measurementType?: MeasurementType;
     wavelengthsMode?: WavelengthsMode;
     datasetIds?: string[];

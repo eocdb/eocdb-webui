@@ -15,7 +15,7 @@ export function newSearchFormState() {
             startDate: "1980-01-01",
             endDate: "2020-01-01",
             geojson: true,
-            productGroupNames: ['b'],
+            productGroupNames: [],
         },
         searchHistory: [],
         foundDatasets: {

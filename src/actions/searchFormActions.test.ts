@@ -27,6 +27,7 @@ const initState = {
             startDate: "1980-01-01",
             endDate: "2020-01-01",
             geojson: true,
+            productGroupNames: [],
         },
         searchHistory: [],
         foundDatasets: {
@@ -121,6 +122,7 @@ describe('searchFormActions', () => {
             startDate: "1980-01-01",
             endDate: "2020-01-01",
             geojson: true,
+            productGroupNames: [],
         };
         const expectedAction = {
             type: UPDATE_DATASET_QUERY,
