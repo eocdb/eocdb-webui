@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { XAxis, YAxis, CartesianGrid, Tooltip, ScatterChart, Scatter, Label, ZAxis, Cell } from 'recharts';
+import { XAxis, YAxis, CartesianGrid, Tooltip, ScatterChart, Scatter, Label, ZAxis } from 'recharts';
 import { Dataset } from "../../types/dataset";
 import { DialogTitle, Theme, WithStyles } from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -11,6 +11,11 @@ import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import SimpleSelect from "./SimpleSelect";
 import { PlotRecord, PlotState } from "../../states/dataTableState";
+
+import {
+    Simplify,
+    ISimplifyObjectPoint
+} from 'simplify-ts';
 
 
 const styles = (theme: Theme) => createStyles({
@@ -25,32 +30,42 @@ const styles = (theme: Theme) => createStyles({
 
 interface PlotDialogProps extends WithStyles<typeof styles> {
     open: boolean;
-    handleClose: () => void;
+    onClose: () => void;
     dataset: Dataset;
 
     updatePlotState: (plotState: PlotState) => void;
     plotState: PlotState;
+
+    updatePlotData: (plotData: PlotRecord[]) => void;
+    plotData: PlotRecord[];
 }
 
 
-const colors = ['red', 'green', 'pink', 'yellow'];
+//const colors = ['red', 'green', 'pink', 'yellow'];
 
 class PlotDialog extends React.Component<PlotDialogProps> {
     constructor(props: PlotDialogProps) {
         super(props);
     }
 
-    updatePlot = (x: number, y: number, z: number | null): PlotRecord[] => {
+    updatePlot = (x: number, y: number, z?: number): PlotRecord[] => {
         const records = this.props.dataset.records;
 
-        if (z !== null) {
-            return records.map((record: any) => {
-                return {x: record[x], y: record[y], z: record[z]};
+        if (z) {
+            return records.map((record: number[]) => {
+                let z = 0;
+                if(!record[z]) {
+                    z = 0;
+                }
+                return {x: record[x], y: record[y], z: z};
             });
+            //return Simplify3D(points, 0.5, false);
         } else {
-            return records.map((record: any) => {
-                return {x: record[x], y: record[y], z: null};
+            const points: ISimplifyObjectPoint[] = records.map((record: number[])  => {
+                return {x: record[x], y: record[y]};
             });
+
+            return Simplify(points, 0.5, false);
         }
     };
 
@@ -62,7 +77,6 @@ class PlotDialog extends React.Component<PlotDialogProps> {
             selectedXField: field,
             selectedYField: plotState.selectedYField,
             selectedZField: plotState.selectedZField,
-            plotRecords: plotState.plotRecords,
         };
 
         this.props.updatePlotState(newPlotState);
@@ -75,7 +89,6 @@ class PlotDialog extends React.Component<PlotDialogProps> {
             selectedXField: plotState.selectedXField,
             selectedYField: field,
             selectedZField: plotState.selectedZField,
-            plotRecords: plotState.plotRecords,
         };
 
         this.props.updatePlotState(newPlotState);
@@ -85,10 +98,9 @@ class PlotDialog extends React.Component<PlotDialogProps> {
         const {plotState} = this.props;
 
         let newPlotState: PlotState = {
-            selectedXField: plotState.selectedZField,
+            selectedXField: plotState.selectedXField,
             selectedYField: plotState.selectedYField,
             selectedZField: field,
-            plotRecords: plotState.plotRecords,
         };
 
         this.props.updatePlotState(newPlotState);
@@ -100,22 +112,34 @@ class PlotDialog extends React.Component<PlotDialogProps> {
 
         const indexX = dataset.attributes.indexOf(plotState.selectedXField);
         const indexY = dataset.attributes.indexOf(plotState.selectedYField);
-        const indexZ = dataset.attributes.indexOf(plotState.selectedZField);
+
+        let indexZ: number|undefined = undefined;
+
+        if(plotState.selectedZField !== '') {
+            indexZ = dataset.attributes.indexOf(plotState.selectedZField);
+        }
 
         const plotData = this.updatePlot(indexX, indexY, indexZ);
 
-        let newPlotState: PlotState = {
-            selectedXField: plotState.selectedZField,
-            selectedYField: plotState.selectedYField,
-            selectedZField: plotState.selectedZField,
-            plotRecords: plotData,
+        this.props.updatePlotData(plotData);
+    };
+
+    handleClose = () => {
+        const newPlotState: PlotState = {
+            selectedXField: '',
+            selectedYField: '',
+            selectedZField: '',
         };
 
         this.props.updatePlotState(newPlotState);
+
+        this.props.updatePlotData([]);
+
+        this.props.onClose();
     };
 
     render() {
-        const data = this.updatePlot(0, 1, 2);
+        const data = this.props.plotData;
 
         const {attributes} = this.props.dataset;
 
@@ -123,12 +147,13 @@ class PlotDialog extends React.Component<PlotDialogProps> {
             return {key: attribute, label: attribute}
         });
 
-        const {selectedXField, selectedYField, selectedZField, plotRecords} = this.props.plotState;
+        const {selectedXField, selectedYField, selectedZField} = this.props.plotState;
+        //const plotData = this.props.plotData;
 
         return (
             <Dialog
                 open={this.props.open}
-                onClose={this.props.handleClose}
+                onClose={this.handleClose}
                 aria-labelledby="form-dialog-title"
             >
                 <DialogTitle id="form-dialog-title">Settings</DialogTitle>
@@ -156,24 +181,20 @@ class PlotDialog extends React.Component<PlotDialogProps> {
                     </Button>
                     <ScatterChart width={700} height={500}
                                   margin={{top: 20, right: 20, bottom: 20, left: 20}}>
-                        <XAxis dataKey={"x"}>
+                        <XAxis dataKey={"x"}  domain={['dataMin', 'dataMax']}>
                             <Label value={selectedXField} position="bottom" offset={0}/>
                         </XAxis>
-                        <YAxis dataKey={"y"}>
+                        <YAxis dataKey={"y"} type={"number"} domain={['dataMin', 'dataMax']}>
                             <Label angle={-90} value={selectedYField} position="insideLeft" offset={0}/>
                         </YAxis>
-                        <ZAxis dataKey={"z"} name={selectedZField}/>
+                        <ZAxis range={[60, 400]} dataKey={"z"} name={selectedZField} />
                         <CartesianGrid/>
                         <Tooltip cursor={{strokeDasharray: '3 3'}}/>
-                        <Scatter name={'test'} data={data} fill={'#8884d8'}>
-                            {plotRecords.map((entry, index) => {
-                                return <Cell key={`cell-${index}`} fill={colors[index % colors.length]}/>
-                            })}
-                        </Scatter>
+                        <Scatter name={'test'} shape={"star"}  data={data} fill={'#8884d8'}/>
                     </ScatterChart>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={this.props.handleClose} color="primary">
+                    <Button onClick={this.handleClose} color="primary">
                         Close
                     </Button>
                 </DialogActions>
