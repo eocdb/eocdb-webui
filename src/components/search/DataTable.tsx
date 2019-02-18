@@ -24,7 +24,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabe
 import Typography from "@material-ui/core/Typography/Typography";
 import Grid from "@material-ui/core/Grid/Grid";
 import green from "@material-ui/core/colors/green";
-import { PlotState } from "../../states/dataTableState";
+import { PlotRecord, PlotState } from "../../states/dataTableState";
 import PlotDialog from "./PlotDialog";
 
 const path = require('path');
@@ -44,6 +44,7 @@ interface TablePaginationActionsProps extends WithStyles<typeof actionsStyles>, 
     onChangePage: (event: React.MouseEvent<HTMLButtonElement>, page: number) => void;
     page: number;
     rowsPerPage: number;
+
     plotState: PlotState;
 }
 
@@ -179,6 +180,9 @@ export interface DataTableProps extends WithStyles<typeof styles> {
 
     updatePlotState: (plotState: PlotState) => void;
     plotState: PlotState;
+
+    updatePlotData: (plotData: PlotRecord[]) => void;
+    plotData: PlotRecord[];
 }
 
 
@@ -279,10 +283,12 @@ class DataTable extends React.Component<DataTableProps> {
                 />
                 <PlotDialog
                     open={this.props.plotDialogOpen}
-                    handleClose={this.handlePlotClose}
+                    onClose={this.handlePlotClose}
                     dataset={this.props.dataset}
                     plotState={this.props.plotState}
                     updatePlotState={this.props.updatePlotState}
+                    plotData={this.props.plotData}
+                    updatePlotData={this.props.updatePlotData}
                 />
                 <Grid container justify={"flex-end"}>
                     <Button variant={"contained"}
