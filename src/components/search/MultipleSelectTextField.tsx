@@ -8,42 +8,6 @@ import Chip from "@material-ui/core/Chip";
 import Paper from "@material-ui/core/Paper";
 
 
-const suggestions = [
-    { label: 'Afghanistan' },
-    { label: 'Aland Islands' },
-    { label: 'Albania' },
-    { label: 'Algeria' },
-    { label: 'American Samoa' },
-    { label: 'Andorra' },
-    { label: 'Angola' },
-    { label: 'Anguilla' },
-    { label: 'Antarctica' },
-    { label: 'Antigua and Barbuda' },
-    { label: 'Argentina' },
-    { label: 'Armenia' },
-    { label: 'Aruba' },
-    { label: 'Australia' },
-    { label: 'Austria' },
-    { label: 'Azerbaijan' },
-    { label: 'Bahamas' },
-    { label: 'Bahrain' },
-    { label: 'Bangladesh' },
-    { label: 'Barbados' },
-    { label: 'Belarus' },
-    { label: 'Belgium' },
-    { label: 'Belize' },
-    { label: 'Benin' },
-    { label: 'Bermuda' },
-    { label: 'Bhutan' },
-    { label: 'Bolivia, Plurinational State of' },
-    { label: 'Bonaire, Sint Eustatius and Saba' },
-    { label: 'Bosnia and Herzegovina' },
-    { label: 'Botswana' },
-    { label: 'Bouvet Island' },
-    { label: 'Brazil' },
-    { label: 'British Indian Ocean Territory' },
-    { label: 'Brunei Darussalam' },
-];
 
 function renderInput(inputProps: any) {
     const { InputProps, classes, ref, ...other } = inputProps;
@@ -99,7 +63,7 @@ function renderSuggestion(props: renderSuggestionProps) {
 
 
 
-function getSuggestions(value: string|null) {
+function getSuggestions(suggestions: Suggestion[], value: string|null) {
     if(!value){
         return [];
     }
@@ -153,63 +117,54 @@ const styles = (theme: Theme) => createStyles({
     },
 });
 
-interface DownshiftMultipleProps extends WithStyles{
-
-}
-
-interface DownshiftMultipleState{
+interface DownshiftMultipleProps extends WithStyles<typeof styles>{
+    suggestions: Suggestion[];
+    selectedItems: string[];
     inputValue: string;
-    selectedItem: string[];
+
+    onChange: (selectedItems: string[]) => void;
+    onInputChange: (inputValue: string) => void;
 }
 
 
-class DownshiftMultiple extends React.Component<DownshiftMultipleProps, DownshiftMultipleState> {
+class DownshiftMultiple extends React.Component<DownshiftMultipleProps> {
     constructor(props: DownshiftMultipleProps) {
         super(props);
-
-        this.state = {
-            inputValue: '',
-            selectedItem: [],
-        };
     }
 
     handleKeyDown = (event: React.KeyboardEvent) => {
-        const { inputValue, selectedItem } = this.state;
-        if (selectedItem.length && !inputValue.length && event.key === 'Backspace') {
-            this.setState({
-                selectedItem: selectedItem.slice(0, selectedItem.length - 1),
-            });
+        const { inputValue } = this.props;
+        let selectedItems = Object.assign(this.props.selectedItems);
+
+        if (selectedItems.length && !inputValue.length && event.key === 'Backspace') {
+            selectedItems = selectedItems.slice(0, selectedItems.length - 1);
+            this.props.onChange(selectedItems);
         }
     };
 
     handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({ inputValue: event.target.value });
+        this.props.onInputChange(event.target.value);
     };
 
     handleChange = (item: string) => {
-        let { selectedItem } = this.state;
+        let selectedItems = Object.assign(this.props.selectedItems);
 
-        if (selectedItem.indexOf(item) === -1) {
-            selectedItem = [...selectedItem, item];
+        if (selectedItems.indexOf(item) === -1) {
+            selectedItems = [...selectedItems, item];
         }
 
-        this.setState({
-            inputValue: '',
-            selectedItem,
-        });
+        this.props.onChange(selectedItems);
     };
 
-    handleDelete = (item: string) => () => {
-        this.setState(state => {
-            const selectedItem = [...state.selectedItem];
-            selectedItem.splice(selectedItem.indexOf(item), 1);
-            return { selectedItem };
-        });
+    handleDelete = (item: string) => {
+        let newSelectedItems = Object.assign(this.props.selectedItems);
+        newSelectedItems.splice(newSelectedItems.indexOf(item), 1);
+
+        this.props.onChange(newSelectedItems);
     };
 
     render() {
-        const { classes } = this.props;
-        const { inputValue, selectedItem } = this.state;
+        const { classes, inputValue, selectedItems } = this.props;
 
         // noinspection JSRemoveUnnecessaryParentheses
         return (
@@ -217,7 +172,7 @@ class DownshiftMultiple extends React.Component<DownshiftMultipleProps, Downshif
                 id="downshift-multiple"
                 inputValue={inputValue}
                 onChange={this.handleChange}
-                selectedItem={selectedItem}
+                selectedItem={selectedItems}
             >
                 {({
                       getInputProps,
@@ -232,13 +187,13 @@ class DownshiftMultiple extends React.Component<DownshiftMultipleProps, Downshif
                             fullWidth: true,
                             classes,
                             InputProps: getInputProps({
-                                startAdornment: selectedItem.map(item => (
+                                startAdornment: selectedItems.map(item => (
                                     <Chip
                                         key={item}
                                         tabIndex={-1}
                                         label={item}
                                         className={classes.chip}
-                                        onDelete={this.handleDelete(item)}
+                                        onDelete={() => this.handleDelete(item)}
                                     />
                                 )),
                                 onChange: this.handleInputChange,
@@ -249,7 +204,7 @@ class DownshiftMultiple extends React.Component<DownshiftMultipleProps, Downshif
                         })}
                         {isOpen ? (
                             <Paper className={classes.paper} square>
-                                {getSuggestions(inputValue2).map((suggestion: Suggestion, index: number) =>
+                                {getSuggestions(this.props.suggestions, inputValue2).map((suggestion: Suggestion, index: number) =>
                                     renderSuggestion({
                                         suggestion,
                                         index,

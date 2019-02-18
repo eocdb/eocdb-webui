@@ -17,6 +17,8 @@ import { wavelengthItems } from "./SelectItems";
 import MinMaxInputSlider from "./MinMaxInputSlider";
 import RadioSelect, { RadioItem } from "./RadioSelect";
 import MultipleSelectTextField from "./MultipleSelectTextField";
+import { Product } from "../../types/dataset";
+import ReactSelect from "./ReactSelect";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -63,7 +65,16 @@ export interface AdvancedSearchDialogProps extends WithStyles<typeof styles> {
 
     updateOptShallow: (optShallow: string) => void;
     selectedOptShallow: string;
+
+    updateProducts: (products: string[]) => void;
+    selectedProducts: string[];
+
+    updateProductValue: (productInputValue: string) => void;
+    productInputValue: string;
+
+    productItems: Product[];
 }
+
 
 const items: RadioItem[] = [
     {
@@ -95,6 +106,12 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
 
     handleWaterDepthChange = (waterDepth: number[]) => {
         this.props.updateWaterDepth(waterDepth);
+    };
+
+    makeSuggestions = () => {
+        return this.props.productItems.map((item: Product) => {
+            return {label: item.name};
+        })
     };
 
     render() {
@@ -138,7 +155,14 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <MultipleSelectTextField/>
+                            <ReactSelect />
+                            <MultipleSelectTextField
+                                suggestions={this.makeSuggestions()}
+                                onChange={this.props.updateProducts}
+                                selectedItems={this.props.selectedProducts}
+                                onInputChange={this.props.updateProductValue}
+                                inputValue={this.props.productInputValue}
+                            />
                         </Grid>
                     </Grid>
 

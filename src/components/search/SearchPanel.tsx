@@ -166,6 +166,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         <AdvancedSearchDialog
                             open={this.props.advancedSearchDialogOpen}
                             onClose={this.props.closeAdvancedSearchDialog}
+                            productItems={this.props.serverInfo['products']}
                         />
 
                     </Grid>
