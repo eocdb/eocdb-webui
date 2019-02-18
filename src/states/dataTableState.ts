@@ -4,16 +4,13 @@ import { Dataset } from "../types/dataset";
 export interface PlotRecord {
     x: number;
     y: number;
-    z: number|null;
+    z?: number;
 }
-
 
 export interface PlotState{
     selectedXField: string;
     selectedYField: string;
     selectedZField: string;
-
-    plotRecords: PlotRecord[];
 }
 
 export interface DataTableState {
@@ -31,6 +28,7 @@ export interface DataTableState {
     downloading: boolean;
 
     plotState: PlotState;
+    plotData: PlotRecord[];
 }
 
 export function newDataTableState() {
@@ -59,7 +57,8 @@ export function newDataTableState() {
             selectedXField: '',
             selectedYField: '',
             selectedZField: '',
-            plotRecords: [],
-        }
+        },
+
+        plotData: [],
     }
 }
