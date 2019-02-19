@@ -1,4 +1,5 @@
-import { LatLngBounds } from "leaflet";
+import { BBoxValue } from "../components/search/BBoxInput";
+import { SliderRange } from "../components/search/AdvancedSearchDialog";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -7,11 +8,11 @@ export type UPDATE_BBOX = typeof UPDATE_BBOX;
 
 export interface UpdateBBox {
     type: UPDATE_BBOX;
-    selectedBounds: LatLngBounds;
+    selectedBBox: BBoxValue;
 }
 
-export function updateBBox(selectedBounds: LatLngBounds): UpdateBBox {
-    return {type: UPDATE_BBOX, selectedBounds};
+export function updateBBox(selectedBBox: BBoxValue): UpdateBBox {
+    return {type: UPDATE_BBOX, selectedBBox};
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,12 +51,44 @@ export type UPDATE_WATERDEPTH  = typeof UPDATE_WATERDEPTH ;
 
 export interface UpdateWaterDepth {
     type: UPDATE_WATERDEPTH ;
-    waterDepth: number[];
+    waterDepth: SliderRange;
 }
 
-export function updateWaterDepth(waterDepth: number[]): UpdateWaterDepth {
+export function updateWaterDepth(waterDepth: SliderRange): UpdateWaterDepth {
     return {type: UPDATE_WATERDEPTH , waterDepth};
-} 
+}
 
 
-export type AdvancedSearchAction = UpdateBBox | UpdateWavelength | UpdateWaterDepth | UpdateOptShallow;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_PRODUCTS = 'UPDATE_PRODUCTS ';
+export type UPDATE_PRODUCTS  = typeof UPDATE_PRODUCTS ;
+
+export interface UpdateProducts {
+    type: UPDATE_PRODUCTS ;
+    selectedProducts: string[];
+}
+
+export function updateProducts(selectedProducts: string[]): UpdateProducts {
+    return {type: UPDATE_PRODUCTS , selectedProducts};
+}
+
+export const UPDATE_PRODUCT_VALUE = 'UPDATE_PRODUCT_VALUE ';
+export type UPDATE_PRODUCT_VALUE  = typeof UPDATE_PRODUCT_VALUE ;
+
+export interface UpdateProductValue {
+    type: UPDATE_PRODUCT_VALUE ;
+    productInputValue: string;
+}
+
+export function updateProductValue(productInputValue: string): UpdateProductValue {
+    return {type: UPDATE_PRODUCT_VALUE , productInputValue};
+}
+
+
+export type AdvancedSearchAction = UpdateBBox
+    | UpdateWavelength
+    | UpdateWaterDepth
+    | UpdateOptShallow
+    | UpdateProducts
+    | UpdateProductValue;

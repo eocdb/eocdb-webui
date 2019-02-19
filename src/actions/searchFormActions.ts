@@ -5,7 +5,7 @@ import { QueryResult, SearchHistoryItem } from '../types/dataset';
 import { AppState } from '../states/appState';
 import * as api from '../api'
 import { DatasetQuery } from '../api/findDatasets';
-import { SELECTED_BOUNDS_DEFAULT } from "../states/advancedSearchState";
+import { LatLng, latLngBounds } from "leaflet";
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,16 +82,30 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
         datasetQuery = {...datasetQuery, region: selectedBounds.toBBoxString()};
     }
 
-    const selectedBoundsAdvanced = state.advancedSearchState.selectedBounds;
+    const selectedBoundsAdvanced = state.advancedSearchState.selectedBBox;
 
-    if (selectedBoundsAdvanced && !selectedBoundsAdvanced.equals(SELECTED_BOUNDS_DEFAULT)) {
-        datasetQuery = {...datasetQuery, region: selectedBoundsAdvanced.toBBoxString()};
+    if (selectedBoundsAdvanced[0]
+        && selectedBoundsAdvanced[1]
+        && selectedBoundsAdvanced[2]
+        && selectedBoundsAdvanced[3])
+    {
+        const bnds1 = new LatLng(selectedBoundsAdvanced[0], selectedBoundsAdvanced[1]);
+        const bnds2 = new LatLng(selectedBoundsAdvanced[2], selectedBoundsAdvanced[3]);
+        const bbox = latLngBounds(bnds1, bnds2);
+
+        datasetQuery = {...datasetQuery, region: bbox.toBBoxString()};
     }
 
     const selectedWavelength = state.advancedSearchState.selectedWavelength;
 
     if (selectedWavelength !== "all") {
         datasetQuery = {...datasetQuery, wavelengthsMode: state.advancedSearchState.selectedWavelength};
+    }
+
+    const waterDepth = state.advancedSearchState.waterDepth;
+
+    if (waterDepth[0] !== undefined && waterDepth[1] !== undefined) {
+        datasetQuery = {...datasetQuery, wdepth: state.advancedSearchState.waterDepth};
     }
 
     datasetQuery = {...datasetQuery, count: state.dataTableState.rowsPerPage};

@@ -3,12 +3,7 @@ import { Theme, WithStyles } from "@material-ui/core";
 import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Select from "react-select";
-
-
-export interface Suggestion {
-    value: string;
-    label: string;
-}
+import { Suggestion } from "./MultipleSelectTextField";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -41,7 +36,7 @@ const styles = (theme: Theme) => createStyles({
         height: theme.spacing.unit * 2,
     },
     basicmultiselect: {
-        width: 600,
+        width: 300,
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
     }
@@ -49,18 +44,11 @@ const styles = (theme: Theme) => createStyles({
 
 
 interface MultipleSelectTextFieldProps extends WithStyles<typeof styles>{
-    suggestions: Suggestion[];
-    selectedItems: Suggestion[];
+    items: Suggestion[];
+    selectedItem: Suggestion;
 
-    onChange: (selectedItems: Suggestion[]) => void;
-
-    isMulti: boolean;
-    closeMenuOnSelect: boolean;
+    onChange: (selectedItem: Suggestion) => void;
 }
-
-const orderOptions = (values: any) => {
-    return values.filter((v: any) => v.isFixed).concat(values.filter((v: any) => !v.isFixed));
-};
 
 
 class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldProps> {
@@ -68,20 +56,7 @@ class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldPro
         super(props);
     }
 
-    onChange = (value: Suggestion[], { action, removedValue }: any) => {
-        switch (action) {
-            case 'remove-value':
-            case 'pop-value':
-                if (removedValue.isFixed) {
-                    return;
-                }
-                break;
-            case 'clear':
-                value = this.props.selectedItems.filter((v: any) => v.isFixed);
-                break;
-        }
-
-        value = orderOptions(value);
+    onChange = (value: Suggestion) => {
         this.props.onChange(value);
     };
 
@@ -90,11 +65,9 @@ class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldPro
 
         return (
             <Select
-                closeMenuOnSelect={this.props.closeMenuOnSelect}
-                value={this.props.selectedItems}
-                isMulti={this.props.isMulti}
+                value={this.props.selectedItem}
                 name="colors"
-                options={this.props.suggestions}
+                options={this.props.items}
                 className={classes.basicmultiselect}
                 classNamePrefix={"select"}
                 onChange={this.onChange}

@@ -1,20 +1,25 @@
-import { LatLng, LatLngBounds } from "leaflet";
-import { WavelengthsMode } from "../api/findDatasets";
+//import { WavelengthsMode } from "../api/findDatasets";
+import { BBoxValue } from "../components/search/BBoxInput";
+import { SliderRange } from "../components/search/AdvancedSearchDialog";
 
 export interface AdvancedSearchState {
-    selectedBounds: LatLngBounds;
-    selectedWavelength: WavelengthsMode;
-    waterDepth: number[];
+    selectedBBox: BBoxValue;
+    selectedWavelength: string;
+    waterDepth: SliderRange;
     selectedOptShallow: string;
+    selectedProducts: string[];
+    productInputValue: string;
 }
 
-export const SELECTED_BOUNDS_DEFAULT = new LatLngBounds(new LatLng(0, 0), new LatLng(0, 0));
+export const SELECTED_BOUNDS_DEFAULT: BBoxValue = [undefined, undefined, undefined, undefined];
 
 export function newAdvancedSearchState(): AdvancedSearchState  {
     return {
-        selectedBounds: SELECTED_BOUNDS_DEFAULT,
+        selectedBBox: SELECTED_BOUNDS_DEFAULT,
         selectedWavelength: 'all',
-        waterDepth: [0, 1000],
+        waterDepth: [undefined, undefined],
         selectedOptShallow: '',
+        selectedProducts: [],
+        productInputValue: '',
     };
 }

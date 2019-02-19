@@ -1,14 +1,22 @@
 import { connect } from "react-redux";
 import { AppState } from "../../states/appState";
 import AdvancedSearchLog from "../../components/search/AdvancedSearchLog";
-import {updateBBox, updateWavelength, updateWaterDepth} from "../../actions/advancedSearchActions";
+import {
+    updateBBox,
+    updateWavelength,
+    updateWaterDepth,
+    updateOptShallow,
+    updateProducts
+} from "../../actions/advancedSearchActions";
 
 
 const mapStateToProps = (state: AppState) => {
     return {
-        selectedBounds: state.advancedSearchState.selectedBounds,
+        selectedBBox: state.advancedSearchState.selectedBBox,
         selectedWavelength: state.advancedSearchState.selectedWavelength,
         waterDepth: state.advancedSearchState.waterDepth,
+        selectedOptShallow: state.advancedSearchState.selectedOptShallow,
+        selectedProducts: state.advancedSearchState.selectedProducts,
     };
 };
 
@@ -16,6 +24,8 @@ const mapDispatchToProps = {
     updateBBox,
     updateWavelength,
     updateWaterDepth,
+    updateOptShallow,
+    updateProducts,
 };
 
 

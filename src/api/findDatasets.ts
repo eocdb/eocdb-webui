@@ -1,10 +1,11 @@
 import { callJsonApi } from './callApi';
 import { QueryResult } from '../types/dataset';
+import { SliderRange } from "../components/search/AdvancedSearchDialog";
 
 export type ProductMode = 'contains' | 'same_cruise' | 'dont_apply';
 export type MeasurementType = 'all';
-export type WavelengthsMode = 'all' | 'multispectral' | 'hyperspectral';
-export type WaterDepth = [string, string];
+//export type WavelengthsMode = 'all' | 'multispectral' | 'hyperspectral';
+
 
 export interface DatasetQuery {
     searchExpr?: string;
@@ -15,7 +16,8 @@ export interface DatasetQuery {
     productNames?: string[];
     productGroupNames: string[];
     measurementType?: MeasurementType;
-    wavelengthsMode?: WavelengthsMode;
+    wavelengthsMode?: string;
+    wdepth?: SliderRange;
     datasetIds?: string[];
     offset?: number;
     count?: number;
@@ -51,6 +53,7 @@ export function collectComponents(datasetQuery: DatasetQuery) {
     collectProductComponents(datasetQuery, queryComponents);
     collectMeasurementTypeComponent(datasetQuery, queryComponents);
     collectWavelengthsTypeComponent(datasetQuery, queryComponents);
+    collectWaterDepthComponents(datasetQuery, queryComponents);
     collectOffsetCountComponents(datasetQuery, queryComponents);
     collectGeoJsonComponent(datasetQuery, queryComponents);
     collectDatasetIds(datasetQuery, queryComponents);
@@ -102,6 +105,17 @@ function collectMeasurementTypeComponent(queryParameters: DatasetQuery, queryCom
 function collectWavelengthsTypeComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
     if (queryParameters.wavelengthsMode) {
         queryComponents.push(['wlmode', queryParameters.wavelengthsMode]);
+    }
+}
+
+function collectWaterDepthComponents(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
+    if (queryParameters.wdepth
+        && queryParameters.wdepth[0] !== undefined
+        && queryParameters.wdepth[1] !== undefined
+        && Number.isSafeInteger(queryParameters.wdepth[0])
+        && Number.isSafeInteger(queryParameters.wdepth[1])) {
+        queryComponents.push(['wdepth', '' + queryParameters.wdepth[0]]);
+        queryComponents.push(['wdepth', '' + queryParameters.wdepth[1]]);
     }
 }
 

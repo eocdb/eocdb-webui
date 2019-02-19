@@ -5,16 +5,18 @@ import {
     updateBBox,
     updateWavelength,
     updateWaterDepth,
-    updateOptShallow,
+    updateOptShallow, updateProducts, updateProductValue,
 }
     from "../../actions/advancedSearchActions";
 
 const mapStateToProps = (state: AppState) => {
     return {
-        selectedBounds: state.advancedSearchState.selectedBounds,
+        selectedBBox: state.advancedSearchState.selectedBBox,
         selectedWavelength: state.advancedSearchState.selectedWavelength,
         waterDepth: state.advancedSearchState.waterDepth,
         selectedOptShallow: state.advancedSearchState.selectedOptShallow,
+        selectedProducts: state.advancedSearchState.selectedProducts,
+        productInputValue: state.advancedSearchState.productInputValue,
     };
 };
 
@@ -24,6 +26,8 @@ const mapDispatchToProps = {
     updateWavelength,
     updateWaterDepth,
     updateOptShallow,
+    updateProducts,
+    updateProductValue,
 };
 
 

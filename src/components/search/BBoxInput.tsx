@@ -2,15 +2,19 @@ import { PureComponent } from "react";
 import TextField from "@material-ui/core/TextField/TextField";
 import * as React from "react";
 import { Theme, withStyles, WithStyles } from "@material-ui/core";
-import { LatLng, latLngBounds, LatLngBounds } from 'leaflet';
+
 
 import createStyles from "@material-ui/core/styles/createStyles";
+
+export type BBoxValue = [number|undefined, number|undefined, number|undefined, number|undefined];
 
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) =>  createStyles({
     searchField: {
         width: 300,
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
     },
     textField: {},
     button: {},
@@ -19,8 +23,8 @@ const styles = (theme: Theme) =>  createStyles({
 });
 
 interface BBoxInputProps extends WithStyles<typeof styles>{
-    onBBoxChange: (selectedBounds: LatLngBounds) => void;
-    selectedBounds: LatLngBounds;
+    onBBoxChange: (selectedBBox: BBoxValue) => void;
+    selectedBBox: BBoxValue;
 }
 
 
@@ -29,75 +33,65 @@ class BBoxInput extends PureComponent<BBoxInputProps> {
         super(props);
     }
 
-    createNewBBox = (south: number, west: number, north: number, east: number) => {
-        const newSouthWest = new LatLng(south, west);
-        const newNorthEast = new LatLng(north, east);
-        return latLngBounds(newSouthWest, newNorthEast);
-    };
 
     handleSouthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let south = event.target.valueAsNumber;
-        const {selectedBounds} = this.props;
+        const {selectedBBox} = this.props;
 
-        if(!south) {
-            south = 0;
-        }
-        else if(south > selectedBounds.getNorth()){
-            south = selectedBounds.getNorth();
-        }
-
-        const newBBox = this.createNewBBox(
+        const newBBox: BBoxValue = [
             south,
-            selectedBounds.getWest(),
-            selectedBounds.getNorth(),
-            selectedBounds.getEast()
-        );
+            selectedBBox[1],
+            selectedBBox[2],
+            selectedBBox[3],
+        ];
+
         this.props.onBBoxChange(newBBox);
     };
 
     handleWestChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const west = event.target.valueAsNumber;
 
-        const {selectedBounds} = this.props;
+        const {selectedBBox} = this.props;
 
-        const newBBox = this.createNewBBox(
-            selectedBounds.getSouth(),
+        const newBBox: BBoxValue = [
+            selectedBBox[0],
             west,
-            selectedBounds.getNorth(),
-            selectedBounds.getEast()
-        );
-
+            selectedBBox[2],
+            selectedBBox[3],
+        ];
         this.props.onBBoxChange(newBBox);
     };
 
     handleNorthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const north = event.target.valueAsNumber;
-        const {selectedBounds} = this.props;
+        const {selectedBBox} = this.props;
 
-        const newBBox = this.createNewBBox(
-            selectedBounds.getSouth(),
-            selectedBounds.getWest(),
+        const newBBox: BBoxValue = [
+            selectedBBox[0],
+            selectedBBox[1],
             north,
-            selectedBounds.getEast()
-        );
+            selectedBBox[3],
+        ];
+
         this.props.onBBoxChange(newBBox);
     };
 
     handleEastChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const east = event.target.valueAsNumber;
-        const {selectedBounds} = this.props;
+        const {selectedBBox} = this.props;
 
-        const newBBox = this.createNewBBox(
-            selectedBounds.getSouth(),
-            selectedBounds.getWest(),
-            selectedBounds.getNorth(),
-            east
-        );
+        const newBBox: BBoxValue = [
+            selectedBBox[0],
+            selectedBBox[1],
+            selectedBBox[2],
+            east,
+        ];
+
         this.props.onBBoxChange(newBBox);
     };
 
     render() {
-        const { classes, selectedBounds } = this.props;
+        const { classes, selectedBBox } = this.props;
         return (
             <div>
                 <TextField
@@ -107,7 +101,7 @@ class BBoxInput extends PureComponent<BBoxInputProps> {
                     type={"number"}
                     className={classes.searchField}
                     onChange={this.handleSouthChange}
-                    value={selectedBounds.getSouth()}
+                    value={selectedBBox[0]}
                 />
                 <TextField
                     id={'bbox_left'}
@@ -116,7 +110,7 @@ class BBoxInput extends PureComponent<BBoxInputProps> {
                     type={"number"}
                     className={classes.searchField}
                     onChange={this.handleWestChange}
-                    value={selectedBounds.getWest()}
+                    value={selectedBBox[1]}
                 />
                 <TextField
                     id={'bbox_top'}
@@ -125,7 +119,7 @@ class BBoxInput extends PureComponent<BBoxInputProps> {
                     type={"number"}
                     className={classes.searchField}
                     onChange={this.handleNorthChange}
-                    value={selectedBounds.getNorth()}
+                    value={selectedBBox[2]}
                 />
                 <TextField
                     id={'bbox_right'}
@@ -134,7 +128,7 @@ class BBoxInput extends PureComponent<BBoxInputProps> {
                     type={"number"}
                     className={classes.searchField}
                     onChange={this.handleEastChange}
-                    value={selectedBounds.getEast()}
+                    value={selectedBBox[3]}
                 />
             </div>
         )

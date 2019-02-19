@@ -12,10 +12,12 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import SimpleSelect from "./SimpleSelect";
 import { PlotRecord, PlotState } from "../../states/dataTableState";
 
+/*
 import {
     Simplify,
     ISimplifyObjectPoint
 } from 'simplify-ts';
+*/
 
 
 const styles = (theme: Theme) => createStyles({
@@ -61,11 +63,11 @@ class PlotDialog extends React.Component<PlotDialogProps> {
             });
             //return Simplify3D(points, 0.5, false);
         } else {
-            const points: ISimplifyObjectPoint[] = records.map((record: number[])  => {
+            return records.map((record: number[])  => {
                 return {x: record[x], y: record[y]};
             });
 
-            return Simplify(points, 0.5, false);
+            //return Simplify(points, 0.5, false);
         }
     };
 

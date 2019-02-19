@@ -1,38 +1,44 @@
 import {
-    UPDATE_BBOX,
-    UpdateBBox,
     UPDATE_WAVELENGTH,
     UPDATE_WATERDEPTH,
     UpdateWavelength,
     UpdateWaterDepth,
     UPDATE_OPTSHALLOW,
-    UpdateOptShallow
+    UpdateOptShallow,
+    UpdateProducts,
+    UPDATE_PRODUCTS,
+    UpdateProductValue,
+    UPDATE_PRODUCT_VALUE,
+    UpdateBBox,
+    UPDATE_BBOX
 } from "../actions/advancedSearchActions";
-import { SELECTED_BOUNDS_DEFAULT } from "../states/advancedSearchState";
 import { advancedSearchReducer } from "./advancedSearchReducer";
+import { SELECTED_BOUNDS_DEFAULT } from "../states/advancedSearchState";
 
 
 
 describe('advancedSearchReducer', () => {
+
     it('submissionReducer to update BBOX', () => {
         const action: UpdateBBox = {
             type: UPDATE_BBOX,
-            selectedBounds: SELECTED_BOUNDS_DEFAULT,
+            selectedBBox: SELECTED_BOUNDS_DEFAULT,
         };
 
         const result = advancedSearchReducer(undefined, action);
-        expect(result.selectedBounds).toEqual(SELECTED_BOUNDS_DEFAULT);
+        expect(result.selectedBBox).toEqual(SELECTED_BOUNDS_DEFAULT);
     });
 
     it('submissionReducer to update BBOX', () => {
         const action: UpdateBBox = {
             type: UPDATE_BBOX,
-            selectedBounds: SELECTED_BOUNDS_DEFAULT,
+            selectedBBox: SELECTED_BOUNDS_DEFAULT,
         };
 
         const result = advancedSearchReducer(undefined, action);
-        expect(result.selectedBounds).toEqual(SELECTED_BOUNDS_DEFAULT);
+        expect(result.selectedBBox).toEqual(SELECTED_BOUNDS_DEFAULT);
     });
+
 
     it('submissionReducer to UpdateSelectedWavelength', () => {
         const action: UpdateWavelength = {
@@ -41,7 +47,7 @@ describe('advancedSearchReducer', () => {
         };
 
         const result = advancedSearchReducer(undefined, action);
-        expect(result.selectedBounds).toEqual('all');
+        expect(result.selectedWavelength).toEqual('all');
     });
 
     it('submissionReducer to UpdateWaterDepth', () => {
@@ -62,6 +68,26 @@ describe('advancedSearchReducer', () => {
 
         const result = advancedSearchReducer(undefined, action);
         expect(result.selectedOptShallow).toEqual('');
+    });
+
+    it('submissionReducer to UpdateProducts', () => {
+        const action: UpdateProducts = {
+            type: UPDATE_PRODUCTS ,
+            selectedProducts: [],
+        };
+
+        const result = advancedSearchReducer(undefined, action);
+        expect(result.selectedProducts).toEqual([]);
+    });
+
+    it('submissionReducer to UpdateProductInputValue', () => {
+        const action: UpdateProductValue = {
+            type: UPDATE_PRODUCT_VALUE ,
+            productInputValue: '',
+        };
+
+        const result = advancedSearchReducer(undefined, action);
+        expect(result.productInputValue).toEqual('');
     });
 });
 

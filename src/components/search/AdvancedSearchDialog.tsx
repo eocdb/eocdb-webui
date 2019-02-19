@@ -9,19 +9,16 @@ import { WithStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid/Grid";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import WaveLengthSelect from "./SimpleSelect";
-import BBoxInput from "./BBoxInput";
-import { LatLngBounds } from "leaflet";
-import { WavelengthsMode } from "../../api/findDatasets";
+import BBoxInput, { BBoxValue } from "./BBoxInput";
 import { wavelengthItems } from "./SelectItems";
 import MinMaxInputSlider from "./MinMaxInputSlider";
 import RadioSelect, { RadioItem } from "./RadioSelect";
-import MultipleSelectTextField from "./MultipleSelectTextField";
+import MultipleSelectTextField, { Suggestion } from "./MultipleSelectTextField";
 import { Product } from "../../types/dataset";
-import ReactSelect from "./ReactSelect";
+import Typography from "@material-ui/core/Typography";
+import InputSelect from "./InputSelect";
 
 
-// noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({
     dialogContent: {
         marginLeft: theme.spacing.unit * 4,
@@ -45,6 +42,9 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
+export type SliderRange = [number|undefined, number|undefined];
+
+
 function Transition(props: SlideProps) {
     return <Slide direction="up" {...props} />;
 }
@@ -54,14 +54,14 @@ export interface AdvancedSearchDialogProps extends WithStyles<typeof styles> {
     open: boolean;
     onClose: () => void;
 
-    updateBBox: (selectedBounds: LatLngBounds) => void;
-    selectedBounds: LatLngBounds;
+    updateBBox: (selectedBBox: BBoxValue) => void;
+    selectedBBox: BBoxValue;
 
     updateWavelength: (item: string) => void;
-    selectedWavelength: WavelengthsMode;
+    selectedWavelength: string;
 
-    updateWaterDepth: (waterDepth: number[]) => void;
-    waterDepth: number[];
+    updateWaterDepth: (waterDepth: SliderRange) => void;
+    waterDepth: SliderRange;
 
     updateOptShallow: (optShallow: string) => void;
     selectedOptShallow: string;
@@ -99,23 +99,45 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
         super(props);
     }
 
-    handleWaveLengthSelect = (item: string) => {
-        //console.log(item);
-        this.props.updateWavelength(item);
+    handleWaveLengthSelect = (item: Suggestion) => {
+         this.props.updateWavelength(item.value);
     };
 
-    handleWaterDepthChange = (waterDepth: number[]) => {
+    handleWaterDepthChange = (waterDepth: SliderRange) => {
         this.props.updateWaterDepth(waterDepth);
     };
 
-    makeSuggestions = () => {
+    handleUpdateProducts = (products: Suggestion[]) => {
+        const items = products.map((item: Suggestion) => {
+            return item.value;
+        });
+
+        this.props.updateProducts(items);
+    };
+
+    makeProductSuggestions = () => {
         return this.props.productItems.map((item: Product) => {
-            return {label: item.name};
+            return {
+                value: item.name,
+                label: item.name,
+            };
         })
     };
 
+    makeSelectedProducts = () => {
+        return this.props.selectedProducts.map((item: string) => {
+            return {
+                value: item,
+                label: item,
+            };
+        });
+    };
+
     render() {
-        const {classes} = this.props;
+        const {classes, selectedWavelength} = this.props;
+
+        const sWaveLength = {value: selectedWavelength, label: selectedWavelength};
+
         return (
             <Dialog
                 fullScreen
@@ -127,20 +149,22 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                     <DialogTitle id="form-dialog-title">Advanced Search</DialogTitle>
                     <Grid spacing={32} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
                         <Grid item xs={12}>
+                            <Typography component={'h2'}>Region</Typography>
                             <BBoxInput
                                 onBBoxChange={this.props.updateBBox}
-                                selectedBounds={this.props.selectedBounds}
+                                selectedBBox={this.props.selectedBBox}
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <WaveLengthSelect
-                                name={'Wavelength'}
+                            <Typography component={'h2'}>Wavelength</Typography>
+                            <InputSelect
+                                selectedItem={sWaveLength}
                                 items={wavelengthItems}
-                                selectedItem={this.props.selectedWavelength}
                                 onChange={this.handleWaveLengthSelect}
                             />
                         </Grid>
                         <Grid item xs={12}>
+                            <Typography component={'h2'}>Water Depth</Typography>
                             <MinMaxInputSlider
                                 value={this.props.waterDepth}
                                 onChange={this.handleWaterDepthChange}
@@ -149,19 +173,20 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                             />
                         </Grid>
                         <Grid item xs={12}>
+                            <Typography component={'h2'}>Select Optical</Typography>
                             <RadioSelect items={items}
                                          selectedValue={this.props.selectedOptShallow}
                                          onChange={this.props.updateOptShallow}
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <ReactSelect />
+                            <Typography component={'h2'}>Select Products</Typography>
                             <MultipleSelectTextField
-                                suggestions={this.makeSuggestions()}
-                                onChange={this.props.updateProducts}
-                                selectedItems={this.props.selectedProducts}
-                                onInputChange={this.props.updateProductValue}
-                                inputValue={this.props.productInputValue}
+                                suggestions={this.makeProductSuggestions()}
+                                onChange={this.handleUpdateProducts}
+                                selectedItems={this.makeSelectedProducts()}
+                                isMulti={true}
+                                closeMenuOnSelect={false}
                             />
                         </Grid>
                     </Grid>
