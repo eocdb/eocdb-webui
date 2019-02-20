@@ -18,6 +18,7 @@ export interface DatasetQuery {
     measurementType?: MeasurementType;
     wavelengthsMode?: string;
     wdepth?: SliderRange;
+    shallow?: string;
     datasetIds?: string[];
     offset?: number;
     count?: number;
@@ -57,6 +58,7 @@ export function collectComponents(datasetQuery: DatasetQuery) {
     collectOffsetCountComponents(datasetQuery, queryComponents);
     collectGeoJsonComponent(datasetQuery, queryComponents);
     collectDatasetIds(datasetQuery, queryComponents);
+    collectShallow(datasetQuery, queryComponents);
     return queryComponents;
 }
 
@@ -64,6 +66,13 @@ export function collectComponents(datasetQuery: DatasetQuery) {
 function collectDatasetIds(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
     if (queryParameters.datasetIds) {
         queryComponents.push(['id_list', JSON.stringify(queryParameters.datasetIds)]);
+    }
+}
+
+
+function collectShallow(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
+    if (queryParameters.shallow) {
+        queryComponents.push(['shallow', queryParameters.shallow]);
     }
 }
 
