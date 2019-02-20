@@ -137,12 +137,12 @@ describe('searchFormActions', () => {
         const apiServerUrl = DEFAULT_API_SERVER_URL + '/datasets' + queryComponents;
 
         fetchMock.getOnce(apiServerUrl, {
-            body: {todos: ['do something']},
+            body: {},
             headers: {'content-type': 'application/json'}
         });
 
         const expectedActions = [
-            {foundDatasets: {todos: ["do something"]}, type: UPDATE_FOUND_DATASETS},
+            {foundDatasets: {}, type: UPDATE_FOUND_DATASETS},
             {searchHistory: [], type: UPDATE_SEARCH_HISTORY},
             {loading: false, type: STOP_LOADING},
             {messageText: "Data Loaded", messageType: "success", type: "POST_MESSAGE"}

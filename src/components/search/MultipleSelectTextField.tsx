@@ -41,14 +41,23 @@ const styles = (theme: Theme) => createStyles({
         height: theme.spacing.unit * 2,
     },
     basicmultiselect: {
-        width: 600,
+        width: 400,
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
+        height: 100,
     }
 });
 
+const customStyles = {
+    control: (base: any) => ({
+        ...base,
+        width: 400,
+        'min-height': '56px',
+    }),
+};
 
-interface MultipleSelectTextFieldProps extends WithStyles<typeof styles>{
+
+interface MultipleSelectTextFieldProps extends WithStyles<typeof styles> {
     suggestions: Suggestion[];
     selectedItems: Suggestion[];
 
@@ -56,7 +65,10 @@ interface MultipleSelectTextFieldProps extends WithStyles<typeof styles>{
 
     isMulti: boolean;
     closeMenuOnSelect: boolean;
+
+    placeholder?: string;
 }
+
 
 const orderOptions = (values: any) => {
     return values.filter((v: any) => v.isFixed).concat(values.filter((v: any) => !v.isFixed));
@@ -68,7 +80,7 @@ class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldPro
         super(props);
     }
 
-    onChange = (value: Suggestion[], { action, removedValue }: any) => {
+    onChange = (value: Suggestion[], {action, removedValue}: any) => {
         switch (action) {
             case 'remove-value':
             case 'pop-value':
@@ -86,7 +98,12 @@ class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldPro
     };
 
     render() {
-        const { classes } = this.props;
+        const {placeholder} = this.props;
+
+        let plh = 'Select...';
+        if (placeholder) {
+            plh = placeholder;
+        }
 
         return (
             <Select
@@ -95,9 +112,9 @@ class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldPro
                 isMulti={this.props.isMulti}
                 name="colors"
                 options={this.props.suggestions}
-                className={classes.basicmultiselect}
-                classNamePrefix={"select"}
                 onChange={this.onChange}
+                styles={customStyles}
+                placeholder={plh}
             />
         );
     }

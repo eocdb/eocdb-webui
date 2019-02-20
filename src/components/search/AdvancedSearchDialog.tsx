@@ -16,7 +16,6 @@ import RadioSelect, { RadioItem } from "./RadioSelect";
 import MultipleSelectTextField, { Suggestion } from "./MultipleSelectTextField";
 import { Product } from "../../types/dataset";
 import Typography from "@material-ui/core/Typography";
-import InputSelect from "./InputSelect";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -78,17 +77,14 @@ export interface AdvancedSearchDialogProps extends WithStyles<typeof styles> {
 
 const items: RadioItem[] = [
     {
-        name: 'Yes',
         value: 'yes',
         label: 'Yes',
     },
     {
-        name: 'No',
         value: 'no',
         label: 'No',
     },
     {
-        name: 'Exclusively',
         value: 'exclusively',
         label: 'Exclusively',
     }
@@ -99,8 +95,8 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
         super(props);
     }
 
-    handleWaveLengthSelect = (item: Suggestion) => {
-         this.props.updateWavelength(item.value);
+    handleWaveLengthSelect = (item: string) => {
+         this.props.updateWavelength(item);
     };
 
     handleWaterDepthChange = (waterDepth: SliderRange) => {
@@ -136,8 +132,6 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
     render() {
         const {classes, selectedWavelength} = this.props;
 
-        const sWaveLength = {value: selectedWavelength, label: selectedWavelength};
-
         return (
             <Dialog
                 fullScreen
@@ -157,10 +151,9 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                         </Grid>
                         <Grid item xs={12}>
                             <Typography component={'h2'}>Wavelength</Typography>
-                            <InputSelect
-                                selectedItem={sWaveLength}
-                                items={wavelengthItems}
-                                onChange={this.handleWaveLengthSelect}
+                            <RadioSelect items={wavelengthItems}
+                                         selectedValue={selectedWavelength}
+                                         onChange={this.handleWaveLengthSelect}
                             />
                         </Grid>
                         <Grid item xs={12}>

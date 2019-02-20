@@ -2,12 +2,12 @@ import { newSearchFormState } from "./searchFormState";
 
 describe('searchFormState', () => {
     it('newSearchFormState', () => {
-        const expected ={
+        const expected = {
             datasetQuery: {
                 startDate: "1980-01-01",
                 endDate: "2020-01-01",
                 geojson: true,
-                productGroupNames: ['b'],
+                productGroupNames: [],
             },
             searchHistory: [],
             foundDatasets: {

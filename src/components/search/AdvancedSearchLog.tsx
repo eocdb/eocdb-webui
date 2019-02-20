@@ -62,7 +62,7 @@ class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
         }
 
         if (this.props.selectedProducts.length > 0) {
-            const label = 'products: ' + this.props.selectedProducts.join(' ');
+            const label = 'products: ' + this.props.selectedProducts.join(', ');
             chips.push({key: 'products', label: label});
         }
 

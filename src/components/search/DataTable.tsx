@@ -292,7 +292,7 @@ class DataTable extends React.Component<DataTableProps> {
                 />
                 <Grid container justify={"flex-end"}>
                     <Button variant={"contained"}
-                            color={"secondary"}
+                            color={"primary"}
                             key={"btn_download33"}
                             className={classes.button}
                             disabled={numSelected == 0}

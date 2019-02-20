@@ -4,6 +4,8 @@ import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Select from "react-select";
 import { Suggestion } from "./MultipleSelectTextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+
 
 
 const styles = (theme: Theme) => createStyles({
@@ -36,18 +38,22 @@ const styles = (theme: Theme) => createStyles({
         height: theme.spacing.unit * 2,
     },
     basicmultiselect: {
-        width: 300,
+        width: 150,
+        marginTop: theme.spacing.unit,
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
     }
 });
 
 
-interface MultipleSelectTextFieldProps extends WithStyles<typeof styles>{
+interface MultipleSelectTextFieldProps extends WithStyles<typeof styles> {
     items: Suggestion[];
     selectedItem: Suggestion;
 
     onChange: (selectedItem: Suggestion) => void;
+
+    placeholder?: string;
+    label?: string;
 }
 
 
@@ -61,16 +67,18 @@ class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldPro
     };
 
     render() {
-        const { classes } = this.props;
+        const {classes, placeholder} = this.props;
 
         return (
-            <Select
-                value={this.props.selectedItem}
-                name="colors"
-                options={this.props.items}
-                className={classes.basicmultiselect}
-                classNamePrefix={"select"}
-                onChange={this.onChange}
+            <FormControlLabel
+                label={this.props.label}
+                control={<Select
+                    value={this.props.selectedItem}
+                    options={this.props.items}
+                    className={classes.basicmultiselect}
+                    onChange={this.onChange}
+                    placeholder={placeholder}
+                />}
             />
         );
     }

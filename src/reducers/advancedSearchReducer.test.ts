@@ -47,7 +47,7 @@ describe('advancedSearchReducer', () => {
         };
 
         const result = advancedSearchReducer(undefined, action);
-        expect(result.selectedWavelength).toEqual('all');
+        expect(result.selectedWavelength).toEqual('');
     });
 
     it('submissionReducer to UpdateWaterDepth', () => {

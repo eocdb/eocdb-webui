@@ -13,10 +13,10 @@ import { withStyles } from '@material-ui/core/styles';
 import SearchMap from '../../containers/search/SearchMap';
 import { DatasetQuery } from '../../api/index';
 import { ProductGroup, StoreInfo } from '../../types/dataset';
-import MultipleSelect from './MultipleSelect';
 import DataTable from "../../containers/search/DataTable";
 import AdvancedSearchDialog from "../../containers/search/AdvancedSearchDialog";
 import AdvancedSearchLog from "../../containers/search/AdvancedSearchLog";
+import MultipleSelectTextField, { Suggestion } from "./MultipleSelectTextField";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -78,7 +78,10 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         this.props.updateDatasetQuery({...this.props.datasetQuery, endDate});
     };
 
-    handleProductGroupsChange = (productGroupNames: string[]) => {
+    handleProductGroupsChange = (productGroups: Suggestion[]) => {
+        const productGroupNames = productGroups.map((item: Suggestion) => {
+            return item.value;
+        });
         this.props.updateDatasetQuery({...this.props.datasetQuery, productGroupNames})
     };
 
@@ -90,8 +93,14 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
     getProductGroups = () => {
         return this.props.serverInfo['productGroups'].map(
             (pg: ProductGroup) => {
-                return pg.name;
+                return {value: pg.name, label: pg.name};
             })
+    };
+
+    getSelectedProducts = () => {
+        return this.props.datasetQuery.productGroupNames.map((pg: string) => {
+            return {label: pg, value: pg};
+        });
     };
 
     render() {
@@ -132,12 +141,13 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             value={endDate}
                             onChange={this.handleEndDateChange}
                         />
-                        <MultipleSelect
-                            open={this.props.productGroupsOpen}
-                            onClose={this.props.closeProductGroups}
-                            items={this.getProductGroups()}
+                        <MultipleSelectTextField
+                            suggestions={this.getProductGroups()}
                             onChange={this.handleProductGroupsChange}
-                            selectedItems={this.props.datasetQuery.productGroupNames}
+                            selectedItems={this.getSelectedProducts()}
+                            isMulti={true}
+                            closeMenuOnSelect={false}
+                            placeholder={'Select Product Groups...'}
                         />
                         <TextField
                             id={'lucene-search'}

@@ -84,16 +84,17 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
 
     const selectedBoundsAdvanced = state.advancedSearchState.selectedBBox;
 
-    if (selectedBoundsAdvanced[0]
-        && selectedBoundsAdvanced[1]
-        && selectedBoundsAdvanced[2]
-        && selectedBoundsAdvanced[3])
-    {
-        const bnds1 = new LatLng(selectedBoundsAdvanced[0], selectedBoundsAdvanced[1]);
-        const bnds2 = new LatLng(selectedBoundsAdvanced[2], selectedBoundsAdvanced[3]);
-        const bbox = latLngBounds(bnds1, bnds2);
+    if (selectedBoundsAdvanced) {
+        if (selectedBoundsAdvanced[0]
+            && selectedBoundsAdvanced[1]
+            && selectedBoundsAdvanced[2]
+            && selectedBoundsAdvanced[3]) {
+            const bnds1 = new LatLng(selectedBoundsAdvanced[0], selectedBoundsAdvanced[1]);
+            const bnds2 = new LatLng(selectedBoundsAdvanced[2], selectedBoundsAdvanced[3]);
+            const bbox = latLngBounds(bnds1, bnds2);
 
-        datasetQuery = {...datasetQuery, region: bbox.toBBoxString()};
+            datasetQuery = {...datasetQuery, region: bbox.toBBoxString()};
+        }
     }
 
     const selectedWavelength = state.advancedSearchState.selectedWavelength;
@@ -104,8 +105,10 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
 
     const waterDepth = state.advancedSearchState.waterDepth;
 
-    if (waterDepth[0] !== undefined && waterDepth[1] !== undefined) {
-        datasetQuery = {...datasetQuery, wdepth: state.advancedSearchState.waterDepth};
+    if(waterDepth) {
+        if (waterDepth[0] !== undefined && waterDepth[1] !== undefined) {
+            datasetQuery = {...datasetQuery, wdepth: state.advancedSearchState.waterDepth};
+        }
     }
 
     datasetQuery = {...datasetQuery, count: state.dataTableState.rowsPerPage};
@@ -164,7 +167,6 @@ export function updateFoundDatasets(foundDatasets: QueryResult): UpdateFoundData
         type: UPDATE_FOUND_DATASETS, foundDatasets
     };
 }
-
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

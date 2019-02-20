@@ -3,6 +3,7 @@ import createStyles from "@material-ui/core/styles/createStyles";
 import Radio from "@material-ui/core/Radio/Radio";
 import * as React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const styles = createStyles({
     root: {}
@@ -10,7 +11,6 @@ const styles = createStyles({
 
 export interface RadioItem {
     value: string;
-    name: string;
     label: string;
 }
 
@@ -36,14 +36,21 @@ class RadioSelect extends React.Component<RadioSelectProps> {
             <div>
                 {items.map((item: RadioItem) => {
                     return (
-                        <Radio
-                            key={item.name}
-                            checked={this.props.selectedValue === item.value}
+                        <FormControlLabel
+                            key={item.value}
                             value={item.value}
-                            name={item.name}
-                            aria-label={item.name}
-                            onChange={this.handleChange}
+                            label={item.label}
+                            control={
+                                <Radio
+                                    key={item.value}
+                                    checked={this.props.selectedValue === item.value}
+                                    value={item.value}
+                                    aria-label={item.label}
+                                    onChange={this.handleChange}
+                                />
+                            }
                         />
+
                     )
                 })}
             </div>
