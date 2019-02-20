@@ -6,8 +6,8 @@ export interface SelectItem{
 }
 
 export const wavelengthItems: Suggestion[] = [
-    {label: 'all', value: 'All'},
-    {label: 'multispectral', value: 'Multispectral'},
-    {label: 'hyperspectral', value: 'Hyperspectral'},
+    {label: 'All', value: 'all'},
+    {label: 'Multispectral', value: 'multispectral'},
+    {label: 'Hyperspectral', value: 'hyperspectral'},
 ];
 
