@@ -105,10 +105,22 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
 
     const waterDepth = state.advancedSearchState.waterDepth;
 
-    if(waterDepth) {
+    if (waterDepth) {
         if (waterDepth[0] !== undefined && waterDepth[1] !== undefined) {
             datasetQuery = {...datasetQuery, wdepth: state.advancedSearchState.waterDepth};
         }
+    }
+
+    const selectedProducts = state.advancedSearchState.selectedProducts;
+
+    if (selectedProducts) {
+        datasetQuery = {...datasetQuery, productNames: state.advancedSearchState.selectedProducts};
+    }
+
+    const selectedOptShallow = state.advancedSearchState.selectedOptShallow;
+
+    if (selectedOptShallow) {
+        datasetQuery = {...datasetQuery,shallow : state.advancedSearchState.selectedOptShallow};
     }
 
     datasetQuery = {...datasetQuery, count: state.dataTableState.rowsPerPage};
