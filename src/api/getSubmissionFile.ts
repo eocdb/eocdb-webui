@@ -12,6 +12,6 @@ export function getSubmissionFile(apiServerUrl: string,
                                   submissionFileIndex: number): Promise<SubmissionFile> {
 
     return callJsonApi<SubmissionFile>(
-        apiServerUrl + '/store/upload/submissionfile/' + submissionId + '/' + submissionFileIndex
+        apiServerUrl + '/store/upload/submissionfile?submission_id=' + submissionId + '&index=' + submissionFileIndex
     );
 }

@@ -50,6 +50,8 @@ interface SubmissionTableProps extends WithStyles<typeof styles> {
     currentSubmissionId: string;
     currentSubmissionFiles: SubmissionFile[];
 
+    approveSubmission: () => void;
+
     submissions: Submission[];
     user?: User | null;
 }
@@ -67,6 +69,13 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
     handleOpenSubmissionFilesDialog = (currentSubmissionId: string, currentSubmissionFiles: SubmissionFile[]) => {
         this.props.openSubmissionFilesDialog();
         this.props.updateCurrentSubmission(currentSubmissionId, currentSubmissionFiles);
+    };
+
+    handleApproveSubmission = () => {
+        console.log('approve');
+        if(this.props.approveSubmission){
+            this.props.approveSubmission();
+        }
     };
 
     getColoutForStatus = (status: string) => {
@@ -141,14 +150,21 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                                 <Icon className={classes.rightIcon}>list</Icon>
                                             </Button>
                                             <Button
-                                                onClick={() => this.handleOpenSubmissionFilesDialog(
-                                                    row.submission_id,
-                                                    row.file_refs
-                                                )}
+                                                onClick={this.handleApproveSubmission}
+                                            >
+                                                <Icon className={classes.rightIcon}>pause</Icon>
+
+                                            </Button>
+                                            <Button
+                                                onClick={this.handleApproveSubmission}
                                             >
                                                 <Icon className={classes.rightIcon}>done</Icon>
                                             </Button>
-
+                                            <Button
+                                                onClick={this.handleApproveSubmission}
+                                            >
+                                                <Icon className={classes.rightIcon}>clear</Icon>
+                                            </Button>
                                         </TableCell>
                                     </TableRow>
                                 );

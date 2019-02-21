@@ -6,6 +6,7 @@ import { DatasetValidationResult, UploadData } from "../api/uploadStoreFiles";
 import { StopLoading, UpdateSearchHistory } from "./searchFormActions";
 import { Submission } from "../api/getSubmissionsForUser";
 import { SubmissionFile } from "../api/getSubmissionFilesForSubmission";
+import {SubmissionFileStatus} from "../api/setSubmissionStatus";
 
 
 /**
@@ -415,7 +416,7 @@ export function updateSubmissionFilesForSubmission(){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*
+
 export const SET_SUBMISSION_STATUS = 'SET_SUBMISSION_STATUS';
 export type SET_SUBMISSION_STATUS = typeof SET_SUBMISSION_STATUS;
 
@@ -441,8 +442,7 @@ export function setSubmissionStatus() {
         const apiServerUrl = state.configState.apiServerUrl;
         const currentSubmissionId = state.submitState.currentSubmissionId;
 
-
-        return api.setSubmissionFileStatus(apiServerUrl, currentSubmissionId, 'APPROVED')
+        return api.setSubmissionStatus(apiServerUrl, currentSubmissionId, 'APPROVED')
             .then(() => {
                 dispatch(postMessage("success", 'Files Loaded'));
             })
@@ -452,7 +452,6 @@ export function setSubmissionStatus() {
     };
 }
 
-*/
 
 export type SubmitAction = OpenSubmitSteps
     | CloseSubmitSteps
@@ -471,4 +470,3 @@ export type SubmitAction = OpenSubmitSteps
     | SubmitFiles
     | UpdateCurrentSubmissionFile
     | UpdateCurrentSubmissionFileIndex;
-    // | SetSubmissionStatus;

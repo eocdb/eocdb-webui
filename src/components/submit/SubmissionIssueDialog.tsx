@@ -11,6 +11,7 @@ import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import { SubmissionFile } from "../../api/getSubmissionFilesForSubmission";
 import DialogContent from "@material-ui/core/DialogContent";
 import { DatasetIssue } from "../../api/uploadStoreFiles";
+import Typography from "@material-ui/core/Typography/Typography";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -53,9 +54,12 @@ class SubmissionIssueDialog extends React.Component<SubmissionIssueDialogProps> 
         const {classes, submissionFile} = this.props;
 
         let issues:DatasetIssue[] = [];
+        let fileName = 'unknown';
 
-        if(submissionFile)
+        if(submissionFile) {
             issues = submissionFile.result.issues;
+            fileName = submissionFile.filename;
+        }
 
 
         return (
@@ -65,12 +69,16 @@ class SubmissionIssueDialog extends React.Component<SubmissionIssueDialogProps> 
                     onClose={this.props.onClose}
                     TransitionComponent={Transition}
                 >
-                    <DialogTitle id="form-dialog-title">Submission Issue for</DialogTitle>
+                    <DialogTitle id="form-dialog-title">Submission Issues for {fileName}</DialogTitle>
                     <DialogContent>
                         {
                             issues.map((issue: DatasetIssue) => {
-                                console.log(issue.type)
-                                console.log(issue.description)
+                                return(
+                                    <div>
+                                        <Typography color={"error"} variant="overline" gutterBottom>{issue.type}</Typography>
+                                        <Typography>{issue.description}</Typography>
+                                    </div>
+                                );
                             })
                         }
                     </DialogContent>

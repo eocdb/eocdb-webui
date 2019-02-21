@@ -4,7 +4,7 @@ import SubmissionTable from "../../components/submit/SubmissionTable";
 import {
     openSubmissionFilesDialog,
     closeSubmissionFilesDialog,
-    updateCurrentSubmission,
+    updateCurrentSubmission, setSubmissionStatus,
 } from "../../actions/submissionActions";
 
 const mapStateToProps = (state: AppState) => {
@@ -22,6 +22,7 @@ const mapDispatchToProps = {
     openSubmissionFilesDialog,
     closeSubmissionFilesDialog,
     updateCurrentSubmission,
+    approveSubmission: setSubmissionStatus,
 };
 
 

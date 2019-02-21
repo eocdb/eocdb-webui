@@ -106,6 +106,11 @@ class SubmissionFilesDialog extends React.Component<SubmissionFilesDialogProps> 
                     onClose={this.props.closeSubmissionIssuesDialog}
                     open={this.props.submissionIssuesDialogOpen}
                 />
+                <Button
+                    onClick={this.props.onClose}
+                >
+                    Close
+                </Button>
                 <Typography component={'h2'}>Submission File Status</Typography>
                 <Table>
                     <TableHead>
@@ -139,7 +144,7 @@ class SubmissionFilesDialog extends React.Component<SubmissionFilesDialogProps> 
                                         <Button
                                             onClick={() => this.handleSubmissionFileIssuesDialogOpen(row.index)}
                                         >
-                                            <Icon className={classes.rightIcon}>bar_chart</Icon>
+                                            <Icon className={classes.rightIcon}>list</Icon>
                                         </Button>
                                     </TableCell>
                                 </TableRow>
