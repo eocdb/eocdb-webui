@@ -4,8 +4,8 @@ import { callJsonApi } from "./callApi";
 export type SubmissionFileStatus = 'SUBMITTED' | 'VALIDATED' | 'APPROVED' | 'PUBLISHED';
 
 
-export function setSubmissionFileStatus(apiServerUrl: string, submissionFileIs: string, status: SubmissionFileStatus):
+export function setSubmissionFileStatus(apiServerUrl: string, submissionFileId: string, status: SubmissionFileStatus):
     Promise<undefined>{
 
-    return callJsonApi<undefined>(apiServerUrl + '/store/upload/status/' + submissionFileIs + '/' + status);
+    return callJsonApi<undefined>(apiServerUrl + '/store/upload/status/' + submissionFileId + '/' + status);
 }

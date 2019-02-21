@@ -2,6 +2,7 @@ import { DatasetValidationResult } from "../api/uploadStoreFiles";
 import { Submission } from "../api/getSubmissionsForUser";
 import { SubmissionFile } from "../api/getSubmissionFilesForSubmission";
 
+
 export interface SubmissionState {
     submissionOpen: boolean;
 
@@ -13,6 +14,7 @@ export interface SubmissionState {
     currentDatasetValidationResults: DatasetValidationResult[];
     currentSubmissionFiles: SubmissionFile[];
     currentSubmissionId: string;
+    //currentSubmissionStatus: SubmissionFileStatus;
 
     foundSubmissions: Submission[];
 

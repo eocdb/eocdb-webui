@@ -374,17 +374,10 @@ export function setSubmissionStatus() {
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
-        const user = state.sessionState.user;
+        const currentSubmissionId = state.submitState.currentSubmissionId;
 
-        let userid = 0;
-        if (user) {
-            userid = user.id;
-        }
 
-        return api.getSubmissionsForUser(apiServerUrl, userid)
-            .then((submissions: SubmissionForUserResult[]) => {
-                dispatch(_updateSubmissionsForUser(submissions));
-            })
+        return api.setSubmissionFileStatus(apiServerUrl, currentSubmissionId, 'APPROVED')
             .then(() => {
                 dispatch(postMessage("success", 'Files Loaded'));
             })
@@ -393,8 +386,8 @@ export function setSubmissionStatus() {
             });
     };
 }
-*/
 
+*/
 
 export type SubmitAction = OpenSubmitSteps
     | CloseSubmitSteps

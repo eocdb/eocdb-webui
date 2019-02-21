@@ -89,7 +89,66 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
         const {classes, submissions} = this.props;
 
         return (
-            <Paper className={classes.root}>
+            <div>
+                <Paper className={classes.root}>
+                    <Grid container justify={"flex-end"}>
+                        <Button variant="contained"
+                                color="secondary"
+                                className={classes.button}
+                                onClick={this.handleOpenSubmitSteps}
+                        >
+                            New Submission
+                            <CloudUpload/>
+                        </Button>
+                    </Grid>
+                    <Table className={classes.table}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>SubmissionId</TableCell>
+                                <TableCell>Date</TableCell>
+                                <TableCell>Status</TableCell>
+                                <TableCell>Action</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {submissions.map((row: Submission) => {
+                                const colour = this.getColoutForStatus(row.status);
+
+                                return (
+                                    <TableRow
+                                        hover
+                                        role="checkbox"
+                                        key={row.submission_id}
+                                        tabIndex={-1}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            {row.submission_id}
+                                        </TableCell>
+                                        <TableCell>
+                                            {row.date}
+                                        </TableCell>
+                                        <TableCell>
+                                            <Chip
+                                                label={row.status}
+                                                style={{background: colour}}
+                                            />
+                                        </TableCell>
+                                        <TableCell>
+                                            <Button
+                                                onClick={() => this.handleOpenSubmissionFilesDialog(
+                                                    row.submission_id,
+                                                    row.file_refs
+                                                )}
+                                            >
+                                                <Icon className={classes.rightIcon}>bar_chart</Icon>
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </Paper>
                 <SubmissionFilesDialog
                     key={this.props.currentSubmissionId}
                     submissionId={this.props.currentSubmissionId}
@@ -97,64 +156,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                     onClose={this.props.closeSubmissionFilesDialog}
                     open={this.props.submissionFilesDialogOpen}
                 />
-                <Grid container justify={"flex-end"}>
-                    <Button variant="contained"
-                            color="secondary"
-                            className={classes.button}
-                            onClick={this.handleOpenSubmitSteps}
-                    >
-                        New Submission
-                        <CloudUpload/>
-                    </Button>
-                </Grid>
-                <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>SubmissionId</TableCell>
-                            <TableCell>Date</TableCell>
-                            <TableCell>Status</TableCell>
-                            <TableCell>Action</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {submissions.map((row: Submission) => {
-                            const colour = this.getColoutForStatus(row.status);
-
-                            return (
-                                <TableRow
-                                    hover
-                                    role="checkbox"
-                                    key={row.submission_id}
-                                    tabIndex={-1}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {row.submission_id}
-                                    </TableCell>
-                                    <TableCell>
-                                        {row.date}
-                                    </TableCell>
-                                    <TableCell>
-                                        <Chip
-                                            label={row.status}
-                                            style={{background: colour}}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <Button
-                                            onClick={() => this.handleOpenSubmissionFilesDialog(
-                                                row.submission_id,
-                                                row.file_refs
-                                            )}
-                                        >
-                                            <Icon className={classes.rightIcon}>bar_chart</Icon>
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </Paper>
+            </div>
         );
     }
 }

@@ -80,7 +80,7 @@ class SubmissionFilesDialog extends React.Component<SubmissionFilesDialogProps> 
         return (
             <div>
                 <Dialog
-                    fullScreen
+                    //fullScreen
                     open={this.props.open}
                     onClose={this.props.onClose}
                     TransitionComponent={Transition}
