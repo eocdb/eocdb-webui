@@ -35,7 +35,7 @@ export function callApi(endpointUrl: string, queryComponents?: QueryComponent[],
 }
 
 function download(blob: Blob){
-    const fileName: string = 'my-test.csv';
+    const fileName: string = 'download.zip';
     const objectUrl: string = URL.createObjectURL(blob);
     const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
 

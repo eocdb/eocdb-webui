@@ -146,7 +146,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             onChange={this.handleProductGroupsChange}
                             selectedItems={this.getSelectedProducts()}
                             isMulti={true}
-                            closeMenuOnSelect={false}
+                            closeMenuOnSelect={true}
                             placeholder={'Select Product Groups...'}
                         />
                         <TextField

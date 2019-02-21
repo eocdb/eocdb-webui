@@ -12,6 +12,19 @@ describe('submitState', () => {
             submissionFilesDialogOpen: false,
             submissionIssuesDialogOpen: false,
 
+            currentSubmissionFile: {
+                index: 0,
+                submission_id: '',
+                filename: '',
+                status: 'OK',
+                filetype: 'DOCUMENT',
+                result: {
+                    status: 'OK',
+                    issues: [],
+                }
+            },
+            currentSubmissionFileIndex: 0,
+
             currentDatasetValidationResults: [],
             currentSubmissionFiles: [],
             currentSubmissionId: '',

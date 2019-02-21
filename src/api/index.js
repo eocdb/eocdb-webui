@@ -7,5 +7,6 @@ export { getDatasetById } from './getDatasetById';
 export { getSubmissionsForUser } from './getSubmissionsForUser';
 export { getSubmissionFilesForSubmission } from './getSubmissionFilesForSubmission';
 export { setSubmissionFileStatus } from './setSubmissionFileStatus';
+export { getSubmissionFile } from './getSubmissionFile'
 export { HTTPError } from './errors';
 

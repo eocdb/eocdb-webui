@@ -14,7 +14,9 @@ export interface SubmissionState {
     currentDatasetValidationResults: DatasetValidationResult[];
     currentSubmissionFiles: SubmissionFile[];
     currentSubmissionId: string;
-    //currentSubmissionStatus: SubmissionFileStatus;
+
+    currentSubmissionFile: SubmissionFile;
+    currentSubmissionFileIndex: number;
 
     foundSubmissions: Submission[];
 
@@ -36,6 +38,20 @@ export function newSubmissionState() {
         currentDatasetValidationResults: [],
         currentSubmissionFiles: [],
         currentSubmissionId: '',
+
+        currentSubmissionFile: {
+            index: 0,
+            submission_id: '',
+            filename: '',
+            status: 'OK',
+            filetype: 'DOCUMENT',
+            result: {
+                status: 'OK',
+                issues: [],
+            }
+        },
+
+        currentSubmissionFileIndex: 0,
 
         foundSubmissions: [],
     }

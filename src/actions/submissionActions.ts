@@ -313,6 +313,71 @@ export function updateCurrentSubmission(currentSubmissionId: string, currentSubm
 }
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+export const UPDATE_CURRENT_SUBMISSIONFILE_INDEX = 'UPDATE_CURRENT_SUBMISSIONFILE_INDEX';
+export type UPDATE_CURRENT_SUBMISSIONFILE_INDEX = typeof UPDATE_CURRENT_SUBMISSIONFILE_INDEX;
+
+export interface UpdateCurrentSubmissionFileIndex {
+    type: UPDATE_CURRENT_SUBMISSIONFILE_INDEX;
+    currentSubmissionFileIndex: number;
+}
+
+export function updateCurrentSubmissionFileIndex(currentSubmissionFileIndex: number)
+    : UpdateCurrentSubmissionFileIndex {
+    return {
+        type: UPDATE_CURRENT_SUBMISSIONFILE_INDEX,
+        currentSubmissionFileIndex,
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+export const UPDATE_CURRENT_SUBMISSIONFILE = 'UPDATE_CURRENT_SUBMISSIONFILE';
+export type UPDATE_CURRENT_SUBMISSIONFILE = typeof UPDATE_CURRENT_SUBMISSIONFILE;
+
+export interface UpdateCurrentSubmissionFile {
+    type: UPDATE_CURRENT_SUBMISSIONFILE;
+    currentSubmissionFile: SubmissionFile;
+}
+
+export function _updateCurrentSubmissionFile(currentSubmissionFile: SubmissionFile)
+    : UpdateCurrentSubmissionFile {
+    return {
+        type: UPDATE_CURRENT_SUBMISSIONFILE,
+        currentSubmissionFile,
+    }
+}
+
+
+export function updateCurrentSubmissionFile(){
+    return (dispatch: Dispatch<UpdateCurrentSubmissionFile | MessageLogAction>, getState: ()
+        => AppState) => {
+        const state = getState();
+        const apiServerUrl = state.configState.apiServerUrl;
+        const currentSubmissionId = state.submitState.currentSubmissionId;
+        const currentSubmissionFileIndex = state.submitState.currentSubmissionFileIndex;
+
+        return api.getSubmissionFile(apiServerUrl, currentSubmissionId, currentSubmissionFileIndex)
+            .then((submissionFile: SubmissionFile) => {
+                dispatch(_updateCurrentSubmissionFile(submissionFile));
+            })
+            .then(() => {
+                dispatch(postMessage('success', 'Submission File Loaded'))
+            })
+            .catch((error: string) => {
+                dispatch(postMessage('error', error + ''));
+            });
+    }
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION = 'UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION';
 export type UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION = typeof UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION;
 
@@ -403,5 +468,7 @@ export type SubmitAction = OpenSubmitSteps
     | ClearForm
     | UpdateSubmissionsForUser
     | UpdateSubmissionsFilesForSubmission
-    | SubmitFiles;
+    | SubmitFiles
+    | UpdateCurrentSubmissionFile
+    | UpdateCurrentSubmissionFileIndex;
     // | SetSubmissionStatus;

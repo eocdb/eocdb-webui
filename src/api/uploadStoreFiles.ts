@@ -17,7 +17,7 @@ export interface DatasetIssue {
 }
 
 export interface DatasetValidationResult {
-    status: DatasetStatus;
+    status: string;
     issues: DatasetIssue [];
 }
 

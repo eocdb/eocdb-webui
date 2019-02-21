@@ -35,6 +35,9 @@ interface SearchMapProps extends WithStyles<typeof styles> {
     selectedDatasets: string[];
 
     updatePosition: (position: LatLng) => void;
+
+    bounds?: LatLngBounds;
+    updateBounds?: (bounds: LatLngBounds) => void;
 }
 
 const DRAW_OPTIONS = {
@@ -66,6 +69,12 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                            position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
         }
     }
+
+    handleUpdateBounds = (bounds: LatLngBounds) => {
+        if (this.handleUpdateBounds) {
+            this.handleUpdateBounds(bounds);
+        }
+    };
 
     handleMarkerClick(id: string) {
         const selected = this.props.selectedDatasets;
@@ -125,7 +134,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
             </MarkerClusterGroup>
         );
         return (
-            <Map center={this.props.position} zoom={this.props.zoom} maxZoom={24}>
+            <Map bounds={this.props.bounds} center={this.props.position} zoom={this.props.zoom} maxZoom={24}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"

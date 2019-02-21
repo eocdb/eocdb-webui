@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import {
     openSubmissionIssuesDialog,
     closeSubmissionIssuesDialog,
+    updateCurrentSubmissionFile,
+    updateCurrentSubmissionFileIndex,
 } from "../../actions/submissionActions";
 
 import SubmissionFilesDialog from "../../components/submit/SubmissionFilesDialog";
@@ -10,6 +12,8 @@ import SubmissionFilesDialog from "../../components/submit/SubmissionFilesDialog
 const mapStateToProps = (state: AppState) => {
     return {
         submissionIssuesDialogOpen: state.submitState.submissionIssuesDialogOpen,
+        currentSubmissionFile: state.submitState.currentSubmissionFile,
+        currentSubmissionFileIndex: state.submitState.currentSubmissionFileIndex,
     };
 };
 
@@ -17,6 +21,8 @@ const mapStateToProps = (state: AppState) => {
 const mapDispatchToProps = {
     closeSubmissionIssuesDialog,
     openSubmissionIssuesDialog,
+    updateCurrentSubmissionFile,
+    updateCurrentSubmissionFileIndex,
 };
 
 

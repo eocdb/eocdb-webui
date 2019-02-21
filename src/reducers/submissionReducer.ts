@@ -15,7 +15,7 @@ import {
     CLOSE_SUBMISSION_FILES_DIALOG,
     OPEN_SUBMISSION_ISSUES_DIALOG,
     CLOSE_SUBMISSION_ISSUES_DIALOG,
-    UPDATE_CURRENT_SUBMISSION
+    UPDATE_CURRENT_SUBMISSION, UPDATE_CURRENT_SUBMISSIONFILE, UPDATE_CURRENT_SUBMISSIONFILE_INDEX
 } from "../actions/submissionActions";
 
 
@@ -53,6 +53,10 @@ export function submissionReducer(state: SubmissionState = initialState, action:
             return {...state, docFiles: [], dataFiles: [], submissionId: '', path: ''};
         case UPDATE_SUBMISSIONS_FOR_USER:
             return {...state, foundSubmissions: action.submissions};
+        case UPDATE_CURRENT_SUBMISSIONFILE:
+            return {...state, currentSubmissionFile: action.currentSubmissionFile};
+        case UPDATE_CURRENT_SUBMISSIONFILE_INDEX:
+            return {...state, currentSubmissionFileIndex: action.currentSubmissionFileIndex};
         case UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION:
             return {...state, currentSubmissionFiles: action.submissionFiles};
         case SUBMIT_FILES:

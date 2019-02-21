@@ -72,9 +72,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
     getColoutForStatus = (status: string) => {
         switch (status) {
             case 'SUBMITTED':
-                return "orange";
-            case 'VALIDATED':
-                return "red";
+                return "blue";
             case 'APPROVED':
                 return "green";
         }
@@ -130,7 +128,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                         <TableCell>
                                             <Chip
                                                 label={row.status}
-                                                style={{background: colour}}
+                                                style={{background: colour, color: "white"}}
                                             />
                                         </TableCell>
                                         <TableCell>
@@ -140,8 +138,17 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                                     row.file_refs
                                                 )}
                                             >
-                                                <Icon className={classes.rightIcon}>bar_chart</Icon>
+                                                <Icon className={classes.rightIcon}>list</Icon>
                                             </Button>
+                                            <Button
+                                                onClick={() => this.handleOpenSubmissionFilesDialog(
+                                                    row.submission_id,
+                                                    row.file_refs
+                                                )}
+                                            >
+                                                <Icon className={classes.rightIcon}>done</Icon>
+                                            </Button>
+
                                         </TableCell>
                                     </TableRow>
                                 );
