@@ -1,13 +1,9 @@
 import * as React from "react";
 import { Theme, withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-//import Dialog from '@material-ui/core/Dialog';
-// import Slide, {SlideProps} from '@material-ui/core/Slide';
 
 import createStyles from "@material-ui/core/styles/createStyles";
 import { WithStyles } from "@material-ui/core";
-// import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
-// import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Paper from "@material-ui/core/Paper/Paper";
 import Table from "@material-ui/core/Table/Table";
 import TableHead from "@material-ui/core/TableHead/TableHead";
@@ -18,7 +14,7 @@ import Icon from "@material-ui/core/Icon/Icon";
 import SubmissionIssueDialog from "./SubmissionIssueDialog";
 import { SubmissionFile } from "../../api/getSubmissionFilesForSubmission";
 import Chip from "@material-ui/core/Chip";
-import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -106,12 +102,14 @@ class SubmissionFilesDialog extends React.Component<SubmissionFilesDialogProps> 
                     onClose={this.props.closeSubmissionIssuesDialog}
                     open={this.props.submissionIssuesDialogOpen}
                 />
+                <Grid container justify={"flex-end"}>
                 <Button
+                    color={"primary"}
                     onClick={this.props.onClose}
                 >
                     Close
                 </Button>
-                <Typography component={'h2'}>Submission File Status</Typography>
+                </Grid>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -143,6 +141,7 @@ class SubmissionFilesDialog extends React.Component<SubmissionFilesDialogProps> 
                                     <TableCell>
                                         <Button
                                             onClick={() => this.handleSubmissionFileIssuesDialogOpen(row.index)}
+                                            disabled={row.filetype==='DOCUMENT'}
                                         >
                                             <Icon className={classes.rightIcon}>list</Icon>
                                         </Button>

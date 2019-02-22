@@ -120,13 +120,24 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
     const selectedOptShallow = state.advancedSearchState.selectedOptShallow;
 
     if (selectedOptShallow) {
-        datasetQuery = {...datasetQuery,shallow : state.advancedSearchState.selectedOptShallow};
+        datasetQuery = {...datasetQuery, shallow: state.advancedSearchState.selectedOptShallow};
     }
 
     datasetQuery = {...datasetQuery, count: state.dataTableState.rowsPerPage};
     datasetQuery = {...datasetQuery, offset: ((state.dataTableState.page * state.dataTableState.rowsPerPage) + 1)};
 
     datasetQuery = {...datasetQuery, geojson: true};
+
+    const expression = datasetQuery.searchExpr;
+    let newExpression = expression;
+
+    if (expression) {
+        if (expression.search(':') == -1) {
+            newExpression = 'path:*' + expression + '*';
+        }
+
+        datasetQuery = {...datasetQuery, searchExpr: newExpression};
+    }
 
     return datasetQuery;
 }

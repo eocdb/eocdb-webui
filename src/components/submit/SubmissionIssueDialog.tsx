@@ -83,11 +83,7 @@ class SubmissionIssueDialog extends React.Component<SubmissionIssueDialogProps> 
                         }
                     </DialogContent>
                     <DialogActions className={classes.appBar}>
-                        <Button onClick={this.props.onClose}
-                                aria-label="Close"
-                                variant="contained"
-                                color="secondary"
-                        >
+                        <Button onClick={this.props.onClose} color="primary">
                             Close
                         </Button>
                     </DialogActions>

@@ -8,7 +8,8 @@ WORKDIR /eocdb-webui
 
 RUN yarn install
 RUN yarn run test --ci
+RUN yarn build
 
-EXPOSE 3000
+EXPOSE 5000
 
-CMD ['yarn run start']
+CMD ['bash -c serve -s build']

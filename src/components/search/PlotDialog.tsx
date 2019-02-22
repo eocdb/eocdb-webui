@@ -160,8 +160,6 @@ class PlotDialog extends React.Component<PlotDialogProps> {
     render() {
         const {plotData, classes} = this.props;
 
-        console.log(plotData);
-
         const {attributes} = this.props.dataset;
 
         const selectItems = attributes.map((attribute: string) => {
