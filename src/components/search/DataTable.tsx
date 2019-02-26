@@ -17,7 +17,7 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import TableFooter from "@material-ui/core/TableFooter/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination/TablePagination";
-import { Dataset, QueryResult } from "../../types/dataset";
+import { Dataset, DatasetRef, QueryResult } from "../../types/dataset";
 import MetaInfoDialog from "./MetaInfoDialog";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
@@ -26,6 +26,7 @@ import Grid from "@material-ui/core/Grid/Grid";
 import green from "@material-ui/core/colors/green";
 import { PlotRecord, PlotState } from "../../states/dataTableState";
 import PlotDialog from "./PlotDialog";
+import { geoJSON, LatLng, LatLngBounds } from "leaflet";
 
 const path = require('path');
 
@@ -170,7 +171,7 @@ export interface DataTableProps extends WithStyles<typeof styles> {
     updateDownloadDocs: (downloadDocs: boolean) => void;
 
     selectedDatasets: string[];
-    updateSelectedDatasets: (selectedDatasets: string[]) => void;
+    updateSelectedDatasets: (selectedDatasets: string[], selectedBounds?: LatLngBounds) => void;
 
     startLoading: () => void;
     startDownloading: () => void;
@@ -200,8 +201,8 @@ class DataTable extends React.Component<DataTableProps> {
     handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = parseInt(event.target.value);
         this.props.updateDataRowsPerPage(value);
-        this.props.searchDatasets();
         this.props.startLoading();
+        this.props.searchDatasets();
     };
 
     handleMetaInfoOpen = (id: string) => {
@@ -222,15 +223,34 @@ class DataTable extends React.Component<DataTableProps> {
         this.props.closePlotDialog();
     };
 
-    handleOnSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let selectedDatasets: string[] = [];
-        if (event.target.checked) {
-            selectedDatasets = this.props.data.datasets.map(row => {
-                return row.id;
-            });
+    getBoundsFromSelectedDatasets = (selectedDatasets: string[]) => {
+        let bounds = new LatLngBounds(new LatLng(0,0), new LatLng(0,0));
+
+        for (let feat of selectedDatasets) {
+            let feat_str = this.props.data.locations[feat];
+            feat_str = feat_str.replace(new RegExp("'", 'g'), '"');
+
+            bounds.extend(geoJSON(JSON.parse(feat_str)).getBounds());
         }
 
-        this.props.updateSelectedDatasets(selectedDatasets);
+        return bounds;
+    };
+
+    handleOnSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+        let selectedDatasets: string[] = [];
+
+        if (event.target.checked) {
+            selectedDatasets = this.props.data.datasets.map((row: DatasetRef) => {
+                return row.id;
+            });
+
+            const bounds = this.getBoundsFromSelectedDatasets(selectedDatasets);
+
+            this.props.updateSelectedDatasets(selectedDatasets,  bounds);
+        }
+        else{
+            this.props.updateSelectedDatasets([],  undefined);
+        }
     };
 
     handleUpdateDownloadDocs = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -256,7 +276,7 @@ class DataTable extends React.Component<DataTableProps> {
             );
         }
 
-        this.props.updateSelectedDatasets(newSelected);
+        this.props.updateSelectedDatasets(newSelected,  new LatLngBounds(new LatLng(0,0), new LatLng(0,0)));
     };
 
     isSelected = (id: string) => {
@@ -332,7 +352,6 @@ class DataTable extends React.Component<DataTableProps> {
                         {datasets.map(row => {
                             const fileName = path.basename(row.path);
                             const dirName = path.dirname(row.path);
-
 
                             return (
                                 <TableRow

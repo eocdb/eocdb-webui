@@ -1,5 +1,5 @@
 import { GeoJsonObject } from 'geojson';
-import { LatLng, LatLngBounds } from 'leaflet';
+import { LatLngBounds } from 'leaflet';
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -17,21 +17,7 @@ export function updateSelectedRegions(selectedRegions: GeoJsonObject, selectedBo
 }
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const UPDATE_POSITION = 'UPDATE_POSITION';
-export type UPDATE_POSITION = typeof UPDATE_POSITION;
-
-export interface UpdatePosition {
-    type: UPDATE_POSITION;
-    position: LatLng;
-}
-
-export function updatePosition(position: LatLng): UpdatePosition {
-    return {type: UPDATE_POSITION, position};
-}
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type SearchMapAction = UpdateSelectedRegions | UpdatePosition;
+export type SearchMapAction = UpdateSelectedRegions;

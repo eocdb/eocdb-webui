@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { AppState } from '../../states/appState';
 
-import { updatePosition, updateSelectedRegions } from '../../actions/searchMapActions';
+import { updateSelectedRegions } from '../../actions/searchMapActions';
 import SearchMap from '../../components/search/SearchMap';
 import { updateSelectedDatasets } from "../../actions/dataTableActions";
 
@@ -12,13 +12,13 @@ const mapStateToProps = (state: AppState) => {
         testMarkerCluster: true,
         foundDatasets: state.searchFormState.foundDatasets,
         selectedDatasets: state.dataTableState.selectedDatasets,
+        selectedBounds: state.dataTableState.selectedBounds,
     }
 };
 
 const mapDispatchToProps = {
     updateSelectedRegions,
     updateSelectedDatasets,
-    updatePosition,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchMap);

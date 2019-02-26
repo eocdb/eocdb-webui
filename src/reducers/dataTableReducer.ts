@@ -48,7 +48,7 @@ export function dataTableReducer(state: DataTableState, action: DataTableAction)
             return {...state, downloadDocs: action.downloadDocs};
         }
         case UPDATE_SELECTED_DATASETS: {
-            return {...state, selectedDatasets: action.selectedDatasets}
+            return {...state, selectedDatasets: action.selectedDatasets, selectedBounds: action.selectedBounds}
         }
         case START_DOWNLOADING:{
             return {...state, downloading: action.downloading}

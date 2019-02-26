@@ -20,7 +20,6 @@ import {
 } from 'simplify-ts';
 
 
-
 const styles = (theme: Theme) => createStyles({
     root: {
         marginLeft: theme.spacing.unit * 2.5,
@@ -75,14 +74,13 @@ class PlotDialog extends React.Component<PlotDialogProps> {
             });
             //return Simplify3D(points, 0.5, false);
         } else {
-            const points =  records.map((record: number[]) => {
+            const points = records.map((record: number[]) => {
                 return {x: round(+record[x], precision), y: round(+record[y], precision)};
             });
 
-            if(points.length < 1000){
+            if (points.length < 1000) {
                 return points;
-            }
-            else {
+            } else {
                 return Simplify(points, 0.5, false);
             }
         }
@@ -226,7 +224,10 @@ class PlotDialog extends React.Component<PlotDialogProps> {
                                 <Tooltip cursor={{strokeDasharray: '3 3'}}/>
                                 <Scatter yAxisId="left" name={selectedYField} data={plotData} fill={'#8884d8'}/>
                                 <Scatter yAxisId="right" name={selectedZField} data={plotData} fill="#82ca9d"/>
-                                <Legend verticalAlign={"top"} height={36}/>
+                                {this.props.plotData.length > 0 ?
+                                    (<Legend verticalAlign={"top"} height={36}/>) :
+                                    ''
+                                }
                             </ScatterChart>
                         </Grid>
                     </DialogContent>

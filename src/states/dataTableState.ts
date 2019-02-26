@@ -1,4 +1,5 @@
 import { Dataset } from "../types/dataset";
+import { LatLngBounds } from "leaflet";
 
 
 export interface PlotRecord {
@@ -29,6 +30,8 @@ export interface DataTableState {
 
     plotState: PlotState;
     plotData: PlotRecord[];
+
+    selectedBounds?: LatLngBounds;
 }
 
 export function newDataTableState() {

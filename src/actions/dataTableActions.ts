@@ -4,6 +4,7 @@ import { MessageLogAction, postMessage } from "./messageLogActions";
 import { AppState } from "../states/appState";
 import * as api from '../api'
 import { PlotRecord, PlotState } from "../states/dataTableState";
+import { LatLngBounds } from "leaflet";
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -14,10 +15,11 @@ export type UPDATE_SELECTED_DATASETS = typeof UPDATE_SELECTED_DATASETS;
 export interface UpdateSelectedDatasets {
     type: UPDATE_SELECTED_DATASETS;
     selectedDatasets: string[];
+    selectedBounds: LatLngBounds;
 }
 
-export function updateSelectedDatasets(selectedDatasets: string[]): UpdateSelectedDatasets{
-    return {type: UPDATE_SELECTED_DATASETS, selectedDatasets};
+export function updateSelectedDatasets(selectedDatasets: string[], selectedBounds: LatLngBounds): UpdateSelectedDatasets{
+    return {type: UPDATE_SELECTED_DATASETS, selectedDatasets, selectedBounds};
 }
 
 

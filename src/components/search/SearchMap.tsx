@@ -3,7 +3,7 @@ import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
 import { FeatureGroup, Map, Marker, Popup, TileLayer } from 'react-leaflet'
-import { Icon, LatLng, LatLngBounds } from 'leaflet';
+import { geoJSON, Icon, LatLng, LatLngBounds } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import 'react-leaflet-markercluster/dist/styles.css';
@@ -31,13 +31,9 @@ interface SearchMapProps extends WithStyles<typeof styles> {
     foundDatasets: QueryResult;
     drawMeasurementPoints?: boolean;
 
-    updateSelectedDatasets: (selectedDatasets: string[]) => void;
+    updateSelectedDatasets: (selectedDatasets: string[], selectedBounds?: LatLngBounds) => void;
     selectedDatasets: string[];
-
-    updatePosition: (position: LatLng) => void;
-
-    bounds?: LatLngBounds;
-    updateBounds?: (bounds: LatLngBounds) => void;
+    selectedBounds?: LatLngBounds;
 }
 
 const DRAW_OPTIONS = {
@@ -70,12 +66,6 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         }
     }
 
-    handleUpdateBounds = (bounds: LatLngBounds) => {
-        if (this.handleUpdateBounds) {
-            this.handleUpdateBounds(bounds);
-        }
-    };
-
     handleMarkerClick(id: string) {
         const selected = this.props.selectedDatasets;
         let newSelected = [];
@@ -93,7 +83,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
             newSelected.push(id);
         }
 
-        this.props.updateSelectedDatasets(newSelected);
+        this.props.updateSelectedDatasets(newSelected, undefined);
     }
 
     getDatasetRef = (id: string): DatasetRef | undefined => {
@@ -125,7 +115,25 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         return markers;
     }
 
+    getBoundsFromDatasets = (): LatLngBounds | undefined => {
+        let bounds;
+        if (this.props.foundDatasets.datasets.length > 0) {
+            bounds = new LatLngBounds(new LatLng(0, 0), new LatLng(0, 0));
+
+            for (let feat in this.props.foundDatasets.locations) {
+                let feat_str = this.props.foundDatasets.locations[feat];
+                feat_str = feat_str.replace(new RegExp("'", 'g'), '"');
+
+                bounds.extend(geoJSON(JSON.parse(feat_str)).getBounds());
+            }
+        }
+
+        return bounds;
+    };
+
     render() {
+        const bounds = this.getBoundsFromDatasets();
+
         const markerClusterGroup = (
             <MarkerClusterGroup
                 chunkedLoading={true}
@@ -134,7 +142,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
             </MarkerClusterGroup>
         );
         return (
-            <Map bounds={this.props.bounds} center={this.props.position} zoom={this.props.zoom} maxZoom={24}>
+            <Map bounds={bounds} center={this.props.position} zoom={this.props.zoom} maxZoom={24}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
