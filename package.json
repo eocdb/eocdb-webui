@@ -20,6 +20,7 @@
     "leaflet": "^1.3.4",
     "leaflet-draw": "^1.0.4",
     "leaflet.markercluster": "^1.4.1",
+
     "material-design-icons": "^3.0.1",
     "material-ui-dropzone": "https://github.com/dzelge/material-ui-dropzone.git#make_preview_optional",
     "prop-types": "^15.6.2",
