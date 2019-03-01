@@ -1,22 +1,28 @@
 import * as React from 'react';
 
-import Grid from '@material-ui/core/Grid/Grid';
-import TextField from '@material-ui/core/TextField/TextField';
-import Button from '@material-ui/core/Button/Button';
-import Icon from '@material-ui/core/Icon/Icon';
-import green from '@material-ui/core/colors/green';
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { Theme, WithStyles } from '@material-ui/core';
+import {
+    IconButton,
+    CircularProgress,
+    TextField,
+    Icon,
+    Button,
+    Grid,
+    Theme,
+    WithStyles
+} from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
 
 import SearchMap from '../../containers/search/SearchMap';
-import { DatasetQuery } from '../../api/index';
-import { ProductGroup, StoreInfo } from '../../types/dataset';
+import { DatasetQuery } from '../../api';
+import { ProductGroup, StoreInfo } from '../../model';
 import DataTable from "../../containers/search/DataTable";
 import AdvancedSearchDialog from "../../containers/search/AdvancedSearchDialog";
 import AdvancedSearchLog from "../../containers/search/AdvancedSearchLog";
 import MultipleSelectTextField, { Suggestion } from "./MultipleSelectTextField";
+import HelpDialog from "../messages/HelpDialog";
+import { FindHelpText } from "../messages/Help/find";
+
 
 
 // noinspection JSUnusedLocalSymbols
@@ -30,7 +36,7 @@ const styles = (theme: Theme) => createStyles({
     rightIcon: {},
     tableContainer: {},
     buttonProgress: {
-        color: green[500],
+        color: theme.palette.primary.light,
         position: 'absolute',
         top: '50%',
         left: '50%',
@@ -53,29 +59,76 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     openAdvancedSearchDialog: () => void;
     closeAdvancedSearchDialog: () => void;
 
-    productGroupsOpen: boolean;
-    openProductGroups: () => void;
-    closeProductGroups: () => void;
+    helpDialogOpen: boolean;
+    openHelpDialog: () => void;
+    closeHelpDialog: () => void;
+
 
     loading: boolean;
     startLoading: () => void;
 }
 
-class SearchPanel extends React.PureComponent<SearchPanelProps> {
+
+interface SearchPanelState {
+    currentSearchExpr: string;
+    currentStartDate: string;
+    currentEndDate: string;
+}
+
+
+class SearchPanel extends React.PureComponent<SearchPanelProps, SearchPanelState> {
+    constructor(props: SearchPanelProps) {
+        super(props);
+
+        this.state = {
+            currentSearchExpr: '',
+            currentStartDate: '',
+            currentEndDate: '',
+        }
+    }
+
+    handleClear = () => {
+        this.setState({
+            currentSearchExpr: '',
+            currentStartDate: '',
+            currentEndDate: '',
+        });
+
+        this.props.updateDatasetQuery({
+                ...this.props.datasetQuery,
+                searchExpr: '',
+                startDate: '',
+                endDate: '',
+                productGroupNames: [],
+            }
+        );
+    };
 
     handleSearchExprChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({currentSearchExpr: event.target.value});
+    };
+
+    handleSearchExprBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
         const searchExpr = event.target.value;
         this.props.updateDatasetQuery({...this.props.datasetQuery, searchExpr});
     };
 
-    handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleStartDateBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
         const startDate = event.target.value;
         this.props.updateDatasetQuery({...this.props.datasetQuery, startDate});
     };
 
-    handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({currentStartDate: event.target.value});
+    };
+
+    handleEndDateBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
         const endDate = event.target.value;
         this.props.updateDatasetQuery({...this.props.datasetQuery, endDate});
+    };
+
+    handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({currentEndDate: event.target.value});
     };
 
     handleProductGroupsChange = (productGroups: Suggestion[]) => {
@@ -108,8 +161,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
             return null;
         }
 
-        const {classes, datasetQuery} = this.props;
-        const {searchExpr, startDate, endDate} = datasetQuery;
+        const {classes} = this.props;
 
         return (
             <div>
@@ -125,8 +177,9 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                                 shrink: true,
                             }}
                             variant="outlined"
-                            value={startDate}
+                            value={this.state.currentStartDate}
                             onChange={this.handleStartDateChange}
+                            onBlur={this.handleStartDateBlur}
                         />
                         <TextField
                             id="measurement-to-date"
@@ -138,8 +191,9 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                                 shrink: true,
                             }}
                             variant="outlined"
-                            value={endDate}
+                            value={this.state.currentEndDate}
                             onChange={this.handleEndDateChange}
+                            onBlur={this.handleEndDateBlur}
                         />
                         <MultipleSelectTextField
                             suggestions={this.getProductGroups()}
@@ -147,7 +201,8 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             selectedItems={this.getSelectedProducts()}
                             isMulti={true}
                             closeMenuOnSelect={true}
-                            placeholder={'Select Product Groups...'}
+                            inputLabel={'Product Groups'}
+                            inputLabelWidth={124}
                         />
                         <TextField
                             id={'lucene-search'}
@@ -155,14 +210,34 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             label={'Expression'}
                             variant="outlined"
                             className={classes.searchField}
-                            value={searchExpr}
+                            value={this.state.currentSearchExpr}
                             onChange={this.handleSearchExprChange}
+                            onBlur={this.handleSearchExprBlur}
                         />
+                        <IconButton
+                            onClick={this.props.openHelpDialog}
+                        >
+                            <Icon color={"secondary"}>
+                                help
+                            </Icon>
+                        </IconButton>
+                        <HelpDialog
+                            open={this.props.helpDialogOpen}
+                            onClose={this.props.closeHelpDialog}
+                            title={'Filter Help'}
+                        >
+                            {FindHelpText}
+                        </HelpDialog>
+                        <Button className={classes.button}
+                                onClick={this.handleClear}>
+                            Clear
+                        </Button>
+
                     </Grid>
                     <Grid item container justify={"flex-end"} xs={12} sm>
                         <Button className={classes.button}
                                 onClick={this.props.openAdvancedSearchDialog}>
-                            Advanced
+                            Advanced Options
                         </Button>
 
                         <Button variant="contained"

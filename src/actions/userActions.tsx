@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import * as api from '../api'
 import { AppState } from '../states/appState';
-import { User } from '../types/user';
+import { User } from '../model';
 import { MessageLogAction, postMessage } from "./messageLogActions";
 
 

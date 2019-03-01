@@ -7,7 +7,7 @@ import List from '@material-ui/core/List/List';
 import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
-import { User } from "../types/user";
+import { User } from "../model";
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({});

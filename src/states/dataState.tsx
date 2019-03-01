@@ -1,4 +1,4 @@
-import { StoreInfo } from "../types/dataset";
+import { StoreInfo } from "../model";
 
 export interface DataState {
     info: StoreInfo;

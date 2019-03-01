@@ -1,7 +1,4 @@
-import { DatasetValidationResult } from "../api/uploadStoreFiles";
-import { Submission } from "../api/getSubmissionsForUser";
-import { SubmissionFile } from "../api/getSubmissionFilesForSubmission";
-
+import { Submission, SubmissionFile, DatasetValidationResult } from "../model";
 
 export interface SubmissionState {
     submissionOpen: boolean;

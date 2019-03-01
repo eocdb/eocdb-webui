@@ -2,7 +2,10 @@ import * as React from "react";
 import { Theme, WithStyles } from "@material-ui/core";
 import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
-import Select from "react-select";
+import Select, { components } from "react-select";
+import { CSSProperties } from "react";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
 
 
 export interface Suggestion {
@@ -49,12 +52,26 @@ const styles = (theme: Theme) => createStyles({
 });
 
 const customStyles = {
-    control: (base: any) => ({
+    control: (base: CSSProperties) => ({
         ...base,
-        width: 400,
+        width: 250,
         'min-height': '56px',
+        'background-color': '#FAFAFA',
+        label: 'red',
     }),
+    container: (base: CSSProperties) => ({
+        ...base,
+        //zIndex: 9999, // get select item list on top of everything.
+    })
 };
+
+const customTheme = (theme: any) => ({
+    ...theme,
+    colors: {
+        ...theme.colors,
+        primary: '#3F51B5',
+    }
+});
 
 
 interface MultipleSelectTextFieldProps extends WithStyles<typeof styles> {
@@ -67,7 +84,27 @@ interface MultipleSelectTextFieldProps extends WithStyles<typeof styles> {
     closeMenuOnSelect: boolean;
 
     placeholder?: string;
+    inputLabel?: string;
+    inputLabelWidth?: number;
 }
+
+const ControlComponent = (props: any) => (
+    <div>
+        {/*<h1 style={
+            {
+                textAlign: 'left',
+                'margin-top': '-20px',
+                height: '20px',
+                'line-height': '20px',
+                'font-size': '15px',
+                fontWeight: 'bold',
+            }
+        }>
+            <span style={{backgroundColor: 'white'}}>kljnd</span>
+        </h1>*/}
+        <components.Input id={'testin'} {...props} />
+    </div>
+);
 
 
 const orderOptions = (values: any) => {
@@ -98,26 +135,37 @@ class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldPro
     };
 
     render() {
-        const {placeholder} = this.props;
+        // const {placeholder} = this.props;
 
-        let plh = 'Select...';
-        if (placeholder) {
-            plh = placeholder;
-        }
+        //const plh = placeholder? placeholder : 'Select...';
 
         return (
-            <Select
-                closeMenuOnSelect={this.props.closeMenuOnSelect}
-                value={this.props.selectedItems}
-                isMulti={this.props.isMulti}
-                name="colors"
-                options={this.props.suggestions}
-                onChange={this.onChange}
-                styles={customStyles}
-                placeholder={plh}
-            />
+            <FormControl>
+                <InputLabel
+                    style={{backgroundColor: '#FAFAFA', width: this.props.inputLabelWidth, paddingLeft: 8}}
+                    shrink
+                    variant={"outlined"}
+                    htmlFor='testin'
+                >
+                    {this.props.inputLabel}
+                </InputLabel>
+                <Select
+                    id='async-select'
+                    closeMenuOnSelect={this.props.closeMenuOnSelect}
+                    value={this.props.selectedItems}
+                    isMulti={this.props.isMulti}
+                    name="colors"
+                    options={this.props.suggestions}
+                    onChange={this.onChange}
+                    styles={customStyles}
+                    placeholder={this.props.placeholder}
+                    theme={customTheme}
+                    components={{Input: ControlComponent}}
+                />
+            </FormControl>
         );
     }
 }
+
 
 export default withStyles(styles)(MultipleSelectTextField);

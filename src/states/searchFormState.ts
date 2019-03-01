@@ -1,5 +1,6 @@
 import { DatasetQuery } from '../api';
-import { QueryResult, SearchHistoryItem } from '../types/dataset';
+import { QueryResult } from '../model';
+import { SearchHistoryItem } from "../types/dataset";
 
 
 export interface SearchFormState {

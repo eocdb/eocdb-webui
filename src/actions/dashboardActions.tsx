@@ -101,28 +101,28 @@ export function closeAdvancedSearchDialog(): CloseAdvancedSearchDialog {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const OPEN_PRODUCT_GROUPS = 'OPEN_PRODUCT_GROUPS';
-export type OPEN_PRODUCT_GROUPS = typeof OPEN_PRODUCT_GROUPS;
+export const OPEN_HELP_DIALOG = 'OPEN_HELP_DIALOG';
+export type OPEN_HELP_DIALOG = typeof OPEN_HELP_DIALOG;
 
-export interface OpenProductGroups {
-    type: OPEN_PRODUCT_GROUPS;
+export interface OpenHelpDialog {
+    type: OPEN_HELP_DIALOG;
 }
 
-export function openProductGroups(): OpenProductGroups {
-    return {type: OPEN_PRODUCT_GROUPS};
+export function openHelpDialog(): OpenHelpDialog {
+    return {type: OPEN_HELP_DIALOG};
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const CLOSE_PRODUCT_GROUPS = 'CLOSE_PRODUCT_GROUPS';
-export type CLOSE_PRODUCT_GROUPS = typeof CLOSE_PRODUCT_GROUPS;
+export const CLOSE_HELP_DIALOG = 'CLOSE_HELP_DIALOG';
+export type CLOSE_HELP_DIALOG = typeof CLOSE_HELP_DIALOG;
 
-export interface CloseProductGroups {
-    type: CLOSE_PRODUCT_GROUPS;
+export interface CloseHelpDialog {
+    type: CLOSE_HELP_DIALOG;
 }
 
-export function closeProductGroups(): CloseProductGroups {
-    return {type: CLOSE_PRODUCT_GROUPS};
+export function closeHelpDialog(): CloseHelpDialog {
+    return {type: CLOSE_HELP_DIALOG};
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,5 +134,5 @@ export type DashboardAction = ChangeDrawer
     | CloseConfigDialog
     | OpenAdvancedSearchDialog
     | CloseAdvancedSearchDialog
-    | OpenProductGroups
-    | CloseProductGroups;
+    | OpenHelpDialog
+    | CloseHelpDialog;

@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { MessageLogAction, postMessage } from "./messageLogActions";
 import { AppState } from "../states/appState";
 import * as api from '../api'
-import { StoreInfo } from "../types/dataset";
+import { StoreInfo } from "../model";
 
 export const SET_API_SERVER_URL = 'SET_API_SERVER_URL';
 export type SET_API_SERVER_URL = typeof SET_API_SERVER_URL;

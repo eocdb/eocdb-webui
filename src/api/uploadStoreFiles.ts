@@ -1,25 +1,6 @@
 import { callJsonApi } from "./callApi";
+import { UploadData, DatasetValidationResult } from "../model";
 
-export type DatasetStatus = "OK" | "WARNING" | "ERROR";
-export type DatasetIssueType = "WARNING" | "ERROR";
-
-
-export interface UploadData {
-    dataFiles: File[];
-    docFiles: File[];
-    submissionId: string;
-    path: string;
-}
-
-export interface DatasetIssue {
-    type: DatasetIssueType;
-    description: string;
-}
-
-export interface DatasetValidationResult {
-    status: string;
-    issues: DatasetIssue [];
-}
 
 export function uploadStoreFiles(apiServerUrl: string, uploadData: UploadData)
     : Promise<DatasetValidationResult[]> {

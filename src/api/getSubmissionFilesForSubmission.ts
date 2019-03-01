@@ -1,15 +1,7 @@
 import { callJsonApi } from './callApi';
-import { DatasetValidationResult } from "./uploadStoreFiles";
+import { SubmissionFile } from "../model";
 
 
-export interface SubmissionFile {
-    index: number;
-    submission_id: string;
-    filename: string;
-    status: string;
-    filetype: string;
-    result: DatasetValidationResult;
-}
 
 /**
  *

@@ -1,4 +1,4 @@
-import { User } from '../types/user';
+import { User } from '../model';
 
 export interface SessionState {
     user: User | null;

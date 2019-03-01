@@ -12,7 +12,7 @@ import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Icon from "@material-ui/core/Icon/Icon";
 import SubmissionIssueDialog from "./SubmissionIssueDialog";
-import { SubmissionFile } from "../../api/getSubmissionFilesForSubmission";
+import { SubmissionFile } from "../../model";
 import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
 

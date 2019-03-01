@@ -8,9 +8,8 @@ import createStyles from "@material-ui/core/styles/createStyles";
 import { WithStyles } from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import { SubmissionFile } from "../../api/getSubmissionFilesForSubmission";
+import { DatasetIssue, SubmissionFile } from "../../model";
 import DialogContent from "@material-ui/core/DialogContent";
-import { DatasetIssue } from "../../api/uploadStoreFiles";
 import Typography from "@material-ui/core/Typography/Typography";
 
 

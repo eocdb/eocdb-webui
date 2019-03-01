@@ -1,5 +1,5 @@
 import { callJsonApi } from './callApi';
-import { SubmissionFile } from "./getSubmissionFilesForSubmission";
+import { SubmissionFile } from "../model";
 
 
 /**

@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { XAxis, YAxis, CartesianGrid, Tooltip, ScatterChart, Scatter, Label, Legend } from 'recharts';
-import { Dataset } from "../../types/dataset";
+import { XAxis, YAxis, CartesianGrid, Tooltip, ScatterChart, Scatter, Label, Legend, Cell } from 'recharts';
+import { Dataset } from "../../model";
 import { DialogTitle, Theme, WithStyles } from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -23,9 +23,11 @@ import {
 const styles = (theme: Theme) => createStyles({
     root: {
         marginLeft: theme.spacing.unit * 2.5,
+        zIndex: 99999,
     },
     select: {},
     dialogPaper: {
+        zIndex: 99999,
         minHeight: '80%',
         maxHeight: '100%',
         minWidth: '60%',
@@ -53,7 +55,7 @@ const round = (value: number, precision: number) => {
     return Math.round(precision * value) / precision;
 };
 
-//const colors = ['red', 'green', 'pink', 'yellow'];
+const colors = ['red', 'green', 'pink', 'yellow'];
 
 class PlotDialog extends React.Component<PlotDialogProps> {
     constructor(props: PlotDialogProps) {
@@ -223,7 +225,14 @@ class PlotDialog extends React.Component<PlotDialogProps> {
                                 <CartesianGrid/>
                                 <Tooltip cursor={{strokeDasharray: '3 3'}}/>
                                 <Scatter yAxisId="left" name={selectedYField} data={plotData} fill={'#8884d8'}/>
-                                <Scatter yAxisId="right" name={selectedZField} data={plotData} fill="#82ca9d"/>
+                                <Scatter yAxisId="right" name={selectedZField} data={plotData} fill="#82ca9d">
+                                    {
+                                        plotData.map((entry, index) => {
+                                            console.log(entry);
+                                            return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                                        })
+                                    }
+                                </Scatter>
                                 {this.props.plotData.length > 0 ?
                                     (<Legend verticalAlign={"top"} height={36}/>) :
                                     ''

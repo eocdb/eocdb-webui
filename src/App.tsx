@@ -2,16 +2,37 @@ import * as React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Dashboard from './containers/Dashboard';
 import MessageLog from "./containers/MessageLog";
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+
+
+const theme = createMuiTheme(
+    {
+        palette: {
+            type: 'light',
+            primary: {
+                light: '#4e5ac5',
+                main: '#003194',
+                dark: '#000e65',
+            },
+        },
+        // see https://material-ui.com/style/typography/#migration-to-typography-v2
+        typography: {
+            useNextVariants: true,
+        },
+    });
 
 
 class App extends React.Component {
     public render() {
         return (
-            <div className="App">
-                <CssBaseline/>
-                <Dashboard/>
-                <MessageLog/>
-            </div>
+            <MuiThemeProvider theme={theme}>
+                <div className="App">
+                    <CssBaseline/>
+                    <Dashboard/>
+                    <MessageLog/>
+                </div>
+            </MuiThemeProvider>
         );
     }
 }

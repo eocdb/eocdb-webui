@@ -1,6 +1,6 @@
 import { callJsonApi } from './callApi';
-import { QueryResult } from '../types/dataset';
-import { SliderRange } from "../components/search/AdvancedSearchDialog";
+import { QueryResult } from '../model';
+import { SliderRange } from "../types/advancedSearchDialog";
 
 export type ProductMode = 'contains' | 'same_cruise' | 'dont_apply';
 export type MeasurementType = 'all';

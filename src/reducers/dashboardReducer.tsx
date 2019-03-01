@@ -6,10 +6,10 @@ import {
     OPEN_LOGIN_DIALOG,
     OPEN_CONFIG_DIALOG,
     OPEN_ADVANCED_SEARCH_DIALOG,
-    OPEN_PRODUCT_GROUPS,
+    OPEN_HELP_DIALOG,
     CLOSE_LOGIN_DIALOG,
     CLOSE_CONFIG_DIALOG,
-    CLOSE_PRODUCT_GROUPS,
+    CLOSE_HELP_DIALOG,
     CLOSE_ADVANCED_SEARCH_DIALOG
 } from '../actions/dashboardActions';
 
@@ -34,10 +34,10 @@ export function dashboardReducer(state: DashboardState, action: DashboardAction)
             return {...state, advancedSearchDialogOpen: true};
         case CLOSE_ADVANCED_SEARCH_DIALOG:
             return {...state, advancedSearchDialogOpen: false};
-        case OPEN_PRODUCT_GROUPS:
-            return {...state, productGroupsOpen: true};
-        case CLOSE_PRODUCT_GROUPS:
-            return {...state, productGroupsOpen: false};
+        case OPEN_HELP_DIALOG:
+            return {...state, helpDialogOpen: true};
+        case CLOSE_HELP_DIALOG:
+            return {...state, helpDialogOpen: false};
     }
     return state;
 }

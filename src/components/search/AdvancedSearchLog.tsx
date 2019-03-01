@@ -6,7 +6,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { LatLng, latLngBounds } from "leaflet";
 import { SELECTED_BOUNDS_DEFAULT } from "../../states/advancedSearchState";
 import { BBoxValue } from "./BBoxInput";
-import { SliderRange } from "./AdvancedSearchDialog";
+import { SliderRange } from "../../types/advancedSearchDialog";
 
 
 // noinspection JSUnusedLocalSymbols

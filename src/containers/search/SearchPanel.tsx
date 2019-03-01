@@ -9,9 +9,9 @@ import {
 import SearchPanel from '../../components/search/SearchPanel';
 import {
     closeAdvancedSearchDialog,
-    closeProductGroups,
+    closeHelpDialog,
     openAdvancedSearchDialog,
-    openProductGroups
+    openHelpDialog,
 } from "../../actions/dashboardActions";
 
 
@@ -20,7 +20,7 @@ const mapStateToProps = (state: AppState) => {
         datasetQuery: state.searchFormState.datasetQuery,
         serverInfo: state.dataState.info,
         advancedSearchDialogOpen: state.dashboardState.advancedSearchDialogOpen,
-        productGroupsOpen: state.dashboardState.productGroupsOpen,
+        helpDialogOpen: state.dashboardState.helpDialogOpen,
         loading: state.searchFormState.loading,
     };
 };
@@ -32,8 +32,8 @@ const mapDispatchToProps = {
     openAdvancedSearchDialog,
     closeAdvancedSearchDialog,
 
-    openProductGroups,
-    closeProductGroups,
+    openHelpDialog,
+    closeHelpDialog,
 
     startLoading,
 };

@@ -4,10 +4,7 @@ import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
 //import { Slider } from "@material-ui/lab";
 import TextField from "@material-ui/core/TextField";
-
-import 'rc-slider/assets/index.css';
-//import * as slider from 'rc-slider';
-import { SliderRange } from "./AdvancedSearchDialog";
+import { SliderRange } from "../../types/advancedSearchDialog";
 
 
 const styles = (theme: Theme) => createStyles({

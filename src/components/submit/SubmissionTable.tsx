@@ -11,12 +11,10 @@ import Button from "@material-ui/core/Button/Button";
 import { CloudUpload } from "@material-ui/icons";
 import Grid from "@material-ui/core/Grid";
 import TableBody from "@material-ui/core/TableBody";
-import { Submission } from "../../api/getSubmissionsForUser";
+import { Submission, SubmissionFile, User } from "../../model";
 import Icon from '@material-ui/core/Icon/Icon';
-import { User } from "../../types/user";
 import Chip from "@material-ui/core/Chip";
 import SubmissionFilesDialog from "../../containers/submit/SubmissionFilesDialog";
-import { SubmissionFile } from "../../api/getSubmissionFilesForSubmission";
 
 
 const styles = (theme: Theme) => createStyles(

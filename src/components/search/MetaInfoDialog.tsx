@@ -13,7 +13,8 @@ import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import List from "@material-ui/core/List/List";
 
 
-import { Dataset, DatasetMetaData } from "../../types/dataset";
+import { Dataset } from "../../model";
+import { DatasetMetaData } from "../../types/dataset";
 
 
 const styles = () => createStyles({

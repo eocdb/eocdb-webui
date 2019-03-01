@@ -1,5 +1,5 @@
 import { callJsonApi } from './callApi';
-import { User } from '../types/user';
+import { User } from '../model';
 
 
 export function loginUser(apiServerUrl: string, name: string, password: string): Promise<User> {

@@ -1,4 +1,4 @@
-import { Dataset } from "../types/dataset";
+import { Dataset } from "../model";
 import { Dispatch } from "redux";
 import { MessageLogAction, postMessage } from "./messageLogActions";
 import { AppState } from "../states/appState";

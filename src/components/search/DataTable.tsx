@@ -17,7 +17,7 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import TableFooter from "@material-ui/core/TableFooter/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination/TablePagination";
-import { Dataset, DatasetRef, QueryResult } from "../../types/dataset";
+import { Dataset, DatasetRef, QueryResult } from "../../model";
 import MetaInfoDialog from "./MetaInfoDialog";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";

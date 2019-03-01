@@ -13,13 +13,13 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { AccountCircle, Settings } from '@material-ui/icons';
 import createStyles from '@material-ui/core/styles/createStyles';
 
-import eumetsatLogo from './eumetsat.png';
 import DrawerItems from './DrawerItems';
 import DashPanels from './DashPanels';
 import LoginDialog from '../containers/user/LoginDialog'; // TODO: dependency issue here!
 import ConfigDialog from './admin/ConfigDialog';
 import SearchHistory from "../containers/search/SearchHistory";
-import { User } from "../types/user";
+import { User } from "../model";
+import partnerLogos from "../resources/logos.png"
 
 
 const drawerWidth = 240;
@@ -102,6 +102,9 @@ const styles = (theme: Theme) => createStyles(
         },
         searchField: {
             width: '50%',
+        },
+        logo: {
+          marginRight: theme.spacing.unit * 2,
         }
     });
 
@@ -201,8 +204,10 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             noWrap
                             className={classes.title}
                         >
-                            <img src={eumetsatLogo} height={48} alt={'EUMETSAT'}/> Ocean Colour In-Situ Database
+                            Ocean Colour In-Situ Database
                         </Typography>
+
+                        <img alt={'OCDB Logo'} src={partnerLogos} width={300} className={classes.logo} />
 
                         <IconButton color="inherit" onClick={this.props.openConfigDialog}>
                             <Settings/>
@@ -232,7 +237,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.appBarSpacer}/>
-                    <DashPanels currentDrawer={this.props.currentDrawer} classes={classes}/>
+                    <DashPanels currentDrawer={this.props.currentDrawer} />
                 </main>
             </div>
         );

@@ -14,8 +14,9 @@ import { wavelengthItems } from "./SelectItems";
 import MinMaxInputSlider from "./MinMaxInputSlider";
 import RadioSelect, { RadioItem } from "./RadioSelect";
 import MultipleSelectTextField, { Suggestion } from "./MultipleSelectTextField";
-import { Product } from "../../types/dataset";
 import Typography from "@material-ui/core/Typography";
+import { SliderRange } from "../../types/advancedSearchDialog";
+import { Product } from "../../model";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -40,8 +41,6 @@ const styles = (theme: Theme) => createStyles({
     tableContainer: {},
 });
 
-
-export type SliderRange = [number|undefined, number|undefined];
 
 
 function Transition(props: SlideProps) {

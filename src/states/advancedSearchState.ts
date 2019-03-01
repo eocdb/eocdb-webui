@@ -1,6 +1,7 @@
 //import { WavelengthsMode } from "../api/findDatasets";
 import { BBoxValue } from "../components/search/BBoxInput";
-import { SliderRange } from "../components/search/AdvancedSearchDialog";
+import { SliderRange } from "../types/advancedSearchDialog";
+
 
 export interface AdvancedSearchState {
     selectedBBox: BBoxValue;

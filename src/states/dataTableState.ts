@@ -1,4 +1,4 @@
-import { Dataset } from "../types/dataset";
+import { Dataset } from "../model";
 import { LatLngBounds } from "leaflet";
 
 

@@ -8,7 +8,6 @@ import Chip from '@material-ui/core/Chip/Chip';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from "@material-ui/core/FormControl/FormControl";
-import Checkbox from "@material-ui/core/Checkbox";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 
 
@@ -120,9 +119,26 @@ class MultipleSelect extends React.Component<MultipleSelectProps, TestState> {
                     value={pg}
                     className={classNames(this.getStyles(pg))}
                 >
-                    <Checkbox checked={this.props.selectedItems.indexOf(pg) > -1}/>
+                    {/*<Checkbox checked={this.props.selectedItems.indexOf(pg) > -1}/>*/}
                     {pg}
                 </MenuItem>
+            )
+        }
+        return items;
+    };
+
+    renderNativeItems = () => {
+        const pgs = this.props.items;
+
+        let items = [];
+        for (let pg of pgs) {
+            items.push(
+                <option
+                    key={pg}
+                    value={pg}
+                >
+                    {pg}
+                </option>
             )
         }
         return items;
@@ -152,6 +168,7 @@ class MultipleSelect extends React.Component<MultipleSelectProps, TestState> {
                 <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel
                         htmlFor="select-multiple"
+                        shrink
                     >
                         Product Groups
                     </InputLabel>
@@ -160,11 +177,8 @@ class MultipleSelect extends React.Component<MultipleSelectProps, TestState> {
                         multiple
                         value={this.props.selectedItems}
                         onChange={this.handleChange}
-                        input={<OutlinedInput
-                            id="select-multiple"
-                            labelWidth={130}
-                        />}
                         MenuProps={MenuProps}
+                        input={<OutlinedInput name={'test'} id={"select-multiple"} labelWidth={130} />}
                         renderValue={this.renderSelectedValues}
                     >
                         {this.renderItems()}

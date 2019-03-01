@@ -1,5 +1,5 @@
-import {Dataset} from "../types/dataset";
-import {callJsonApi} from "./callApi";
+import { Dataset } from "../model";
+import { callJsonApi } from "./callApi";
 
 /**
  *
@@ -8,5 +8,5 @@ import {callJsonApi} from "./callApi";
  */
 export function getDatasetById(apiServerUrl: string, datasetId: string): Promise<Dataset> {
 
-    return callJsonApi<Dataset>(apiServerUrl + '/datasets/'+ datasetId);
+    return callJsonApi<Dataset>(apiServerUrl + '/datasets/' + datasetId);
 }

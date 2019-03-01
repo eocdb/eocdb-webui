@@ -2,10 +2,8 @@ import { Dispatch } from "redux";
 import * as api from '../api'
 import { postMessage, MessageLogAction } from "./messageLogActions";
 import { AppState } from "../states/appState";
-import { DatasetValidationResult, UploadData } from "../api/uploadStoreFiles";
+import { DatasetValidationResult, UploadData, Submission, SubmissionFile } from "../model";
 import { StopLoading, UpdateSearchHistory } from "./searchFormActions";
-import { Submission } from "../api/getSubmissionsForUser";
-import { SubmissionFile } from "../api/getSubmissionFilesForSubmission";
 import {SubmissionFileStatus} from "../api/setSubmissionStatus";
 
 
