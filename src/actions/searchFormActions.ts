@@ -86,12 +86,13 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
     const selectedBoundsAdvanced = state.advancedSearchState.selectedBBox;
 
     if (selectedBoundsAdvanced) {
-        if (selectedBoundsAdvanced[0]
-            && selectedBoundsAdvanced[1]
-            && selectedBoundsAdvanced[2]
-            && selectedBoundsAdvanced[3]) {
-            const bnds1 = new LatLng(selectedBoundsAdvanced[0], selectedBoundsAdvanced[1]);
-            const bnds2 = new LatLng(selectedBoundsAdvanced[2], selectedBoundsAdvanced[3]);
+        if (selectedBoundsAdvanced[0] !== ''
+            && selectedBoundsAdvanced[1] !== ''
+            && selectedBoundsAdvanced[2] !== ''
+            && selectedBoundsAdvanced[3] !== '') {
+
+            const bnds1 = new LatLng(+selectedBoundsAdvanced[0], +selectedBoundsAdvanced[1]);
+            const bnds2 = new LatLng(+selectedBoundsAdvanced[2], +selectedBoundsAdvanced[3]);
             const bbox = latLngBounds(bnds1, bnds2);
 
             datasetQuery = {...datasetQuery, region: bbox.toBBoxString()};
@@ -159,15 +160,19 @@ export function searchDatasets() {
         return api.findDatasets(apiServerUrl, datasetQuery)
             .then((foundDatasets: QueryResult) => {
                 dispatch(updateFoundDatasets(foundDatasets));
+                if (foundDatasets.total_count == 0){
+                    dispatch(postMessage('warning', 'Empty Result'));
+                }
+                else {
+                    dispatch(postMessage('success', foundDatasets.total_count + ' Datasets Found'));
+                }
             })
             .then(() => {
                 dispatch(updateSearchHistory(searchHistory));
             })
             .then(() => {
                 dispatch(stopLoading());
-            })
-            .then(() => {
-                dispatch(postMessage('success', 'Data Loaded'));
+                return 0;
             })
             .catch((error: string) => {
                 dispatch(postMessage('error', error + ''));
