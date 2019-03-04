@@ -52,23 +52,20 @@ export interface AdvancedSearchDialogProps extends WithStyles<typeof styles> {
     open: boolean;
     onClose: () => void;
 
-    updateBBox: (selectedBBox: BBoxValue) => void;
-    selectedBBox: BBoxValue;
+    onBBoxChange: (selectedBBox: BBoxValue) => void;
+    bboxValue: BBoxValue;
 
-    updateWavelength: (item: string) => void;
-    selectedWavelength: string;
+    onWavelengthChange: (item: string) => void;
+    wavelengthValue: string;
 
-    updateWaterDepth: (waterDepth: SliderRange) => void;
-    waterDepth: SliderRange;
+    onWaterDepthChange: (waterDepth: SliderRange) => void;
+    waterDepthValue: SliderRange;
 
-    updateOptShallow: (optShallow: string) => void;
-    selectedOptShallow: string;
+    onOptShallowChange: (optShallow: string) => void;
+    optShallowValue: string;
 
-    updateProducts: (products: string[]) => void;
-    selectedProducts: string[];
-
-    updateProductValue: (productInputValue: string) => void;
-    productInputValue: string;
+    onProductsChange: (products: string[]) => void;
+    productsValue: string[];
 
     productItems: Product[];
 }
@@ -95,11 +92,11 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
     }
 
     handleWaveLengthSelect = (item: string) => {
-         this.props.updateWavelength(item);
+         this.props.onWavelengthChange(item);
     };
 
     handleWaterDepthChange = (waterDepth: SliderRange) => {
-        this.props.updateWaterDepth(waterDepth);
+        this.props.onWaterDepthChange(waterDepth);
     };
 
     handleUpdateProducts = (products: Suggestion[]) => {
@@ -107,7 +104,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
             return item.value;
         });
 
-        this.props.updateProducts(items);
+        this.props.onProductsChange(items);
     };
 
     makeProductSuggestions = () => {
@@ -120,7 +117,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
     };
 
     makeSelectedProducts = () => {
-        return this.props.selectedProducts.map((item: string) => {
+        return this.props.productsValue.map((item: string) => {
             return {
                 value: item,
                 label: item,
@@ -129,7 +126,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
     };
 
     render() {
-        const {classes, selectedWavelength} = this.props;
+        const {classes, wavelengthValue} = this.props;
 
         return (
             <Dialog
@@ -144,21 +141,21 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                         <Grid item xs={12}>
                             <Typography component={'h2'}>Region</Typography>
                             <BBoxInput
-                                onBBoxChange={this.props.updateBBox}
-                                selectedBBox={this.props.selectedBBox}
+                                onBBoxChange={this.props.onBBoxChange}
+                                selectedBBox={this.props.bboxValue}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <Typography component={'h2'}>Wavelength</Typography>
                             <RadioSelect items={wavelengthItems}
-                                         selectedValue={selectedWavelength}
+                                         selectedValue={wavelengthValue}
                                          onChange={this.handleWaveLengthSelect}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <Typography component={'h2'}>Water Depth</Typography>
                             <MinMaxInputSlider
-                                value={this.props.waterDepth}
+                                value={this.props.waterDepthValue}
                                 onChange={this.handleWaterDepthChange}
 
                                 label={'Water Depth'}
@@ -167,8 +164,8 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                         <Grid item xs={12}>
                             <Typography component={'h2'}>Select Optical</Typography>
                             <RadioSelect items={items}
-                                         selectedValue={this.props.selectedOptShallow}
-                                         onChange={this.props.updateOptShallow}
+                                         selectedValue={this.props.optShallowValue}
+                                         onChange={this.props.onOptShallowChange}
                             />
                         </Grid>
                         <Grid item xs={12}>

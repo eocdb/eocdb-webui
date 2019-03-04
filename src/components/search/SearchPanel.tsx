@@ -17,11 +17,16 @@ import SearchMap from '../../containers/search/SearchMap';
 import { DatasetQuery } from '../../api';
 import { ProductGroup, StoreInfo } from '../../model';
 import DataTable from "../../containers/search/DataTable";
-import AdvancedSearchDialog from "../../containers/search/AdvancedSearchDialog";
-import AdvancedSearchLog from "../../containers/search/AdvancedSearchLog";
+import AdvancedSearchDialog from "./AdvancedSearchDialog";
+import AdvancedSearchLog from "./AdvancedSearchLog";
 import MultipleSelectTextField, { Suggestion } from "./MultipleSelectTextField";
 import HelpDialog from "../messages/HelpDialog";
 import { FindHelpText } from "../messages/Help/find";
+
+import { DatePicker } from 'material-ui-pickers';
+import { BBoxValue } from "./BBoxInput";
+import { SliderRange } from "../../types/advancedSearchDialog";
+
 
 
 
@@ -63,49 +68,50 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     openHelpDialog: () => void;
     closeHelpDialog: () => void;
 
-
     loading: boolean;
     startLoading: () => void;
+
+    // Properties for Advanced Search Dolog
+
+    updateBBox: (selectedBBox: BBoxValue) => void;
+    selectedBBox: BBoxValue;
+
+    updateWavelength: (item: string) => void;
+    selectedWavelength: string;
+
+    updateWaterDepth: (waterDepth: SliderRange) => void;
+    selectedWaterDepth: SliderRange;
+
+    updateOptShallow: (optShallow: string) => void;
+    selectedOptShallow: string;
+
+    updateProducts: (products: string[]) => void;
+    selectedProducts: string[];
+
+    updateProductValue: (productInputValue: string) => void;
+    productInputValue: string;
 }
 
 
-interface SearchPanelState {
-    currentSearchExpr: string;
-    currentStartDate: string;
-    currentEndDate: string;
-}
-
-
-class SearchPanel extends React.PureComponent<SearchPanelProps, SearchPanelState> {
+class SearchPanel extends React.PureComponent<SearchPanelProps> {
     constructor(props: SearchPanelProps) {
         super(props);
-
-        this.state = {
-            currentSearchExpr: '',
-            currentStartDate: '',
-            currentEndDate: '',
-        }
     }
 
     handleClear = () => {
-        this.setState({
-            currentSearchExpr: '',
-            currentStartDate: '',
-            currentEndDate: '',
-        });
-
         this.props.updateDatasetQuery({
                 ...this.props.datasetQuery,
                 searchExpr: '',
-                startDate: '',
-                endDate: '',
+                startDate: null,
+                endDate: null,
                 productGroupNames: [],
             }
         );
     };
 
     handleSearchExprChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({currentSearchExpr: event.target.value});
+        const searchExpr = event.target.value;
+        this.props.updateDatasetQuery({...this.props.datasetQuery, searchExpr});
     };
 
     handleSearchExprBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,22 +119,14 @@ class SearchPanel extends React.PureComponent<SearchPanelProps, SearchPanelState
         this.props.updateDatasetQuery({...this.props.datasetQuery, searchExpr});
     };
 
-    handleStartDateBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const startDate = event.target.value;
+    handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const startDate = event ? event.toString() : null;
         this.props.updateDatasetQuery({...this.props.datasetQuery, startDate});
     };
 
-    handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({currentStartDate: event.target.value});
-    };
-
-    handleEndDateBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const endDate = event.target.value;
-        this.props.updateDatasetQuery({...this.props.datasetQuery, endDate});
-    };
-
     handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({currentEndDate: event.target.value});
+        const endDate = event ? event.toString() : null;
+        this.props.updateDatasetQuery({...this.props.datasetQuery, endDate});
     };
 
     handleProductGroupsChange = (productGroups: Suggestion[]) => {
@@ -167,33 +165,25 @@ class SearchPanel extends React.PureComponent<SearchPanelProps, SearchPanelState
             <div>
                 <Grid spacing={24} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
                     <Grid item container spacing={8} xs={12} sm={10}>
-                        <TextField
-                            id="measurement-from-date"
-                            key="measurement-from-date"
-                            label="Measured From"
-                            type="date"
-                            className={classes.textField}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            variant="outlined"
-                            value={this.state.currentStartDate}
+                        <DatePicker
+                            keyboard
+                            clearable
+                            variant={"outlined"}
+                            label="Start Date"
+                            format="dd/MM/yyyy"
+                            animateYearScrolling={false}
+                            value={this.props.datasetQuery.startDate}
                             onChange={this.handleStartDateChange}
-                            onBlur={this.handleStartDateBlur}
                         />
-                        <TextField
-                            id="measurement-to-date"
-                            key="measurement-to-date"
-                            label="Measured To"
-                            type="date"
-                            className={classes.textField}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            variant="outlined"
-                            value={this.state.currentEndDate}
+                        <DatePicker
+                            keyboard
+                            clearable
+                            variant={"outlined"}
+                            label="End Date"
+                            format="dd/MM/yyyy"
+                            animateYearScrolling={false}
+                            value={this.props.datasetQuery.endDate}
                             onChange={this.handleEndDateChange}
-                            onBlur={this.handleEndDateBlur}
                         />
                         <MultipleSelectTextField
                             suggestions={this.getProductGroups()}
@@ -210,7 +200,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps, SearchPanelState
                             label={'Expression'}
                             variant="outlined"
                             className={classes.searchField}
-                            value={this.state.currentSearchExpr}
+                            value={this.props.datasetQuery.searchExpr}
                             onChange={this.handleSearchExprChange}
                             onBlur={this.handleSearchExprBlur}
                         />
@@ -252,11 +242,33 @@ class SearchPanel extends React.PureComponent<SearchPanelProps, SearchPanelState
                             open={this.props.advancedSearchDialogOpen}
                             onClose={this.props.closeAdvancedSearchDialog}
                             productItems={this.props.serverInfo['products']}
+
+                            onBBoxChange={this.props.updateBBox}
+                            bboxValue={this.props.selectedBBox}
+                            onWavelengthChange={this.props.updateWavelength}
+                            wavelengthValue={this.props.selectedWavelength}
+                            onWaterDepthChange={this.props.updateWaterDepth}
+                            waterDepthValue={this.props.selectedWaterDepth}
+                            onOptShallowChange={this.props.updateOptShallow}
+                            optShallowValue={this.props.selectedOptShallow}
+                            onProductsChange={this.props.updateProducts}
+                            productsValue={this.props.selectedProducts}
                         />
 
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <AdvancedSearchLog/>
+                        <AdvancedSearchLog
+                            onBBoxChange={this.props.updateBBox}
+                            bboxValue={this.props.selectedBBox}
+                            onWavelengthChange={this.props.updateWavelength}
+                            wavelengthValue={this.props.selectedWavelength}
+                            onWaterDepthChange={this.props.updateWaterDepth}
+                            waterDepthValue={this.props.selectedWaterDepth}
+                            onOptShallowChange={this.props.updateOptShallow}
+                            optShallowValue={this.props.selectedOptShallow}
+                            onProductsChange={this.props.updateProducts}
+                            productsValue={this.props.selectedProducts}
+                        />
                         <DataTable/>
                     </Grid>
                     <Grid item xs={12} sm={6}>

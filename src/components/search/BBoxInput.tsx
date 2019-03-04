@@ -6,7 +6,7 @@ import { Theme, withStyles, WithStyles } from "@material-ui/core";
 
 import createStyles from "@material-ui/core/styles/createStyles";
 
-export type BBoxValue = [number|undefined, number|undefined, number|undefined, number|undefined];
+export type BBoxValue = [number|string, number|string, number|string, number|string];
 
 
 // noinspection JSUnusedLocalSymbols
@@ -110,7 +110,7 @@ class BBoxInput extends PureComponent<BBoxInputProps> {
                     type={"number"}
                     className={classes.searchField}
                     onChange={this.handleWestChange}
-                    value={selectedBBox[1]}
+                    defaultValue={selectedBBox[1]}
                 />
                 <TextField
                     id={'bbox_top'}
@@ -119,7 +119,7 @@ class BBoxInput extends PureComponent<BBoxInputProps> {
                     type={"number"}
                     className={classes.searchField}
                     onChange={this.handleNorthChange}
-                    value={selectedBBox[2]}
+                    defaultValue={selectedBBox[2]}
                 />
                 <TextField
                     id={'bbox_right'}
@@ -128,7 +128,7 @@ class BBoxInput extends PureComponent<BBoxInputProps> {
                     type={"number"}
                     className={classes.searchField}
                     onChange={this.handleEastChange}
-                    value={selectedBBox[3]}
+                    defaultValue={selectedBBox[3]}
                 />
             </div>
         )

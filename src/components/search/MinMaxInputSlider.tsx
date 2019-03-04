@@ -2,7 +2,9 @@ import * as React from "react";
 import { Theme, WithStyles } from "@material-ui/core";
 import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
-//import { Slider } from "@material-ui/lab";
+
+const Slider = require('material-ui-slider').Slider;
+
 import TextField from "@material-ui/core/TextField";
 import { SliderRange } from "../../types/advancedSearchDialog";
 
@@ -51,17 +53,17 @@ class MinMaxInputSlider extends React.Component<MinMaxInputSliderProps> {
         const {classes, value} = this.props;
 
         return (
+
             <div className={classes.root}>
-                {/*<slider.Range
-                    className={classes.slider}
-                    allowCross={false}
-                    value={value}
-                    onChange={this.handleSliderChange}
-                    step={1}
+                <Slider
+                    range
+                    //disabled={!dataTimeRangeValid}
                     min={0}
                     max={1000}
+                    value={value}
+                    onChangeComplete={this.handleSliderChange}
+                    //onChangeComplete={this.handleChangeComplete}
                 />
-*/}
                 <TextField
                     type={"number"}
                     label={this.props.label + ' Min'}
@@ -71,7 +73,7 @@ class MinMaxInputSlider extends React.Component<MinMaxInputSliderProps> {
                     onChange={this.handleMinInputChange}
                 />
                 <TextField
-                    type={"number"}
+                    //type={"number"}
                     label={this.props.label + ' Max'}
                     className={classes.textField}
                     variant="outlined"

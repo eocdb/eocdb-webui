@@ -15,6 +15,9 @@ export function newSearchFormState() {
         datasetQuery: {
             geojson: true,
             productGroupNames: [],
+            startDate: null,
+            endDate: null,
+            searchExpr: '',
         },
         searchHistory: [],
         foundDatasets: {

@@ -9,8 +9,8 @@ export type MeasurementType = 'all';
 
 export interface DatasetQuery {
     searchExpr?: string;
-    startDate?: string;
-    endDate?: string;
+    startDate?: string | null;
+    endDate?: string | null;
     region?: string;
     productMode?: ProductMode;
     productNames?: string[];

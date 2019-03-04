@@ -3,7 +3,7 @@ import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
 import SubmissionTable from "../../containers/submit/SubmissionTable";
-import Submission from "../../containers/submit/Submission";
+import Submission from "./Submission";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -17,6 +17,24 @@ interface SubmissionPanelProps extends WithStyles<typeof styles> {
     submissionOpen: boolean;
     openSubmission: () => void,
     closeSubmission: () => void,
+
+    // Submission props
+    updateSubmissionId: (submissionId: string) => void;
+    selectedSubmissionId: string;
+
+    updatePath: (path: string) => void;
+    selectedPath: string;
+
+    updateDataFiles: (acceptedFiles: File[]) => void;
+    selectedDataFiles: File[];
+
+    updateDocFiles: (acceptedFiles: File[]) => void;
+    selectedDocFiles: File[];
+
+    sendSubmission: () => void;
+
+    clearSubmissionForm: () => void;
+    updateSubmissionsForUser: () => void;
 }
 
 
@@ -34,6 +52,23 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                 <Submission
                     show={this.props.submissionOpen}
                     onClose={this.props.closeSubmission}
+
+                    onSubmissionIdChange={this.props.updateSubmissionId}
+                    submissionIdValue={this.props.selectedSubmissionId}
+
+                    onPathChange={this.props.updatePath}
+                    pathValue={this.props.selectedPath}
+
+                    onDatafilesChange={this.props.updateDataFiles}
+                    dataFilesValue={this.props.selectedDataFiles}
+
+                    onDocfilesChange={this.props.updateDocFiles}
+                    docFilesValue={this.props.selectedDocFiles}
+
+                    onSubmissionsChange={this.props.updateSubmissionsForUser}
+                    onFileSubmit={this.props.sendSubmission}
+
+                    onClearForm={this.props.clearSubmissionForm}
                 />
                 <SubmissionTable
                     show={!this.props.submissionOpen}

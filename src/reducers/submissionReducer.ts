@@ -1,21 +1,23 @@
 import { newSubmissionState, SubmissionState } from "../states/submissionState";
 import {
+    SubmitAction,
     CLOSE_SUBMIT_STEPS,
     OPEN_SUBMIT_STEPS,
     UPDATE_DATA_FILES,
-    SUBMIT_FILES,
-    SubmitAction,
     UPDATE_DOC_FILES,
     UPDATE_SUBMISSION_ID,
     UPDATE_PATH,
     UPDATE_SUBMISSIONS_FOR_USER,
-    CLEAR_FORM,
     UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION,
     OPEN_SUBMISSION_FILES_DIALOG,
     CLOSE_SUBMISSION_FILES_DIALOG,
     OPEN_SUBMISSION_ISSUES_DIALOG,
     CLOSE_SUBMISSION_ISSUES_DIALOG,
-    UPDATE_CURRENT_SUBMISSION, UPDATE_CURRENT_SUBMISSIONFILE, UPDATE_CURRENT_SUBMISSIONFILE_INDEX
+    UPDATE_CURRENT_SUBMISSION,
+    UPDATE_CURRENT_SUBMISSIONFILE,
+    UPDATE_CURRENT_SUBMISSIONFILE_INDEX,
+    CLEAR_SUBMISSION_FORM,
+    SEND_SUBMISSION
 } from "../actions/submissionActions";
 
 
@@ -49,7 +51,7 @@ export function submissionReducer(state: SubmissionState = initialState, action:
             return {...state, dataFiles: action.dataFiles};
         case UPDATE_DOC_FILES:
             return {...state, docFiles: action.docFiles};
-        case CLEAR_FORM:
+        case CLEAR_SUBMISSION_FORM:
             return {...state, docFiles: [], dataFiles: [], submissionId: '', path: ''};
         case UPDATE_SUBMISSIONS_FOR_USER:
             return {...state, foundSubmissions: action.submissions};
@@ -59,7 +61,7 @@ export function submissionReducer(state: SubmissionState = initialState, action:
             return {...state, currentSubmissionFileIndex: action.currentSubmissionFileIndex};
         case UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION:
             return {...state, currentSubmissionFiles: action.submissionFiles};
-        case SUBMIT_FILES:
+        case SEND_SUBMISSION:
             return {...state, currentDatasetValidationResults: action.currentDatasetValidationResults};
         default:
             return state;

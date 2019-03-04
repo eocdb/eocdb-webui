@@ -2,8 +2,8 @@ import { submissionReducer } from "./submissionReducer";
 import {
     CLOSE_SUBMIT_STEPS,
     OPEN_SUBMIT_STEPS,
-    SUBMIT_FILES,
-    SubmitFiles, UPDATE_CURRENT_SUBMISSION,
+    SEND_SUBMISSION,
+    SendSubmission, UPDATE_CURRENT_SUBMISSION,
     UPDATE_DATA_FILES,
     UPDATE_DOC_FILES,
     UPDATE_SUBMISSION_ID, UpdateCurrentSubmission,
@@ -64,8 +64,8 @@ describe('submitStepsReducer', () => {
 
 
     it('submissionReducer to submit files', () => {
-        const action: SubmitFiles = {
-            type: SUBMIT_FILES,
+        const action: SendSubmission = {
+            type: SEND_SUBMISSION,
             currentDatasetValidationResults: [],
         };
         const result = submissionReducer(undefined, action);

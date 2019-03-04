@@ -17,7 +17,7 @@ import {
 } from '../../actions/dataTableActions';
 
 import DataTable from '../../components/search/DataTable';
-import { searchDatasets, startLoading } from "../../actions/searchFormActions";
+import { searchDatasets, startLoading } from "../../actions/findActions";
 
 const mapStateToProps = (state: AppState) => {
     return {

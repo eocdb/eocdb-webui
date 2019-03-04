@@ -5,7 +5,7 @@ import {
     updateDatasetQuery,
     searchDatasets,
     startLoading
-} from '../../actions/searchFormActions';
+} from '../../actions/findActions';
 import SearchPanel from '../../components/search/SearchPanel';
 import {
     closeAdvancedSearchDialog,
@@ -13,6 +13,13 @@ import {
     openAdvancedSearchDialog,
     openHelpDialog,
 } from "../../actions/dashboardActions";
+import {
+    updateBBox,
+    updateOptShallow,
+    updateProducts, updateProductValue,
+    updateWaterDepth,
+    updateWavelength
+} from "../../actions/advancedFindActions";
 
 
 const mapStateToProps = (state: AppState) => {
@@ -22,6 +29,14 @@ const mapStateToProps = (state: AppState) => {
         advancedSearchDialogOpen: state.dashboardState.advancedSearchDialogOpen,
         helpDialogOpen: state.dashboardState.helpDialogOpen,
         loading: state.searchFormState.loading,
+
+        // Advanced Find
+        selectedBBox: state.advancedSearchState.selectedBBox,
+        selectedWavelength: state.advancedSearchState.selectedWavelength,
+        selectedWaterDepth: state.advancedSearchState.waterDepth,
+        selectedOptShallow: state.advancedSearchState.selectedOptShallow,
+        selectedProducts: state.advancedSearchState.selectedProducts,
+        productInputValue: state.advancedSearchState.productInputValue,
     };
 };
 
@@ -36,6 +51,14 @@ const mapDispatchToProps = {
     closeHelpDialog,
 
     startLoading,
+
+    // Advanced Search
+    updateBBox,
+    updateWavelength,
+    updateWaterDepth,
+    updateOptShallow,
+    updateProducts,
+    updateProductValue,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPanel);

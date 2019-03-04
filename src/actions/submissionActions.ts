@@ -3,8 +3,8 @@ import * as api from '../api'
 import { postMessage, MessageLogAction } from "./messageLogActions";
 import { AppState } from "../states/appState";
 import { DatasetValidationResult, UploadData, Submission, SubmissionFile } from "../model";
-import { StopLoading, UpdateSearchHistory } from "./searchFormActions";
-import {SubmissionFileStatus} from "../api/setSubmissionStatus";
+import { StopLoading, UpdateSearchHistory } from "./findActions";
+import { SubmissionFileStatus } from "../api/setSubmissionStatus";
 
 
 /**
@@ -25,8 +25,8 @@ export interface OpenSubmissionFilesDialog {
     type: OPEN_SUBMISSION_FILES_DIALOG;
 }
 
-export function openSubmissionFilesDialog(): OpenSubmissionFilesDialog{
-    return{
+export function openSubmissionFilesDialog(): OpenSubmissionFilesDialog {
+    return {
         type: OPEN_SUBMISSION_FILES_DIALOG
     }
 }
@@ -40,8 +40,8 @@ export interface CloseSubmissionFilesDialog {
     type: CLOSE_SUBMISSION_FILES_DIALOG;
 }
 
-export function closeSubmissionFilesDialog(): CloseSubmissionFilesDialog{
-    return{
+export function closeSubmissionFilesDialog(): CloseSubmissionFilesDialog {
+    return {
         type: CLOSE_SUBMISSION_FILES_DIALOG
     }
 }
@@ -56,8 +56,8 @@ export interface OpenSubmissionIssuesDialog {
     type: OPEN_SUBMISSION_ISSUES_DIALOG;
 }
 
-export function openSubmissionIssuesDialog(): OpenSubmissionIssuesDialog{
-    return{
+export function openSubmissionIssuesDialog(): OpenSubmissionIssuesDialog {
+    return {
         type: OPEN_SUBMISSION_ISSUES_DIALOG
     }
 }
@@ -71,8 +71,8 @@ export interface CloseSubmissionIssuesDialog {
     type: CLOSE_SUBMISSION_ISSUES_DIALOG;
 }
 
-export function closeSubmissionIssuesDialog(): CloseSubmissionIssuesDialog{
-    return{
+export function closeSubmissionIssuesDialog(): CloseSubmissionIssuesDialog {
+    return {
         type: CLOSE_SUBMISSION_ISSUES_DIALOG
     }
 }
@@ -186,40 +186,40 @@ export function updateDocFiles(docFiles: File[]): UpdateDocFiles {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-export const CLEAR_FORM = 'CLEAR_FORM';
-export type CLEAR_FORM = typeof CLEAR_FORM;
+export const CLEAR_SUBMISSION_FORM = 'CLEAR_SUBMISSION_FORM';
+export type CLEAR_SUBMISSION_FORM = typeof CLEAR_SUBMISSION_FORM;
 
-export interface ClearForm {
-    type: CLEAR_FORM;
+export interface ClearSubmissionForm {
+    type: CLEAR_SUBMISSION_FORM;
 }
 
-export function clearForm(): ClearForm {
+export function clearSubmissionForm(): ClearSubmissionForm {
     return {
-        type: CLEAR_FORM,
+        type: CLEAR_SUBMISSION_FORM,
     }
 }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const SUBMIT_FILES = 'SUBMIT_FILES';
-export type SUBMIT_FILES = typeof SUBMIT_FILES;
+export const SEND_SUBMISSION = 'SEND_SUBMISSION';
+export type SEND_SUBMISSION = typeof SEND_SUBMISSION;
 
-export interface SubmitFiles {
-    type: SUBMIT_FILES;
+export interface SendSubmission {
+    type: SEND_SUBMISSION;
     currentDatasetValidationResults: DatasetValidationResult[];
 }
 
 
-export function _submitFiles(currentDatasetValidationResults: DatasetValidationResult[]): SubmitFiles {
+export function _sendSubmission(currentDatasetValidationResults: DatasetValidationResult[]): SendSubmission {
     return {
-        type: SUBMIT_FILES,
+        type: SEND_SUBMISSION,
         currentDatasetValidationResults: currentDatasetValidationResults
     }
 }
 
 
-export function submitFiles() {
+export function sendSubmission() {
     return (dispatch: Dispatch<SubmitAction | MessageLogAction | UpdateSearchHistory | StopLoading>, getState: ()
         => AppState) => {
         const state = getState();
@@ -234,7 +234,7 @@ export function submitFiles() {
 
         return api.uploadStoreFiles(apiServerUrl, uploadData)
             .then((datasetValidationResults: DatasetValidationResult[]) => {
-                dispatch(_submitFiles(datasetValidationResults));
+                dispatch(_sendSubmission(datasetValidationResults));
             })
             .then(() => {
                 dispatch(postMessage("success", 'Files Loaded'));
@@ -352,7 +352,7 @@ export function _updateCurrentSubmissionFile(currentSubmissionFile: SubmissionFi
 }
 
 
-export function updateCurrentSubmissionFile(){
+export function updateCurrentSubmissionFile() {
     return (dispatch: Dispatch<UpdateCurrentSubmissionFile | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
@@ -374,7 +374,6 @@ export function updateCurrentSubmissionFile(){
 }
 
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION = 'UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION';
@@ -392,7 +391,7 @@ export function _updateSubmissionFilesForSubmission(submissionFiles: SubmissionF
     }
 }
 
-export function updateSubmissionFilesForSubmission(){
+export function updateSubmissionFilesForSubmission() {
     return (dispatch: Dispatch<UpdateSubmissionsFilesForSubmission | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
@@ -462,9 +461,9 @@ export type SubmitAction = OpenSubmitSteps
     | UpdatePath
     | UpdateDataFiles
     | UpdateDocFiles
-    | ClearForm
+    | ClearSubmissionForm
     | UpdateSubmissionsForUser
     | UpdateSubmissionsFilesForSubmission
-    | SubmitFiles
+    | SendSubmission
     | UpdateCurrentSubmissionFile
     | UpdateCurrentSubmissionFileIndex;

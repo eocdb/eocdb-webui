@@ -3,7 +3,7 @@ import { AdvancedSearchState } from "../states/advancedSearchState";
 import {
     AdvancedSearchAction,
     UPDATE_BBOX, UPDATE_WAVELENGTH, UPDATE_WATERDEPTH, UPDATE_OPTSHALLOW, UPDATE_PRODUCTS, UPDATE_PRODUCT_VALUE
-} from "../actions/advancedSearchActions";
+} from "../actions/advancedFindActions";
 
 import { newAdvancedSearchState } from "../states/advancedSearchState";
 

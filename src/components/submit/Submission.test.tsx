@@ -1,28 +1,27 @@
 import * as React from 'react';
 import { createMount } from '@material-ui/core/test-utils';
-import SubmitSteps from "./Submission";
+import Submission from "./Submission";
 
 
 interface MockProps {
     show: boolean;
     onClose: () => void;
 
-    submissionId: string;
-    path: string;
-    dataFiles: File[];
-    docFiles: File[];
+    onSubmissionIdChange: (submissionId: string) => void;
+    submissionIdValue: string;
 
-    onSubmissionIdChange: () => void;
-    onPathChange: () => void;
-    onDatafilesChange: () => void;
-    onDocfilesChange: () => void;
+    onPathChange: (path: string) => void;
+    pathValue: string;
+
+    onDatafilesChange: (acceptedFiles: File[]) => void;
+    dataFilesValue: File[];
+
+    onDocfilesChange: (acceptedFiles: File[]) => void;
+    docFilesValue: File[];
 
     onFileSubmit: () => void;
-    updateSubmissions: () => void;
-
+    onSubmissionsChange: () => void;
     onClearForm: () => void;
-
-    onError: () => void;
 }
 
 
@@ -30,10 +29,10 @@ const props: MockProps = {
     show: true,
     onClose: jest.fn(),
 
-    submissionId: '',
-    path: '',
-    dataFiles: [],
-    docFiles: [],
+    submissionIdValue: '',
+    pathValue: '',
+    dataFilesValue: [],
+    docFilesValue: [],
 
     onSubmissionIdChange: jest.fn(),
     onPathChange: jest.fn(),
@@ -41,11 +40,9 @@ const props: MockProps = {
     onDocfilesChange: jest.fn(),
 
     onFileSubmit: jest.fn(),
-    updateSubmissions: jest.fn(),
-
     onClearForm: jest.fn(),
+    onSubmissionsChange: jest.fn,
 
-    onError: jest.fn(),
 };
 
 
@@ -61,7 +58,7 @@ describe('<SubmitSteps />', () => {
     });
 
     it('SubmissionPanel renders children', () => {
-        const enzymeWrapper = mount(<SubmitSteps {...props} />);
+        const enzymeWrapper = mount(<Submission {...props} />);
 
         expect(enzymeWrapper.find('TextField').length).toBe(2);
         expect(enzymeWrapper.find('FileUpload').length).toBe(2);

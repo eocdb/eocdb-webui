@@ -36,21 +36,22 @@ interface SubmitStepsProps extends WithStyles<typeof styles> {
     show: boolean;
     onClose: () => void;
 
-    submissionId: string;
-    path: string;
-    dataFiles: File[];
-    docFiles: File[];
-
     onSubmissionIdChange: (submissionId: string) => void;
+    submissionIdValue: string;
+
     onPathChange: (path: string) => void;
+    pathValue: string;
+
     onDatafilesChange: (acceptedFiles: File[]) => void;
+    dataFilesValue: File[];
+
     onDocfilesChange: (acceptedFiles: File[]) => void;
+    docFilesValue: File[];
+
     onFileSubmit: () => void;
-    updateSubmissions: () => void;
+    onSubmissionsChange: () => void;
 
     onClearForm: () => void;
-
-    //onError: (messageType: MessageType, messageText: string) => void;
 }
 
 
@@ -79,22 +80,11 @@ class Submission extends React.Component<SubmitStepsProps> {
         this.props.onDocfilesChange(acceptedFiles);
     };
 
-    /*
-        handleError = (message: string) => {
-            this.props.onError('error', message);
-        };
-    */
-
     handleFileSubmit = () => {
-        if (!this.props.submissionId) {
-            //this.handleError('Please give Submission ID')
-            console.log('help');
-        } else {
-            this.props.onFileSubmit();
-            this.props.onClearForm();
-            this.props.updateSubmissions();
-            this.props.onClose();
-        }
+        this.props.onFileSubmit();
+        this.props.onClearForm();
+        this.props.onSubmissionsChange();
+        this.props.onClose();
     };
 
     render() {
@@ -130,7 +120,7 @@ class Submission extends React.Component<SubmitStepsProps> {
                         Close
                     </Button>
                 </Grid>
-                <Grid container justify={"flex-start"} spacing={16}  direction={"column"}>
+                <Grid container justify={"flex-start"} spacing={16} direction={"column"}>
                     <Grid item>
                         <TextField
                             required
@@ -140,7 +130,7 @@ class Submission extends React.Component<SubmitStepsProps> {
                             margin="dense"
                             variant="outlined"
                             onChange={this.handleSubmissionIdChange}
-                            value={this.props.submissionId}
+                            value={this.props.submissionIdValue}
                         />
                     </Grid>
                     <Grid item>
@@ -152,7 +142,7 @@ class Submission extends React.Component<SubmitStepsProps> {
                             margin="dense"
                             variant="outlined"
                             onChange={this.handleOnPathChange}
-                            value={this.props.path}
+                            value={this.props.pathValue}
                         />
                     </Grid>
                     <Grid item>
@@ -160,7 +150,7 @@ class Submission extends React.Component<SubmitStepsProps> {
                             key={'drop-datafiles'}
                             label={'Drag and drop DATA files here or click'}
                             onChange={this.handleOndropDatafiles}
-                            files={this.props.dataFiles}
+                            files={this.props.dataFilesValue}
                             acceptedFiles={['.dat', '.csv', '.txt', '.sb']}
                         />
                     </Grid>
@@ -169,7 +159,7 @@ class Submission extends React.Component<SubmitStepsProps> {
                             key={'drop-docfiles'}
                             label={'Drag and drop DOCUMENT files here or click'}
                             onChange={this.handleOndropDocfiles}
-                            files={this.props.docFiles}
+                            files={this.props.docFilesValue}
                         />
                     </Grid>
                 </Grid>

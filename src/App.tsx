@@ -5,6 +5,11 @@ import MessageLog from "./containers/MessageLog";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 
+import { MuiPickersUtilsProvider } from 'material-ui-pickers';
+//import * as MomentUtils from '@date-io/moment';
+//import DateFnsUtils from '@date-io/date-fns';
+import LuxonUtils from '@date-io/luxon';
+
 
 const theme = createMuiTheme(
     {
@@ -27,11 +32,13 @@ class App extends React.Component {
     public render() {
         return (
             <MuiThemeProvider theme={theme}>
-                <div className="App">
-                    <CssBaseline/>
-                    <Dashboard/>
-                    <MessageLog/>
-                </div>
+                <MuiPickersUtilsProvider utils={LuxonUtils}>
+                    <div className="App">
+                        <CssBaseline/>
+                        <Dashboard/>
+                        <MessageLog/>
+                    </div>
+                </MuiPickersUtilsProvider>
             </MuiThemeProvider>
         );
     }

@@ -6,12 +6,12 @@ import {
     UPDATE_DATASET_QUERY,
     UPDATE_FOUND_DATASETS,
     UPDATE_SEARCH_HISTORY
-} from '../actions/searchFormActions';
+} from '../actions/findActions';
 
 
 const initialState = newSearchFormState();
 
-export function searchFormReducer(state: SearchFormState, action: SearchFormAction): SearchFormState {
+export function findReducer(state: SearchFormState, action: SearchFormAction): SearchFormState {
     if (typeof state === 'undefined') {
         state = initialState;
     }

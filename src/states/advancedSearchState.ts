@@ -1,4 +1,3 @@
-//import { WavelengthsMode } from "../api/findDatasets";
 import { BBoxValue } from "../components/search/BBoxInput";
 import { SliderRange } from "../types/advancedSearchDialog";
 
@@ -12,13 +11,13 @@ export interface AdvancedSearchState {
     productInputValue: string;
 }
 
-export const SELECTED_BOUNDS_DEFAULT: BBoxValue = [undefined, undefined, undefined, undefined];
+export const SELECTED_BOUNDS_DEFAULT: BBoxValue = ['', '', '', ''];
 
 export function newAdvancedSearchState(): AdvancedSearchState  {
     return {
         selectedBBox: SELECTED_BOUNDS_DEFAULT,
         selectedWavelength: 'all',
-        waterDepth: [undefined, undefined],
+        waterDepth: [0, 1000],
         selectedOptShallow: '',
         selectedProducts: [],
         productInputValue: '',

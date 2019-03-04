@@ -3,4 +3,4 @@ export interface AdvancedSearchItem {
     value: string;
 }
 
-export type SliderRange = [number|undefined, number|undefined];
+export type SliderRange = [number, number];

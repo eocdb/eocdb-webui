@@ -15,21 +15,20 @@ const styles = (theme: Theme) => createStyles({
 });
 
 interface AdvancedSearchLogProps extends WithStyles<typeof styles> {
-    updateBBox: (selectedBBox: BBoxValue) => void;
-    selectedBBox: BBoxValue;
+    onBBoxChange: (selectedBBox: BBoxValue) => void;
+    bboxValue: BBoxValue;
 
-    updateWavelength: (item: string) => void;
-    selectedWavelength: string;
+    onWavelengthChange: (item: string) => void;
+    wavelengthValue: string;
 
-    updateWaterDepth: (waterDepth: SliderRange) => void;
-    waterDepth: SliderRange;
+    onWaterDepthChange: (waterDepth: SliderRange) => void;
+    waterDepthValue: SliderRange;
 
-    updateOptShallow: (optShallow: string) => void;
-    selectedOptShallow: string;
+    onOptShallowChange: (optShallow: string) => void;
+    optShallowValue: string;
 
-    updateProducts: (products: string[]) => void;
-    selectedProducts: string[];
-
+    onProductsChange: (products: string[]) => void;
+    productsValue: string[];
 }
 
 class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
@@ -40,30 +39,35 @@ class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
     getFilterChipEntries() {
         let chips = [];
 
-        if (this.props.selectedBBox[0]
-            && this.props.selectedBBox[1]
-            && this.props.selectedBBox[2]
-            && this.props.selectedBBox[3]) {
-            const bnds1 = new LatLng(this.props.selectedBBox[0], this.props.selectedBBox[1]);
-            const bnds2 = new LatLng(this.props.selectedBBox[2], this.props.selectedBBox[3]);
+        if (this.props.bboxValue[0]  !== ''
+            && this.props.bboxValue[1]  !== ''
+            && this.props.bboxValue[2] !== ''
+            && this.props.bboxValue[3] !== '') {
+            const bnds1 = new LatLng(+this.props.bboxValue[0], +this.props.bboxValue[1]);
+            const bnds2 = new LatLng(+this.props.bboxValue[2], +this.props.bboxValue[3]);
             const bbox = latLngBounds(bnds1, bnds2);
             const label = 'bbox: ' + bbox.toBBoxString();
             chips.push({key: 'bbox', label: label});
         }
 
-        if (this.props.selectedWavelength !== "all") {
-            const label = 'wavelength: ' + this.props.selectedWavelength;
+        if (this.props.wavelengthValue !== "all") {
+            const label = 'wavelength: ' + this.props.wavelengthValue;
             chips.push({key: 'wavelength', label: label});
         }
 
-        if (this.props.waterDepth[0] !== undefined && this.props.waterDepth[1] !== undefined) {
-            const label = 'water depth: ' + this.props.waterDepth.join(' ');
+        if (this.props.waterDepthValue[0] !== 0 && this.props.waterDepthValue[1] !== 1000) {
+            const label = 'water depth: ' + this.props.waterDepthValue.join(' ');
             chips.push({key: 'waterdepth', label: label});
         }
 
-        if (this.props.selectedProducts.length > 0) {
-            const label = 'products: ' + this.props.selectedProducts.join(', ');
+        if (this.props.productsValue.length > 0) {
+            const label = 'products: ' + this.props.productsValue.join(', ');
             chips.push({key: 'products', label: label});
+        }
+
+        if (this.props.optShallowValue) {
+            const label = 'opt shallow:' + this.props.optShallowValue;
+            chips.push({key: 'optshallow', label: label});
         }
 
         return chips;
@@ -72,16 +76,19 @@ class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
     handleFilterDelete = (key: string) => {
         switch (key) {
             case 'bbox': {
-                return this.props.updateBBox(SELECTED_BOUNDS_DEFAULT);
+                return this.props.onBBoxChange(SELECTED_BOUNDS_DEFAULT);
             }
             case 'wavelength': {
-                return this.props.updateWavelength("all");
+                return this.props.onWavelengthChange("all");
             }
             case 'waterdepth': {
-                return this.props.updateWaterDepth([undefined, undefined]);
+                return this.props.onWaterDepthChange([0, 1000]);
             }
             case 'products': {
-                return this.props.updateProducts([]);
+                return this.props.onProductsChange([]);
+            }
+            case 'optshallow': {
+                return this.props.onOptShallowChange('');
             }
         }
     };

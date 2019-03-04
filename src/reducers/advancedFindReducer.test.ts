@@ -11,7 +11,7 @@ import {
     UPDATE_PRODUCT_VALUE,
     UpdateBBox,
     UPDATE_BBOX
-} from "../actions/advancedSearchActions";
+} from "../actions/advancedFindActions";
 import { advancedSearchReducer } from "./advancedSearchReducer";
 import { SELECTED_BOUNDS_DEFAULT } from "../states/advancedSearchState";
 

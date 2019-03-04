@@ -9,14 +9,12 @@ import {
     UPDATE_DOC_FILES,
     UPDATE_SUBMISSION_ID,
     updateSubmissionId,
-    SUBMIT_FILES,
-    _submitFiles,
-    CLEAR_FORM,
-    clearForm,
+    SEND_SUBMISSION,
+    _sendSubmission,
     UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION,
     _updateSubmissionFilesForSubmission,
     UPDATE_SUBMISSIONS_FOR_USER,
-    _updateSubmissionsForUser,
+    _updateSubmissionsForUser, CLEAR_SUBMISSION_FORM, clearSubmissionForm,
 }
     from "./submissionActions";
 
@@ -66,19 +64,19 @@ describe("submitActions", () => {
 
     it("clearForm", () => {
         const expectedAction = {
-            type: CLEAR_FORM,
+            type: CLEAR_SUBMISSION_FORM,
         };
 
-        expect(clearForm()).toEqual(expectedAction);
+        expect(clearSubmissionForm()).toEqual(expectedAction);
     });
 
-    it("_submitFiles", () => {
+    it("_sendSubmission", () => {
         const expectedAction = {
-            type: SUBMIT_FILES,
+            type: SEND_SUBMISSION,
             currentDatasetValidationResults: [],
         };
 
-        expect(_submitFiles([])).toEqual(expectedAction);
+        expect(_sendSubmission([])).toEqual(expectedAction);
     });
 
     it("_updateSubmissionsForUser", () => {

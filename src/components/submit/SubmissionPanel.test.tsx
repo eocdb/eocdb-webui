@@ -8,6 +8,25 @@ interface MockProps {
     submissionOpen: boolean;
     openSubmission: () => void;
     closeSubmission: () => void;
+
+    updateSubmissionId: (submissionId: string) => void;
+    selectedSubmissionId: string;
+
+    updatePath: (path: string) => void;
+    selectedPath: string;
+
+    updateDataFiles: (acceptedFiles: File[]) => void;
+    selectedDataFiles: File[];
+
+    updateDocFiles: (acceptedFiles: File[]) => void;
+    selectedDocFiles: File[];
+
+    onSubmissionsChange: () => void;
+
+    sendSubmission: () => void;
+
+    clearSubmissionForm: () => void;
+    updateSubmissionsForUser: () => void;
 }
 
 
@@ -16,6 +35,25 @@ const props: MockProps = {
     submissionOpen: false,
     openSubmission: jest.fn(),
     closeSubmission: jest.fn(),
+
+    updateSubmissionId: jest.fn(),
+    selectedSubmissionId: '',
+
+    updatePath: jest.fn(),
+    selectedPath: '',
+
+    updateDataFiles: jest.fn(),
+    selectedDataFiles: [],
+
+    updateDocFiles: jest.fn(),
+    selectedDocFiles: [],
+
+    onSubmissionsChange: jest.fn,
+
+    sendSubmission: jest.fn,
+
+    clearSubmissionForm: jest.fn,
+    updateSubmissionsForUser: jest.fn,
 };
 
 

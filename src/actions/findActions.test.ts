@@ -10,7 +10,7 @@ import {
     stopLoading,
     UPDATE_DATASET_QUERY, UPDATE_FOUND_DATASETS, UPDATE_SEARCH_HISTORY,
     updateDatasetQuery, updateFoundDatasets
-} from "./searchFormActions";
+} from "./findActions";
 import { DEFAULT_API_SERVER_URL } from "../api/config";
 import { LatLng } from "leaflet";
 
