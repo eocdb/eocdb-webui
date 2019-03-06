@@ -6,6 +6,9 @@ describe('searchFormState', () => {
             datasetQuery: {
                 geojson: true,
                 productGroupNames: [],
+                startDate: null,
+                endDate: null,
+                searchExpr: '',
             },
             searchHistory: [],
             foundDatasets: {

@@ -6,7 +6,7 @@ describe('advancedSearchState', () => {
         const expected = {
             selectedBBox: SELECTED_BOUNDS_DEFAULT,
             selectedWavelength: 'all',
-            waterDepth: [undefined, undefined],
+            waterDepth: [0, 1000],
             selectedOptShallow: '',
             selectedProducts: [],
             productInputValue: '',
