@@ -11,10 +11,10 @@ import TableCell from "@material-ui/core/TableCell/TableCell";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Icon from "@material-ui/core/Icon/Icon";
-import SubmissionIssueDialog from "./SubmissionIssueDialog";
 import { SubmissionFile } from "../../model";
 import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
+import { Submission } from "../../model/Submission";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -37,33 +37,19 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-/*
-function Transition(props: SlideProps) {
-    return <Slide direction="up" {...props} />;
-}
-*/
-
-
-export interface SubmissionFilesDialogProps extends WithStyles<typeof styles> {
+export interface SubmissionFilesTableProps extends WithStyles<typeof styles> {
     open: boolean;
     onClose: () => void;
 
-    submissionId: string;
-    submissionFiles: SubmissionFile[];
-    submissionIssuesDialogOpen: boolean;
-    openSubmissionIssuesDialog: () => void;
-    closeSubmissionIssuesDialog: () => void;
+    submissionValue: Submission;
 
-    currentSubmissionFile: SubmissionFile;
-    updateCurrentSubmissionFile: () => void;
-
-    currentSubmissionFileIndex: number;
-    updateCurrentSubmissionFileIndex: (currentSubmissionFileIndex: number) => void;
+    onSubmissionFileSelect: (submissionId: string, submissionFileIndex: number) => void;
+    onSubmissionFileDelete: (submissionId: string, submissionFileIndex: number) => void;
 }
 
 
-class SubmissionFilesDialog extends React.Component<SubmissionFilesDialogProps> {
-    constructor(props: SubmissionFilesDialogProps) {
+class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
+    constructor(props: SubmissionFilesTableProps) {
         super(props);
     }
 
@@ -81,14 +67,6 @@ class SubmissionFilesDialog extends React.Component<SubmissionFilesDialogProps> 
         return "yellow"
     };
 
-
-    handleSubmissionFileIssuesDialogOpen = (submissionFileIndex: number) => {
-        this.props.updateCurrentSubmissionFileIndex(submissionFileIndex);
-        this.props.updateCurrentSubmissionFile();
-
-        this.props.openSubmissionIssuesDialog();
-    };
-
     render() {
         if (!this.props.open) {
             return null;
@@ -97,18 +75,13 @@ class SubmissionFilesDialog extends React.Component<SubmissionFilesDialogProps> 
         const {classes} = this.props;
         return (
             <Paper className={classes.root}>
-                <SubmissionIssueDialog
-                    submissionFile={this.props.currentSubmissionFile}
-                    onClose={this.props.closeSubmissionIssuesDialog}
-                    open={this.props.submissionIssuesDialogOpen}
-                />
                 <Grid container justify={"flex-end"}>
-                <Button
-                    color={"primary"}
-                    onClick={this.props.onClose}
-                >
-                    Close
-                </Button>
+                    <Button
+                        color={"primary"}
+                        onClick={this.props.onClose}
+                    >
+                        Close
+                    </Button>
                 </Grid>
                 <Table>
                     <TableHead>
@@ -120,9 +93,8 @@ class SubmissionFilesDialog extends React.Component<SubmissionFilesDialogProps> 
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {this.props.submissionFiles.map((row: SubmissionFile) => {
+                        {this.props.submissionValue.files.map((row: SubmissionFile) => {
                             const colour = this.getColoutForStatus(row.status);
-                            console.log(row);
                             return (
                                 <TableRow key={row.filename}>
                                     <TableCell>
@@ -140,10 +112,21 @@ class SubmissionFilesDialog extends React.Component<SubmissionFilesDialogProps> 
                                     </TableCell>
                                     <TableCell>
                                         <Button
-                                            onClick={() => this.handleSubmissionFileIssuesDialogOpen(row.index)}
-                                            disabled={row.filetype==='DOCUMENT'}
+                                            onClick={() => this.props.onSubmissionFileSelect(
+                                                row.submission_id,
+                                                row.index
+                                            )}
+                                            disabled={row.filetype === 'DOCUMENT'}
                                         >
                                             <Icon className={classes.rightIcon}>list</Icon>
+                                        </Button>
+                                        <Button
+                                            onClick={() => this.props.onSubmissionFileDelete(
+                                                row.submission_id,
+                                                row.index
+                                            )}
+                                        >
+                                            <Icon className={classes.rightIcon}>delete</Icon>
                                         </Button>
                                     </TableCell>
                                 </TableRow>
@@ -157,5 +140,5 @@ class SubmissionFilesDialog extends React.Component<SubmissionFilesDialogProps> 
 }
 
 
-export default withStyles(styles)(SubmissionFilesDialog);
+export default withStyles(styles)(SubmissionFilesTable);
 

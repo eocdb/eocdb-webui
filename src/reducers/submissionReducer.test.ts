@@ -3,12 +3,12 @@ import {
     CLOSE_SUBMIT_STEPS,
     OPEN_SUBMIT_STEPS,
     SEND_SUBMISSION,
-    SendSubmission, UPDATE_CURRENT_SUBMISSION,
+    SendSubmission,
     UPDATE_DATA_FILES,
-    UPDATE_DOC_FILES,
-    UPDATE_SUBMISSION_ID, UpdateCurrentSubmission,
+    UPDATE_DOC_FILES, UPDATE_SUBMISSION,
+    UPDATE_SUBMISSION_ID,
     UpdateDataFiles,
-    UpdateDocFiles,
+    UpdateDocFiles, UpdateSubmission,
     UpdateSubmissionId
 } from "../actions/submissionActions";
 
@@ -16,12 +16,12 @@ import {
 describe('submitStepsReducer', () => {
     it('submissionReducer to open submit steps', () => {
         const result = submissionReducer(undefined, {type: OPEN_SUBMIT_STEPS});
-        expect(result.submissionOpen).toEqual(true);
+        expect(result.submissionDialogOpen).toEqual(true);
     });
 
     it('submissionReducer to close submit steps', () => {
         const result = submissionReducer(undefined, {type: CLOSE_SUBMIT_STEPS});
-        expect(result.submissionOpen).toEqual(false);
+        expect(result.submissionDialogOpen).toEqual(false);
     });
 
     it('reducing updateSubmissionId', () => {
@@ -51,15 +51,22 @@ describe('submitStepsReducer', () => {
         expect(result.dataFiles.length).toEqual(0);
     });
 
-    it('reducing updateCurrentSubmission', () => {
-        const action: UpdateCurrentSubmission = {
-            type: UPDATE_CURRENT_SUBMISSION,
-            currentSubmissionId: '',
-            currentSubmissionFiles: [],
+    it('reducing updateSubmission', () => {
+        const submission = {
+                submission_id: '',
+                user_id: 0,
+                date: '',
+                status: '',
+                files: [],
+                file_refs: [],
+            };
+
+        const action: UpdateSubmission = {
+            type: UPDATE_SUBMISSION,
+            submission,
         };
         const result = submissionReducer(undefined, action);
-        expect(result.currentSubmissionId).toEqual('');
-        expect(result.currentSubmissionFiles).toEqual([]);
+        expect(result.selectedSubmission).toEqual(submission);
     });
 
 

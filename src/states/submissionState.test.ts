@@ -3,14 +3,24 @@ import { newSubmissionState } from "./submissionState";
 describe('submitState', () => {
     it('newSubmissionState', () => {
         const expected = {
-            submissionOpen: false,
+            submissionDialogOpen: false,
+            submissionFilesDialogOpen: false,
+            submissionFileIssueDialogOpen: false,
+            deleteSubmissionFileAlertOpen: false,
 
             submissionId: '',
             dataFiles: [],
             docFiles: [],
             path: '',
-            submissionFilesDialogOpen: false,
-            submissionIssuesDialogOpen: false,
+
+            currentSubmission: {
+                submission_id: '',
+                user_id: 0,
+                date: '',
+                status: '',
+                files: [],
+                file_refs: [],
+            },
 
             currentSubmissionFile: {
                 index: 0,

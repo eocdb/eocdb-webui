@@ -8,16 +8,17 @@ import {
     UPDATE_SUBMISSION_ID,
     UPDATE_PATH,
     UPDATE_SUBMISSIONS_FOR_USER,
-    UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION,
+    UPDATE_SUBMISSION,
     OPEN_SUBMISSION_FILES_DIALOG,
     CLOSE_SUBMISSION_FILES_DIALOG,
     OPEN_SUBMISSION_ISSUES_DIALOG,
     CLOSE_SUBMISSION_ISSUES_DIALOG,
-    UPDATE_CURRENT_SUBMISSION,
     UPDATE_CURRENT_SUBMISSIONFILE,
     UPDATE_CURRENT_SUBMISSIONFILE_INDEX,
     CLEAR_SUBMISSION_FORM,
-    SEND_SUBMISSION
+    SEND_SUBMISSION,
+    OPEN_DELETE_SUBMISSION_FILES_ALERT,
+    CLOSE_DELETE_SUBMISSION_FILES_ALERT
 } from "../actions/submissionActions";
 
 
@@ -26,25 +27,25 @@ const initialState = newSubmissionState();
 export function submissionReducer(state: SubmissionState = initialState, action: SubmitAction) {
     switch (action.type) {
         case OPEN_SUBMIT_STEPS:
-            return {...state, submissionOpen: true};
+            return {...state, submissionDialogOpen: true};
         case CLOSE_SUBMIT_STEPS:
-            return {...state, submissionOpen: false};
+            return {...state, submissionDialogOpen: false};
         case OPEN_SUBMISSION_FILES_DIALOG:
             return {...state, submissionFilesDialogOpen: true};
         case CLOSE_SUBMISSION_FILES_DIALOG:
             return {...state, submissionFilesDialogOpen: false};
         case OPEN_SUBMISSION_ISSUES_DIALOG:
-            return {...state, submissionIssuesDialogOpen: true};
+            return {...state, submissionFileIssueDialogOpen: true};
         case CLOSE_SUBMISSION_ISSUES_DIALOG:
-            return {...state, submissionIssuesDialogOpen: false};
+            return {...state, submissionFileIssueDialogOpen: false};
+        case OPEN_DELETE_SUBMISSION_FILES_ALERT:
+            return {...state, deleteSubmissionFileAlertOpen: true};
+        case CLOSE_DELETE_SUBMISSION_FILES_ALERT:
+            return {...state, deleteSubmissionFileAlertOpen: false};
         case UPDATE_SUBMISSION_ID:
             return {...state, submissionId: action.submissionId};
-        case UPDATE_CURRENT_SUBMISSION:
-            return {
-                ...state,
-                currentSubmissionId: action.currentSubmissionId,
-                currentSubmissionFiles: action.currentSubmissionFiles,
-            };
+        case UPDATE_SUBMISSION:
+            return {...state, selectedSubmission: action.submission};
         case UPDATE_PATH:
             return {...state, path: action.path};
         case UPDATE_DATA_FILES:
@@ -56,11 +57,9 @@ export function submissionReducer(state: SubmissionState = initialState, action:
         case UPDATE_SUBMISSIONS_FOR_USER:
             return {...state, foundSubmissions: action.submissions};
         case UPDATE_CURRENT_SUBMISSIONFILE:
-            return {...state, currentSubmissionFile: action.currentSubmissionFile};
+            return {...state, selectedSubmissionFile: action.currentSubmissionFile};
         case UPDATE_CURRENT_SUBMISSIONFILE_INDEX:
             return {...state, currentSubmissionFileIndex: action.currentSubmissionFileIndex};
-        case UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION:
-            return {...state, currentSubmissionFiles: action.submissionFiles};
         case SEND_SUBMISSION:
             return {...state, currentDatasetValidationResults: action.currentDatasetValidationResults};
         default:

@@ -21,6 +21,6 @@ export const appReducer = combineReducers(
         dataState: dataReducer,
         dataTableState: dataTableReducer,
         advancedSearchState: advancedSearchReducer,
-        submitState: submissionReducer,
+        submissionState: submissionReducer,
     }
 );

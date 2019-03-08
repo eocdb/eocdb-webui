@@ -11,10 +11,10 @@ import Button from "@material-ui/core/Button/Button";
 import { CloudUpload } from "@material-ui/icons";
 import Grid from "@material-ui/core/Grid";
 import TableBody from "@material-ui/core/TableBody";
-import { Submission, SubmissionFile, User } from "../../model";
 import Icon from '@material-ui/core/Icon/Icon';
 import Chip from "@material-ui/core/Chip";
-import SubmissionFilesDialog from "../../containers/submit/SubmissionFilesDialog";
+
+import { Submission } from "../../model";
 
 
 const styles = (theme: Theme) => createStyles(
@@ -38,20 +38,17 @@ const styles = (theme: Theme) => createStyles(
 
 interface SubmissionTableProps extends WithStyles<typeof styles> {
     show: boolean;
-    openSubmitSteps: () => void;
 
-    submissionFilesDialogOpen: boolean;
-    openSubmissionFilesDialog: () => void;
-    closeSubmissionFilesDialog: () => void;
+    onSubmissionDialogOpen: () => void;
 
-    updateCurrentSubmission: (currentSubmissionId: string, currentSubmissionFiles: SubmissionFile[]) => void;
-    currentSubmissionId: string;
-    currentSubmissionFiles: SubmissionFile[];
+    onSubmissionSelect: (selectedSubmissionId: string) => void;
 
-    approveSubmission: () => void;
+    onSubmissionApprove: (selectedSubmissionId: string) => void;
+    onSubmissionReject: (selectedSubmissionId: string) => void;
+    onSubmissionHalt: (selectedSubmissionId: string) => void;
+    onSubmissionRestart: (selectedSubmissionId: string) => void;
 
-    submissions: Submission[];
-    user?: User | null;
+    submissionsValue: Submission[];
 }
 
 
@@ -60,28 +57,16 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
         super(props);
     }
 
-    handleOpenSubmitSteps = () => {
-        this.props.openSubmitSteps();
-    };
-
-    handleOpenSubmissionFilesDialog = (currentSubmissionId: string, currentSubmissionFiles: SubmissionFile[]) => {
-        this.props.openSubmissionFilesDialog();
-        this.props.updateCurrentSubmission(currentSubmissionId, currentSubmissionFiles);
-    };
-
-    handleApproveSubmission = () => {
-        console.log('approve');
-        if(this.props.approveSubmission){
-            this.props.approveSubmission();
-        }
-    };
-
-    getColoutForStatus = (status: string) => {
+    getColourForStatus = (status: string) => {
         switch (status) {
             case 'SUBMITTED':
                 return "blue";
             case 'APPROVED':
                 return "green";
+            case 'HALTED':
+                return "orange";
+            case 'REJECTED':
+                return "red";
         }
         return "yellow"
     };
@@ -91,7 +76,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
             return null;
         }
 
-        const {classes, submissions} = this.props;
+        const {classes, submissionsValue} = this.props;
 
         return (
             <div>
@@ -100,7 +85,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                         <Button variant="contained"
                                 color="secondary"
                                 className={classes.button}
-                                onClick={this.handleOpenSubmitSteps}
+                                onClick={this.props.onSubmissionDialogOpen}
                         >
                             New Submission
                             <CloudUpload/>
@@ -116,8 +101,8 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {submissions.map((row: Submission) => {
-                                const colour = this.getColoutForStatus(row.status);
+                            {submissionsValue.map((row: Submission) => {
+                                const colour = this.getColourForStatus(row.status);
 
                                 return (
                                     <TableRow
@@ -140,26 +125,41 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                         </TableCell>
                                         <TableCell>
                                             <Button
-                                                onClick={() => this.handleOpenSubmissionFilesDialog(
-                                                    row.submission_id,
-                                                    row.file_refs
+                                                onClick={() => this.props.onSubmissionSelect(
+                                                    row.submission_id
                                                 )}
                                             >
                                                 <Icon className={classes.rightIcon}>list</Icon>
                                             </Button>
-                                            <Button
-                                                onClick={this.handleApproveSubmission}
-                                            >
-                                                <Icon className={classes.rightIcon}>pause</Icon>
+                                            {row.status !== 'SUBMITTED' ?
+                                                <Button
+                                                    onClick={() => this.props.onSubmissionRestart(
+                                                        row.submission_id
+                                                    )}
+                                                >
+                                                    <Icon className={classes.rightIcon}>play_arrow</Icon>
 
-                                            </Button>
+                                                </Button>
+                                                :
+                                                <Button
+                                                    onClick={() => this.props.onSubmissionHalt(
+                                                        row.submission_id
+                                                    )}
+                                                >
+                                                    <Icon className={classes.rightIcon}>pause</Icon>
+                                                </Button>
+                                            }
                                             <Button
-                                                onClick={this.handleApproveSubmission}
+                                                onClick={() => this.props.onSubmissionApprove(
+                                                    row.submission_id
+                                                )}
                                             >
                                                 <Icon className={classes.rightIcon}>done</Icon>
                                             </Button>
                                             <Button
-                                                onClick={this.handleApproveSubmission}
+                                                onClick={() => this.props.onSubmissionReject(
+                                                    row.submission_id
+                                                )}
                                             >
                                                 <Icon className={classes.rightIcon}>clear</Icon>
                                             </Button>
@@ -170,13 +170,6 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                         </TableBody>
                     </Table>
                 </Paper>
-                <SubmissionFilesDialog
-                    key={this.props.currentSubmissionId}
-                    submissionId={this.props.currentSubmissionId}
-                    submissionFiles={this.props.currentSubmissionFiles}
-                    onClose={this.props.closeSubmissionFilesDialog}
-                    open={this.props.submissionFilesDialogOpen}
-                />
             </div>
         );
     }

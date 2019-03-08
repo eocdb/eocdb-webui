@@ -40,7 +40,7 @@ export interface SubmissionIssueDialogProps extends WithStyles<typeof styles> {
     open: boolean;
     onClose: () => void;
 
-    submissionFile: SubmissionFile;
+    submissionFileValue: SubmissionFile;
 }
 
 
@@ -50,16 +50,17 @@ class SubmissionIssueDialog extends React.Component<SubmissionIssueDialogProps> 
     }
 
     render() {
-        const {classes, submissionFile} = this.props;
+        const {classes, submissionFileValue} = this.props;
 
         let issues:DatasetIssue[] = [];
         let fileName = 'unknown';
 
-        if(submissionFile) {
-            issues = submissionFile.result.issues;
-            fileName = submissionFile.filename;
+        if(submissionFileValue) {
+            issues = submissionFileValue.result.issues;
+            fileName = submissionFileValue.filename;
         }
 
+        console.log(submissionFileValue);
 
         return (
             <div>

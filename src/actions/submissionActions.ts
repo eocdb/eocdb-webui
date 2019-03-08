@@ -4,7 +4,6 @@ import { postMessage, MessageLogAction } from "./messageLogActions";
 import { AppState } from "../states/appState";
 import { DatasetValidationResult, UploadData, Submission, SubmissionFile } from "../model";
 import { StopLoading, UpdateSearchHistory } from "./findActions";
-import { SubmissionFileStatus } from "../api/setSubmissionStatus";
 
 
 /**
@@ -74,6 +73,38 @@ export interface CloseSubmissionIssuesDialog {
 export function closeSubmissionIssuesDialog(): CloseSubmissionIssuesDialog {
     return {
         type: CLOSE_SUBMISSION_ISSUES_DIALOG
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const OPEN_DELETE_SUBMISSION_FILES_ALERT = 'OPEN_DELETE_SUBMISSION_FILES_ALERT';
+export type OPEN_DELETE_SUBMISSION_FILES_ALERT = typeof OPEN_DELETE_SUBMISSION_FILES_ALERT;
+
+
+export interface OpenDeleteSubmissionFilesAlert {
+    type: OPEN_DELETE_SUBMISSION_FILES_ALERT;
+}
+
+export function openDeleteSubmissionFilesAlert(): OpenDeleteSubmissionFilesAlert {
+    return {
+        type: OPEN_DELETE_SUBMISSION_FILES_ALERT
+    }
+}
+
+
+export const CLOSE_DELETE_SUBMISSION_FILES_ALERT = 'CLOSE_DELETE_SUBMISSION_FILES_ALERT';
+export type CLOSE_DELETE_SUBMISSION_FILES_ALERT = typeof CLOSE_DELETE_SUBMISSION_FILES_ALERT;
+
+
+export interface CloseDeleteSubmissionFilesAlert {
+    type: CLOSE_DELETE_SUBMISSION_FILES_ALERT;
+}
+
+export function closeDeleteSubmissionFilesAlert(): CloseDeleteSubmissionFilesAlert {
+    return {
+        type: CLOSE_DELETE_SUBMISSION_FILES_ALERT
     }
 }
 
@@ -226,10 +257,10 @@ export function sendSubmission() {
         const apiServerUrl = state.configState.apiServerUrl;
 
         const uploadData: UploadData = {
-            dataFiles: state.submitState.dataFiles,
-            docFiles: state.submitState.docFiles,
-            submissionId: state.submitState.submissionId,
-            path: state.submitState.path,
+            dataFiles: state.submissionState.dataFiles,
+            docFiles: state.submissionState.docFiles,
+            submissionId: state.submissionState.submissionId,
+            path: state.submissionState.path,
         };
 
         return api.uploadStoreFiles(apiServerUrl, uploadData)
@@ -290,27 +321,6 @@ export function updateSubmissionsForUser() {
     };
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-export const UPDATE_CURRENT_SUBMISSION = 'UPDATE_CURRENT_SUBMISSION';
-export type UPDATE_CURRENT_SUBMISSION = typeof UPDATE_CURRENT_SUBMISSION;
-
-export interface UpdateCurrentSubmission {
-    type: UPDATE_CURRENT_SUBMISSION;
-    currentSubmissionId: string;
-    currentSubmissionFiles: SubmissionFile[];
-}
-
-export function updateCurrentSubmission(currentSubmissionId: string, currentSubmissionFiles: SubmissionFile[])
-    : UpdateCurrentSubmission {
-    return {
-        type: UPDATE_CURRENT_SUBMISSION,
-        currentSubmissionId,
-        currentSubmissionFiles,
-    }
-}
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -352,15 +362,13 @@ export function _updateCurrentSubmissionFile(currentSubmissionFile: SubmissionFi
 }
 
 
-export function updateCurrentSubmissionFile() {
+export function updateSubmissionFile(submissionId: string, submissionFileIndex: number) {
     return (dispatch: Dispatch<UpdateCurrentSubmissionFile | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
-        const currentSubmissionId = state.submitState.currentSubmissionId;
-        const currentSubmissionFileIndex = state.submitState.currentSubmissionFileIndex;
 
-        return api.getSubmissionFile(apiServerUrl, currentSubmissionId, currentSubmissionFileIndex)
+        return api.getSubmissionFile(apiServerUrl, submissionId, submissionFileIndex)
             .then((submissionFile: SubmissionFile) => {
                 dispatch(_updateCurrentSubmissionFile(submissionFile));
             })
@@ -376,34 +384,34 @@ export function updateCurrentSubmissionFile() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION = 'UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION';
-export type UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION = typeof UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION;
+export const UPDATE_SUBMISSION = 'UPDATE_SUBMISSION';
+export type UPDATE_SUBMISSION = typeof UPDATE_SUBMISSION;
 
-export interface UpdateSubmissionsFilesForSubmission {
-    type: UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION;
-    submissionFiles: SubmissionFile[];
+export interface UpdateSubmission {
+    type: UPDATE_SUBMISSION;
+    submission: Submission;
 }
 
-export function _updateSubmissionFilesForSubmission(submissionFiles: SubmissionFile[]): UpdateSubmissionsFilesForSubmission {
+export function _updateSubmission(submission: Submission): UpdateSubmission {
     return {
-        type: UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION,
-        submissionFiles: submissionFiles,
+        type: UPDATE_SUBMISSION,
+        submission: submission,
     }
 }
 
-export function updateSubmissionFilesForSubmission() {
-    return (dispatch: Dispatch<UpdateSubmissionsFilesForSubmission | MessageLogAction>, getState: ()
+export function updateSubmission(submissionId: string) {
+    return (dispatch: Dispatch<UpdateSubmission | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
-        const submissionId = state.submitState.submissionId;
+        //const submissionId = state.submissionState.submissionId;
 
-        return api.getSubmissionFilesForSubmission(apiServerUrl, submissionId)
-            .then((submissionFiles: SubmissionFile[]) => {
-                dispatch(_updateSubmissionFilesForSubmission(submissionFiles));
+        return api.getSubmission(apiServerUrl, submissionId)
+            .then((submission: Submission) => {
+                dispatch(_updateSubmission(submission));
             })
             .then(() => {
-                dispatch(postMessage('success', 'Submission Files Loaded'))
+                dispatch(postMessage('success', 'Submission Loaded'))
             })
             .catch((error: string) => {
                 dispatch(postMessage('error', error + ''));
@@ -420,11 +428,11 @@ export type SET_SUBMISSION_STATUS = typeof SET_SUBMISSION_STATUS;
 export interface SetSubmissionStatus {
     type: SET_SUBMISSION_STATUS;
     submissionId: string;
-    status: SubmissionFileStatus;
+    status: string;
 }
 
 
-export function _setSubmissionStatus(submissionId: string, status: SubmissionFileStatus): SetSubmissionStatus {
+export function _setSubmissionStatus(submissionId: string, status: string): SetSubmissionStatus {
     return {
         type: SET_SUBMISSION_STATUS,
         submissionId,
@@ -432,16 +440,35 @@ export function _setSubmissionStatus(submissionId: string, status: SubmissionFil
     }
 }
 
-export function setSubmissionStatus() {
+export function setSubmissionStatus(submissionId: string, status: string) {
     return (dispatch: Dispatch<SetSubmissionStatus | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
-        const currentSubmissionId = state.submitState.currentSubmissionId;
 
-        return api.setSubmissionStatus(apiServerUrl, currentSubmissionId, 'APPROVED')
+        return api.setSubmissionStatus(apiServerUrl, submissionId, status)
             .then(() => {
-                dispatch(postMessage("success", 'Files Loaded'));
+                dispatch(postMessage("success", 'Status set to ' + status));
+            })
+            .catch((error: string) => {
+                dispatch(postMessage('error', error + ''));
+            });
+    };
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+export function deleteSubmissionFile(submissionId: string, submissionFileIndex: number) {
+    return (dispatch: Dispatch<MessageLogAction>, getState: ()
+        => AppState) => {
+        const state = getState();
+        const apiServerUrl = state.configState.apiServerUrl;
+
+        return api.deleteSubmissionFile(apiServerUrl, submissionId, submissionFileIndex)
+            .then(() => {
+                dispatch(postMessage("success", 'File Deleted'));
             })
             .catch((error: string) => {
                 dispatch(postMessage('error', error + ''));
@@ -456,14 +483,15 @@ export type SubmitAction = OpenSubmitSteps
     | CloseSubmissionFilesDialog
     | OpenSubmissionIssuesDialog
     | CloseSubmissionIssuesDialog
+    | OpenDeleteSubmissionFilesAlert
+    | CloseDeleteSubmissionFilesAlert
     | UpdateSubmissionId
-    | UpdateCurrentSubmission
     | UpdatePath
     | UpdateDataFiles
     | UpdateDocFiles
     | ClearSubmissionForm
     | UpdateSubmissionsForUser
-    | UpdateSubmissionsFilesForSubmission
+    | UpdateSubmission
     | SendSubmission
     | UpdateCurrentSubmissionFile
     | UpdateCurrentSubmissionFileIndex;

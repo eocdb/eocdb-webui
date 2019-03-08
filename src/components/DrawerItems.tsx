@@ -19,7 +19,11 @@ interface DrawerItemsProps extends WithStyles<typeof styles> {
 }
 
 class DrawerItems extends React.PureComponent<DrawerItemsProps> {
-    handleSubmitClick = () => {
+    constructor(props: DrawerItemsProps) {
+        super(props);
+    }
+
+    handleSubmissionClick = () => {
         this.props.handleClick('Submit');
         this.props.updateSubmissions();
     };
@@ -63,7 +67,7 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
                         </ListItemIcon>
                         <ListItemText primary="Browse"/>
                     </ListItem>
-                    <ListItem disabled={!submitAllowed} key={'Submit'} onClick={this.handleSubmitClick} button>
+                    <ListItem disabled={!submitAllowed} key={'Submit'} onClick={this.handleSubmissionClick} button>
                         <ListItemIcon>
                             <CloudUpload/>
                         </ListItemIcon>

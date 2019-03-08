@@ -19,5 +19,5 @@ export interface AppState {
     dataState: DataState;
     dataTableState: DataTableState;
     advancedSearchState: AdvancedSearchState;
-    submitState: SubmissionState;
+    submissionState: SubmissionState;
 }

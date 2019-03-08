@@ -1,13 +1,14 @@
 import * as React from 'react';
 
-import HomePanel from './home/HomePanel';
-import SubmitPanel from '../containers/submit/SubmissionPanel';
-import BrowsePanel from './browse/BrowsePanel';
-import AdminPanel from './admin/AdminPanel';
-import SearchPanel from '../containers/search/SearchPanel';
 import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
-import { withStyles } from '@material-ui/core/styles'; // TODO: dependency issue here!
+import { withStyles } from '@material-ui/core/styles';
+
+import HomePanel from './home/HomePanel';
+import BrowsePanel from './browse/BrowsePanel';
+import AdminPanel from './admin/AdminPanel';
+import SubmissionPanel from "../containers/submission/SubmissionPanel";
+import SearchPanel from '../containers/search/SearchPanel';
 
 
 const drawerWidth = 240;
@@ -108,7 +109,7 @@ class DashPanels extends React.PureComponent<DashPanelsProps> {
             <div>
                 <SearchPanel show={this.props.currentDrawer == 'Search'}/>
                 <HomePanel show={this.props.currentDrawer == 'Home'}/>
-                <SubmitPanel show={this.props.currentDrawer == 'Submit'}/>
+                <SubmissionPanel show={this.props.currentDrawer == 'Submit'}/>
                 <BrowsePanel show={this.props.currentDrawer == 'Browse'}/>
                 <AdminPanel show={this.props.currentDrawer == 'Admin'}/>
             </div>

@@ -1,7 +1,13 @@
 import { Submission, SubmissionFile, DatasetValidationResult } from "../model";
 
 export interface SubmissionState {
-    submissionOpen: boolean;
+    submissionDialogOpen: boolean;
+    submissionFilesDialogOpen: boolean;
+    submissionFileIssueDialogOpen: boolean;
+    deleteSubmissionFileAlertOpen: boolean;
+
+    selectedSubmission: Submission;
+    selectedSubmissionFile: SubmissionFile;
 
     submissionId: string;
     dataFiles: File[];
@@ -12,20 +18,19 @@ export interface SubmissionState {
     currentSubmissionFiles: SubmissionFile[];
     currentSubmissionId: string;
 
-    currentSubmissionFile: SubmissionFile;
-    currentSubmissionFileIndex: number;
-
     foundSubmissions: Submission[];
 
-    submissionFilesDialogOpen: boolean;
-    submissionIssuesDialogOpen: boolean;
+
 }
 
 export function newSubmissionState() {
     return {
-        submissionOpen: false,
+        foundSubmissions: [],
+
+        submissionDialogOpen: false,
         submissionFilesDialogOpen: false,
-        submissionIssuesDialogOpen: false,
+        submissionFileIssueDialogOpen: false,
+        deleteSubmissionFileAlertOpen: false,
 
         submissionId: '',
         dataFiles: [],
@@ -36,7 +41,16 @@ export function newSubmissionState() {
         currentSubmissionFiles: [],
         currentSubmissionId: '',
 
-        currentSubmissionFile: {
+        selectedSubmission: {
+            submission_id: '',
+            user_id: 0,
+            date: '',
+            status: '',
+            files: [],
+            file_refs: [],
+        },
+
+        selectedSubmissionFile: {
             index: 0,
             submission_id: '',
             filename: '',
@@ -47,9 +61,5 @@ export function newSubmissionState() {
                 issues: [],
             }
         },
-
-        currentSubmissionFileIndex: 0,
-
-        foundSubmissions: [],
     }
 }

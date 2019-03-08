@@ -45,12 +45,14 @@ interface TablePaginationActionsProps extends WithStyles<typeof actionsStyles>, 
     onChangePage: (event: React.MouseEvent<HTMLButtonElement>, page: number) => void;
     page: number;
     rowsPerPage: number;
-
-    plotState: PlotState;
 }
 
 
 class TablePaginationActions extends React.Component<TablePaginationActionsProps> {
+    constructor(props: TablePaginationActionsProps) {
+        super(props);
+    }
+
     handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         this.props.onChangePage(event, 0);
     };
@@ -193,6 +195,7 @@ class DataTable extends React.Component<DataTableProps> {
     }
 
     handleChangePage = (event: React.MouseEvent<HTMLButtonElement>, page: number) => {
+        console.log(event);
         this.props.updateDataPage(page);
         this.props.searchDatasets();
         this.props.startLoading();

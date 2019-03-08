@@ -32,7 +32,7 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-interface SubmitStepsProps extends WithStyles<typeof styles> {
+interface SubmissionDialogProps extends WithStyles<typeof styles> {
     show: boolean;
     onClose: () => void;
 
@@ -49,14 +49,13 @@ interface SubmitStepsProps extends WithStyles<typeof styles> {
     docFilesValue: File[];
 
     onFileSubmit: () => void;
-    onSubmissionsChange: () => void;
 
     onClearForm: () => void;
 }
 
 
-class Submission extends React.Component<SubmitStepsProps> {
-    constructor(props: SubmitStepsProps) {
+class SubmissionDialog extends React.Component<SubmissionDialogProps> {
+    constructor(props: SubmissionDialogProps) {
         super(props);
     }
 
@@ -83,7 +82,6 @@ class Submission extends React.Component<SubmitStepsProps> {
     handleFileSubmit = () => {
         this.props.onFileSubmit();
         this.props.onClearForm();
-        this.props.onSubmissionsChange();
         this.props.onClose();
     };
 
@@ -169,4 +167,4 @@ class Submission extends React.Component<SubmitStepsProps> {
 }
 
 
-export default withStyles(styles)(Submission);
+export default withStyles(styles)(SubmissionDialog);

@@ -11,14 +11,15 @@ import {
     updateSubmissionId,
     SEND_SUBMISSION,
     _sendSubmission,
-    UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION,
-    _updateSubmissionFilesForSubmission,
     UPDATE_SUBMISSIONS_FOR_USER,
-    _updateSubmissionsForUser, CLEAR_SUBMISSION_FORM, clearSubmissionForm,
+    _updateSubmissionsForUser,
+    CLEAR_SUBMISSION_FORM,
+    clearSubmissionForm, UPDATE_SUBMISSION,
+    _updateSubmission,
 }
     from "./submissionActions";
 
-describe("submitActions", () => {
+describe("submissionActions", () => {
     it("openSubmitActions", () => {
         const expectedAction = {
             type: OPEN_SUBMIT_STEPS,
@@ -88,13 +89,23 @@ describe("submitActions", () => {
         expect(_updateSubmissionsForUser([])).toEqual(expectedAction);
     });
 
-    it("_updateSubmissionFilesForSubmission", () => {
-        const expectedAction = {
-            type: UPDATE_SUBMISSIONSFILES_FOR_SUBMISSION,
-            submissionFiles: [],
+    it("_updateSubmission", () => {
+        const submission = {
+            submission_id: '',
+            user_id: 0,
+            date: '',
+            status: '',
+            files: [],
+            file_refs: [],
         };
 
-        expect(_updateSubmissionFilesForSubmission([])).toEqual(expectedAction);
+
+        const expectedAction = {
+            type: UPDATE_SUBMISSION,
+            submission,
+        };
+
+        expect(_updateSubmission(submission)).toEqual(expectedAction);
     });
 
 });
