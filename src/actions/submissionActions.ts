@@ -493,30 +493,11 @@ export function deleteSubmissionFile(submissionId: string, submissionFileIndex: 
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
 
-        const user = state.sessionState.user;
-
-        let userid = 0;
-        if (user) {
-            userid = user.id;
-        }
-
         return api.deleteSubmissionFile(apiServerUrl, submissionId, submissionFileIndex)
             .then(() => {
                 api.getSubmission(apiServerUrl, submissionId)
                     .then((submission: Submission) => {
                         dispatch(_updateSubmission(submission));
-                    })
-                    .then(() => {
-                        return api.getSubmissionsForUser(apiServerUrl, userid)
-                            .then((submissions: Submission[]) => {
-                                dispatch(_updateSubmissionsForUser(submissions));
-                            })
-                    })
-            })
-            .then(() => {
-                return api.getSubmissionFile(apiServerUrl, submissionId, submissionFileIndex)
-                    .then((submissionFile: SubmissionFile) => {
-                        dispatch(_updateCurrentSubmissionFile(submissionFile));
                     })
             })
             .then(() => {
