@@ -9,6 +9,7 @@ import SubmissionFilesTable from "./SubmissionFilesTable";
 import SubmissionDialog from "./SubmissionDialog";
 import SubmissionIssueDialog from "./SubmissionIssueDialog";
 import YesNoAlert from "./YesNoAlert";
+import { User } from "../../model/User";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -67,6 +68,8 @@ interface SubmissionPanelProps extends WithStyles<typeof styles> {
     sendSubmission: () => void;
 
     clearSubmissionForm: () => void;
+
+    user: User;
 }
 
 
@@ -77,22 +80,18 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
 
     handleApproveSubmission = (selectedSubmissionId: string) => {
         this.props.setSubmissionStatus(selectedSubmissionId, 'APPROVED');
-        this.props.updateSubmissionsForUser();
     };
 
     handleRejectSubmission = (selectedSubmissionId: string) => {
         this.props.setSubmissionStatus(selectedSubmissionId, 'REJECTED');
-        this.props.updateSubmissionsForUser();
     };
 
     handleHaltSubmission = (selectedSubmissionId: string) => {
         this.props.setSubmissionStatus(selectedSubmissionId, 'HALTED');
-        this.props.updateSubmissionsForUser();
     };
 
     handleRestartSubmission = (selectedSubmissionId: string) => {
         this.props.setSubmissionStatus(selectedSubmissionId, 'SUBMITTED');
-        this.props.updateSubmissionsForUser();
     };
 
     handleSendSubmission = () => {
@@ -111,17 +110,12 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
     };
 
     handleDeleteSubmissionFile = (submissionId: string, submissionFileIndex: number) => {
-        this.props.openDeleteSubmissionFileAlert();
-        // this.props.deleteSubmissionFile(submissionId, submissionFileIndex);
-        // this.props.updateSelectedSubmission(submissionId);
-        // this.props.openSubmissionFilesTable();
+        this.props.deleteSubmissionFile(submissionId, submissionFileIndex);
     };
 
     handleDeleteSubmissionFileAlertAgree = () => {
         this.props.closeDeleteSubmissionFileAlert();
         // this.props.deleteSubmissionFile(submissionId, submissionFileIndex);
-        // this.props.updateSelectedSubmission(submissionId);
-        // this.props.openSubmissionFilesTable();
     };
 
     render() {
@@ -163,6 +157,8 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     onSubmissionRestart={this.handleRestartSubmission}
 
                     onSubmissionDialogOpen={this.props.openSubmissionDialog}
+
+                    user={this.props.user}
                 />
                 <SubmissionFilesTable
                     onClose={this.props.closeSubmissionFilesTable}

@@ -9,6 +9,7 @@ import { dataReducer } from "./dataReducer";
 import { dataTableReducer } from "./dataTableReducer";
 import { advancedSearchReducer } from "./advancedSearchReducer";
 import { submissionReducer } from "./submissionReducer";
+import { alertReducer } from "./alertReducer";
 
 export const appReducer = combineReducers(
     {
@@ -17,6 +18,7 @@ export const appReducer = combineReducers(
         searchFormState: findReducer,
         searchMapState: searchMapReducer,
         messageLogState: messageLogReducer,
+        alertState: alertReducer,
         sessionState: sessionReducer,
         dataState: dataReducer,
         dataTableState: dataTableReducer,

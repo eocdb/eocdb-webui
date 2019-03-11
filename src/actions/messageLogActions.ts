@@ -29,6 +29,5 @@ export function hideMessage(messageId: number): HideMessage {
     return {type: HIDE_MESSAGE, messageId};
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type MessageLogAction = PostMessage | HideMessage;

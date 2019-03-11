@@ -17,3 +17,16 @@ export function newMessageLogState() {
         oldEntries: [],
     }
 }
+
+
+export interface AlertState {
+    open: boolean;
+    alertId: number;
+}
+
+export function newAlertState () {
+    return {
+        open: false,
+        alertId: 1,
+    }
+}

@@ -15,6 +15,7 @@ import Icon from '@material-ui/core/Icon/Icon';
 import Chip from "@material-ui/core/Chip";
 
 import { Submission } from "../../model";
+import { User } from "../../model/User";
 
 
 const styles = (theme: Theme) => createStyles(
@@ -49,6 +50,8 @@ interface SubmissionTableProps extends WithStyles<typeof styles> {
     onSubmissionRestart: (selectedSubmissionId: string) => void;
 
     submissionsValue: Submission[];
+
+    user: User;
 }
 
 
@@ -76,7 +79,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
             return null;
         }
 
-        const {classes, submissionsValue} = this.props;
+        const {classes, submissionsValue, user} = this.props;
 
         return (
             <div>
@@ -131,7 +134,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                             >
                                                 <Icon className={classes.rightIcon}>list</Icon>
                                             </Button>
-                                            {row.status !== 'SUBMITTED' ?
+                                            {row.status === 'HALTED' ?
                                                 <Button
                                                     onClick={() => this.props.onSubmissionRestart(
                                                         row.submission_id
@@ -153,6 +156,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                                 onClick={() => this.props.onSubmissionApprove(
                                                     row.submission_id
                                                 )}
+                                                disabled={user.roles.indexOf('admin') === -1}
                                             >
                                                 <Icon className={classes.rightIcon}>done</Icon>
                                             </Button>
@@ -160,6 +164,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                                 onClick={() => this.props.onSubmissionReject(
                                                     row.submission_id
                                                 )}
+                                                disabled={user.roles.indexOf('admin') === -1}
                                             >
                                                 <Icon className={classes.rightIcon}>clear</Icon>
                                             </Button>

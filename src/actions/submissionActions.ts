@@ -400,15 +400,29 @@ export function _updateSubmission(submission: Submission): UpdateSubmission {
 }
 
 export function updateSubmission(submissionId: string) {
-    return (dispatch: Dispatch<UpdateSubmission | MessageLogAction>, getState: ()
+    return (dispatch: Dispatch<UpdateSubmission | UpdateSubmissionsForUser | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
+
+        const user = state.sessionState.user;
+
+        let userid = 0;
+        if (user) {
+            userid = user.id;
+        }
+        console.log(userid);
         //const submissionId = state.submissionState.submissionId;
 
         return api.getSubmission(apiServerUrl, submissionId)
             .then((submission: Submission) => {
                 dispatch(_updateSubmission(submission));
+            })
+            .then(() => {
+                return api.getSubmissionsForUser(apiServerUrl, userid)
+                    .then((submissions: Submission[]) => {
+                        dispatch(_updateSubmissionsForUser(submissions));
+                    })
             })
             .then(() => {
                 dispatch(postMessage('success', 'Submission Loaded'))
@@ -441,14 +455,27 @@ export function _setSubmissionStatus(submissionId: string, status: string): SetS
 }
 
 export function setSubmissionStatus(submissionId: string, status: string) {
-    return (dispatch: Dispatch<SetSubmissionStatus | MessageLogAction>, getState: ()
+    return (dispatch: Dispatch<SetSubmissionStatus | UpdateSubmissionsForUser | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
 
+        const user = state.sessionState.user;
+
+        let userid = 0;
+        if (user) {
+            userid = user.id;
+        }
+
         return api.setSubmissionStatus(apiServerUrl, submissionId, status)
             .then(() => {
                 dispatch(postMessage("success", 'Status set to ' + status));
+            })
+            .then(() => {
+                return api.getSubmissionsForUser(apiServerUrl, userid)
+                    .then((submissions: Submission[]) => {
+                        dispatch(_updateSubmissionsForUser(submissions));
+                    })
             })
             .catch((error: string) => {
                 dispatch(postMessage('error', error + ''));
@@ -461,12 +488,37 @@ export function setSubmissionStatus(submissionId: string, status: string) {
 
 
 export function deleteSubmissionFile(submissionId: string, submissionFileIndex: number) {
-    return (dispatch: Dispatch<MessageLogAction>, getState: ()
+    return (dispatch: Dispatch<UpdateSubmission | UpdateSubmissionsForUser | UpdateCurrentSubmissionFile | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
 
+        const user = state.sessionState.user;
+
+        let userid = 0;
+        if (user) {
+            userid = user.id;
+        }
+
         return api.deleteSubmissionFile(apiServerUrl, submissionId, submissionFileIndex)
+            .then(() => {
+                api.getSubmission(apiServerUrl, submissionId)
+                    .then((submission: Submission) => {
+                        dispatch(_updateSubmission(submission));
+                    })
+                    .then(() => {
+                        return api.getSubmissionsForUser(apiServerUrl, userid)
+                            .then((submissions: Submission[]) => {
+                                dispatch(_updateSubmissionsForUser(submissions));
+                            })
+                    })
+            })
+            .then(() => {
+                return api.getSubmissionFile(apiServerUrl, submissionId, submissionFileIndex)
+                    .then((submissionFile: SubmissionFile) => {
+                        dispatch(_updateCurrentSubmissionFile(submissionFile));
+                    })
+            })
             .then(() => {
                 dispatch(postMessage("success", 'File Deleted'));
             })

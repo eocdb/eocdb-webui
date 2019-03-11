@@ -43,6 +43,8 @@ const mapStateToProps = (state: AppState) => {
         selectedPath: state.submissionState.path,
         selectedDataFiles: state.submissionState.dataFiles,
         selectedDocFiles: state.submissionState.docFiles,
+
+        user: state.sessionState.user,
     };
 };
 
