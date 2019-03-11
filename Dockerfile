@@ -17,8 +17,10 @@
 FROM node:latest as build-deps
 WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
+
+RUN yarn self-update
 RUN yarn --version
-RUN yarn install --network-concurrency 1
+RUN yarn install --network-concurrency 1 --network-timeout 1000000
 COPY . ./
 RUN yarn build
 
