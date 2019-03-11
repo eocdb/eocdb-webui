@@ -18,7 +18,7 @@ FROM node:latest as build-deps
 WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
 RUN yarn --version
-RUN yarn
+RUN yarn install --network-concurrency 1
 COPY . ./
 RUN yarn build
 
