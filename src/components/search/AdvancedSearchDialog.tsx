@@ -130,7 +130,6 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
 
         return (
             <Dialog
-                fullScreen
                 open={this.props.open}
                 onClose={this.props.onClose}
                 TransitionComponent={Transition}
@@ -186,7 +185,14 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                                 variant="contained"
                                 color="secondary"
                         >
-                            Close
+                            Apply
+                        </Button>
+                        <Button onClick={this.props.onClose}
+                                aria-label="Close"
+                                variant="contained"
+                                color="secondary"
+                        >
+                            Cancel
                         </Button>
                     </DialogActions>
                 </div>

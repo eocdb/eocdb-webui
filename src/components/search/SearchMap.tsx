@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
-import { FeatureGroup, Map, Marker, Popup, TileLayer } from 'react-leaflet'
+import { FeatureGroup, Map, Marker, Popup, Rectangle, TileLayer } from 'react-leaflet'
 import { geoJSON, Icon, LatLng, LatLngBounds } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 import MarkerClusterGroup from "react-leaflet-markercluster";
@@ -33,6 +33,7 @@ interface SearchMapProps extends WithStyles<typeof styles> {
 
     updateSelectedDatasets: (selectedDatasets: string[], selectedBounds?: LatLngBounds) => void;
     selectedDatasets: string[];
+
     selectedBounds?: LatLngBounds;
 }
 
@@ -176,6 +177,11 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                         onDeleteStart={this.handleGeometryDeleteStart}
                         onDeleteStop={this.handleGeometryDeleteStop}
                     />
+                    {
+                        this.props.selectedBounds ?
+                            <Rectangle bounds={this.props.selectedBounds}/>
+                            : ''
+                    }
                 </FeatureGroup>
             </Map>
         );

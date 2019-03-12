@@ -16,6 +16,8 @@ import Chip from "@material-ui/core/Chip";
 
 import { Submission } from "../../model";
 import { User } from "../../model/User";
+import SingleFileUpload from "./SingleFileUpload";
+
 
 
 const styles = (theme: Theme) => createStyles(
@@ -168,6 +170,12 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                             >
                                                 <Icon className={classes.rightIcon}>clear</Icon>
                                             </Button>
+                                            <SingleFileUpload
+                                                label={'Add'}
+                                                onCancel={() => {console.log('Cancel')}}
+                                                onSave={() => {console.log('Save')}}
+                                                open={true}
+                                            />
                                         </TableCell>
                                     </TableRow>
                                 );

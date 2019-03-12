@@ -109,13 +109,18 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
         this.props.openSubmissionFileIssueDialog();
     };
 
-    handleDeleteSubmissionFile = (submissionId: string, submissionFileIndex: number) => {
-        this.props.deleteSubmissionFile(submissionId, submissionFileIndex);
+    handleDeleteSubmissionFileAlertCancel = () => {
+        this.props.closeDeleteSubmissionFileAlert();
     };
 
-    handleDeleteSubmissionFileAlertAgree = () => {
+    handleDeleteSubmissionFileAlertAgree = (submissionFile: SubmissionFile) => {
         this.props.closeDeleteSubmissionFileAlert();
-        // this.props.deleteSubmissionFile(submissionId, submissionFileIndex);
+        this.props.deleteSubmissionFile(submissionFile.submission_id, submissionFile.index);
+    };
+
+    handleDeleteSubmissionFile = (submissionId: string, submissionFileIndex: number) => {
+        this.props.updateSelectedSubmissionFile(submissionId, submissionFileIndex);
+        this.props.openDeleteSubmissionFileAlert();
     };
 
     render() {
@@ -177,8 +182,10 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                 />
                 <YesNoAlert
                     open={this.props.deleteSubmissionFileAlertOpen}
-                    onClose={this.props.closeDeleteSubmissionFileAlert}
+                    onClose={this.handleDeleteSubmissionFileAlertCancel}
                     onAgree={this.handleDeleteSubmissionFileAlertAgree}
+
+                    value={this.props.selectedSubmissionFile}
                 >
                     Do you really want to delete?
                 </YesNoAlert>

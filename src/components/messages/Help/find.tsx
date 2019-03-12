@@ -1,7 +1,7 @@
 import { List, ListItem, Typography } from "@material-ui/core";
 import * as React from "react";
+
 import SyntaxHighlighter from 'react-syntax-highlighter';
-//import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 export const FindHelpText = (
     <div>
@@ -32,7 +32,8 @@ export const FindHelpText = (
         </SyntaxHighlighter>
 
         <Typography variant={"body1"} gutterBottom>
-            Another typical search is to apply wildcard searches. You can use the wildcard character '?' (single character)
+            Another typical search is to apply wildcard searches. You can use the wildcard character '?' (single
+            character)
             or '*' (multiple characters).
         </Typography>
         <SyntaxHighlighter language='javascript'>

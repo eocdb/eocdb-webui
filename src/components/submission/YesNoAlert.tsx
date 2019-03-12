@@ -13,16 +13,22 @@ import {
 
 const styles = createStyles({root: {}});
 
-interface YesNoAlertProperties extends WithStyles<typeof styles>{
+interface YesNoAlertProperties<T> extends WithStyles<typeof styles>{
     open: boolean;
     onClose: () => void;
-    onAgree: () => void;
+    onAgree: (value: T) => void;
+
+    value: T;
 }
 
-class YesNoAlert extends React.Component<YesNoAlertProperties> {
-    constructor(props: YesNoAlertProperties) {
+class YesNoAlert<T> extends React.Component<YesNoAlertProperties<T>> {
+    constructor(props: YesNoAlertProperties<T>) {
         super(props);
     }
+
+    handleAgree = (value: T) => {
+        this.props.onAgree(value)
+    };
 
     render() {
         return (
@@ -42,7 +48,7 @@ class YesNoAlert extends React.Component<YesNoAlertProperties> {
                     <Button onClick={this.props.onClose} color="primary">
                         Disagree
                     </Button>
-                    <Button onClick={this.props.onAgree} color="primary" autoFocus>
+                    <Button onClick={() => this.handleAgree(this.props.value)} color="primary" autoFocus>
                         Agree
                     </Button>
                 </DialogActions>

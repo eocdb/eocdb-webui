@@ -28,8 +28,6 @@ import { BBoxValue } from "./BBoxInput";
 import { SliderRange } from "../../types/advancedSearchDialog";
 
 
-
-
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({
     searchField: {
@@ -105,6 +103,13 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                 startDate: null,
                 endDate: null,
                 productGroupNames: [],
+                region: undefined,
+                productMode: undefined,
+                productNames: [],
+                measurementType: undefined,
+                wavelengthsMode: undefined,
+                wdepth: undefined,
+                shallow: undefined,
             }
         );
     };
