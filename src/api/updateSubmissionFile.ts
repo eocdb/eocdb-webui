@@ -34,6 +34,7 @@ export function updateSubmissionFile(
         undefined,
         {
             method: 'PUT',
+            body: formData,
         }
     );
 }

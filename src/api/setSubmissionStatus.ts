@@ -4,15 +4,13 @@ import { callApi } from "./callApi";
 export function setSubmissionStatus(apiServerUrl: string, submissionId: string, status: string):
     Promise<Response>{
 
+
     return callApi(
-        apiServerUrl + '/store/upload/status/' + submissionId + '/' + status,
+        apiServerUrl + '/store/status/submission/' + submissionId,
         undefined,
         {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
             method: 'PUT',
-        }
+            body: JSON.stringify({status: status}),
+        },
     );
 }

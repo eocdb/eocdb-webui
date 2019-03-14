@@ -5,10 +5,12 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle,
+    DialogTitle, Icon, List, ListItem, ListItemIcon, Typography,
     withStyles,
     WithStyles
 } from "@material-ui/core";
+
+import FolderIcon from '@material-ui/icons/Folder';
 
 import Dropzone from "react-dropzone";
 
@@ -18,7 +20,18 @@ const styles = createStyles({
     appBar: {
         position: 'relative',
     },
+    dropzone: {
+        textAlign: 'center',
+        //borderRadius: '25px',
+        border: '4px solid #C8C8C8',
+        borderStyle: 'dashed',
+        padding: '2em',
+        width: '100%',
+        height: '10%',
+        backgroundColor: "#F0F0F0",
+    }
 });
+
 
 interface SingleFileUploadProps<T> extends WithStyles<typeof styles> {
     label: string;
@@ -32,6 +45,7 @@ interface SingleFileUploadProps<T> extends WithStyles<typeof styles> {
 
 interface SingleFileUploadState {
     files: File[];
+    color: string;
 }
 
 
@@ -40,7 +54,8 @@ class SingleFileUpload<T> extends React.Component<SingleFileUploadProps<T>, Sing
         super(props);
 
         this.state = {
-            files: []
+            files: [],
+            color: '#F0F0F0',
         }
     }
 
@@ -48,24 +63,47 @@ class SingleFileUpload<T> extends React.Component<SingleFileUploadProps<T>, Sing
         this.props.onCancel();
     };
 
-    handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.value);
-        //this.setState({file: event.target.value})
+    handleOnDrop = (files: File[]) => {
+        this.setState({files: files, color: '#F0F0F0'});
     };
 
-    handleOnDrop = (files: File[]) => {
-        console.log(files);
+    handleDragOver = () => {
+        this.setState({color: '#35dd65'});
+    };
+
+    handleFileDelete = (fileName: string) => {
+        const files = this.state.files;
+        const index = files.findIndex(f => f.name === fileName); //find index in your array
+
+        files.splice(index, 1);
+
+        this.setState({files: files});
+
+        if (files.length == 0) {
+            this.setState({color: '#F0F0F0'});
+        }
     };
 
     render() {
         const {classes} = this.props;
 
-       /* const files = this.state.files.map((file: File) => (
-            <li key={file.name}>
+        const files = this.state.files.map((file: File) => (
+            <ListItem key={'item_' + file.name}>
+                <ListItemIcon key={'item_icon_' + file.name}>
+                    <FolderIcon key={'item_icon_folder' + file.name}/>
+                </ListItemIcon>
                 {file.name} - {file.size} bytes
-            </li>
+                <Button
+                    key={'button_' + file.name}
+                    onClick={() => this.handleFileDelete(
+                        file.name
+                    )}
+                >
+                    <Icon key={'item_icon_delete' + file.name}>delete</Icon>
+                </Button>
+            </ListItem>
         ));
-*/
+
         return (
             <Dialog
                 open={this.props.open}
@@ -73,26 +111,33 @@ class SingleFileUpload<T> extends React.Component<SingleFileUploadProps<T>, Sing
             >
                 <DialogTitle id="form-dialog-title">Upload new Submission File</DialogTitle>
                 <DialogContent>
-                    <Dropzone onDrop={this.handleOnDrop}>
-                        {({getRootProps, getInputProps}) => (
+                    <Dropzone
+                        onDrop={this.handleOnDrop}
+                        onDragEnter={this.handleDragOver}
+                        accept={'.sb'}
+                    >
+                        {({getRootProps, getInputProps, isDragActive, isDragReject}: any) => (
                             <section>
-                                <div {...getRootProps()}>
+                                <div style={{backgroundColor: isDragReject ? 'red' : '#F0F0F0"'}}
+                                     className={classes.dropzone} {...getRootProps()}>
                                     <input {...getInputProps()} />
-                                    <p>Drag 'n' drop some files here, or click to select files</p>
+                                    <Typography component={'p'}>
+                                        Drag 'n' drop your file here, or click to select
+                                    </Typography>
+                                    <Icon style={{color: '#909090'}}>cloud_upload</Icon>
                                 </div>
-                                <aside>
-                                    <h4>Files</h4>
-                                    <ul>{this.state.files}</ul>
-                                </aside>
+                                <List dense>
+                                    {files}
+                                </List>
                             </section>
                         )}
                     </Dropzone>
                 </DialogContent>
                 <DialogActions className={classes.appBar}>
-                    <Button onClick={this.props.onCancel} color="primary">
+                    <Button key={'Cancel'} onClick={this.props.onCancel} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={() => this.handleOnSave(this.props.value)} color="primary">
+                    <Button key={'Save'} onClick={() => this.handleOnSave(this.props.value)} color="primary">
                         Save
                     </Button>
                 </DialogActions>
