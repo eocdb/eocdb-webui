@@ -4,11 +4,14 @@ import { AppState } from "../../states/appState";
 import {
     clearSubmissionForm,
     closeDeleteSubmissionFilesAlert,
+    closeDeleteSubmissionAlert,
     closeSubmissionFilesDialog,
     closeSubmissionIssuesDialog,
     closeSubmitSteps,
+    deleteSubmission,
     deleteSubmissionFile,
     openDeleteSubmissionFilesAlert,
+    openDeleteSubmissionAlert,
     openSubmissionFilesDialog,
     openSubmissionIssuesDialog,
     openSubmitSteps,
@@ -17,10 +20,11 @@ import {
     updateDataFiles,
     updateDocFiles,
     updatePath,
-    updateSubmission,
-    updateSubmissionFile,
     updateSubmissionId,
-    updateSubmissionsForUser
+    getSubmissionFile,
+    getSubmission,
+    getSubmissionsForUser,
+    openUploadSubmissionFileDialog, closeUploadSubmissionFileDialog
 } from "../../actions/submissionActions";
 import SubmissionPanel from "../../components/submission/SubmissionPanel";
 
@@ -31,6 +35,8 @@ const mapStateToProps = (state: AppState) => {
         submissionFilesTableOpen: state.submissionState.submissionFilesDialogOpen,
         submissionFileIssueDialogOpen: state.submissionState.submissionFileIssueDialogOpen,
         deleteSubmissionFileAlertOpen: state.submissionState.deleteSubmissionFileAlertOpen,
+        deleteSubmissionAlertOpen: state.submissionState.deleteSubmissionAlertOpen,
+        uploadSubmissionFileDialogOpen: state.submissionState.uploadSubmissionFileDialogOpen,
 
         submissionsForUser: state.submissionState.foundSubmissions,
 
@@ -62,10 +68,18 @@ const mapDispatchToProps = {
     openDeleteSubmissionFileAlert: openDeleteSubmissionFilesAlert,
     closeDeleteSubmissionFileAlert: closeDeleteSubmissionFilesAlert,
 
-    updateSubmissionsForUser,
+    openDeleteSubmissionAlert,
+    closeDeleteSubmissionAlert,
 
-    updateSelectedSubmission:  updateSubmission,
-    updateSelectedSubmissionFile: updateSubmissionFile,
+    openUploadSubmissionFileDialog,
+    closeUploadSubmissionFileDialog,
+
+    updateSubmissionsForUser: getSubmissionsForUser,
+
+    updateSelectedSubmission:  getSubmission,
+    updateSelectedSubmissionFile: getSubmissionFile,
+
+    deleteSubmission,
 
     setSubmissionStatus,
 

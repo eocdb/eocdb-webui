@@ -7,6 +7,8 @@ describe('submitState', () => {
             submissionFilesDialogOpen: false,
             submissionFileIssueDialogOpen: false,
             deleteSubmissionFileAlertOpen: false,
+            deleteSubmissionAlertOpen: false,
+            uploadSubmissionFileDialogOpen: false,
 
             submissionId: '',
             dataFiles: [],

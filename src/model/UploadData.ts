@@ -3,4 +3,5 @@ export interface UploadData {
     docFiles: File[];
     submissionId: string;
     path: string;
+    username: string;
 }

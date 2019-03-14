@@ -12,10 +12,10 @@ import {
     SEND_SUBMISSION,
     _sendSubmission,
     UPDATE_SUBMISSIONS_FOR_USER,
-    _updateSubmissionsForUser,
+    updateSubmissionsForUser,
     CLEAR_SUBMISSION_FORM,
     clearSubmissionForm, UPDATE_SUBMISSION,
-    _updateSubmission,
+    updateSubmission,
 }
     from "./submissionActions";
 
@@ -86,7 +86,7 @@ describe("submissionActions", () => {
             submissions: [],
         };
 
-        expect(_updateSubmissionsForUser([])).toEqual(expectedAction);
+        expect(updateSubmissionsForUser([])).toEqual(expectedAction);
     });
 
     it("_updateSubmission", () => {
@@ -105,7 +105,7 @@ describe("submissionActions", () => {
             submission,
         };
 
-        expect(_updateSubmission(submission)).toEqual(expectedAction);
+        expect(updateSubmission(submission)).toEqual(expectedAction);
     });
 
 });

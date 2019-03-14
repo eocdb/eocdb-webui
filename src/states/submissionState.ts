@@ -5,6 +5,8 @@ export interface SubmissionState {
     submissionFilesDialogOpen: boolean;
     submissionFileIssueDialogOpen: boolean;
     deleteSubmissionFileAlertOpen: boolean;
+    deleteSubmissionAlertOpen: boolean,
+    uploadSubmissionFileDialogOpen: boolean,
 
     selectedSubmission: Submission;
     selectedSubmissionFile: SubmissionFile;
@@ -31,6 +33,8 @@ export function newSubmissionState() {
         submissionFilesDialogOpen: false,
         submissionFileIssueDialogOpen: false,
         deleteSubmissionFileAlertOpen: false,
+        deleteSubmissionAlertOpen: false,
+        uploadSubmissionFileDialogOpen: false,
 
         submissionId: '',
         dataFiles: [],

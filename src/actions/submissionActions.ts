@@ -108,6 +108,68 @@ export function closeDeleteSubmissionFilesAlert(): CloseDeleteSubmissionFilesAle
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const OPEN_DELETE_SUBMISSION_ALERT = 'OPEN_DELETE_SUBMISSION_ALERT';
+export type OPEN_DELETE_SUBMISSION_ALERT = typeof OPEN_DELETE_SUBMISSION_ALERT;
+
+
+export interface OpenDeleteSubmissionAlert {
+    type: OPEN_DELETE_SUBMISSION_ALERT;
+}
+
+export function openDeleteSubmissionAlert(): OpenDeleteSubmissionAlert {
+    return {
+        type: OPEN_DELETE_SUBMISSION_ALERT
+    }
+}
+
+
+export const CLOSE_DELETE_SUBMISSION_ALERT = 'CLOSE_DELETE_SUBMISSION_ALERT';
+export type CLOSE_DELETE_SUBMISSION_ALERT = typeof CLOSE_DELETE_SUBMISSION_ALERT;
+
+
+export interface CloseDeleteSubmissionAlert {
+    type: CLOSE_DELETE_SUBMISSION_ALERT;
+}
+
+export function closeDeleteSubmissionAlert(): CloseDeleteSubmissionAlert {
+    return {
+        type: CLOSE_DELETE_SUBMISSION_ALERT
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const OPEN_UPLOAD_SUBMISSION_FILE_DIALOG = 'OPEN_UPLOAD_SUBMISSION_FILE_DIALOG';
+export type OPEN_UPLOAD_SUBMISSION_FILE_DIALOG = typeof OPEN_UPLOAD_SUBMISSION_FILE_DIALOG;
+
+
+export interface OpenUploadSubmissionFileDialog {
+    type: OPEN_UPLOAD_SUBMISSION_FILE_DIALOG;
+}
+
+export function openUploadSubmissionFileDialog(): OpenUploadSubmissionFileDialog {
+    return {
+        type: OPEN_UPLOAD_SUBMISSION_FILE_DIALOG
+    }
+}
+
+
+export const CLOSE_UPLOAD_SUBMISSION_FILE_DIALOG = 'CLOSE_UPLOAD_SUBMISSION_FILE_DIALOG';
+export type CLOSE_UPLOAD_SUBMISSION_FILE_DIALOG = typeof CLOSE_UPLOAD_SUBMISSION_FILE_DIALOG;
+
+
+export interface CloseUploadSubmissionFileDialog {
+    type: CLOSE_UPLOAD_SUBMISSION_FILE_DIALOG;
+}
+
+export function closeUploadSubmissionFileDialog(): CloseUploadSubmissionFileDialog {
+    return {
+        type: CLOSE_UPLOAD_SUBMISSION_FILE_DIALOG
+    }
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -256,11 +318,16 @@ export function sendSubmission() {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
 
+        const user = state.sessionState.user;
+
+        const username = user ? user.name : '';
+
         const uploadData: UploadData = {
             dataFiles: state.submissionState.dataFiles,
             docFiles: state.submissionState.docFiles,
             submissionId: state.submissionState.submissionId,
             path: state.submissionState.path,
+            username: username,
         };
 
         return api.uploadStoreFiles(apiServerUrl, uploadData)
@@ -288,7 +355,7 @@ export interface UpdateSubmissionsForUser {
 }
 
 
-export function _updateSubmissionsForUser(submissions: Submission[]): UpdateSubmissionsForUser {
+export function updateSubmissionsForUser(submissions: Submission[]): UpdateSubmissionsForUser {
     return {
         type: UPDATE_SUBMISSIONS_FOR_USER,
         submissions
@@ -296,7 +363,7 @@ export function _updateSubmissionsForUser(submissions: Submission[]): UpdateSubm
 }
 
 
-export function updateSubmissionsForUser() {
+export function getSubmissionsForUser() {
     return (dispatch: Dispatch<UpdateSubmissionsForUser | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
@@ -310,7 +377,7 @@ export function updateSubmissionsForUser() {
 
         return api.getSubmissionsForUser(apiServerUrl, userid)
             .then((submissions: Submission[]) => {
-                dispatch(_updateSubmissionsForUser(submissions));
+                dispatch(updateSubmissionsForUser(submissions));
             })
             .then(() => {
                 dispatch(postMessage("success", 'Files Loaded'));
@@ -345,35 +412,70 @@ export function updateCurrentSubmissionFileIndex(currentSubmissionFileIndex: num
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-export const UPDATE_CURRENT_SUBMISSIONFILE = 'UPDATE_CURRENT_SUBMISSIONFILE';
-export type UPDATE_CURRENT_SUBMISSIONFILE = typeof UPDATE_CURRENT_SUBMISSIONFILE;
+export const UPDATE_SELECTED_SUBMISSIONFILE = 'UPDATE_SELECTED_SUBMISSIONFILE';
+export type UPDATE_SELECTED_SUBMISSIONFILE = typeof UPDATE_SELECTED_SUBMISSIONFILE;
 
-export interface UpdateCurrentSubmissionFile {
-    type: UPDATE_CURRENT_SUBMISSIONFILE;
-    currentSubmissionFile: SubmissionFile;
+export interface UpdateSelectedSubmissionFile {
+    type: UPDATE_SELECTED_SUBMISSIONFILE;
+    selectedSubmissionFile: SubmissionFile;
 }
 
-export function _updateCurrentSubmissionFile(currentSubmissionFile: SubmissionFile)
-    : UpdateCurrentSubmissionFile {
+export function updateSelectedSubmissionFile(selectedSubmissionFile: SubmissionFile)
+    : UpdateSelectedSubmissionFile {
     return {
-        type: UPDATE_CURRENT_SUBMISSIONFILE,
-        currentSubmissionFile,
+        type: UPDATE_SELECTED_SUBMISSIONFILE,
+        selectedSubmissionFile: selectedSubmissionFile,
     }
 }
 
 
-export function updateSubmissionFile(submissionId: string, submissionFileIndex: number) {
-    return (dispatch: Dispatch<UpdateCurrentSubmissionFile | MessageLogAction>, getState: ()
+export function getSubmissionFile(submissionId: string, submissionFileIndex: number) {
+    return (dispatch: Dispatch<UpdateSelectedSubmissionFile | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
 
         return api.getSubmissionFile(apiServerUrl, submissionId, submissionFileIndex)
             .then((submissionFile: SubmissionFile) => {
-                dispatch(_updateCurrentSubmissionFile(submissionFile));
+                dispatch(updateSelectedSubmissionFile(submissionFile));
             })
             .then(() => {
                 dispatch(postMessage('success', 'Submission File Loaded'))
+            })
+            .catch((error: string) => {
+                dispatch(postMessage('error', error + ''));
+            });
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+export function updateSubmissionFile(submissionFile: SubmissionFile, uploadData: UploadData) {
+    return (dispatch: Dispatch<UpdateSubmissionsForUser | MessageLogAction>, getState: ()
+        => AppState) => {
+        const state = getState();
+        const apiServerUrl = state.configState.apiServerUrl;
+
+        const {submission_id, index} = submissionFile;
+
+        const user = state.sessionState.user;
+
+        let userid = 0;
+        if (user) {
+            userid = user.id;
+        }
+
+        return api.updateSubmissionFile(apiServerUrl, submission_id, index, uploadData)
+            .then(() => {
+                api.getSubmissionsForUser(apiServerUrl, userid)
+                    .then((submissions: Submission[]) => {
+                        dispatch(updateSubmissionsForUser(submissions));
+                    })
+            })
+            .then(() => {
+                dispatch(postMessage('success', 'Submission File Uploaded'))
             })
             .catch((error: string) => {
                 dispatch(postMessage('error', error + ''));
@@ -392,14 +494,14 @@ export interface UpdateSubmission {
     submission: Submission;
 }
 
-export function _updateSubmission(submission: Submission): UpdateSubmission {
+export function updateSubmission(submission: Submission): UpdateSubmission {
     return {
         type: UPDATE_SUBMISSION,
         submission: submission,
     }
 }
 
-export function updateSubmission(submissionId: string) {
+export function getSubmission(submissionId: string) {
     return (dispatch: Dispatch<UpdateSubmission | UpdateSubmissionsForUser | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
@@ -411,17 +513,15 @@ export function updateSubmission(submissionId: string) {
         if (user) {
             userid = user.id;
         }
-        console.log(userid);
-        //const submissionId = state.submissionState.submissionId;
 
         return api.getSubmission(apiServerUrl, submissionId)
             .then((submission: Submission) => {
-                dispatch(_updateSubmission(submission));
+                dispatch(updateSubmission(submission));
             })
             .then(() => {
                 return api.getSubmissionsForUser(apiServerUrl, userid)
                     .then((submissions: Submission[]) => {
-                        dispatch(_updateSubmissionsForUser(submissions));
+                        dispatch(updateSubmissionsForUser(submissions));
                     })
             })
             .then(() => {
@@ -432,6 +532,39 @@ export function updateSubmission(submissionId: string) {
             });
     }
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+export function deleteSubmission(submissionId: string) {
+    return (dispatch: Dispatch<UpdateSubmissionsForUser | MessageLogAction>, getState: ()
+        => AppState) => {
+        const state = getState();
+        const apiServerUrl = state.configState.apiServerUrl;
+
+        const user = state.sessionState.user;
+
+        let userid = 0;
+        if (user) {
+            userid = user.id;
+        }
+
+        return api.deleteSubmission(apiServerUrl, submissionId)
+            .then(() => {
+                api.getSubmissionsForUser(apiServerUrl, userid)
+                    .then((submissions: Submission[]) => {
+                        dispatch(updateSubmissionsForUser(submissions));
+                    })
+            })
+            .then(() => {
+                dispatch(postMessage("success", 'Submission ' + submissionId + ' Deleted'));
+            })
+            .catch((error: string) => {
+                dispatch(postMessage('error', error + ''));
+            });
+    };
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -474,7 +607,7 @@ export function setSubmissionStatus(submissionId: string, status: string) {
             .then(() => {
                 return api.getSubmissionsForUser(apiServerUrl, userid)
                     .then((submissions: Submission[]) => {
-                        dispatch(_updateSubmissionsForUser(submissions));
+                        dispatch(updateSubmissionsForUser(submissions));
                     })
             })
             .catch((error: string) => {
@@ -488,7 +621,7 @@ export function setSubmissionStatus(submissionId: string, status: string) {
 
 
 export function deleteSubmissionFile(submissionId: string, submissionFileIndex: number) {
-    return (dispatch: Dispatch<UpdateSubmission | UpdateSubmissionsForUser | UpdateCurrentSubmissionFile | MessageLogAction>, getState: ()
+    return (dispatch: Dispatch<UpdateSubmission | UpdateSubmissionsForUser | UpdateSelectedSubmissionFile | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
@@ -497,7 +630,7 @@ export function deleteSubmissionFile(submissionId: string, submissionFileIndex: 
             .then(() => {
                 api.getSubmission(apiServerUrl, submissionId)
                     .then((submission: Submission) => {
-                        dispatch(_updateSubmission(submission));
+                        dispatch(updateSubmission(submission));
                     })
             })
             .then(() => {
@@ -518,6 +651,10 @@ export type SubmitAction = OpenSubmitSteps
     | CloseSubmissionIssuesDialog
     | OpenDeleteSubmissionFilesAlert
     | CloseDeleteSubmissionFilesAlert
+    | OpenDeleteSubmissionAlert
+    | CloseDeleteSubmissionAlert
+    | OpenUploadSubmissionFileDialog
+    | CloseUploadSubmissionFileDialog
     | UpdateSubmissionId
     | UpdatePath
     | UpdateDataFiles
@@ -526,5 +663,5 @@ export type SubmitAction = OpenSubmitSteps
     | UpdateSubmissionsForUser
     | UpdateSubmission
     | SendSubmission
-    | UpdateCurrentSubmissionFile
+    | UpdateSelectedSubmissionFile
     | UpdateCurrentSubmissionFileIndex;

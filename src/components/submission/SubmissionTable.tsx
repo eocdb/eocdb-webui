@@ -16,8 +16,6 @@ import Chip from "@material-ui/core/Chip";
 
 import { Submission } from "../../model";
 import { User } from "../../model/User";
-import SingleFileUpload from "./SingleFileUpload";
-
 
 
 const styles = (theme: Theme) => createStyles(
@@ -50,6 +48,7 @@ interface SubmissionTableProps extends WithStyles<typeof styles> {
     onSubmissionReject: (selectedSubmissionId: string) => void;
     onSubmissionHalt: (selectedSubmissionId: string) => void;
     onSubmissionRestart: (selectedSubmissionId: string) => void;
+    onSubmissionDelete: (selectedSubmissionId: string) => void;
 
     submissionsValue: Submission[];
 
@@ -170,12 +169,14 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                             >
                                                 <Icon className={classes.rightIcon}>clear</Icon>
                                             </Button>
-                                            <SingleFileUpload
-                                                label={'Add'}
-                                                onCancel={() => {console.log('Cancel')}}
-                                                onSave={() => {console.log('Save')}}
-                                                open={true}
-                                            />
+                                            <Button
+                                                onClick={() => this.props.onSubmissionDelete(
+                                                    row.submission_id
+                                                )}
+                                                disabled={user.roles.indexOf('admin') === -1}
+                                            >
+                                                <Icon className={classes.rightIcon}>delete</Icon>
+                                            </Button>
                                         </TableCell>
                                     </TableRow>
                                 );

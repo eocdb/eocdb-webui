@@ -12,7 +12,7 @@ import {
 import { configServer } from '../actions/configActions'
 import Dashboard from '../components/Dashboard';
 import { loginUser } from '../actions/userActions';
-import { updateSubmissionsForUser } from "../actions/submissionActions";
+import { getSubmissionsForUser } from "../actions/submissionActions";
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -35,7 +35,7 @@ const mapDispatchToProps = {
     loginUser,
     openRegistrationDialog,
 
-    updateSubmissions: updateSubmissionsForUser,
+    updateSubmissions: getSubmissionsForUser,
 
     apiServerUrlChange: configServer, // TODO: rename apiServerUrlChange --> configServer
 };

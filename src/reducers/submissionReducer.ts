@@ -13,12 +13,16 @@ import {
     CLOSE_SUBMISSION_FILES_DIALOG,
     OPEN_SUBMISSION_ISSUES_DIALOG,
     CLOSE_SUBMISSION_ISSUES_DIALOG,
-    UPDATE_CURRENT_SUBMISSIONFILE,
+    UPDATE_SELECTED_SUBMISSIONFILE,
     UPDATE_CURRENT_SUBMISSIONFILE_INDEX,
     CLEAR_SUBMISSION_FORM,
     SEND_SUBMISSION,
     OPEN_DELETE_SUBMISSION_FILES_ALERT,
-    CLOSE_DELETE_SUBMISSION_FILES_ALERT
+    CLOSE_DELETE_SUBMISSION_FILES_ALERT,
+    OPEN_DELETE_SUBMISSION_ALERT,
+    CLOSE_DELETE_SUBMISSION_ALERT,
+    OPEN_UPLOAD_SUBMISSION_FILE_DIALOG,
+    CLOSE_UPLOAD_SUBMISSION_FILE_DIALOG
 } from "../actions/submissionActions";
 
 
@@ -42,6 +46,14 @@ export function submissionReducer(state: SubmissionState = initialState, action:
             return {...state, deleteSubmissionFileAlertOpen: true};
         case CLOSE_DELETE_SUBMISSION_FILES_ALERT:
             return {...state, deleteSubmissionFileAlertOpen: false};
+        case OPEN_UPLOAD_SUBMISSION_FILE_DIALOG:
+            return {...state, uploadSubmissionFileDialogOpen: true};
+        case CLOSE_UPLOAD_SUBMISSION_FILE_DIALOG:
+            return {...state, uploadSubmissionFileDialogOpen: false};
+        case OPEN_DELETE_SUBMISSION_ALERT:
+            return {...state, deleteSubmissionAlertOpen: true};
+        case CLOSE_DELETE_SUBMISSION_ALERT:
+            return {...state, deleteSubmissionAlertOpen: false};
         case UPDATE_SUBMISSION_ID:
             return {...state, submissionId: action.submissionId};
         case UPDATE_SUBMISSION:
@@ -56,8 +68,8 @@ export function submissionReducer(state: SubmissionState = initialState, action:
             return {...state, docFiles: [], dataFiles: [], submissionId: '', path: ''};
         case UPDATE_SUBMISSIONS_FOR_USER:
             return {...state, foundSubmissions: action.submissions};
-        case UPDATE_CURRENT_SUBMISSIONFILE:
-            return {...state, selectedSubmissionFile: action.currentSubmissionFile};
+        case UPDATE_SELECTED_SUBMISSIONFILE:
+            return {...state, selectedSubmissionFile: action.selectedSubmissionFile};
         case UPDATE_CURRENT_SUBMISSIONFILE_INDEX:
             return {...state, currentSubmissionFileIndex: action.currentSubmissionFileIndex};
         case SEND_SUBMISSION:

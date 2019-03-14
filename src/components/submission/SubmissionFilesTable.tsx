@@ -3,7 +3,7 @@ import { Theme, withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
 import createStyles from "@material-ui/core/styles/createStyles";
-import { Input, WithStyles } from "@material-ui/core";
+import { WithStyles } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper/Paper";
 import Table from "@material-ui/core/Table/Table";
 import TableHead from "@material-ui/core/TableHead/TableHead";
@@ -43,8 +43,9 @@ export interface SubmissionFilesTableProps extends WithStyles<typeof styles> {
 
     submissionValue: Submission;
 
-    onSubmissionFileSelect: (submissionId: string, submissionFileIndex: number) => void;
-    onSubmissionFileDelete: (submissionId: string, submissionFileIndex: number) => void;
+    onSubmissionFileSelectClick: (submissionFile: SubmissionFile) => void;
+    onSubmissionFileDeleteClick: (submissionFile: SubmissionFile) => void;
+    onSubmissionFileUploadClick: (submissionFile: SubmissionFile) => void;
 }
 
 
@@ -112,25 +113,27 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                                     </TableCell>
                                     <TableCell>
                                         <Button
-                                            onClick={() => this.props.onSubmissionFileSelect(
-                                                row.submission_id,
-                                                row.index
+                                            onClick={() => this.props.onSubmissionFileSelectClick(
+                                                row
                                             )}
                                             disabled={row.filetype === 'DOCUMENT'}
                                         >
                                             <Icon className={classes.rightIcon}>list</Icon>
                                         </Button>
                                         <Button
-                                            onClick={() => this.props.onSubmissionFileDelete(
-                                                row.submission_id,
-                                                row.index
+                                            onClick={() => this.props.onSubmissionFileDeleteClick(
+                                                row
                                             )}
                                         >
                                             <Icon className={classes.rightIcon}>delete</Icon>
                                         </Button>
-                                        <Input
-                                            type={'file'}
-                                        />
+                                        <Button
+                                            onClick={() => this.props.onSubmissionFileUploadClick(
+                                                row
+                                            )}
+                                        >
+                                            <Icon className={classes.rightIcon}>cloud_upload</Icon>
+                                        </Button>
                                     </TableCell>
                                 </TableRow>
                             )

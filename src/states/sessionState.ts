@@ -1,7 +1,7 @@
 import { User } from '../model';
 import { UserRole } from "../types/user";
 
-const submitRole: UserRole = 'submit';
+const testRoles: UserRole[] = ['admin', 'submit'];
 
 export interface SessionState {
     user: User | null;
@@ -14,7 +14,7 @@ export function newSessionState() {
         user: {
             id: 8877827454,
             name: 'scott',
-            roles: [submitRole],
+            roles: testRoles,
             firstName: '',
             lastName: '',
             email: '',
