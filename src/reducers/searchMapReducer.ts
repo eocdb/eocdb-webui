@@ -1,5 +1,9 @@
 import { SearchMapState, newSearchMapState } from '../states/searchMapState';
-import { SearchMapAction, UPDATE_SELECTED_REGIONS } from '../actions/searchMapActions';
+import {
+    SearchMapAction,
+    UPDATE_SELECTED_REGION_FROM_ADVANCED,
+    UPDATE_SELECTED_REGIONS
+} from '../actions/searchMapActions';
 
 const initialState = newSearchMapState();
 
@@ -14,6 +18,8 @@ export function searchMapReducer(state: SearchMapState, action: SearchMapAction)
                 selectedRegions: action.selectedRegions,
                 selectedBounds: action.selectedBounds,
             };
+        case UPDATE_SELECTED_REGION_FROM_ADVANCED:
+            return {...state, selectedRectangleFromAdvancedDialog: action.selectedRegion}
     }
     return state;
 }

@@ -159,6 +159,10 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         });
     };
 
+    handleAdvancedSearchDialogBBoxChange = (selectedBBox: BBoxValue) => {
+        this.props.updateBBox(selectedBBox);
+    };
+
     render() {
         if (!this.props.show) {
             return null;
@@ -248,7 +252,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             onClose={this.props.closeAdvancedSearchDialog}
                             productItems={this.props.serverInfo['products']}
 
-                            onBBoxChange={this.props.updateBBox}
+                            onBBoxChange={this.handleAdvancedSearchDialogBBoxChange}
                             bboxValue={this.props.selectedBBox}
                             onWavelengthChange={this.props.updateWavelength}
                             wavelengthValue={this.props.selectedWavelength}

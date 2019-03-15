@@ -11,6 +11,7 @@ import { DatasetRef, QueryResult } from "../../model";
 
 import markerInv from './marker_inv.png';
 import marker from './marker.png';
+import { BBoxValue } from "./BBoxInput";
 
 // FIXME: forman did not find any typedefs for 'react-leaflet-draw', 2018.11.xx
 // import EditControl from "react-leaflet-draw";
@@ -35,6 +36,8 @@ interface SearchMapProps extends WithStyles<typeof styles> {
     selectedDatasets: string[];
 
     selectedBounds?: LatLngBounds;
+
+    selectedRectangleFromAdvancedDialog?: BBoxValue;
 }
 
 const DRAW_OPTIONS = {
@@ -132,8 +135,21 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         return bounds;
     };
 
+    getAdvancedBounds = () => {
+        const bbox = this.props.selectedRectangleFromAdvancedDialog;
+
+        console.log(bbox);
+        return bbox ? new LatLngBounds(
+            new LatLng(+bbox[0], +bbox[1]),
+            new LatLng(+bbox[2], +bbox[3]),
+            ) :
+            undefined;
+    };
+
     render() {
         const bounds = this.getBoundsFromDatasets();
+
+        const advancedRegion = this.getAdvancedBounds();
 
         const markerClusterGroup = (
             <MarkerClusterGroup
@@ -178,8 +194,8 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                         onDeleteStop={this.handleGeometryDeleteStop}
                     />
                     {
-                        this.props.selectedBounds ?
-                            <Rectangle bounds={this.props.selectedBounds}/>
+                        advancedRegion ?
+                            <Rectangle bounds={advancedRegion}/>
                             : ''
                     }
                 </FeatureGroup>
@@ -204,6 +220,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         const featureGroupRef = this.editableFeatureGroupRef;
         if (featureGroupRef && this.props.updateSelectedRegions) {
             const selectedRegion = featureGroupRef.leafletElement.toGeoJSON();
+            console.log(selectedRegion);
             const layer = e.layer;
             if (layer) {
                 this.props.updateSelectedRegions(selectedRegion, layer.getBounds());

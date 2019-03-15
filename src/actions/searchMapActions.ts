@@ -17,7 +17,21 @@ export function updateSelectedRegions(selectedRegions: GeoJsonObject, selectedBo
 }
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_SELECTED_REGION_FROM_ADVANCED = 'UPDATE_SELECTED_REGION_FROM_ADVANCED';
+export type UPDATE_SELECTED_REGION_FROM_ADVANCED = typeof UPDATE_SELECTED_REGION_FROM_ADVANCED;
+
+export interface UpdateSelectedRegionFromAdvanced {
+    type: UPDATE_SELECTED_REGION_FROM_ADVANCED;
+    selectedRegion: LatLngBounds;
+}
+
+export function updateSelectedRegionFromAdvanced(selectedRegion: LatLngBounds): UpdateSelectedRegionFromAdvanced {
+    return {type: UPDATE_SELECTED_REGION_FROM_ADVANCED, selectedRegion};
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type SearchMapAction = UpdateSelectedRegions;
+export type SearchMapAction = UpdateSelectedRegions | UpdateSelectedRegionFromAdvanced;

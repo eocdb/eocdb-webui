@@ -13,6 +13,7 @@ const mapStateToProps = (state: AppState) => {
         foundDatasets: state.searchFormState.foundDatasets,
         selectedDatasets: state.dataTableState.selectedDatasets,
         selectedBounds: state.dataTableState.selectedBounds,
+        selectedRectangleFromAdvancedDialog: state.advancedSearchState.selectedBBox,
     }
 };
 
