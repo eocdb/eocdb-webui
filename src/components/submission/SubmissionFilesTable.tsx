@@ -14,7 +14,6 @@ import Icon from "@material-ui/core/Icon/Icon";
 import { SubmissionFile } from "../../model";
 import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
-import { Submission } from "../../model/Submission";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -41,7 +40,7 @@ export interface SubmissionFilesTableProps extends WithStyles<typeof styles> {
     open: boolean;
     onClose: () => void;
 
-    submissionValue: Submission;
+    submissionFilesValue: SubmissionFile[];
 
     onSubmissionFileSelectClick: (submissionFile: SubmissionFile) => void;
     onSubmissionFileDeleteClick: (submissionFile: SubmissionFile) => void;
@@ -94,7 +93,7 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {this.props.submissionValue.files.map((row: SubmissionFile) => {
+                        {this.props.submissionFilesValue.map((row: SubmissionFile) => {
                             const colour = this.getColoutForStatus(row.status);
                             return (
                                 <TableRow key={row.filename}>

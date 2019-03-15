@@ -12,7 +12,7 @@ import {
 
 import FolderIcon from '@material-ui/icons/Folder';
 
-import Dropzone from "react-dropzone";
+import Dropzone, { DropzoneState } from "react-dropzone";
 
 
 const styles = createStyles({
@@ -37,7 +37,7 @@ interface SingleFileUploadProps<T> extends WithStyles<typeof styles> {
     label: string;
     open: boolean;
     onCancel: () => void;
-    onSave: (value: T, file: File) => void;
+    onSave: (value: T, file: File[]) => void;
 
     value: T;
 }
@@ -60,6 +60,7 @@ class SingleFileUpload<T> extends React.Component<SingleFileUploadProps<T>, Sing
     }
 
     handleOnSave = (value: T) => {
+        this.props.onSave(value, this.state.files);
         this.props.onCancel();
     };
 
@@ -114,9 +115,9 @@ class SingleFileUpload<T> extends React.Component<SingleFileUploadProps<T>, Sing
                     <Dropzone
                         onDrop={this.handleOnDrop}
                         onDragEnter={this.handleDragOver}
-                        accept={'.sb'}
+                        accept={'.sb, .dat, .txt'}
                     >
-                        {({getRootProps, getInputProps, isDragActive, isDragReject}: any) => (
+                        {({getRootProps, getInputProps, isDragActive, isDragReject}: DropzoneState) => (
                             <section>
                                 <div style={{backgroundColor: isDragReject ? 'red' : '#F0F0F0"'}}
                                      className={classes.dropzone} {...getRootProps()}>

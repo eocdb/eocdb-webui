@@ -48,7 +48,11 @@ interface SubmissionTableProps extends WithStyles<typeof styles> {
     onSubmissionReject: (selectedSubmissionId: string) => void;
     onSubmissionHalt: (selectedSubmissionId: string) => void;
     onSubmissionRestart: (selectedSubmissionId: string) => void;
+    onSubmissionSubmit: (selectedSubmissionId: string) => void;
     onSubmissionDelete: (selectedSubmissionId: string) => void;
+
+    onSubmissionReady: (selectedSubmissionId: string) => void;
+    onSubmissionPublish: (selectedSubmissionId: string) => void;
 
     submissionsValue: Submission[];
 
@@ -170,12 +174,36 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                                 <Icon className={classes.rightIcon}>clear</Icon>
                                             </Button>
                                             <Button
+                                                onClick={() => this.props.onSubmissionSubmit(
+                                                    row.submission_id
+                                                )}
+                                                disabled={user.roles.indexOf('admin') === -1}
+                                            >
+                                                <Icon className={classes.rightIcon}>submit</Icon>
+                                            </Button>
+                                            <Button
                                                 onClick={() => this.props.onSubmissionDelete(
                                                     row.submission_id
                                                 )}
                                                 disabled={user.roles.indexOf('admin') === -1}
                                             >
                                                 <Icon className={classes.rightIcon}>delete</Icon>
+                                            </Button>
+                                            <Button
+                                                onClick={() => this.props.onSubmissionReady(
+                                                    row.submission_id
+                                                )}
+                                                disabled={user.roles.indexOf('admin') === -1}
+                                            >
+                                                <Icon className={classes.rightIcon}>ready</Icon>
+                                            </Button>
+                                            <Button
+                                                onClick={() => this.props.onSubmissionPublish(
+                                                    row.submission_id
+                                                )}
+                                                disabled={user.roles.indexOf('admin') === -1}
+                                            >
+                                                <Icon className={classes.rightIcon}>publish</Icon>
                                             </Button>
                                         </TableCell>
                                     </TableRow>

@@ -1,18 +1,17 @@
 import { callApi } from './callApi';
 import { UploadData } from "../model/UploadData";
+import { SubmissionFile } from "../model/SubmissionFile";
 
 
 /**
  *
  * @param apiServerUrl: URL of the OCDB API
- * @param submissionId: ID of the submission
- * @param submissionFileIndex: Index of a submission file in a submission
+ * @param submissionFile: submission file
  * @param uploadData: interface to uploadData. Contains file names, user name, submission id, path
  */
 export function updateSubmissionFile(
     apiServerUrl: string,
-    submissionId: string,
-    submissionFileIndex: number,
+    submissionFile: SubmissionFile,
     uploadData: UploadData): Promise<Response> {
 
     let formData  = new FormData();
@@ -30,7 +29,7 @@ export function updateSubmissionFile(
     formData.append('username', uploadData.username);
 
     return callApi(
-        apiServerUrl + '/store/upload/submissionfile/' + submissionId + '/' + submissionFileIndex,
+        apiServerUrl + '/store/upload/submissionfile/' + submissionFile.submission_id + '/' + submissionFile.index,
         undefined,
         {
             method: 'PUT',

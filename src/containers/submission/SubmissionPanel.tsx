@@ -24,7 +24,9 @@ import {
     getSubmissionFile,
     getSubmission,
     getSubmissionsForUser,
-    openUploadSubmissionFileDialog, closeUploadSubmissionFileDialog
+    openUploadSubmissionFileDialog,
+    closeUploadSubmissionFileDialog,
+    updateSubmissionFile, updateSelectedSubmissionFile
 } from "../../actions/submissionActions";
 import SubmissionPanel from "../../components/submission/SubmissionPanel";
 
@@ -77,13 +79,13 @@ const mapDispatchToProps = {
     updateSubmissionsForUser: getSubmissionsForUser,
 
     updateSelectedSubmission:  getSubmission,
-    updateSelectedSubmissionFile: getSubmissionFile,
+    updateSelectedSubmissionFile,
+    getSelectedSubmissionFile: getSubmissionFile,
 
     deleteSubmission,
-
     setSubmissionStatus,
-
     deleteSubmissionFile,
+    uploadSubmissionFile: updateSubmissionFile,
 
     updateSubmissionId,
     updatePath,

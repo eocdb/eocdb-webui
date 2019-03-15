@@ -31,7 +31,7 @@ const initialState = newSubmissionState();
 export function submissionReducer(state: SubmissionState = initialState, action: SubmitAction) {
     switch (action.type) {
         case OPEN_SUBMIT_STEPS:
-            return {...state, submissionDialogOpen: true};
+            return {...state, submissionDialogOpen: true, submissionFilesDialogOpen: false};
         case CLOSE_SUBMIT_STEPS:
             return {...state, submissionDialogOpen: false};
         case OPEN_SUBMISSION_FILES_DIALOG:

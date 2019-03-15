@@ -320,6 +320,8 @@ export function sendSubmission() {
 
         const user = state.sessionState.user;
 
+        const userid = user ? user.id : 0;
+
         const username = user ? user.name : '';
 
         const uploadData: UploadData = {
@@ -333,6 +335,12 @@ export function sendSubmission() {
         return api.uploadStoreFiles(apiServerUrl, uploadData)
             .then((datasetValidationResults: DatasetValidationResult[]) => {
                 dispatch(_sendSubmission(datasetValidationResults));
+            })
+            .then(() => {
+                return api.getSubmissionsForUser(apiServerUrl, userid)
+                    .then((submissions: Submission[]) => {
+                        dispatch(updateSubmissionsForUser(submissions));
+                    })
             })
             .then(() => {
                 dispatch(postMessage("success", 'Files Loaded'));
@@ -453,23 +461,24 @@ export function getSubmissionFile(submissionId: string, submissionFileIndex: num
 
 
 export function updateSubmissionFile(submissionFile: SubmissionFile, uploadData: UploadData) {
-    return (dispatch: Dispatch<UpdateSubmissionsForUser | MessageLogAction>, getState: ()
+    return (dispatch: Dispatch<UpdateSubmission | UpdateSubmissionsForUser | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
 
-        const {submission_id, index} = submissionFile;
-
         const user = state.sessionState.user;
 
-        let userid = 0;
-        if (user) {
-            userid = user.id;
-        }
+        const userid = user ? user.id : 0;
 
-        return api.updateSubmissionFile(apiServerUrl, submission_id, index, uploadData)
+        return api.updateSubmissionFile(apiServerUrl, submissionFile, uploadData)
             .then(() => {
-                api.getSubmissionsForUser(apiServerUrl, userid)
+                api.getSubmission(apiServerUrl, submissionFile.submission_id)
+                    .then((submission: Submission) => {
+                        dispatch(updateSubmission(submission));
+                    })
+            })
+            .then(() => {
+                return api.getSubmissionsForUser(apiServerUrl, userid)
                     .then((submissions: Submission[]) => {
                         dispatch(updateSubmissionsForUser(submissions));
                     })
