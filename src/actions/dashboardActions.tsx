@@ -127,6 +127,32 @@ export function closeHelpDialog(): CloseHelpDialog {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+export const OPEN_HELP_METAINFO_DIALOG = 'OPEN_HELP_METAINFO_DIALOG';
+export type OPEN_HELP_METAINFO_DIALOG = typeof OPEN_HELP_METAINFO_DIALOG;
+
+export interface OpenHelpMetaInfoDialog {
+    type: OPEN_HELP_METAINFO_DIALOG;
+    helpMetaInfoKey: string;
+}
+
+export function openHelpMetaInfoDialog(helpMetaInfoKey: string): OpenHelpMetaInfoDialog {
+    return {type: OPEN_HELP_METAINFO_DIALOG, helpMetaInfoKey};
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const CLOSE_HELP_METAINFO_DIALOG = 'CLOSE_HELP_METAINFO_DIALOG';
+export type CLOSE_HELP_METAINFO_DIALOG = typeof CLOSE_HELP_METAINFO_DIALOG;
+
+export interface CloseHelpMetaInfoDialog {
+    type: CLOSE_HELP_METAINFO_DIALOG;
+}
+
+export function closeHelpMetaInfoDialog(): CloseHelpMetaInfoDialog {
+    return {type: CLOSE_HELP_METAINFO_DIALOG};
+}
+
+
 export type DashboardAction = ChangeDrawer
     | OpenLoginDialog
     | CloseUserDialog
@@ -135,4 +161,6 @@ export type DashboardAction = ChangeDrawer
     | OpenAdvancedSearchDialog
     | CloseAdvancedSearchDialog
     | OpenHelpDialog
-    | CloseHelpDialog;
+    | CloseHelpDialog
+    | OpenHelpMetaInfoDialog
+    | CloseHelpMetaInfoDialog;

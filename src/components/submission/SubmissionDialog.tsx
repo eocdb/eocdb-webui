@@ -8,6 +8,7 @@ import * as classNames from "classnames";
 import { CloudUpload } from "@material-ui/icons";
 import Button from "@material-ui/core/Button/Button";
 import Grid from "@material-ui/core/Grid";
+import { DatePicker } from "material-ui-pickers";
 //import { Cancel } from "@material-ui/icons";
 
 
@@ -47,6 +48,9 @@ interface SubmissionDialogProps extends WithStyles<typeof styles> {
 
     onDocfilesChange: (acceptedFiles: File[]) => void;
     docFilesValue: File[];
+
+    onPublicationDateChange: (publicationDate: string|null) => void;
+    publicationDate: string|null;
 
     onFileSubmit: () => void;
 
@@ -141,6 +145,18 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                             variant="outlined"
                             onChange={this.handleOnPathChange}
                             value={this.props.pathValue}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <DatePicker
+                            keyboard
+                            clearable
+                            variant={"outlined"}
+                            label={'Publication Date'}
+                            format="dd/MM/yyyy"
+                            animateYearScrolling={false}
+                            value={this.props.publicationDate}
+                            onChange={this.props.onPublicationDateChange}
                         />
                     </Grid>
                     <Grid item>

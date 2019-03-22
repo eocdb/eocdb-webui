@@ -16,6 +16,9 @@ export function uploadStoreFiles(apiServerUrl: string, uploadData: UploadData)
     formData.append('submissionid', uploadData.submissionId);
     formData.append('path', uploadData.path);
     formData.append('username', uploadData.username);
+    if(uploadData.publicationDate){
+        formData.append('publicationdate', uploadData.publicationDate);
+    }
 
     return callJsonApi<DatasetValidationResult[]>(apiServerUrl + '/store/upload/submission',
         undefined,

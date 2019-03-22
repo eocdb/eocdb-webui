@@ -17,6 +17,7 @@ import MultipleSelectTextField, { Suggestion } from "./MultipleSelectTextField";
 import Typography from "@material-ui/core/Typography";
 import { SliderRange } from "../../types/advancedSearchDialog";
 import { Product } from "../../model";
+import { LatLngBounds } from "leaflet";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -54,6 +55,7 @@ export interface AdvancedSearchDialogProps extends WithStyles<typeof styles> {
 
     onBBoxChange: (selectedBBox: BBoxValue) => void;
     bboxValue: BBoxValue;
+    mapBBoxValue: LatLngBounds;
 
     onWavelengthChange: (item: string) => void;
     wavelengthValue: string;
@@ -126,7 +128,17 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
     };
 
     render() {
-        const {classes, wavelengthValue} = this.props;
+        const {classes, wavelengthValue, mapBBoxValue} = this.props;
+        let selectedBBox = this.props.bboxValue;
+
+        if (mapBBoxValue) {
+            selectedBBox = [
+                +mapBBoxValue.getSouth(),
+                +mapBBoxValue.getWest(),
+                +mapBBoxValue.getNorth(),
+                +mapBBoxValue.getEast()
+            ];
+        }
 
         return (
             <Dialog
@@ -141,7 +153,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                             <Typography component={'h2'}>Region</Typography>
                             <BBoxInput
                                 onBBoxChange={this.props.onBBoxChange}
-                                selectedBBox={this.props.bboxValue}
+                                selectedBBox={selectedBBox}
                             />
                         </Grid>
                         <Grid item xs={12}>

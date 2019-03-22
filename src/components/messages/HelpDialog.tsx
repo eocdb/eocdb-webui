@@ -15,7 +15,7 @@ const styles = (theme: Theme) => createStyles({
     },
     select: {},
     dialogPaper: {
-        minHeight: '80%',
+        minHeight: '30%',
         maxHeight: '100%',
         minWidth: '30%',
         maxWidth: '50%',

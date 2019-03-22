@@ -59,6 +59,7 @@ describe('submitStepsReducer', () => {
                 status: '',
                 files: [],
                 file_refs: [],
+                publication_date: ''
             };
 
         const action: UpdateSubmission = {

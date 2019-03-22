@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Theme, WithStyles } from "@material-ui/core";
+import { Theme, Tooltip, WithStyles } from "@material-ui/core";
 import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import TableHead from "@material-ui/core/TableHead/TableHead";
@@ -16,6 +16,7 @@ import Chip from "@material-ui/core/Chip";
 
 import { Submission } from "../../model";
 import { User } from "../../model/User";
+import { blue, green, orange, red } from "@material-ui/core/colors";
 
 
 const styles = (theme: Theme) => createStyles(
@@ -28,6 +29,9 @@ const styles = (theme: Theme) => createStyles(
             minWidth: 700,
         },
         rightIcon: {},
+        fab: {
+            margin: theme.spacing.unit * 2,
+        },
         button: {
             margin: theme.spacing.unit / 2,
         },
@@ -68,13 +72,19 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
     getColourForStatus = (status: string) => {
         switch (status) {
             case 'SUBMITTED':
-                return "blue";
+                return blue.A100;
+            case 'VALIDATED':
+                return green.A100;
             case 'APPROVED':
-                return "green";
-            case 'HALTED':
-                return "orange";
-            case 'REJECTED':
-                return "red";
+                return green.A400;
+            case 'READY':
+                return red.A200;
+            case 'CANCELED':
+                return orange.A400;
+            case 'PAUSED':
+                return orange.A100;
+            case 'PUBLISHED':
+                return red.A400;
         }
         return "yellow"
     };
@@ -110,6 +120,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                         </TableHead>
                         <TableBody>
                             {submissionsValue.map((row: Submission) => {
+                                console.log(row);
                                 const colour = this.getColourForStatus(row.status);
 
                                 return (
@@ -130,16 +141,19 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                                 label={row.status}
                                                 style={{background: colour, color: "white"}}
                                             />
+                                            {row.publication_date ? row.publication_date : ''}
                                         </TableCell>
                                         <TableCell>
-                                            <Button
-                                                onClick={() => this.props.onSubmissionSelect(
-                                                    row.submission_id
-                                                )}
-                                            >
-                                                <Icon className={classes.rightIcon}>list</Icon>
-                                            </Button>
-                                            {row.status === 'HALTED' ?
+                                            <Tooltip title="List Files" aria-label="ListFiles">
+                                                <Button
+                                                    onClick={() => this.props.onSubmissionSelect(
+                                                        row.submission_id
+                                                    )}
+                                                >
+                                                    <Icon className={classes.rightIcon}>list</Icon>
+                                                </Button>
+                                            </Tooltip>
+                                            {row.status === 'PAUSED' ?
                                                 <Button
                                                     onClick={() => this.props.onSubmissionRestart(
                                                         row.submission_id
@@ -157,54 +171,70 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                                     <Icon className={classes.rightIcon}>pause</Icon>
                                                 </Button>
                                             }
-                                            <Button
-                                                onClick={() => this.props.onSubmissionApprove(
-                                                    row.submission_id
-                                                )}
-                                                disabled={user.roles.indexOf('admin') === -1}
-                                            >
-                                                <Icon className={classes.rightIcon}>done</Icon>
-                                            </Button>
-                                            <Button
-                                                onClick={() => this.props.onSubmissionReject(
-                                                    row.submission_id
-                                                )}
-                                                disabled={user.roles.indexOf('admin') === -1}
-                                            >
-                                                <Icon className={classes.rightIcon}>clear</Icon>
-                                            </Button>
-                                            <Button
-                                                onClick={() => this.props.onSubmissionSubmit(
-                                                    row.submission_id
-                                                )}
-                                                disabled={user.roles.indexOf('admin') === -1}
-                                            >
-                                                <Icon className={classes.rightIcon}>submit</Icon>
-                                            </Button>
-                                            <Button
-                                                onClick={() => this.props.onSubmissionDelete(
-                                                    row.submission_id
-                                                )}
-                                                disabled={user.roles.indexOf('admin') === -1}
-                                            >
-                                                <Icon className={classes.rightIcon}>delete</Icon>
-                                            </Button>
-                                            <Button
-                                                onClick={() => this.props.onSubmissionReady(
-                                                    row.submission_id
-                                                )}
-                                                disabled={user.roles.indexOf('admin') === -1}
-                                            >
-                                                <Icon className={classes.rightIcon}>ready</Icon>
-                                            </Button>
-                                            <Button
-                                                onClick={() => this.props.onSubmissionPublish(
-                                                    row.submission_id
-                                                )}
-                                                disabled={user.roles.indexOf('admin') === -1}
-                                            >
-                                                <Icon className={classes.rightIcon}>publish</Icon>
-                                            </Button>
+                                            <Tooltip title="Set Submission to Publication Ready"
+                                                     aria-label="ReadySubmission">
+                                                <Button
+                                                    onClick={() => this.props.onSubmissionReady(
+                                                        row.submission_id
+                                                    )}
+                                                    disabled={user.roles.indexOf('admin') === -1
+                                                    || row.status !== "APPROVED"}
+                                                >
+                                                    <Icon className={classes.rightIcon}>done_all</Icon>
+                                                </Button>
+                                            </Tooltip>
+                                            <Tooltip title="Approve Submission" aria-label="ApproveSubmission">
+                                                <Button
+                                                    onClick={() => this.props.onSubmissionApprove(
+                                                        row.submission_id
+                                                    )}
+                                                    disabled={user.roles.indexOf('admin') === -1
+                                                    || row.status !== "VALIDATED"}
+                                                >
+                                                    <Icon className={classes.rightIcon}>done</Icon>
+                                                </Button>
+                                            </Tooltip>
+                                            <Tooltip title="Cancel Submission" aria-label="CancelSubmission">
+                                                <Button
+                                                    onClick={() => this.props.onSubmissionReject(
+                                                        row.submission_id
+                                                    )}
+                                                    disabled={user.roles.indexOf('admin') === -1}
+                                                >
+                                                    <Icon className={classes.rightIcon}>power_settings_new</Icon>
+                                                </Button>
+                                            </Tooltip>
+                                            <Tooltip title="Set Submission Status back to Submit"
+                                                     aria-label="SubmissionSubmit">
+                                                <Button
+                                                    onClick={() => this.props.onSubmissionSubmit(
+                                                        row.submission_id
+                                                    )}
+                                                    disabled={user.roles.indexOf('admin') === -1}
+                                                >
+                                                    <Icon className={classes.rightIcon}>settings_backup_restore</Icon>
+                                                </Button>
+                                            </Tooltip>
+                                            <Tooltip title="Delete Entire Submission" aria-label="deleteSubmission">
+                                                <Button
+                                                    onClick={() => this.props.onSubmissionDelete(
+                                                        row.submission_id
+                                                    )}
+                                                    disabled={user.roles.indexOf('admin') === -1}
+                                                >
+                                                    <Icon className={classes.rightIcon}>delete</Icon>
+                                                </Button>
+                                            </Tooltip>
+                                            <Tooltip title="Publish Submission" aria-label="PublishSubmission">
+                                                <Button
+                                                    onClick={() => this.props.onSubmissionPublish(
+                                                        row.submission_id
+                                                    )}
+                                                    disabled={user.roles.indexOf('admin') === -1}
+                                                >
+                                                    <Icon className={classes.rightIcon}>input</Icon>
+                                                </Button>
+                                            </Tooltip>
                                         </TableCell>
                                     </TableRow>
                                 );

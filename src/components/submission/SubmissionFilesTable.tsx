@@ -3,7 +3,7 @@ import { Theme, withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
 import createStyles from "@material-ui/core/styles/createStyles";
-import { WithStyles } from "@material-ui/core";
+import { Tooltip, WithStyles } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper/Paper";
 import Table from "@material-ui/core/Table/Table";
 import TableHead from "@material-ui/core/TableHead/TableHead";
@@ -14,6 +14,7 @@ import Icon from "@material-ui/core/Icon/Icon";
 import { SubmissionFile } from "../../model";
 import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
+import { blue, green, orange, red } from "@material-ui/core/colors";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -55,14 +56,14 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
 
     getColoutForStatus = (status: string) => {
         switch (status) {
-            case 'OK':
-                return "green";
+            case 'VALIDATED':
+                return green.A400;
             case 'WARNING':
-                return "orange";
+                return orange.A400;
             case 'ERROR':
-                return "red";
+                return red.A400;
             case 'SUBMITTED':
-                return "blue";
+                return blue.A400;
         }
         return "yellow"
     };
@@ -111,28 +112,34 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Button
-                                            onClick={() => this.props.onSubmissionFileSelectClick(
-                                                row
-                                            )}
-                                            disabled={row.filetype === 'DOCUMENT'}
-                                        >
-                                            <Icon className={classes.rightIcon}>list</Icon>
-                                        </Button>
-                                        <Button
-                                            onClick={() => this.props.onSubmissionFileDeleteClick(
-                                                row
-                                            )}
-                                        >
-                                            <Icon className={classes.rightIcon}>delete</Icon>
-                                        </Button>
-                                        <Button
-                                            onClick={() => this.props.onSubmissionFileUploadClick(
-                                                row
-                                            )}
-                                        >
-                                            <Icon className={classes.rightIcon}>cloud_upload</Icon>
-                                        </Button>
+                                        <Tooltip title="List Import Issues" aria-label="ImportIssues">
+                                            <Button
+                                                onClick={() => this.props.onSubmissionFileSelectClick(
+                                                    row
+                                                )}
+                                                disabled={row.filetype === 'DOCUMENT'}
+                                            >
+                                                <Icon className={classes.rightIcon}>list</Icon>
+                                            </Button>
+                                        </Tooltip>
+                                        <Tooltip title="Delete File" aria-label="DeleteFile">
+                                            <Button
+                                                onClick={() => this.props.onSubmissionFileDeleteClick(
+                                                    row
+                                                )}
+                                            >
+                                                <Icon className={classes.rightIcon}>delete</Icon>
+                                            </Button>
+                                        </Tooltip>
+                                        <Tooltip title="Re-Upload File" aria-label="ReUpload">
+                                            <Button
+                                                onClick={() => this.props.onSubmissionFileUploadClick(
+                                                    row
+                                                )}
+                                            >
+                                                <Icon className={classes.rightIcon}>cloud_upload</Icon>
+                                            </Button>
+                                        </Tooltip>
                                     </TableCell>
                                 </TableRow>
                             )

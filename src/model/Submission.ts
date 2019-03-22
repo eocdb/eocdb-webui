@@ -7,4 +7,5 @@ export interface Submission {
     status: string;
     files: SubmissionFile[];
     file_refs: SubmissionFile[];
+    publication_date: string;
 }

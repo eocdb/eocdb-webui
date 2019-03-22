@@ -159,11 +159,14 @@ export interface DataTableProps extends WithStyles<typeof styles> {
     openMetaInfoDialog: () => void;
     closeMetaInfoDialog: () => void;
 
+    helpMetaInfoDialogOpen: boolean;
+    openHelpMetaInfoDialog: (helpMetaInfoKey: string) => void;
+    closeHelpMetaInfoDialog: () => void;
+    helpMetaInfoKey: string;
 
     plotDialogOpen: boolean;
     openPlotDialog: () => void;
     closePlotDialog: () => void;
-
 
     updateDataset: (datasetId: string) => void;
     dataset: Dataset;
@@ -303,6 +306,11 @@ class DataTable extends React.Component<DataTableProps> {
                     open={this.props.metaInfoDialogOpen}
                     handleClose={this.handleMetaInfoClose}
                     dataset={this.props.dataset}
+
+                    helpDialogOpen={this.props.helpMetaInfoDialogOpen}
+                    closeHelpDialog={this.props.closeHelpMetaInfoDialog}
+                    openHelpDialog={this.props.openHelpMetaInfoDialog}
+                    helpMetaInfoKey={this.props.helpMetaInfoKey}
                 />
                 <PlotDialog
                     open={this.props.plotDialogOpen}

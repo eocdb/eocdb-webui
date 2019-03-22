@@ -22,7 +22,10 @@ import {
     OPEN_DELETE_SUBMISSION_ALERT,
     CLOSE_DELETE_SUBMISSION_ALERT,
     OPEN_UPLOAD_SUBMISSION_FILE_DIALOG,
-    CLOSE_UPLOAD_SUBMISSION_FILE_DIALOG
+    CLOSE_UPLOAD_SUBMISSION_FILE_DIALOG,
+    OPEN_SUBMISSION_PUBLICATION_DATE_DIALOG,
+    CLOSE_SUBMISSION_PUBLICATION_DATE_DIALOG,
+    UPDATE_SUBMISSION_PUBLICATION_DATE, UPDATE_PUBLICATION_DATE
 } from "../actions/submissionActions";
 
 
@@ -50,6 +53,10 @@ export function submissionReducer(state: SubmissionState = initialState, action:
             return {...state, uploadSubmissionFileDialogOpen: true};
         case CLOSE_UPLOAD_SUBMISSION_FILE_DIALOG:
             return {...state, uploadSubmissionFileDialogOpen: false};
+        case OPEN_SUBMISSION_PUBLICATION_DATE_DIALOG:
+            return {...state, setSubmissionPublicationDateDialogOpen: true};
+        case CLOSE_SUBMISSION_PUBLICATION_DATE_DIALOG:
+            return {...state, setSubmissionPublicationDateDialogOpen: false};
         case OPEN_DELETE_SUBMISSION_ALERT:
             return {...state, deleteSubmissionAlertOpen: true};
         case CLOSE_DELETE_SUBMISSION_ALERT:
@@ -60,6 +67,8 @@ export function submissionReducer(state: SubmissionState = initialState, action:
             return {...state, selectedSubmission: action.submission};
         case UPDATE_PATH:
             return {...state, path: action.path};
+        case UPDATE_PUBLICATION_DATE:
+            return {...state, publicationDate: action.publicationDate}
         case UPDATE_DATA_FILES:
             return {...state, dataFiles: action.dataFiles};
         case UPDATE_DOC_FILES:
@@ -74,6 +83,8 @@ export function submissionReducer(state: SubmissionState = initialState, action:
             return {...state, currentSubmissionFileIndex: action.currentSubmissionFileIndex};
         case SEND_SUBMISSION:
             return {...state, currentDatasetValidationResults: action.currentDatasetValidationResults};
+        case UPDATE_SUBMISSION_PUBLICATION_DATE:
+            return {...state, submissionPublicationDate: action.submissionPublicationDate}
         default:
             return state;
     }

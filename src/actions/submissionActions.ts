@@ -173,6 +173,38 @@ export function closeUploadSubmissionFileDialog(): CloseUploadSubmissionFileDial
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+export const OPEN_SUBMISSION_PUBLICATION_DATE_DIALOG = 'OPEN_SUBMISSION_PUBLICATION_DATE_DIALOG';
+export type OPEN_SUBMISSION_PUBLICATION_DATE_DIALOG = typeof OPEN_SUBMISSION_PUBLICATION_DATE_DIALOG;
+
+
+export interface OpenSubmissionPublicationDateDialog {
+    type: OPEN_SUBMISSION_PUBLICATION_DATE_DIALOG;
+}
+
+export function openSubmissionPublicationDateDialog(): OpenSubmissionPublicationDateDialog {
+    return {
+        type: OPEN_SUBMISSION_PUBLICATION_DATE_DIALOG
+    }
+}
+
+
+export const CLOSE_SUBMISSION_PUBLICATION_DATE_DIALOG = 'CLOSE_SUBMISSION_PUBLICATION_DATE_DIALOG';
+export type CLOSE_SUBMISSION_PUBLICATION_DATE_DIALOG = typeof CLOSE_SUBMISSION_PUBLICATION_DATE_DIALOG;
+
+
+export interface CloseSubmissionPublicationDateDialog {
+    type: CLOSE_SUBMISSION_PUBLICATION_DATE_DIALOG;
+}
+
+export function closeSubmissionPublicationDateDialog(): CloseSubmissionPublicationDateDialog {
+    return {
+        type: CLOSE_SUBMISSION_PUBLICATION_DATE_DIALOG
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const CLOSE_SUBMIT_STEPS = 'CLOSE_SUBMIT_STEPS';
 export type CLOSE_SUBMIT_STEPS = typeof CLOSE_SUBMIT_STEPS;
 
@@ -240,6 +272,24 @@ export function updatePath(path: string): UpdatePath {
         path
     }
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_PUBLICATION_DATE = 'UPDATE_PUBLICATION_DATE';
+export type UPDATE_PUBLICATION_DATE = typeof UPDATE_PUBLICATION_DATE;
+
+export interface UpdatePublicationDate {
+    type: UPDATE_PUBLICATION_DATE;
+    publicationDate: string|null;
+}
+
+export function updatePublicationDate(publicationDate: string|null): UpdatePublicationDate {
+    return {
+        type: UPDATE_PUBLICATION_DATE,
+        publicationDate
+    }
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -329,6 +379,7 @@ export function sendSubmission() {
             docFiles: state.submissionState.docFiles,
             submissionId: state.submissionState.submissionId,
             path: state.submissionState.path,
+            publicationDate: state.submissionState.publicationDate,
             username: username,
         };
 
@@ -596,7 +647,7 @@ export function _setSubmissionStatus(submissionId: string, status: string): SetS
     }
 }
 
-export function setSubmissionStatus(submissionId: string, status: string) {
+export function setSubmissionStatus(submissionId: string, status: string, appDate?: string | null) {
     return (dispatch: Dispatch<SetSubmissionStatus | UpdateSubmissionsForUser | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
@@ -604,12 +655,9 @@ export function setSubmissionStatus(submissionId: string, status: string) {
 
         const user = state.sessionState.user;
 
-        let userid = 0;
-        if (user) {
-            userid = user.id;
-        }
+        const userid = user ? user.id : 0;
 
-        return api.setSubmissionStatus(apiServerUrl, submissionId, status)
+        return api.setSubmissionStatus(apiServerUrl, submissionId, status, appDate)
             .then(() => {
                 dispatch(postMessage("success", 'Status set to ' + status));
             })
@@ -652,6 +700,31 @@ export function deleteSubmissionFile(submissionId: string, submissionFileIndex: 
 }
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_SUBMISSION_PUBLICATION_DATE = 'UPDATE_SUBMISSION_PUBLICATION_DATE';
+export type UPDATE_SUBMISSION_PUBLICATION_DATE = typeof UPDATE_SUBMISSION_PUBLICATION_DATE;
+
+
+export interface UpdateSubmissionPublicationDate {
+    type: UPDATE_SUBMISSION_PUBLICATION_DATE;
+    submissionPublicationDate: string | null;
+}
+
+export function updateSubmissionPublicationDate(submissionPublicationDate: string | null): UpdateSubmissionPublicationDate {
+    return {
+        type: UPDATE_SUBMISSION_PUBLICATION_DATE,
+        submissionPublicationDate
+    }
+}
+
+
+
+
+
+
+
+
 export type SubmitAction = OpenSubmitSteps
     | CloseSubmitSteps
     | OpenSubmissionFilesDialog
@@ -664,13 +737,17 @@ export type SubmitAction = OpenSubmitSteps
     | CloseDeleteSubmissionAlert
     | OpenUploadSubmissionFileDialog
     | CloseUploadSubmissionFileDialog
+    | OpenSubmissionPublicationDateDialog
+    | CloseSubmissionPublicationDateDialog
     | UpdateSubmissionId
     | UpdatePath
+    | UpdatePublicationDate
     | UpdateDataFiles
     | UpdateDocFiles
     | ClearSubmissionForm
     | UpdateSubmissionsForUser
     | UpdateSubmission
     | SendSubmission
+    | UpdateSubmissionPublicationDate
     | UpdateSelectedSubmissionFile
     | UpdateCurrentSubmissionFileIndex;

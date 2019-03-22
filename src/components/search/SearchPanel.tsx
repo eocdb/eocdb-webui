@@ -26,6 +26,7 @@ import { FindHelpText } from "../messages/Help/find";
 import { DatePicker } from 'material-ui-pickers';
 import { BBoxValue } from "./BBoxInput";
 import { SliderRange } from "../../types/advancedSearchDialog";
+import { LatLngBounds } from "leaflet";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -72,6 +73,7 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     // Properties for Advanced Search Dolog
 
     updateBBox: (selectedBBox: BBoxValue) => void;
+    mapBBox: LatLngBounds;
     selectedBBox: BBoxValue;
 
     updateWavelength: (item: string) => void;
@@ -254,6 +256,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
                             onBBoxChange={this.handleAdvancedSearchDialogBBoxChange}
                             bboxValue={this.props.selectedBBox}
+                            mapBBoxValue={this.props.mapBBox}
                             onWavelengthChange={this.props.updateWavelength}
                             wavelengthValue={this.props.selectedWavelength}
                             onWaterDepthChange={this.props.updateWaterDepth}
@@ -278,7 +281,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             onProductsChange={this.props.updateProducts}
                             productsValue={this.props.selectedProducts}
                         />
-                        <DataTable/>
+                        <DataTable />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <SearchMap/>

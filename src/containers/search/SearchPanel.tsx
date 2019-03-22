@@ -32,6 +32,7 @@ const mapStateToProps = (state: AppState) => {
 
         // Advanced Find
         selectedBBox: state.advancedSearchState.selectedBBox,
+        mapBBox: state.searchMapState.selectedBounds,
         selectedWavelength: state.advancedSearchState.selectedWavelength,
         selectedWaterDepth: state.advancedSearchState.waterDepth,
         selectedOptShallow: state.advancedSearchState.selectedOptShallow,

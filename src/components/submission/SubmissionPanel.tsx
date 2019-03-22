@@ -12,6 +12,7 @@ import YesNoAlert from "./YesNoAlert";
 import { User } from "../../model/User";
 import SingleFileUpload from "./SingleFileUpload";
 import { UploadData } from "../../model/UploadData";
+import DateDialog from "./DateDialog";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -47,6 +48,10 @@ interface SubmissionPanelProps extends WithStyles<typeof styles> {
     openUploadSubmissionFileDialog: () => void;
     closeUploadSubmissionFileDialog: () => void;
 
+    setSubmissionPublicationDialogOpen: boolean;
+    openSubmissionPublicationDateDialog: () => void;
+    closeSubmissionPublicationDateDialog: () => void;
+
     submissionsForUser: Submission[];
     updateSubmissionsForUser: () => void;
 
@@ -61,9 +66,13 @@ interface SubmissionPanelProps extends WithStyles<typeof styles> {
     getSelectedSubmissionFile: (selectedSubmissionId: string, selectedSubmissionFileIndex: number) => void;
     updateSelectedSubmissionFile: (selectedSubmissionFile: SubmissionFile) => void;
 
-    setSubmissionStatus: (submissionId: string, status: string) => void;
+    setSubmissionStatus: (submissionId: string, status: string, appDate?: string | null) => void;
 
     deleteSubmissionFile: (submissionId: string, submissionFileIndex: number) => void;
+
+    submissionPublicationDate: string | null;
+
+    updateSelectedSubmissionPublicationDate: (publicationDate: string | null) => void;
 
     // SubmissionDialog
 
@@ -78,6 +87,9 @@ interface SubmissionPanelProps extends WithStyles<typeof styles> {
 
     updateDocFiles: (acceptedFiles: File[]) => void;
     selectedDocFiles: File[];
+
+    updatePublicationDate: (publicationDate: string|null) => void;
+    selectedPublicationDate: string|null;
 
     sendSubmission: () => void;
 
@@ -105,15 +117,22 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
     };
 
     handleHaltSubmission = (selectedSubmissionId: string) => {
-        this.props.setSubmissionStatus(selectedSubmissionId, 'HALTED');
+        this.props.setSubmissionStatus(selectedSubmissionId, 'PAUSED');
     };
 
     handleRestartSubmission = (selectedSubmissionId: string) => {
         this.props.setSubmissionStatus(selectedSubmissionId, 'SUBMITTED');
     };
 
-    handleReadySubmission = (selectedSubmissionId: string) => {
-        this.props.setSubmissionStatus(selectedSubmissionId, 'READY');
+
+    handleSubmissionPublicationDateClick = (submissionId: string) => {
+        this.props.updateSelectedSubmission(submissionId);
+        this.props.openSubmissionPublicationDateDialog();
+    };
+
+    handleSaveSubmissionPublicationDialog = (selectedSubmission: Submission, publicationDate: string | null) => {
+        this.props.closeSubmissionPublicationDateDialog();
+        this.props.setSubmissionStatus(selectedSubmission.submission_id, 'READY', publicationDate);
     };
 
     handlePublishSubmission = (selectedSubmissionId: string) => {
@@ -183,12 +202,14 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
             docFiles: [],
             submissionId: submissionFile.submission_id,
             path: submissionFile.filename,
+            publicationDate: null,
             username: this.props.user.name,
         };
 
         this.props.uploadSubmissionFile(submissionFile, uploadData);
         this.props.closeUploadSubmissionFileDialog();
     };
+
 
     render() {
         if (!this.props.show) {
@@ -212,6 +233,9 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     onDocfilesChange={this.props.updateDocFiles}
                     docFilesValue={this.props.selectedDocFiles}
 
+                    onPublicationDateChange={this.props.updatePublicationDate}
+                    publicationDate={this.props.selectedPublicationDate}
+
                     onFileSubmit={this.handleSendSubmission}
 
                     onClearForm={this.props.clearSubmissionForm}
@@ -230,7 +254,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     onSubmissionSubmit={this.handleSubmitSubmission}
                     onSubmissionDelete={this.handleDeleteSubmissionClick}
 
-                    onSubmissionReady={this.handleReadySubmission}
+                    onSubmissionReady={this.handleSubmissionPublicationDateClick}
                     onSubmissionPublish={this.handlePublishSubmission}
 
                     onSubmissionDialogOpen={this.handleOpenSubmissionDialog}
@@ -278,6 +302,17 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     open={this.props.uploadSubmissionFileDialogOpen}
 
                     value={this.props.selectedSubmissionFile}
+                />
+                <DateDialog
+                    open={this.props.setSubmissionPublicationDialogOpen}
+                    label={'Publication Date'}
+                    message={'Please give the date you would like the data to be published'}
+                    dateValue={this.props.submissionPublicationDate}
+                    onCancel={this.props.closeSubmissionPublicationDateDialog}
+                    onSave={this.handleSaveSubmissionPublicationDialog}
+                    onChange={this.props.updateSelectedSubmissionPublicationDate}
+
+                    value={this.props.selectedSubmission}
                 />
             </div>
         );

@@ -1,9 +1,11 @@
 import { BBoxValue } from "../components/search/BBoxInput";
 import { SliderRange } from "../types/advancedSearchDialog";
+import { LatLngBounds } from "leaflet";
 
 
 export interface AdvancedSearchState {
     selectedBBox: BBoxValue;
+    mapBBox?: LatLngBounds;
     selectedWavelength: string;
     waterDepth: SliderRange;
     selectedOptShallow: string;

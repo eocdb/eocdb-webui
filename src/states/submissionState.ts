@@ -7,6 +7,7 @@ export interface SubmissionState {
     deleteSubmissionFileAlertOpen: boolean;
     deleteSubmissionAlertOpen: boolean,
     uploadSubmissionFileDialogOpen: boolean,
+    setSubmissionPublicationDateDialogOpen: boolean,
 
     selectedSubmission: Submission;
     selectedSubmissionFile: SubmissionFile;
@@ -15,6 +16,7 @@ export interface SubmissionState {
     dataFiles: File[];
     docFiles: File[];
     path: string;
+    publicationDate: string | null;
 
     currentDatasetValidationResults: DatasetValidationResult[];
     currentSubmissionFiles: SubmissionFile[];
@@ -22,7 +24,7 @@ export interface SubmissionState {
 
     foundSubmissions: Submission[];
 
-
+    submissionPublicationDate: string | null;
 }
 
 export function newSubmissionState() {
@@ -35,11 +37,13 @@ export function newSubmissionState() {
         deleteSubmissionFileAlertOpen: false,
         deleteSubmissionAlertOpen: false,
         uploadSubmissionFileDialogOpen: false,
+        setSubmissionPublicationDateDialogOpen: false,
 
         submissionId: '',
         dataFiles: [],
         docFiles: [],
         path: '',
+        publicationDate: null,
 
         currentDatasetValidationResults: [],
         currentSubmissionFiles: [],
@@ -52,6 +56,7 @@ export function newSubmissionState() {
             status: '',
             files: [],
             file_refs: [],
+            publication_date: '',
         },
 
         selectedSubmissionFile: {
@@ -65,5 +70,7 @@ export function newSubmissionState() {
                 issues: [],
             }
         },
+
+        submissionPublicationDate: null,
     }
 }

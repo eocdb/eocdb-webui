@@ -10,7 +10,7 @@ import {
     CLOSE_LOGIN_DIALOG,
     CLOSE_CONFIG_DIALOG,
     CLOSE_HELP_DIALOG,
-    CLOSE_ADVANCED_SEARCH_DIALOG
+    CLOSE_ADVANCED_SEARCH_DIALOG, OPEN_HELP_METAINFO_DIALOG, CLOSE_HELP_METAINFO_DIALOG
 } from '../actions/dashboardActions';
 
 const initialState = newDashboardState();
@@ -38,6 +38,10 @@ export function dashboardReducer(state: DashboardState, action: DashboardAction)
             return {...state, helpDialogOpen: true};
         case CLOSE_HELP_DIALOG:
             return {...state, helpDialogOpen: false};
+        case OPEN_HELP_METAINFO_DIALOG:
+            return {...state, helpMetaInfoDialogOpen: true, helpMetaInfoKey: action.helpMetaInfoKey}
+        case CLOSE_HELP_METAINFO_DIALOG:
+            return {...state, helpMetaInfoDialogOpen: false}
     }
     return state;
 }

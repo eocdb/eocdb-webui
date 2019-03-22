@@ -1,5 +1,5 @@
 import * as React from "react";
-import { WithStyles } from "@material-ui/core";
+import { Icon, IconButton, Typography, WithStyles } from "@material-ui/core";
 import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -15,10 +15,16 @@ import List from "@material-ui/core/List/List";
 
 import { Dataset } from "../../model";
 import { DatasetMetaData } from "../../types/dataset";
+import HelpDialog from "../messages/HelpDialog";
+import { MetaInfoHelpText } from "../messages/Help/MetaInfo";
+
 
 
 const styles = () => createStyles({
     root: {},
+    helpDialog: {
+        minHeight: '4em'
+    }
 });
 
 
@@ -27,6 +33,11 @@ interface MetaInfoDialogProps extends WithStyles<typeof styles> {
     dataset: Dataset;
 
     handleClose: () => void;
+
+    helpDialogOpen: boolean;
+    closeHelpDialog: () => void;
+    openHelpDialog: (helpMetaInfoKey: string) => void;
+    helpMetaInfoKey: string;
 }
 
 class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
@@ -41,6 +52,13 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
             items.push(
                 <ListItem component={'span'} key={key}>
                     <ListItemText secondary={metadata[key]} primary={key}/>
+                    <IconButton
+                        onClick={() => this.props.openHelpDialog(key)}
+                    >
+                        <Icon color={"secondary"}>
+                            help
+                        </Icon>
+                    </IconButton>
                 </ListItem>
             );
         }
@@ -52,7 +70,6 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
     };
 
     render() {
-        console.log(this.props.dataset);
         return (
             <Dialog
                 open={this.props.open}
@@ -62,6 +79,19 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
                 <DialogTitle id="form-dialog-title">Settings</DialogTitle>
                 <DialogContent>
                     {this.renderInfo(this.props.dataset.metadata)}
+                    <HelpDialog
+                        open={this.props.helpDialogOpen}
+                        onClose={this.props.closeHelpDialog}
+                        title={'Meta Info Help'}
+                    >
+                        <Typography variant="button" gutterBottom>
+                            {this.props.helpMetaInfoKey}
+                        </Typography>
+                        <Typography component={'p'}>
+                            {MetaInfoHelpText[this.props.helpMetaInfoKey]}
+                        </Typography>
+                    </HelpDialog>
+
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.props.handleClose} color="primary">

@@ -26,7 +26,10 @@ import {
     getSubmissionsForUser,
     openUploadSubmissionFileDialog,
     closeUploadSubmissionFileDialog,
-    updateSubmissionFile, updateSelectedSubmissionFile
+    updateSubmissionFile,
+    updateSelectedSubmissionFile,
+    openSubmissionPublicationDateDialog,
+    closeSubmissionPublicationDateDialog, updateSubmissionPublicationDate, updatePublicationDate
 } from "../../actions/submissionActions";
 import SubmissionPanel from "../../components/submission/SubmissionPanel";
 
@@ -40,15 +43,20 @@ const mapStateToProps = (state: AppState) => {
         deleteSubmissionAlertOpen: state.submissionState.deleteSubmissionAlertOpen,
         uploadSubmissionFileDialogOpen: state.submissionState.uploadSubmissionFileDialogOpen,
 
+        setSubmissionPublicationDialogOpen: state.submissionState.setSubmissionPublicationDateDialogOpen,
+
         submissionsForUser: state.submissionState.foundSubmissions,
 
         selectedSubmission: state.submissionState.selectedSubmission,
         selectedSubmissionFile: state.submissionState.selectedSubmissionFile,
 
-        // SubmissionDialog
-        selectedSubmissionId: state.submissionState.submissionId,
+        submissionPublicationDate: state.submissionState.submissionPublicationDate,
 
+        // SubmissionDialog
+
+        selectedSubmissionId: state.submissionState.submissionId,
         selectedPath: state.submissionState.path,
+        selectedPublicationDate: state.submissionState.publicationDate,
         selectedDataFiles: state.submissionState.dataFiles,
         selectedDocFiles: state.submissionState.docFiles,
 
@@ -70,6 +78,9 @@ const mapDispatchToProps = {
     openDeleteSubmissionFileAlert: openDeleteSubmissionFilesAlert,
     closeDeleteSubmissionFileAlert: closeDeleteSubmissionFilesAlert,
 
+    openSubmissionPublicationDateDialog,
+    closeSubmissionPublicationDateDialog,
+
     openDeleteSubmissionAlert,
     closeDeleteSubmissionAlert,
 
@@ -82,6 +93,8 @@ const mapDispatchToProps = {
     updateSelectedSubmissionFile,
     getSelectedSubmissionFile: getSubmissionFile,
 
+    updateSelectedSubmissionPublicationDate: updateSubmissionPublicationDate,
+
     deleteSubmission,
     setSubmissionStatus,
     deleteSubmissionFile,
@@ -89,6 +102,7 @@ const mapDispatchToProps = {
 
     updateSubmissionId,
     updatePath,
+    updatePublicationDate,
     updateDataFiles,
     updateDocFiles,
 

@@ -18,6 +18,10 @@ import {
 
 import DataTable from '../../components/search/DataTable';
 import { searchDatasets, startLoading } from "../../actions/findActions";
+import {
+    closeHelpMetaInfoDialog,
+    openHelpMetaInfoDialog
+} from "../../actions/dashboardActions";
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -25,6 +29,8 @@ const mapStateToProps = (state: AppState) => {
         rowsPerPage: state.dataTableState.rowsPerPage,
 
         metaInfoDialogOpen: state.dataTableState.metaInfoDialogOpen,
+        helpMetaInfoDialogOpen: state.dashboardState.helpMetaInfoDialogOpen,
+        helpMetaInfoKey: state.dashboardState.helpMetaInfoKey,
         plotDialogOpen: state.dataTableState.plotDialogOpen,
 
         data: state.searchFormState.foundDatasets,
@@ -47,6 +53,8 @@ const mapDispatchToProps = {
     updateDataRowsPerPage,
     closeMetaInfoDialog,
     openMetaInfoDialog,
+    openHelpMetaInfoDialog,
+    closeHelpMetaInfoDialog,
     openPlotDialog,
     closePlotDialog,
     updateDataset,
