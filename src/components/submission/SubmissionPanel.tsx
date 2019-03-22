@@ -12,7 +12,6 @@ import YesNoAlert from "./YesNoAlert";
 import { User } from "../../model/User";
 import SingleFileUpload from "./SingleFileUpload";
 import { UploadData } from "../../model/UploadData";
-import DateDialog from "./DateDialog";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -302,17 +301,6 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     open={this.props.uploadSubmissionFileDialogOpen}
 
                     value={this.props.selectedSubmissionFile}
-                />
-                <DateDialog
-                    open={this.props.setSubmissionPublicationDialogOpen}
-                    label={'Publication Date'}
-                    message={'Please give the date you would like the data to be published'}
-                    dateValue={this.props.submissionPublicationDate}
-                    onCancel={this.props.closeSubmissionPublicationDateDialog}
-                    onSave={this.handleSaveSubmissionPublicationDialog}
-                    onChange={this.props.updateSelectedSubmissionPublicationDate}
-
-                    value={this.props.selectedSubmission}
                 />
             </div>
         );
