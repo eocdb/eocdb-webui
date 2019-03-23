@@ -17,8 +17,9 @@ const styles = (theme: Theme) => createStyles({
         size: '100pt',
     },
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        width: 200,
+        marginTop: theme.spacing.unit / 2,
+        marginRight: theme.spacing.unit / 2,
     },
 });
 

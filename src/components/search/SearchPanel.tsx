@@ -32,7 +32,9 @@ import { LatLngBounds } from "leaflet";
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({
     searchField: {
-        width: 300,
+        width: 200,
+        marginRight: theme.spacing.unit / 2,
+        //marginTop: theme.spacing.unit / 2,
     },
     textField: {},
     button: {},
@@ -185,6 +187,8 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             animateYearScrolling={false}
                             value={this.props.datasetQuery.startDate}
                             onChange={this.handleStartDateChange}
+
+                            className={classes.searchField}
                         />
                         <DatePicker
                             keyboard
@@ -195,6 +199,8 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             animateYearScrolling={false}
                             value={this.props.datasetQuery.endDate}
                             onChange={this.handleEndDateChange}
+
+                            className={classes.searchField}
                         />
                         <MultipleSelectTextField
                             suggestions={this.getProductGroups()}
@@ -204,6 +210,8 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             closeMenuOnSelect={true}
                             inputLabel={'Product Groups'}
                             inputLabelWidth={124}
+
+                            className={classes.searchField}
                         />
                         <TextField
                             id={'lucene-search'}

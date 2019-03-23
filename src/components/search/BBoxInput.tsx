@@ -12,9 +12,9 @@ export type BBoxValue = [number|string, number|string, number|string, number|str
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) =>  createStyles({
     searchField: {
-        width: 300,
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        width: 200,
+        marginRight: theme.spacing.unit / 2,
+        marginTop: theme.spacing.unit / 2,
     },
     textField: {},
     button: {},
@@ -28,7 +28,7 @@ interface BBoxInputProps extends WithStyles<typeof styles>{
 }
 
 
-class BBoxInput extends PureComponent<BBoxInputProps> {
+const BBoxInput = class extends PureComponent<BBoxInputProps> {
     constructor(props: BBoxInputProps) {
         super(props);
     }
@@ -133,6 +133,6 @@ class BBoxInput extends PureComponent<BBoxInputProps> {
             </div>
         )
     }
-}
+};
 
 export default withStyles(styles)(BBoxInput);

@@ -54,7 +54,7 @@ const styles = (theme: Theme) => createStyles({
 const customStyles = {
     control: (base: CSSProperties) => ({
         ...base,
-        width: 250,
+        width: 200,
         'min-height': '56px',
         'background-color': '#FAFAFA',
         label: 'red',
@@ -86,6 +86,8 @@ interface MultipleSelectTextFieldProps extends WithStyles<typeof styles> {
     placeholder?: string;
     inputLabel?: string;
     inputLabelWidth?: number;
+
+    className?: string;
 }
 
 const ControlComponent = (props: any) => (
@@ -140,7 +142,9 @@ class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldPro
         //const plh = placeholder? placeholder : 'Select...';
 
         return (
-            <FormControl>
+            <FormControl
+                className={this.props.className}
+            >
                 <InputLabel
                     style={{backgroundColor: '#FAFAFA', width: this.props.inputLabelWidth, paddingLeft: 8}}
                     shrink
@@ -161,6 +165,8 @@ class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldPro
                     placeholder={this.props.placeholder}
                     theme={customTheme}
                     components={{Input: ControlComponent}}
+
+                    className={this.props.className}
                 />
             </FormControl>
         );

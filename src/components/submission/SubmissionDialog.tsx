@@ -20,8 +20,9 @@ const styles = (theme: Theme) => createStyles({
         marginRight: theme.spacing.unit,
     },
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        width: 200,
+        marginTop: theme.spacing.unit / 2,
+        marginRight: theme.spacing.unit / 2,
     },
     dense: {
         marginTop: 16,
@@ -128,7 +129,7 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                             required
                             id="outlined-dense"
                             label="Submission Label"
-                            className={classNames(classes.textField, classes.dense)}
+                            className={classNames(classes.textField)}
                             margin="dense"
                             variant="outlined"
                             onChange={this.handleSubmissionIdChange}
@@ -140,7 +141,7 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                             required
                             id="submission-path"
                             label="Submission Path"
-                            className={classNames(classes.textField, classes.dense)}
+                            className={classNames(classes.textField)}
                             margin="dense"
                             variant="outlined"
                             onChange={this.handleOnPathChange}
@@ -157,6 +158,8 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                             animateYearScrolling={false}
                             value={this.props.publicationDate}
                             onChange={this.props.onPublicationDateChange}
+                            
+                            className={classes.textField}
                         />
                     </Grid>
                     <Grid item>

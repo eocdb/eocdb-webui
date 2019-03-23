@@ -34,7 +34,8 @@ const styles = (theme: Theme) => createStyles({
         flex: 1,
     },
     searchField: {
-        width: 300,
+        width: 200,
+        marginRight: theme.spacing.unit / 2,
     },
     textField: {},
     button: {},
