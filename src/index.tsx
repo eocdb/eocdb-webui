@@ -11,20 +11,28 @@ import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 import 'typeface-roboto';
 import { updateStoreInfo } from "./actions/configActions";
+import { SearchHistoryItem } from "./types/dataset";
+import { updateSearchHistory } from "./actions/findActions";
 
 const logger = createLogger({collapsed: true});
 const store = createStore(appReducer, applyMiddleware(thunk, logger));
 
-/*
-for (let i = 0; i < localStorage.length; i++){
+let history: SearchHistoryItem[] = [];
+
+for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
-    const query = localStorage.getItem(localStorage.key(i));
 
-
+    if (key) {
+        const query = localStorage.getItem(key);
+        console.log(query);
+        if (query) {
+            history.push({key: key, query: JSON.parse(query)})
+        }
+    }
 }
 
-*/
 
+store.dispatch(updateSearchHistory(history));
 store.dispatch(updateStoreInfo() as any);
 
 ReactDOM.render(

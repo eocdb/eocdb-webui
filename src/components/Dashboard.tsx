@@ -188,7 +188,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             return item.key != searchHistoryItem.key
         });
 
-
+        localStorage.removeItem(searchHistoryItem.key);
         this.props.updateSearchHistory(history);
     };
 
