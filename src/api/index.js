@@ -11,5 +11,6 @@ export {setSubmissionStatus} from './setSubmissionStatus';
 export {getSubmissionFile} from './getSubmissionFile';
 export {updateSubmissionFile} from './updateSubmissionFile';
 export {deleteSubmissionFile} from './deleteSubmissionFile';
+export {downloadSubmissionFile} from './downloadSubmissionFile';
 export {HTTPError} from './errors';
 

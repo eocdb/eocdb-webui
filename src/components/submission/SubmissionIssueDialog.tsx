@@ -60,8 +60,6 @@ class SubmissionIssueDialog extends React.Component<SubmissionIssueDialogProps> 
             fileName = submissionFileValue.filename;
         }
 
-        console.log(submissionFileValue);
-
         return (
             <div>
                 <Dialog

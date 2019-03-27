@@ -113,16 +113,16 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                         <TableHead>
                             <TableRow>
                                 <TableCell>SubmissionId</TableCell>
-                                <TableCell>Date</TableCell>
+                                <TableCell>Submission Date</TableCell>
+                                <TableCell>Publication Date</TableCell>
                                 <TableCell>Status</TableCell>
                                 <TableCell>Action</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {submissionsValue.map((row: Submission) => {
-                                console.log(row);
                                 const colour = this.getColourForStatus(row.status);
-
+                                console.log(row);
                                 return (
                                     <TableRow
                                         hover
@@ -137,11 +137,13 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                             {row.date}
                                         </TableCell>
                                         <TableCell>
+                                            {row.publication_date}
+                                        </TableCell>
+                                        <TableCell>
                                             <Chip
                                                 label={row.status}
                                                 style={{background: colour, color: "white"}}
                                             />
-                                            {row.publication_date ? row.publication_date : ''}
                                         </TableCell>
                                         <TableCell>
                                             <Tooltip title="List Files" aria-label="ListFiles">

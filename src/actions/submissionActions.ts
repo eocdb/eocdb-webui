@@ -429,13 +429,11 @@ export function getSubmissionsForUser() {
         const apiServerUrl = state.configState.apiServerUrl;
         const user = state.sessionState.user;
 
-        let userid = 0;
-        if (user) {
-            userid = user.id;
-        }
+        const userid = user ? user.id : 0;
 
         return api.getSubmissionsForUser(apiServerUrl, userid)
             .then((submissions: Submission[]) => {
+                console.log(submissions);
                 dispatch(updateSubmissionsForUser(submissions));
             })
             .then(() => {
@@ -718,11 +716,23 @@ export function updateSubmissionPublicationDate(submissionPublicationDate: strin
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
+export function downloadSubmissionFile(submissionId: string, index: number) {
+    return (dispatch: Dispatch<MessageLogAction>, getState: ()
+        => AppState) => {
+        const state = getState();
+        const apiServerUrl = state.configState.apiServerUrl;
 
-
-
-
+        return api.downloadSubmissionFile(apiServerUrl, submissionId, index)
+            .then(() => {
+                dispatch(postMessage("success", 'File Downloaded'));
+            })
+            .catch((error: string) => {
+                dispatch(postMessage('error', error + ''));
+            });
+    };
+}
 
 
 export type SubmitAction = OpenSubmitSteps
