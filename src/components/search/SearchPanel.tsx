@@ -27,6 +27,7 @@ import { DatePicker } from 'material-ui-pickers';
 import { BBoxValue } from "./BBoxInput";
 import { SliderRange } from "../../types/advancedSearchDialog";
 import { LatLngBounds } from "leaflet";
+import { SearchHistoryItem } from "../../types/dataset";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -92,6 +93,9 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
 
     updateProductValue: (productInputValue: string) => void;
     productInputValue: string;
+
+    updateSearchHistory: (searchHistory: SearchHistoryItem[]) => void;
+    searchHistory: SearchHistoryItem[];
 }
 
 
@@ -116,6 +120,16 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                 shallow: undefined,
             }
         );
+    };
+
+    handleSaveFilter = () => {
+        const item: SearchHistoryItem = {key: 'test', query: Object.assign(this.props.datasetQuery)};
+        const history = Object.assign(this.props.searchHistory);
+
+        history.push(item);
+        this.props.updateSearchHistory(history);
+
+        localStorage.setItem('test', JSON.stringify(item.query));
     };
 
     handleSearchExprChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -240,6 +254,10 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         <Button className={classes.button}
                                 onClick={this.handleClear}>
                             Clear
+                        </Button>
+                        <Button className={classes.button}
+                                onClick={this.handleSaveFilter}>
+                            SaveFilter
                         </Button>
 
                     </Grid>

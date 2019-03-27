@@ -138,7 +138,6 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     getAdvancedBounds = () => {
         const bbox = this.props.selectedRectangleFromAdvancedDialog;
 
-        console.log(bbox);
         return bbox ? new LatLngBounds(
             new LatLng(+bbox[0], +bbox[1]),
             new LatLng(+bbox[2], +bbox[3]),

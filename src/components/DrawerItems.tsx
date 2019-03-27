@@ -45,7 +45,6 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
             }
         }
 
-        console.log(this.props.user);
         return (
             <List>
                 <div>

@@ -4,7 +4,7 @@ import { AppState } from '../../states/appState';
 import {
     updateDatasetQuery,
     searchDatasets,
-    startLoading
+    startLoading, updateSearchHistory
 } from '../../actions/findActions';
 import SearchPanel from '../../components/search/SearchPanel';
 import {
@@ -30,6 +30,8 @@ const mapStateToProps = (state: AppState) => {
         helpDialogOpen: state.dashboardState.helpDialogOpen,
         loading: state.searchFormState.loading,
 
+        searchHistory: state.searchFormState.searchHistory,
+
         // Advanced Find
         selectedBBox: state.advancedSearchState.selectedBBox,
         mapBBox: state.searchMapState.selectedBounds,
@@ -52,6 +54,8 @@ const mapDispatchToProps = {
     closeHelpDialog,
 
     startLoading,
+
+    updateSearchHistory,
 
     // Advanced Search
     updateBBox,

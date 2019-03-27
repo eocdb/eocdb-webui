@@ -20,8 +20,8 @@ import ConfigDialog from './admin/ConfigDialog';
 import SearchHistory from "./search/SearchHistory";
 import { User } from "../model";
 import partnerLogos from "../resources/logos.png"
-import {SearchHistoryItem} from "../types/dataset";
-import {DatasetQuery} from "../api/findDatasets";
+import { SearchHistoryItem } from "../types/dataset";
+import { DatasetQuery } from "../api/findDatasets";
 
 
 const drawerWidth = 240;
@@ -106,7 +106,7 @@ const styles = (theme: Theme) => createStyles(
             width: '50%',
         },
         logo: {
-          marginRight: theme.spacing.unit * 2,
+            marginRight: theme.spacing.unit * 2,
         }
     });
 
@@ -131,6 +131,7 @@ interface DashboardProps extends WithStyles<typeof styles> {
     updateSubmissions: () => void;
 
     searchHistory: SearchHistoryItem[];
+    updateSearchHistory: (searchHistory: SearchHistoryItem[]) => void;
 
     updateDatasetQuery: (datasetQuery: DatasetQuery) => void;
     searchDatasets: () => void;
@@ -143,7 +144,7 @@ interface DashboardState {
 
 
 class Dashboard extends React.Component<DashboardProps, DashboardState> {
-    constructor(props: DashboardProps){
+    constructor(props: DashboardProps) {
         super(props);
 
         this.state = {
@@ -180,6 +181,15 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     handleUpdateDatasetQuery = (selectedHistoryItem: SearchHistoryItem) => {
         this.props.updateDatasetQuery(selectedHistoryItem.query);
         this.props.searchDatasets();
+    };
+
+    handleDeleteHistoryItem = (searchHistoryItem: SearchHistoryItem) => {
+        const history = Object.assign(this.props.searchHistory).filter((item: SearchHistoryItem) => {
+            return item.key != searchHistoryItem.key
+        });
+
+
+        this.props.updateSearchHistory(history);
     };
 
     render() {
@@ -219,7 +229,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             Ocean Colour In-Situ Database
                         </Typography>
 
-                        <img alt={'OCDB Logo'} src={partnerLogos} width={300} className={classes.logo} />
+                        <img alt={'OCDB Logo'} src={partnerLogos} width={300} className={classes.logo}/>
 
                         <IconButton color="inherit" onClick={this.props.openConfigDialog}>
                             <Settings/>
@@ -242,17 +252,19 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         </IconButton>
                     </div>
                     <Divider/>
-                    <DrawerItems updateSubmissions={this.props.updateSubmissions} user={this.props.user} handleClick={this.handleDrawerChanged}/>
+                    <DrawerItems updateSubmissions={this.props.updateSubmissions} user={this.props.user}
+                                 handleClick={this.handleDrawerChanged}/>
                     <Divider/>
 
                     <SearchHistory
                         searchHistory={this.props.searchHistory}
-                        onSearchHistoryClick={this.handleUpdateDatasetQuery}
+                        onSearchHistoryItemClick={this.handleUpdateDatasetQuery}
+                        onSearchHistoryItemDelete={this.handleDeleteHistoryItem}
                     />
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.appBarSpacer}/>
-                    <DashPanels currentDrawer={this.props.currentDrawer} />
+                    <DashPanels currentDrawer={this.props.currentDrawer}/>
                 </main>
             </div>
         );

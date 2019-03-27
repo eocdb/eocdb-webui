@@ -170,11 +170,6 @@ export function searchDatasets() {
 
         datasetQuery = collectDatasetQuery(state, datasetQuery);
 
-        let searchHistory = Object.assign(state.searchFormState.searchHistory);
-
-        searchHistory.push({key: 'hello', query: Object.assign(datasetQuery)});
-        dispatch(updateSearchHistory(searchHistory));
-
         return api.findDatasets(apiServerUrl, datasetQuery)
             .then((foundDatasets: QueryResult) => {
                 dispatch(updateFoundDatasets(foundDatasets));
@@ -184,9 +179,6 @@ export function searchDatasets() {
                 else {
                     dispatch(postMessage('success', foundDatasets.total_count + ' Datasets Found'));
                 }
-            })
-            .then(() => {
-                dispatch(updateSearchHistory(searchHistory));
             })
             .then(() => {
                 dispatch(stopLoading());

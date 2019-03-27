@@ -13,7 +13,7 @@ import {configServer} from '../actions/configActions'
 import Dashboard from '../components/Dashboard';
 import {loginUser} from '../actions/userActions';
 import {getSubmissionsForUser} from "../actions/submissionActions";
-import {searchDatasets, updateDatasetQuery} from "../actions/findActions";
+import { searchDatasets, updateDatasetQuery, updateSearchHistory } from "../actions/findActions";
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -40,6 +40,7 @@ const mapDispatchToProps = {
 
     updateSubmissions: getSubmissionsForUser,
     updateDatasetQuery,
+    updateSearchHistory,
     searchDatasets,
 
     apiServerUrlChange: configServer, // TODO: rename apiServerUrlChange --> configServer

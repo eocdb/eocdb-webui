@@ -15,6 +15,16 @@ import { updateStoreInfo } from "./actions/configActions";
 const logger = createLogger({collapsed: true});
 const store = createStore(appReducer, applyMiddleware(thunk, logger));
 
+/*
+for (let i = 0; i < localStorage.length; i++){
+    const key = localStorage.key(i);
+    const query = localStorage.getItem(localStorage.key(i));
+
+
+}
+
+*/
+
 store.dispatch(updateStoreInfo() as any);
 
 ReactDOM.render(

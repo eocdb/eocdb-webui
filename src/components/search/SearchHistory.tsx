@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Theme, withStyles, WithStyles } from "@material-ui/core";
+import { Button, Icon, Theme, Tooltip, withStyles, WithStyles } from "@material-ui/core";
 import createStyles from "@material-ui/core/styles/createStyles";
 import ListSubheader from "@material-ui/core/ListSubheader/ListSubheader";
 import ListItem from "@material-ui/core/ListItem/ListItem";
@@ -15,13 +15,17 @@ const styles = (theme: Theme) => createStyles({
     root: {
         display: 'flex',
     },
+    rightIcon: {
+
+    }
 });
 
 
 interface SearchHistoryProps extends WithStyles<typeof styles> {
     searchHistory: SearchHistoryItem[];
 
-    onSearchHistoryClick: (selectedSearchHistory: SearchHistoryItem) => void;
+    onSearchHistoryItemClick: (selectedSearchHistory: SearchHistoryItem) => void;
+    onSearchHistoryItemDelete: (selectedSearchHistory: SearchHistoryItem) => void;
 }
 
 
@@ -31,17 +35,26 @@ class SearchHistory extends React.PureComponent<SearchHistoryProps> {
     }
 
     render() {
+        const {classes} = this.props;
         return (
             <List>
                 <ListSubheader inset>Saved Searches</ListSubheader>
                 {this.props.searchHistory.map((item: SearchHistoryItem) => {
                     return (
-                        <ListItem  onClick={() => this.props.onSearchHistoryClick(item)}  button key={item.key}>
+                        <ListItem button key={item.key}>
                             <ListItemIcon>
                                 <AssignmentIcon/>
                             </ListItemIcon>
-                            <ListItemText primary={item.key}/>
-                            fds
+                            <ListItemText onClick={() => this.props.onSearchHistoryItemClick(item)} primary={item.key}/>
+                            <Tooltip title="Delete History Item" aria-label="DeleteHistoryItem">
+                                <Button
+                                    onClick={() => this.props.onSearchHistoryItemDelete(
+                                        item
+                                    )}
+                                >
+                                    <Icon className={classes.rightIcon}>delete</Icon>
+                                </Button>
+                            </Tooltip>
                         </ListItem>
                     );
                 })}
