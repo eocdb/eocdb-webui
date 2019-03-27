@@ -1,5 +1,5 @@
-import { connect } from 'react-redux';
-import { AppState } from '../states/appState';
+import {connect} from 'react-redux';
+import {AppState} from '../states/appState';
 
 import {
     changeDrawer,
@@ -9,10 +9,11 @@ import {
     closeLoginDialog,
     openRegistrationDialog
 } from '../actions/dashboardActions';
-import { configServer } from '../actions/configActions'
+import {configServer} from '../actions/configActions'
 import Dashboard from '../components/Dashboard';
-import { loginUser } from '../actions/userActions';
-import { getSubmissionsForUser } from "../actions/submissionActions";
+import {loginUser} from '../actions/userActions';
+import {getSubmissionsForUser} from "../actions/submissionActions";
+import {searchDatasets, updateDatasetQuery} from "../actions/findActions";
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -21,6 +22,8 @@ const mapStateToProps = (state: AppState) => {
         configDialogOpen: state.dashboardState.configDialogOpen,
         apiServerUrl: state.configState.apiServerUrl,
         user: state.sessionState.user,
+
+        searchHistory: state.searchFormState.searchHistory,
     }
 };
 
@@ -36,6 +39,8 @@ const mapDispatchToProps = {
     openRegistrationDialog,
 
     updateSubmissions: getSubmissionsForUser,
+    updateDatasetQuery,
+    searchDatasets,
 
     apiServerUrlChange: configServer, // TODO: rename apiServerUrlChange --> configServer
 };

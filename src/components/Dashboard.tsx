@@ -17,9 +17,11 @@ import DrawerItems from './DrawerItems';
 import DashPanels from './DashPanels';
 import LoginDialog from '../containers/user/LoginDialog'; // TODO: dependency issue here!
 import ConfigDialog from './admin/ConfigDialog';
-import SearchHistory from "../containers/search/SearchHistory";
+import SearchHistory from "./search/SearchHistory";
 import { User } from "../model";
 import partnerLogos from "../resources/logos.png"
+import {SearchHistoryItem} from "../types/dataset";
+import {DatasetQuery} from "../api/findDatasets";
 
 
 const drawerWidth = 240;
@@ -127,6 +129,11 @@ interface DashboardProps extends WithStyles<typeof styles> {
 
     user?: User | null;
     updateSubmissions: () => void;
+
+    searchHistory: SearchHistoryItem[];
+
+    updateDatasetQuery: (datasetQuery: DatasetQuery) => void;
+    searchDatasets: () => void;
 }
 
 
@@ -168,6 +175,11 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     handleApiServerUrlChange = (url: string) => {
         this.props.apiServerUrlChange(url);
         this.handleConfigClose();
+    };
+
+    handleUpdateDatasetQuery = (selectedHistoryItem: SearchHistoryItem) => {
+        this.props.updateDatasetQuery(selectedHistoryItem.query);
+        this.props.searchDatasets();
     };
 
     render() {
@@ -233,7 +245,10 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                     <DrawerItems updateSubmissions={this.props.updateSubmissions} user={this.props.user} handleClick={this.handleDrawerChanged}/>
                     <Divider/>
 
-                    <SearchHistory />
+                    <SearchHistory
+                        searchHistory={this.props.searchHistory}
+                        onSearchHistoryClick={this.handleUpdateDatasetQuery}
+                    />
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.appBarSpacer}/>

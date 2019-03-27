@@ -36,58 +36,69 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
 
     handleSouthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let south = event.target.valueAsNumber;
-        const {selectedBBox} = this.props;
 
-        const newBBox: BBoxValue = [
-            south,
-            selectedBBox[1],
-            selectedBBox[2],
-            selectedBBox[3],
-        ];
+        if(south) {
+            const {selectedBBox} = this.props;
 
-        this.props.onBBoxChange(newBBox);
+            const newBBox: BBoxValue = [
+                south,
+                selectedBBox[1],
+                selectedBBox[2],
+                selectedBBox[3],
+            ];
+
+            this.props.onBBoxChange(newBBox);
+        }
     };
 
     handleWestChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const west = event.target.valueAsNumber;
 
-        const {selectedBBox} = this.props;
+        if (west) {
+            const {selectedBBox} = this.props;
 
-        const newBBox: BBoxValue = [
-            selectedBBox[0],
-            west,
-            selectedBBox[2],
-            selectedBBox[3],
-        ];
-        this.props.onBBoxChange(newBBox);
+            const newBBox: BBoxValue = [
+                selectedBBox[0],
+                west,
+                selectedBBox[2],
+                selectedBBox[3],
+            ];
+            this.props.onBBoxChange(newBBox);
+        }
     };
 
     handleNorthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const north = event.target.valueAsNumber;
-        const {selectedBBox} = this.props;
 
-        const newBBox: BBoxValue = [
-            selectedBBox[0],
-            selectedBBox[1],
-            north,
-            selectedBBox[3],
-        ];
+        if(north) {
+            const {selectedBBox} = this.props;
 
-        this.props.onBBoxChange(newBBox);
+            const newBBox: BBoxValue = [
+                selectedBBox[0],
+                selectedBBox[1],
+                north,
+                selectedBBox[3],
+            ];
+
+            this.props.onBBoxChange(newBBox);
+        }
     };
 
     handleEastChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const east = event.target.valueAsNumber;
-        const {selectedBBox} = this.props;
 
-        const newBBox: BBoxValue = [
-            selectedBBox[0],
-            selectedBBox[1],
-            selectedBBox[2],
-            east,
-        ];
+        if(east) {
+            const {selectedBBox} = this.props;
 
-        this.props.onBBoxChange(newBBox);
+            const newBBox: BBoxValue = [
+                selectedBBox[0],
+                selectedBBox[1],
+                selectedBBox[2],
+                east,
+            ];
+
+            this.props.onBBoxChange(newBBox);
+        }
     };
 
     render() {

@@ -19,7 +19,18 @@ export function newSearchFormState() {
             endDate: null,
             searchExpr: '',
         },
-        searchHistory: [],
+        searchHistory: [
+            {
+                key: 'test',
+                query: {
+                    geojson: true,
+                    productGroupNames: [],
+                    startDate: null,
+                    endDate: null,
+                    searchExpr: '',
+                }
+            }
+        ],
         foundDatasets: {
             locations: new Map(),
             datasets: [],

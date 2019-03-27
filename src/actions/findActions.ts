@@ -76,6 +76,21 @@ export function updateSearchHistory(searchHistory: SearchHistoryItem[]): UpdateS
     };
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+export const UPDATE_SELECTED_SEARCH_HISTORY = 'UPDATE_SELECTED_SEARCH_HISTORY';
+export type UPDATE_SELECTED_SEARCH_HISTORY = typeof UPDATE_SELECTED_SEARCH_HISTORY;
+
+export interface UpdateSelectedSearchHistory {
+    type: UPDATE_SELECTED_SEARCH_HISTORY;
+    selectedSearchHistory: SearchHistoryItem;
+}
+
+export function updateSelectedSearchHistory(selectedSearchHistory: SearchHistoryItem): UpdateSelectedSearchHistory {
+    return {
+        type: UPDATE_SELECTED_SEARCH_HISTORY, selectedSearchHistory,
+    };
+}
+
 
 function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): DatasetQuery {
     const selectedBounds = state.searchMapState.selectedBounds;
@@ -155,7 +170,10 @@ export function searchDatasets() {
 
         datasetQuery = collectDatasetQuery(state, datasetQuery);
 
-        let searchHistory = state.searchFormState.searchHistory;
+        let searchHistory = Object.assign(state.searchFormState.searchHistory);
+
+        searchHistory.push({key: 'hello', query: Object.assign(datasetQuery)});
+        dispatch(updateSearchHistory(searchHistory));
 
         return api.findDatasets(apiServerUrl, datasetQuery)
             .then((foundDatasets: QueryResult) => {
@@ -203,5 +221,6 @@ export function updateFoundDatasets(foundDatasets: QueryResult): UpdateFoundData
 export type SearchFormAction = UpdateDatasetQuery
     | UpdateFoundDatasets
     | UpdateSearchHistory
+    | UpdateSelectedSearchHistory
     | StartLoading
     | StopLoading;

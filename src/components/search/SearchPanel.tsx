@@ -217,7 +217,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             id={'lucene-search'}
                             key={'lucene-search'}
                             label={'Expression'}
-                            variant="outlined"
+                            variant={"outlined"}
                             className={classes.searchField}
                             value={this.props.datasetQuery.searchExpr}
                             onChange={this.handleSearchExprChange}

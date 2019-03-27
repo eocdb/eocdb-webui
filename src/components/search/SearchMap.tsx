@@ -220,7 +220,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         const featureGroupRef = this.editableFeatureGroupRef;
         if (featureGroupRef && this.props.updateSelectedRegions) {
             const selectedRegion = featureGroupRef.leafletElement.toGeoJSON();
-            console.log(selectedRegion);
+
             const layer = e.layer;
             if (layer) {
                 this.props.updateSelectedRegions(selectedRegion, layer.getBounds());
