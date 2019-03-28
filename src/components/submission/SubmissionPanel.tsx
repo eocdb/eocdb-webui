@@ -142,6 +142,10 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
         this.props.setSubmissionStatus(selectedSubmissionId, 'SUBMIT');
     };
 
+    handleProcessSubmission = (selectedSubmissionId: string) => {
+        this.props.setSubmissionStatus(selectedSubmissionId, 'PROCESSED');
+    };
+
     handleSendSubmission = () => {
         this.props.sendSubmission();
         this.props.updateSubmissionsForUser();
@@ -247,6 +251,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     onSubmissionSelect={this.handleUpdateSubmission}
 
                     onSubmissionApprove={this.handleApproveSubmission}
+                    onSubmissionProcess={this.handleProcessSubmission}
                     onSubmissionReject={this.handleCancelSubmission}
                     onSubmissionHalt={this.handleHaltSubmission}
                     onSubmissionRestart={this.handleRestartSubmission}

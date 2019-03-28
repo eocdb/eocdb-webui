@@ -80,6 +80,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     private editableFeatureGroupRef: any = null;
     //private myEditControl: any = null;
     private mapRef = createRef<Map>();
+    private layers:any = [];
 
     createMarker(lat: number, lon: number, key: string, dsId: string) {
         if (this.props.selectedDatasets.indexOf(dsId) >= 0) {
@@ -161,14 +162,13 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     };
 
     handleClearLayers = () => {
-        const map = this.mapRef.current;
-        if (map) {
-            map.leafletElement.removeLayer(this.editableFeatureGroupRef.leafletElement);
+        for (let i in this.layers) {
+            this.editableFeatureGroupRef.leafletElement.removeLayer(this.layers[i]);
         }
     };
 
     handleBBoxSave = (selectedBBox: LatLngBounds) => {
-        //this.handleClearLayers();
+        this.handleClearLayers();
 
         this.props.updateSelectedRegions({type: 'Polygon'}, selectedBBox, true);
         this.props.closeManualBBoxDialog();
@@ -240,26 +240,37 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     />
 
                     {markerClusterGroup}
-
-                    <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
-                        <EditControl
-                            position='topright'
-                            draw={DRAW_OPTIONS}
-                            onEdited={this.handleGeometryEdited}
-                            onCreated={this.handleGeometryCreated}
-                            onDeleted={this.handleGeometryDeleted}
-                            onMounted={this.handleDrawControlMounted}
-                            onEditStart={this.handleGeometryEditStart}
-                            onEditStop={this.handleGeometryEditStop}
-                            onDeleteStart={this.handleGeometryDeleteStart}
-                            onDeleteStop={this.handleGeometryDeleteStop}
-                        />
-
-                        {this.props.selectedBounds && this.props.drawBounds ?
-                            <Rectangle bounds={this.props.selectedBounds}/> :
-                            ''
-                        }
-                    </FeatureGroup>
+                    {this.props.selectedBounds && this.props.drawBounds ?
+                        <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
+                            <EditControl
+                                position='topright'
+                                draw={DRAW_OPTIONS}
+                                onEdited={this.handleGeometryEdited}
+                                onCreated={this.handleGeometryCreated}
+                                onDeleted={this.handleGeometryDeleted}
+                                onMounted={this.handleDrawControlMounted}
+                                onEditStart={this.handleGeometryEditStart}
+                                onEditStop={this.handleGeometryEditStop}
+                                onDeleteStart={this.handleGeometryDeleteStart}
+                                onDeleteStop={this.handleGeometryDeleteStop}
+                            />
+                            <Rectangle bounds={this.props.selectedBounds}/>
+                        </FeatureGroup>
+                        : <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
+                            <EditControl
+                                position='topright'
+                                draw={DRAW_OPTIONS}
+                                onEdited={this.handleGeometryEdited}
+                                onCreated={this.handleGeometryCreated}
+                                onDeleted={this.handleGeometryDeleted}
+                                onMounted={this.handleDrawControlMounted}
+                                onEditStart={this.handleGeometryEditStart}
+                                onEditStop={this.handleGeometryEditStop}
+                                onDeleteStart={this.handleGeometryDeleteStart}
+                                onDeleteStop={this.handleGeometryDeleteStop}
+                            />
+                        </FeatureGroup>
+                    }
                 </Map>
             </div>
         );
@@ -284,7 +295,9 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
             const selectedRegion = featureGroupRef.leafletElement.toGeoJSON();
 
             const bounds = featureGroupRef.leafletElement.getBounds();
-
+            if (e.layer) {
+                this.layers.push(e.layer);
+            }
             this.props.updateSelectedRegions(selectedRegion, bounds);
         }
     };
