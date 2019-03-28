@@ -1,11 +1,20 @@
 import { PureComponent } from "react";
 import TextField from "@material-ui/core/TextField/TextField";
 import * as React from "react";
-import { Theme, withStyles, WithStyles } from "@material-ui/core";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogTitle,
+    Grid,
+    Theme,
+    withStyles,
+    WithStyles
+} from "@material-ui/core";
 
 
 import createStyles from "@material-ui/core/styles/createStyles";
-import {LatLng, LatLngBounds} from "leaflet";
+import { LatLng, LatLngBounds } from "leaflet";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -22,131 +31,124 @@ const styles = (theme: Theme) => createStyles({
 });
 
 interface BBoxInputProps extends WithStyles<typeof styles> {
-    show?: boolean;
-    onBBoxChange: (selectedBBox: LatLngBounds) => void;
-    selectedBBox?: LatLngBounds;
-}
+    open: boolean;
+    onClose: () => void;
 
-interface BBoxInputState {
-    west: number|string;
-    north: number|string;
-    east: number|string;
+    onSouthChange: (south: number|string) => void;
     south: number|string;
+
+    onWestChange: (west: number|string) => void;
+    west: number|string;
+
+    onNorthChange: (north: number|string) => void;
+    north: number|string;
+
+    onEastChange: (east: number|string) => void;
+    east: number|string;
+
+    onBBoxSave: (selectedBounds: LatLngBounds) => void;
 }
 
-const BBoxInput = class extends PureComponent<BBoxInputProps, BBoxInputState> {
+/*function Transition(props: SlideProps) {
+    return <Slide direction="up" {...props} />;
+}*/
+
+const BBoxInput = class extends PureComponent<BBoxInputProps> {
     constructor(props: BBoxInputProps) {
         super(props);
-
-        this.state = {
-            west: "",
-            north: "",
-            east: "",
-            south: "",
-        }
     }
 
     handleOnChange = () => {
-        const {west, south, east, north} = this.state;
+        const {north, east, south, west} = this.props;
 
-        if (west!="" && south != "" && east !="" && north !=""){
-            this.props.onBBoxChange(new LatLngBounds(new LatLng(+west, +south), new LatLng(+east, +north)));
-        }
+        this.props.onBBoxSave(new LatLngBounds(new LatLng(+north, +east), new LatLng(+south, +west)));
     };
 
     handleSouthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let south = event.target.valueAsNumber;
-
-        if (south) {
-            this.setState({...this.state, south})
-        }
-
-        //this.handleOnChange();
+        const south = event.target.valueAsNumber;
+        this.props.onSouthChange(south);
     };
 
     handleWestChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const west = event.target.valueAsNumber;
-
-        if (west) {
-            this.setState({...this.state, west})
-        }
+        this.props.onWestChange(west);
     };
 
     handleNorthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const north = event.target.valueAsNumber;
-
-        if (north) {
-            this.setState({...this.state, north})
-        }
+        this.props.onNorthChange(north);
     };
 
     handleEastChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const east = event.target.valueAsNumber;
-
-        if (east) {
-            this.setState({...this.state, east})
-        }
+        this.props.onEastChange(east);
     };
 
     render() {
         const {classes} = this.props;
 
-        if (this.props.selectedBBox){
-            this.setState( {
-                west: this.props.selectedBBox.getWest(),
-                north: this.props.selectedBBox.getNorth(),
-                east: this.props.selectedBBox.getEast(),
-                south: this.props.selectedBBox.getSouth(),
-            });
-        }
-        else {
-            this.setState( {
-                west: "",
-                north: "",
-                east: "",
-                south: "",
-            });
-        }
-
         return (
-            <div>
-                <TextField
-                    id={'bbox_bottom'}
-                    label={'South'}
-                    variant={'outlined'}
-                    type={"number"}
-                    className={classes.searchField}
-                    onChange={this.handleSouthChange}
-                    value={this.state.south}
-                />
-                <TextField
-                    id={'bbox_left'}
-                    label={'West'}
-                    variant={'outlined'}
-                    type={"number"}
-                    className={classes.searchField}
-                    onChange={this.handleWestChange}
-                    value={this.state.west}
-                />
-                <TextField
-                    id={'bbox_top'}
-                    label={'North'}
-                    variant={'outlined'}
-                    type={"number"}
-                    className={classes.searchField}
-                    onChange={this.handleNorthChange}
-                    value={this.state.north}
-                />
-                <TextField
-                    id={'bbox_right'}
-                    label={'East'}
-                    variant={'outlined'}
-                    type={"number"}
-                    className={classes.searchField}
-                    onChange={this.handleEastChange}
-                    value={this.state.east}
-                />
-            </div>
+            <Dialog
+                open={this.props.open}
+                onClose={this.props.onClose}
+                //TransitionComponent={Transition}
+            >
+                <DialogTitle id="form-dialog-title">Manual BBox Input</DialogTitle>
+                <Grid spacing={32} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
+                    <Grid item xs={12}>
+                        <TextField
+                            id={'bbox_bottom'}
+                            label={'South'}
+                            variant={'outlined'}
+                            type={"number"}
+                            className={classes.searchField}
+                            onBlur={this.handleSouthChange}
+                            defaultValue={this.props.south}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            id={'bbox_left'}
+                            label={'West'}
+                            variant={'outlined'}
+                            type={"number"}
+                            className={classes.searchField}
+                            onChange={this.handleWestChange}
+                            defaultValue={this.props.west}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            id={'bbox_top'}
+                            label={'North'}
+                            variant={'outlined'}
+                            type={"number"}
+                            className={classes.searchField}
+                            onChange={this.handleNorthChange}
+                            defaultValue={this.props.north}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            id={'bbox_right'}
+                            label={'East'}
+                            variant={'outlined'}
+                            type={"number"}
+                            className={classes.searchField}
+                            onChange={this.handleEastChange}
+                            defaultValue={this.props.east}
+                        />
+                    </Grid>
+                </Grid>
+                <DialogActions>
+                    <Button onClick={() => this.handleOnChange()}>
+                        test
+                    </Button>
+                    <Button onClick={this.props.onClose}>
+                        Cancel
+                    </Button>
+                </DialogActions>
+            </Dialog>
         )
     }
 };

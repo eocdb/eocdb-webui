@@ -1,18 +1,18 @@
 import * as React from 'react'
-import {Button, Theme, WithStyles} from '@material-ui/core';
+import { Button, Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
-import {withStyles} from '@material-ui/core/styles';
-import {FeatureGroup, Map, Marker, Popup, Rectangle, TileLayer} from 'react-leaflet'
-import {geoJSON, Icon, LatLng, LatLngBounds} from 'leaflet';
-import {GeoJsonObject} from 'geojson';
+import { withStyles } from '@material-ui/core/styles';
+import { FeatureGroup, Map, Marker, Popup, Rectangle, TileLayer } from 'react-leaflet'
+import { geoJSON, Icon, LatLng, LatLngBounds } from 'leaflet';
+import { GeoJsonObject } from 'geojson';
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import 'react-leaflet-markercluster/dist/styles.css';
-import {DatasetRef, QueryResult} from "../../model";
+import { DatasetRef, QueryResult } from "../../model";
 
 import markerInv from './marker_inv.png';
 import marker from './marker.png';
-import {BBoxValue} from "./BBoxInput";
-import {createRef} from "react";
+import { BBoxValue } from "./BBoxInput";
+import { createRef } from "react";
 import BBoxInput from "./BBoxInputDialog";
 
 
@@ -40,7 +40,25 @@ interface SearchMapProps extends WithStyles<typeof styles> {
 
     selectedBounds?: LatLngBounds;
     mapBounds?: LatLngBounds;
-    drawBounds?: boolean;
+    drawBounds: boolean;
+
+    selectedManualBBox: LatLngBounds;
+    updateManualBBox: (selectedBBox: LatLngBounds) => void;
+    openManualBBoxDialog: () => void;
+    closeManualBBoxDialog: () => void;
+    manualBBoxInputOpen: boolean;
+
+    updateManualBBoxSouth: (south: number | string) => void;
+    selectedBBoxSouth: number | string;
+
+    updateManualBBoxWest: (west: number | string) => void;
+    selectedBBoxWest: number | string;
+
+    updateManualBBoxNorth: (north: number | string) => void;
+    selectedBBoxNorth: number | string;
+
+    updateManualBBoxEast: (east: number | string) => void;
+    selectedBBoxEast: number | string;
 
     selectedRectangleFromAdvancedDialog?: BBoxValue;
 }
@@ -149,8 +167,25 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         }
     };
 
-    handleBBoxChange = () => {
+    handleBBoxSave = (selectedBBox: LatLngBounds) => {
         //this.handleClearLayers();
+
+        this.props.updateSelectedRegions({type: 'Polygon'}, selectedBBox, true);
+        this.props.closeManualBBoxDialog();
+    };
+
+    handleManualBBoxInputOpen = () => {
+        if (this.props.selectedBounds) {
+            this.props.updateManualBBoxSouth(this.props.selectedBounds.getSouth());
+            this.props.updateManualBBoxWest(this.props.selectedBounds.getWest());
+            this.props.updateManualBBoxNorth(this.props.selectedBounds.getNorth());
+            this.props.updateManualBBoxEast(this.props.selectedBounds.getEast());
+        }
+        this.props.openManualBBoxDialog();
+    };
+
+    handleManualBBoxInputSouthChange = (south: number | string) => {
+        this.props.updateManualBBoxSouth(south);
     };
 
     render() {
@@ -166,10 +201,23 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         return (
             <div style={{zIndex: 1}}>
                 <BBoxInput
-                    onBBoxChange={this.handleBBoxChange}
-                    selectedBBox={this.props.selectedBounds}
+                    open={this.props.manualBBoxInputOpen}
+                    onClose={this.props.closeManualBBoxDialog}
+                    onBBoxSave={this.handleBBoxSave}
+
+                    south={this.props.selectedBBoxSouth}
+                    onSouthChange={this.handleManualBBoxInputSouthChange}
+
+                    west={this.props.selectedBBoxWest}
+                    onWestChange={this.props.updateManualBBoxWest}
+
+                    north={this.props.selectedBBoxNorth}
+                    onNorthChange={this.props.updateManualBBoxNorth}
+
+                    east={this.props.selectedBBoxEast}
+                    onEastChange={this.props.updateManualBBoxEast}
                 />
-                <Button onClick={() => this.handleClearLayers()}>
+                <Button onClick={this.handleManualBBoxInputOpen}>
                     test
                 </Button>
                 <Map ref={this.mapRef} bounds={bounds} center={this.props.position} zoom={this.props.zoom} maxZoom={24}>
@@ -235,13 +283,19 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         if (featureGroupRef && this.props.updateSelectedRegions) {
             const selectedRegion = featureGroupRef.leafletElement.toGeoJSON();
 
-            const layer = e.layer;
+            const bounds = featureGroupRef.leafletElement.getBounds();
 
-            if (layer) {
-                this.props.updateSelectedRegions(selectedRegion, layer.getBounds());
-            } else {
-                this.props.updateSelectedRegions(selectedRegion);
-            }
+            this.props.updateSelectedRegions(selectedRegion, bounds);
+        }
+    };
+
+    private deleteSelectedRegions = (e: any) => {
+        // this.editableFeatureGroupRef contains the edited geometry, which can be manipulated through the leaflet API
+        const featureGroupRef = this.editableFeatureGroupRef;
+        if (featureGroupRef && this.props.updateSelectedRegions) {
+            const selectedRegion = featureGroupRef.leafletElement.toGeoJSON();
+
+            this.props.updateSelectedRegions(selectedRegion);
         }
     };
 
@@ -261,7 +315,12 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         });
         console.log(`handleGeometryDeleted: removed ${numDeleted} layers`, e);
         */
-        this.updateSelectedRegions(e);
+        this.props.updateManualBBoxSouth('');
+        this.props.updateManualBBoxWest('');
+        this.props.updateManualBBoxNorth('');
+        this.props.updateManualBBoxEast('');
+
+        this.deleteSelectedRegions(e);
     };
 
     // noinspection JSUnusedLocalSymbols
@@ -287,6 +346,12 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     // noinspection JSUnusedLocalSymbols
     private handleGeometryDeleteStop = (e: any) => {
         // console.log('handleGeometryDeleteStop', e);
+        this.deleteSelectedRegions(e);
+
+        this.props.updateManualBBoxSouth('');
+        this.props.updateManualBBoxWest('');
+        this.props.updateManualBBoxNorth('');
+        this.props.updateManualBBoxEast('');
     };
 
 }

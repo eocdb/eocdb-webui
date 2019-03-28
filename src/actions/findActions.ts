@@ -5,7 +5,6 @@ import { QueryResult } from '../model';
 import { AppState } from '../states/appState';
 import * as api from '../api'
 import { DatasetQuery } from '../api/findDatasets';
-import { LatLng, latLngBounds } from "leaflet";
 import { SearchHistoryItem } from "../types/dataset";
 
 
@@ -100,22 +99,6 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
 
     if (!state.sessionState.user){
         datasetQuery = {...datasetQuery, status: 'PUBLISHED'};
-    }
-
-    const selectedBoundsAdvanced = state.advancedSearchState.selectedBBox;
-
-    if (selectedBoundsAdvanced) {
-        if (selectedBoundsAdvanced[0] !== ''
-            && selectedBoundsAdvanced[1] !== ''
-            && selectedBoundsAdvanced[2] !== ''
-            && selectedBoundsAdvanced[3] !== '') {
-
-            const bnds1 = new LatLng(+selectedBoundsAdvanced[0], +selectedBoundsAdvanced[1]);
-            const bnds2 = new LatLng(+selectedBoundsAdvanced[2], +selectedBoundsAdvanced[3]);
-            const bbox = latLngBounds(bnds1, bnds2);
-
-            datasetQuery = {...datasetQuery, region: bbox.toBBoxString()};
-        }
     }
 
     const selectedWavelength = state.advancedSearchState.selectedWavelength;

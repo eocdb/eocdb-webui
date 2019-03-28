@@ -7,8 +7,12 @@ export interface SearchMapState {
     selectedRegions?: GeoJsonObject;
     selectedBounds?: LatLngBounds;
     drawBounds?: boolean;
-
-    selectedRectangleFromAdvancedDialog?: LatLngBounds;
+    selectedManualBounds?: LatLngBounds;
+    manualBBoxInputOpen: boolean;
+    selectedBBoxSouth: number|string;
+    selectedBBoxWest: number|string;
+    selectedBBoxNorth: number|string;
+    selectedBBoxEast: number|string;
 }
 
 const EUMETSAT_LAT_LNG = new LatLng(49.858996564, 8.622830842);
@@ -18,5 +22,10 @@ export function newSearchMapState() {
         position: EUMETSAT_LAT_LNG,
         zoom: 4,
         drawBounds: false,
+        manualBBoxInputOpen: false,
+        selectedBBoxSouth: '',
+        selectedBBoxWest: '',
+        selectedBBoxNorth: '',
+        selectedBBoxEast: '',
     }
 }
