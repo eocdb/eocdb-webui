@@ -264,7 +264,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.appBarSpacer}/>
-                    <DashPanels currentDrawer={this.props.currentDrawer}/>
+                    <DashPanels searchHistory={this.props.searchHistory} currentDrawer={this.props.currentDrawer}/>
                 </main>
             </div>
         );

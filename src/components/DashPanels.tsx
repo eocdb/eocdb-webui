@@ -9,6 +9,7 @@ import BrowsePanel from './browse/BrowsePanel';
 import AdminPanel from './admin/AdminPanel';
 import SubmissionPanel from "../containers/submission/SubmissionPanel";
 import SearchPanel from '../containers/search/SearchPanel';
+import {SearchHistoryItem} from "../types/dataset";
 
 
 const drawerWidth = 240;
@@ -96,7 +97,8 @@ const styles = (theme: Theme) => createStyles(
 
 
 interface DashPanelsProps extends WithStyles<typeof styles> {
-    currentDrawer: string
+    currentDrawer: string;
+    searchHistory: SearchHistoryItem[];
 }
 
 class DashPanels extends React.PureComponent<DashPanelsProps> {
@@ -107,7 +109,7 @@ class DashPanels extends React.PureComponent<DashPanelsProps> {
     render() {
         return (
             <div>
-                <SearchPanel show={this.props.currentDrawer == 'Search'}/>
+                <SearchPanel searchHistory={this.props.searchHistory} show={this.props.currentDrawer == 'Search'}/>
                 <HomePanel show={this.props.currentDrawer == 'Home'}/>
                 <SubmissionPanel show={this.props.currentDrawer == 'Submit'}/>
                 <BrowsePanel show={this.props.currentDrawer == 'Browse'}/>

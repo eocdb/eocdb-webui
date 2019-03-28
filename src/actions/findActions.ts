@@ -98,6 +98,10 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
         datasetQuery = {...datasetQuery, region: selectedBounds.toBBoxString()};
     }
 
+    if (!state.sessionState.user){
+        datasetQuery = {...datasetQuery, status: 'PUBLISHED'};
+    }
+
     const selectedBoundsAdvanced = state.advancedSearchState.selectedBBox;
 
     if (selectedBoundsAdvanced) {

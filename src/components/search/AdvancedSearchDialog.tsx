@@ -9,7 +9,6 @@ import { WithStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid/Grid";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import BBoxInput, { BBoxValue } from "./BBoxInput";
 import { wavelengthItems } from "./SelectItems";
 import MinMaxInputSlider from "./MinMaxInputSlider";
 import RadioSelect, { RadioItem } from "./RadioSelect";
@@ -17,7 +16,6 @@ import MultipleSelectTextField, { Suggestion } from "./MultipleSelectTextField";
 import Typography from "@material-ui/core/Typography";
 import { SliderRange } from "../../types/advancedSearchDialog";
 import { Product } from "../../model";
-import { LatLngBounds } from "leaflet";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -53,10 +51,6 @@ function Transition(props: SlideProps) {
 export interface AdvancedSearchDialogProps extends WithStyles<typeof styles> {
     open: boolean;
     onClose: () => void;
-
-    onBBoxChange: (selectedBBox: BBoxValue) => void;
-    bboxValue: BBoxValue;
-    mapBBoxValue: LatLngBounds;
 
     onWavelengthChange: (item: string) => void;
     wavelengthValue: string;
@@ -129,17 +123,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
     };
 
     render() {
-        const {classes, wavelengthValue, mapBBoxValue} = this.props;
-        let selectedBBox = this.props.bboxValue;
-
-        if (mapBBoxValue) {
-            selectedBBox = [
-                +mapBBoxValue.getSouth(),
-                +mapBBoxValue.getWest(),
-                +mapBBoxValue.getNorth(),
-                +mapBBoxValue.getEast()
-            ];
-        }
+        const {classes, wavelengthValue} = this.props;
 
         return (
             <Dialog
@@ -150,13 +134,6 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                 <div className={classes.dialogContent}>
                     <DialogTitle id="form-dialog-title">Advanced Search</DialogTitle>
                     <Grid spacing={32} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
-                        <Grid item xs={12}>
-                            <Typography component={'h2'}>Region</Typography>
-                            <BBoxInput
-                                onBBoxChange={this.props.onBBoxChange}
-                                selectedBBox={selectedBBox}
-                            />
-                        </Grid>
                         <Grid item xs={12}>
                             <Typography component={'h2'}>Wavelength</Typography>
                             <RadioSelect items={wavelengthItems}

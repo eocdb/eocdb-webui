@@ -10,10 +10,11 @@ export interface UpdateSelectedRegions {
     type: UPDATE_SELECTED_REGIONS;
     selectedRegions: GeoJsonObject;
     selectedBounds: LatLngBounds;
+    drawBounds: boolean;
 }
 
-export function updateSelectedRegions(selectedRegions: GeoJsonObject, selectedBounds: LatLngBounds): UpdateSelectedRegions {
-    return {type: UPDATE_SELECTED_REGIONS, selectedRegions, selectedBounds};
+export function updateSelectedRegions(selectedRegions: GeoJsonObject, selectedBounds: LatLngBounds, drawBounds: boolean): UpdateSelectedRegions {
+    return {type: UPDATE_SELECTED_REGIONS, selectedRegions, selectedBounds, drawBounds};
 }
 
 

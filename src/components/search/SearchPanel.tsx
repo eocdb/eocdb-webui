@@ -24,9 +24,7 @@ import HelpDialog from "../messages/HelpDialog";
 import { FindHelpText } from "../messages/Help/find";
 
 import { DatePicker } from 'material-ui-pickers';
-import { BBoxValue } from "./BBoxInput";
 import { SliderRange } from "../../types/advancedSearchDialog";
-import { LatLngBounds } from "leaflet";
 import { SearchHistoryItem } from "../../types/dataset";
 
 
@@ -73,11 +71,7 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     loading: boolean;
     startLoading: () => void;
 
-    // Properties for Advanced Search Dolog
-
-    updateBBox: (selectedBBox: BBoxValue) => void;
-    mapBBox: LatLngBounds;
-    selectedBBox: BBoxValue;
+    // Properties for Advanced Search Dialog
 
     updateWavelength: (item: string) => void;
     selectedWavelength: string;
@@ -123,13 +117,15 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
     };
 
     handleSaveFilter = () => {
-        const item: SearchHistoryItem = {key: 'test', query: Object.assign(this.props.datasetQuery)};
-        const history = Object.assign(this.props.searchHistory);
+        const item: SearchHistoryItem = {key: 'user_' + Date.now(), query: Object.assign(this.props.datasetQuery)};
+        let history = this.props.searchHistory.map((item: SearchHistoryItem) => {
+            return item;
+        });
 
         history.push(item);
         this.props.updateSearchHistory(history);
 
-        localStorage.setItem('test', JSON.stringify(item.query));
+        localStorage.setItem('user_' + Date.now(), JSON.stringify(item.query));
     };
 
     handleSearchExprChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -175,10 +171,6 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         return this.props.datasetQuery.productGroupNames.map((pg: string) => {
             return {label: pg, value: pg};
         });
-    };
-
-    handleAdvancedSearchDialogBBoxChange = (selectedBBox: BBoxValue) => {
-        this.props.updateBBox(selectedBBox);
     };
 
     render() {
@@ -279,10 +271,6 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             open={this.props.advancedSearchDialogOpen}
                             onClose={this.props.closeAdvancedSearchDialog}
                             productItems={this.props.serverInfo['products']}
-
-                            onBBoxChange={this.handleAdvancedSearchDialogBBoxChange}
-                            bboxValue={this.props.selectedBBox}
-                            mapBBoxValue={this.props.mapBBox}
                             onWavelengthChange={this.props.updateWavelength}
                             wavelengthValue={this.props.selectedWavelength}
                             onWaterDepthChange={this.props.updateWaterDepth}
@@ -296,8 +284,6 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <AdvancedSearchLog
-                            onBBoxChange={this.props.updateBBox}
-                            bboxValue={this.props.selectedBBox}
                             onWavelengthChange={this.props.updateWavelength}
                             wavelengthValue={this.props.selectedWavelength}
                             onWaterDepthChange={this.props.updateWaterDepth}

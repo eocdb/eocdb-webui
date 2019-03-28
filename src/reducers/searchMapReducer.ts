@@ -17,6 +17,7 @@ export function searchMapReducer(state: SearchMapState, action: SearchMapAction)
                 ...state,
                 selectedRegions: action.selectedRegions,
                 selectedBounds: action.selectedBounds,
+                drawBounds: action.drawBounds,
             };
         case UPDATE_SELECTED_REGION_FROM_ADVANCED:
             return {...state, selectedRectangleFromAdvancedDialog: action.selectedRegion}

@@ -12,6 +12,9 @@ export interface DatasetQuery {
     startDate?: string | null;
     endDate?: string | null;
     region?: string;
+    submission_id?: string;
+    status?: string;
+    user_id?: number;
     productMode?: ProductMode;
     productNames?: string[];
     productGroupNames: string[];
@@ -23,6 +26,9 @@ export interface DatasetQuery {
     offset?: number;
     count?: number;
     geojson?: boolean;
+    //submissionId: string;
+    //userId: number;
+    //status: string;
 }
 
 type QueryComponent = [string, string];
@@ -51,6 +57,9 @@ export function collectComponents(datasetQuery: DatasetQuery) {
     collectSearchExprComponent(datasetQuery, queryComponents);
     collectTimeComponent(datasetQuery, queryComponents);
     collectRegionComponent(datasetQuery, queryComponents);
+    collectSubmissionIdComponent(datasetQuery, queryComponents);
+    collectStatusComponent(datasetQuery, queryComponents);
+    collectUserIdComponent(datasetQuery, queryComponents);
     collectProductComponents(datasetQuery, queryComponents);
     collectMeasurementTypeComponent(datasetQuery, queryComponents);
     collectWavelengthsTypeComponent(datasetQuery, queryComponents);
@@ -93,6 +102,24 @@ function collectSearchExprComponent(queryParameters: DatasetQuery, queryComponen
 function collectRegionComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
     if (queryParameters.region) {
         queryComponents.push(['region', queryParameters.region]);
+    }
+}
+
+function collectSubmissionIdComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
+    if (queryParameters.submission_id) {
+        queryComponents.push(['submission_id', queryParameters.submission_id]);
+    }
+}
+
+function collectStatusComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
+    if (queryParameters.status) {
+        queryComponents.push(['status', queryParameters.status]);
+    }
+}
+
+function collectUserIdComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
+    if (queryParameters.user_id) {
+        queryComponents.push(['user_id', `${queryParameters.user_id}`]);
     }
 }
 

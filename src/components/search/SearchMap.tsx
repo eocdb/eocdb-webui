@@ -1,17 +1,20 @@
 import * as React from 'react'
-import { Theme, WithStyles } from '@material-ui/core';
+import {Button, Theme, WithStyles} from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
-import { withStyles } from '@material-ui/core/styles';
-import { FeatureGroup, Map, Marker, Popup, Rectangle, TileLayer } from 'react-leaflet'
-import { geoJSON, Icon, LatLng, LatLngBounds } from 'leaflet';
-import { GeoJsonObject } from 'geojson';
+import {withStyles} from '@material-ui/core/styles';
+import {FeatureGroup, Map, Marker, Popup, Rectangle, TileLayer} from 'react-leaflet'
+import {geoJSON, Icon, LatLng, LatLngBounds} from 'leaflet';
+import {GeoJsonObject} from 'geojson';
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import 'react-leaflet-markercluster/dist/styles.css';
-import { DatasetRef, QueryResult } from "../../model";
+import {DatasetRef, QueryResult} from "../../model";
 
 import markerInv from './marker_inv.png';
 import marker from './marker.png';
-import { BBoxValue } from "./BBoxInput";
+import {BBoxValue} from "./BBoxInput";
+import {createRef} from "react";
+import BBoxInput from "./BBoxInputDialog";
+
 
 // FIXME: forman did not find any typedefs for 'react-leaflet-draw', 2018.11.xx
 // import EditControl from "react-leaflet-draw";
@@ -26,7 +29,7 @@ interface SearchMapProps extends WithStyles<typeof styles> {
     position: LatLng;
     zoom: number;
 
-    updateSelectedRegions: (selectedRegions: GeoJsonObject, selectedBounds?: LatLngBounds) => void;
+    updateSelectedRegions: (selectedRegions: GeoJsonObject, selectedBounds?: LatLngBounds, drawBounds?: boolean) => void;
     testMarkerCluster?: boolean;
 
     foundDatasets: QueryResult;
@@ -36,6 +39,8 @@ interface SearchMapProps extends WithStyles<typeof styles> {
     selectedDatasets: string[];
 
     selectedBounds?: LatLngBounds;
+    mapBounds?: LatLngBounds;
+    drawBounds?: boolean;
 
     selectedRectangleFromAdvancedDialog?: BBoxValue;
 }
@@ -55,6 +60,8 @@ const DRAW_OPTIONS = {
 
 class SearchMap extends React.PureComponent<SearchMapProps> {
     private editableFeatureGroupRef: any = null;
+    //private myEditControl: any = null;
+    private mapRef = createRef<Map>();
 
     createMarker(lat: number, lon: number, key: string, dsId: string) {
         if (this.props.selectedDatasets.indexOf(dsId) >= 0) {
@@ -135,20 +142,19 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         return bounds;
     };
 
-    getAdvancedBounds = () => {
-        const bbox = this.props.selectedRectangleFromAdvancedDialog;
+    handleClearLayers = () => {
+        const map = this.mapRef.current;
+        if (map) {
+            map.leafletElement.removeLayer(this.editableFeatureGroupRef.leafletElement);
+        }
+    };
 
-        return bbox ? new LatLngBounds(
-            new LatLng(+bbox[0], +bbox[1]),
-            new LatLng(+bbox[2], +bbox[3]),
-            ) :
-            undefined;
+    handleBBoxChange = () => {
+        //this.handleClearLayers();
     };
 
     render() {
         const bounds = this.getBoundsFromDatasets();
-
-        const advancedRegion = this.getAdvancedBounds();
 
         const markerClusterGroup = (
             <MarkerClusterGroup
@@ -158,47 +164,56 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
             </MarkerClusterGroup>
         );
         return (
-            <Map zIndex={1} bounds={bounds} center={this.props.position} zoom={this.props.zoom} maxZoom={24}>
-                <TileLayer
-                    zIndex={1}
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+            <div style={{zIndex: 1}}>
+                <BBoxInput
+                    onBBoxChange={this.handleBBoxChange}
+                    selectedBBox={this.props.selectedBounds}
                 />
-                <TileLayer
-                    zIndex={1}
-                    url="https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer/tile/{z}/{y}/{x}"
-                    attribution="&copy; <a href=&quot;https://www.gebco.net/data_and_products/gridded_bathymetry_data/&quot;>GEBCO</a>, <a href=&quot;https://maps.ngdc.noaa.gov/&quot;>NOAHH</a> and contributors"
-                    maxZoom={9}
-                />
-                <TileLayer
-                    zIndex={1}
-                    url="https://a.tiles.mapbox.com/v3/mapbox.natural-earth-2/{z}/{x}/{y}.png"
-                    attribution="&copy; <a href=&quot;https://www.naturalearthdata.com/&quot;>MapBox</a>, <a href=&quot;https://www.mapbox.com/&quot;>MapBox</a> and contributors"
-                    maxZoom={6}
-                />
-
-                {markerClusterGroup}
-
-                <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
-                    <EditControl
-                        position='topright'
-                        draw={DRAW_OPTIONS}
-                        onEdited={this.handleGeometryEdited}
-                        onCreated={this.handleGeometryCreated}
-                        onDeleted={this.handleGeometryDeleted}
-                        onMounted={this.handleDrawControlMounted}
-                        onEditStart={this.handleGeometryEditStart}
-                        onEditStop={this.handleGeometryEditStop}
-                        onDeleteStart={this.handleGeometryDeleteStart}
-                        onDeleteStop={this.handleGeometryDeleteStop}
+                <Button onClick={() => this.handleClearLayers()}>
+                    test
+                </Button>
+                <Map ref={this.mapRef} bounds={bounds} center={this.props.position} zoom={this.props.zoom} maxZoom={24}>
+                    <TileLayer
+                        zIndex={1}
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                     />
-                    {
-                        advancedRegion ?
-                            <Rectangle bounds={advancedRegion}/>
-                            : ''
-                    }
-                </FeatureGroup>
-            </Map>
+                    <TileLayer
+                        zIndex={1}
+                        url="https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer/tile/{z}/{y}/{x}"
+                        attribution="&copy; <a href=&quot;https://www.gebco.net/data_and_products/gridded_bathymetry_data/&quot;>GEBCO</a>, <a href=&quot;https://maps.ngdc.noaa.gov/&quot;>NOAHH</a> and contributors"
+                        maxZoom={9}
+                    />
+                    <TileLayer
+                        zIndex={1}
+                        url="https://a.tiles.mapbox.com/v3/mapbox.natural-earth-2/{z}/{x}/{y}.png"
+                        attribution="&copy; <a href=&quot;https://www.naturalearthdata.com/&quot;>MapBox</a>, <a href=&quot;https://www.mapbox.com/&quot;>MapBox</a> and contributors"
+                        maxZoom={6}
+                    />
+
+                    {markerClusterGroup}
+
+                    <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
+                        <EditControl
+                            position='topright'
+                            draw={DRAW_OPTIONS}
+                            onEdited={this.handleGeometryEdited}
+                            onCreated={this.handleGeometryCreated}
+                            onDeleted={this.handleGeometryDeleted}
+                            onMounted={this.handleDrawControlMounted}
+                            onEditStart={this.handleGeometryEditStart}
+                            onEditStop={this.handleGeometryEditStop}
+                            onDeleteStart={this.handleGeometryDeleteStart}
+                            onDeleteStop={this.handleGeometryDeleteStop}
+                        />
+
+                        {this.props.selectedBounds && this.props.drawBounds ?
+                            <Rectangle bounds={this.props.selectedBounds}/> :
+                            ''
+                        }
+                    </FeatureGroup>
+                </Map>
+            </div>
         );
     }
 
@@ -221,6 +236,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
             const selectedRegion = featureGroupRef.leafletElement.toGeoJSON();
 
             const layer = e.layer;
+
             if (layer) {
                 this.props.updateSelectedRegions(selectedRegion, layer.getBounds());
             } else {

@@ -14,9 +14,9 @@ import {
     openHelpDialog,
 } from "../../actions/dashboardActions";
 import {
-    updateBBox,
     updateOptShallow,
-    updateProducts, updateProductValue,
+    updateProducts,
+    updateProductValue,
     updateWaterDepth,
     updateWavelength
 } from "../../actions/advancedFindActions";
@@ -30,11 +30,9 @@ const mapStateToProps = (state: AppState) => {
         helpDialogOpen: state.dashboardState.helpDialogOpen,
         loading: state.searchFormState.loading,
 
-        searchHistory: state.searchFormState.searchHistory,
+        //searchHistory: state.searchFormState.searchHistory,
 
         // Advanced Find
-        selectedBBox: state.advancedSearchState.selectedBBox,
-        mapBBox: state.searchMapState.selectedBounds,
         selectedWavelength: state.advancedSearchState.selectedWavelength,
         selectedWaterDepth: state.advancedSearchState.waterDepth,
         selectedOptShallow: state.advancedSearchState.selectedOptShallow,
@@ -58,7 +56,6 @@ const mapDispatchToProps = {
     updateSearchHistory,
 
     // Advanced Search
-    updateBBox,
     updateWavelength,
     updateWaterDepth,
     updateOptShallow,

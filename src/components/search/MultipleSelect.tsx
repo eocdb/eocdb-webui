@@ -16,16 +16,24 @@ const styles = (theme: Theme) => createStyles(
         root: {
             display: 'flex',
             flexWrap: 'wrap',
+            position: "relative",
+            flexGrow: 1,
+            height: 250,
+            '& div':{
+                zIndex:1
+            }
         },
         chip: {
             margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
         },
         formControl: {
             minWidth: 200,
-
+            position: 'relative',
+            zIndex: 999,
         },
         select: {
             minHeight: 20,
+            zIndex: 999,
         },
         fontRegular: {
             fontWeight: theme.typography.fontWeightRegular,
@@ -53,9 +61,11 @@ const MenuProps = {
         style: {
             maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
             width: 300,
+            zIndex: 999,
         },
     },
 };
+
 
 interface TestState {
     labelWidth: number;
@@ -169,6 +179,7 @@ class MultipleSelect extends React.Component<MultipleSelectProps, TestState> {
                     <InputLabel
                         htmlFor="select-multiple"
                         shrink
+                        variant={"outlined"}
                     >
                         Product Groups
                     </InputLabel>

@@ -6,6 +6,7 @@ export interface SearchMapState {
     zoom: number;
     selectedRegions?: GeoJsonObject;
     selectedBounds?: LatLngBounds;
+    drawBounds?: boolean;
 
     selectedRectangleFromAdvancedDialog?: LatLngBounds;
 }
@@ -16,5 +17,6 @@ export function newSearchMapState() {
     return {
         position: EUMETSAT_LAT_LNG,
         zoom: 4,
+        drawBounds: false,
     }
 }
