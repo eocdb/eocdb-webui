@@ -4,5 +4,6 @@ export interface UploadData {
     submissionId: string;
     path: string;
     publicationDate: string|null;
+    allowPublication: boolean;
     username: string;
 }

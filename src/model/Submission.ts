@@ -8,4 +8,5 @@ export interface Submission {
     files: SubmissionFile[];
     file_refs: SubmissionFile[];
     publication_date: string;
+    allow_publication: boolean;
 }

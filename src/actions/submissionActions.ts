@@ -328,6 +328,23 @@ export function updateDocFiles(docFiles: File[]): UpdateDocFiles {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+export const UPDATE_ALLOW_PUBLICATION = 'UPDATE_ALLOW_PUBLICATION';
+export type UPDATE_ALLOW_PUBLICATION = typeof UPDATE_ALLOW_PUBLICATION;
+
+export interface UpdateAllowPublication {
+    type: UPDATE_ALLOW_PUBLICATION;
+    allowPublication: boolean;
+}
+
+export function updateAllowPublication(allowPublication: boolean): UpdateAllowPublication {
+    return {
+        type: UPDATE_ALLOW_PUBLICATION,
+        allowPublication
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 export const CLEAR_SUBMISSION_FORM = 'CLEAR_SUBMISSION_FORM';
 export type CLEAR_SUBMISSION_FORM = typeof CLEAR_SUBMISSION_FORM;
@@ -380,6 +397,7 @@ export function sendSubmission() {
             submissionId: state.submissionState.submissionId,
             path: state.submissionState.path,
             publicationDate: state.submissionState.publicationDate,
+            allowPublication: state.submissionState.allowPublication,
             username: username,
         };
 
@@ -752,6 +770,7 @@ export type SubmitAction = OpenSubmitSteps
     | UpdateSubmissionId
     | UpdatePath
     | UpdatePublicationDate
+    | UpdateAllowPublication
     | UpdateDataFiles
     | UpdateDocFiles
     | ClearSubmissionForm

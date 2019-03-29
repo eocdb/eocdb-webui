@@ -17,6 +17,7 @@ export interface SubmissionState {
     docFiles: File[];
     path: string;
     publicationDate: string | null;
+    allowPublication: boolean;
 
     currentDatasetValidationResults: DatasetValidationResult[];
     currentSubmissionFiles: SubmissionFile[];
@@ -44,6 +45,7 @@ export function newSubmissionState() {
         docFiles: [],
         path: '',
         publicationDate: null,
+        allowPublication: false,
 
         currentDatasetValidationResults: [],
         currentSubmissionFiles: [],

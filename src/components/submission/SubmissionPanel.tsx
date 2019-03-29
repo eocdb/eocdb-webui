@@ -92,6 +92,9 @@ interface SubmissionPanelProps extends WithStyles<typeof styles> {
     updatePublicationDate: (publicationDate: string|null) => void;
     selectedPublicationDate: string|null;
 
+    updateAllowPublication: (allowPublication: boolean) => void;
+    allowPublication: boolean;
+
     sendSubmission: () => void;
 
     clearSubmissionForm: () => void;
@@ -201,13 +204,14 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
         this.props.closeUploadSubmissionFileDialog();
     };
 
-    handleOploadSubmissionFileDialogOnSave = (submissionFile: SubmissionFile, files: File[]) => {
+    handleUploadSubmissionFileDialogOnSave = (submissionFile: SubmissionFile, files: File[]) => {
         const uploadData = {
             dataFiles: files,
             docFiles: [],
             submissionId: submissionFile.submission_id,
             path: submissionFile.filename,
             publicationDate: null,
+            allowPublication: false,
             username: this.props.user.name,
         };
 
@@ -234,6 +238,9 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
 
                     onPathChange={this.props.updatePath}
                     pathValue={this.props.selectedPath}
+
+                    onAllowPublicationChange={this.props.updateAllowPublication}
+                    allowPublication={this.props.allowPublication}
 
                     onDatafilesChange={this.props.updateDataFiles}
                     dataFilesValue={this.props.selectedDataFiles}
@@ -308,7 +315,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                 <SingleFileUpload
                     label={'Upload'}
                     onCancel={this.handleOploadSubmissionFileDialogOnCancel}
-                    onSave={this.handleOploadSubmissionFileDialogOnSave}
+                    onSave={this.handleUploadSubmissionFileDialogOnSave}
                     open={this.props.uploadSubmissionFileDialogOpen}
 
                     value={this.props.selectedSubmissionFile}

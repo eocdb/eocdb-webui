@@ -1,4 +1,4 @@
-import { Theme, WithStyles } from "@material-ui/core";
+import { Checkbox, Theme, WithStyles } from "@material-ui/core";
 import createStyles from "@material-ui/core/styles/createStyles";
 import * as React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -44,6 +44,9 @@ interface SubmissionDialogProps extends WithStyles<typeof styles> {
     onPathChange: (path: string) => void;
     pathValue: string;
 
+    onAllowPublicationChange: (allowPublication: boolean) => void;
+    allowPublication: boolean;
+
     onDatafilesChange: (acceptedFiles: File[]) => void;
     dataFilesValue: File[];
 
@@ -74,6 +77,10 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
         const path = event.target.value;
 
         this.props.onPathChange(path);
+    };
+
+    handlePublicationDateChange = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+        this.props.onAllowPublicationChange(checked);
     };
 
     handleOndropDatafiles = (acceptedFiles: File[]) => {
@@ -160,6 +167,13 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                             onChange={this.props.onPublicationDateChange}
                             
                             className={classes.textField}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            value={'publish'}
+                            checked={this.props.allowPublication}
+                            onChange={this.handlePublicationDateChange}
                         />
                     </Grid>
                     <Grid item>

@@ -80,7 +80,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     private editableFeatureGroupRef: any = null;
     //private myEditControl: any = null;
     private mapRef = createRef<Map>();
-    private layers:any = [];
+    private layers: any = [];
 
     createMarker(lat: number, lon: number, key: string, dsId: string) {
         if (this.props.selectedDatasets.indexOf(dsId) >= 0) {
@@ -218,8 +218,9 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     onEastChange={this.props.updateManualBBoxEast}
                 />
                 <Button onClick={this.handleManualBBoxInputOpen}>
-                    test
+                    Enter BBox
                 </Button>
+
                 <Map ref={this.mapRef} bounds={bounds} center={this.props.position} zoom={this.props.zoom} maxZoom={24}>
                     <TileLayer
                         zIndex={1}
@@ -302,6 +303,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         }
     };
 
+    // noinspection JSUnusedLocalSymbols
     private deleteSelectedRegions = (e: any) => {
         // this.editableFeatureGroupRef contains the edited geometry, which can be manipulated through the leaflet API
         const featureGroupRef = this.editableFeatureGroupRef;

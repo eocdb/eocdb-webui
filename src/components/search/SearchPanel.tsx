@@ -26,6 +26,7 @@ import { FindHelpText } from "../messages/Help/find";
 import { DatePicker } from 'material-ui-pickers';
 import { SliderRange } from "../../types/advancedSearchDialog";
 import { SearchHistoryItem } from "../../types/dataset";
+import { User } from "../../model/User";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -90,6 +91,8 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
 
     updateSearchHistory: (searchHistory: SearchHistoryItem[]) => void;
     searchHistory: SearchHistoryItem[];
+
+    user?: User|null;
 }
 
 
@@ -117,7 +120,12 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
     };
 
     handleSaveFilter = () => {
-        const item: SearchHistoryItem = {key: 'user_' + Date.now(), query: Object.assign(this.props.datasetQuery)};
+        let key = 'flt_';
+        if (this.props.user) {
+            key = this.props.user.name + '_';
+        }
+
+        const item: SearchHistoryItem = {key: key + Date(), query: Object.assign(this.props.datasetQuery)};
         let history = this.props.searchHistory.map((item: SearchHistoryItem) => {
             return item;
         });
@@ -249,7 +257,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         </Button>
                         <Button className={classes.button}
                                 onClick={this.handleSaveFilter}>
-                            SaveFilter
+                            Save Filter
                         </Button>
 
                     </Grid>

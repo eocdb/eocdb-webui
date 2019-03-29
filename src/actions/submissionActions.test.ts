@@ -97,7 +97,8 @@ describe("submissionActions", () => {
             status: '',
             files: [],
             file_refs: [],
-            publication_date: ''
+            publication_date: '',
+            allow_publication: false,
         };
 
 

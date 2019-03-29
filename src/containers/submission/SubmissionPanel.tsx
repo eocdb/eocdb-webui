@@ -29,7 +29,11 @@ import {
     updateSubmissionFile,
     updateSelectedSubmissionFile,
     openSubmissionPublicationDateDialog,
-    closeSubmissionPublicationDateDialog, updateSubmissionPublicationDate, updatePublicationDate, downloadSubmissionFile
+    closeSubmissionPublicationDateDialog,
+    updateSubmissionPublicationDate,
+    updatePublicationDate,
+    downloadSubmissionFile,
+    updateAllowPublication
 } from "../../actions/submissionActions";
 import SubmissionPanel from "../../components/submission/SubmissionPanel";
 
@@ -59,6 +63,7 @@ const mapStateToProps = (state: AppState) => {
         selectedPublicationDate: state.submissionState.publicationDate,
         selectedDataFiles: state.submissionState.dataFiles,
         selectedDocFiles: state.submissionState.docFiles,
+        allowPublication: state.submissionState.allowPublication,
 
         user: state.sessionState.user,
     };
@@ -105,6 +110,7 @@ const mapDispatchToProps = {
     updateSubmissionId,
     updatePath,
     updatePublicationDate,
+    updateAllowPublication,
     updateDataFiles,
     updateDocFiles,
 

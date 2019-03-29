@@ -142,7 +142,7 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
                 </Grid>
                 <DialogActions>
                     <Button onClick={() => this.handleOnChange()}>
-                        test
+                        Apply
                     </Button>
                     <Button onClick={this.props.onClose}>
                         Cancel

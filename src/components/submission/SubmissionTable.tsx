@@ -204,14 +204,15 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                                     <Icon className={classes.rightIcon}>input</Icon>
                                                 </Button>
                                             </Tooltip>
-                                            <Tooltip title="Publish Submission" aria-label="PublishSubmission">
+                                            <Tooltip title="Process into DB and Publish Submission"
+                                                     aria-label="PublishSubmission">
                                                 <Button
                                                     onClick={() => this.props.onSubmissionPublish(
                                                         row.submission_id
                                                     )}
                                                     disabled={user.roles.indexOf('admin') === -1}
                                                 >
-                                                    <Icon className={classes.rightIcon}>input</Icon>
+                                                    <Icon className={classes.rightIcon}>publish</Icon>
                                                 </Button>
                                             </Tooltip>
                                         </TableCell>

@@ -25,7 +25,7 @@ import {
     CLOSE_UPLOAD_SUBMISSION_FILE_DIALOG,
     OPEN_SUBMISSION_PUBLICATION_DATE_DIALOG,
     CLOSE_SUBMISSION_PUBLICATION_DATE_DIALOG,
-    UPDATE_SUBMISSION_PUBLICATION_DATE, UPDATE_PUBLICATION_DATE
+    UPDATE_SUBMISSION_PUBLICATION_DATE, UPDATE_PUBLICATION_DATE, UPDATE_ALLOW_PUBLICATION
 } from "../actions/submissionActions";
 
 
@@ -67,8 +67,10 @@ export function submissionReducer(state: SubmissionState = initialState, action:
             return {...state, selectedSubmission: action.submission};
         case UPDATE_PATH:
             return {...state, path: action.path};
+        case UPDATE_ALLOW_PUBLICATION:
+            return {...state, allowPublication: action.allowPublication};
         case UPDATE_PUBLICATION_DATE:
-            return {...state, publicationDate: action.publicationDate}
+            return {...state, publicationDate: action.publicationDate};
         case UPDATE_DATA_FILES:
             return {...state, dataFiles: action.dataFiles};
         case UPDATE_DOC_FILES:
@@ -84,7 +86,7 @@ export function submissionReducer(state: SubmissionState = initialState, action:
         case SEND_SUBMISSION:
             return {...state, currentDatasetValidationResults: action.currentDatasetValidationResults};
         case UPDATE_SUBMISSION_PUBLICATION_DATE:
-            return {...state, submissionPublicationDate: action.submissionPublicationDate}
+            return {...state, submissionPublicationDate: action.submissionPublicationDate};
         default:
             return state;
     }
