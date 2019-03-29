@@ -59,6 +59,7 @@ export function newSubmissionState() {
             files: [],
             file_refs: [],
             publication_date: '',
+            allow_publication: false
         },
 
         selectedSubmissionFile: {
