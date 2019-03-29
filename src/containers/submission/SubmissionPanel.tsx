@@ -29,7 +29,7 @@ import {
     updateSubmissionFile,
     updateSelectedSubmissionFile,
     openSubmissionPublicationDateDialog,
-    closeSubmissionPublicationDateDialog, updateSubmissionPublicationDate, updatePublicationDate
+    closeSubmissionPublicationDateDialog, updateSubmissionPublicationDate, updatePublicationDate, downloadSubmissionFile
 } from "../../actions/submissionActions";
 import SubmissionPanel from "../../components/submission/SubmissionPanel";
 
@@ -77,6 +77,8 @@ const mapDispatchToProps = {
 
     openDeleteSubmissionFileAlert: openDeleteSubmissionFilesAlert,
     closeDeleteSubmissionFileAlert: closeDeleteSubmissionFilesAlert,
+
+    downloadSubmissionFile,
 
     openSubmissionPublicationDateDialog,
     closeSubmissionPublicationDateDialog,

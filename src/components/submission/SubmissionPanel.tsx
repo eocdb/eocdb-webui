@@ -69,6 +69,8 @@ interface SubmissionPanelProps extends WithStyles<typeof styles> {
 
     deleteSubmissionFile: (submissionId: string, submissionFileIndex: number) => void;
 
+    downloadSubmissionFile: (submissionId: string, submissionFileIndex: number) => void;
+
     submissionPublicationDate: string | null;
 
     updateSelectedSubmissionPublicationDate: (publicationDate: string | null) => void;
@@ -213,6 +215,9 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
         this.props.closeUploadSubmissionFileDialog();
     };
 
+    handleDownloadSubmissionFile = (submissionFile: SubmissionFile) => {
+        this.props.downloadSubmissionFile(submissionFile.submission_id, submissionFile.index);
+    };
 
     render() {
         if (!this.props.show) {
@@ -274,6 +279,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     onSubmissionFileDeleteClick={this.handleDeleteSubmissionFileClick}
                     onSubmissionFileSelectClick={this.handleSubmissionFileSelect}
                     onSubmissionFileUploadClick={this.handleUploadSubmissionFileClick}
+                    onSubmissionFileDownloadClick={this.handleDownloadSubmissionFile}
                 />
                 <SubmissionIssueDialog
                     onClose={this.props.closeSubmissionFileIssueDialog}

@@ -46,6 +46,7 @@ export interface SubmissionFilesTableProps extends WithStyles<typeof styles> {
     onSubmissionFileSelectClick: (submissionFile: SubmissionFile) => void;
     onSubmissionFileDeleteClick: (submissionFile: SubmissionFile) => void;
     onSubmissionFileUploadClick: (submissionFile: SubmissionFile) => void;
+    onSubmissionFileDownloadClick: (submissionFile: SubmissionFile) => void;
 }
 
 
@@ -138,6 +139,15 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                                                 )}
                                             >
                                                 <Icon className={classes.rightIcon}>cloud_upload</Icon>
+                                            </Button>
+                                        </Tooltip>
+                                        <Tooltip title="Download File" aria-label="Down load">
+                                            <Button
+                                                onClick={() => this.props.onSubmissionFileDownloadClick(
+                                                    row
+                                                )}
+                                            >
+                                                <Icon className={classes.rightIcon}>cloud_download</Icon>
                                             </Button>
                                         </Tooltip>
                                     </TableCell>
