@@ -213,6 +213,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
             publicationDate: null,
             allowPublication: false,
             username: this.props.user.name,
+            userId: this.props.user.id,
         };
 
         this.props.uploadSubmissionFile(submissionFile, uploadData);

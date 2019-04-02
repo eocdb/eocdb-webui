@@ -6,4 +6,5 @@ export interface UploadData {
     publicationDate: string|null;
     allowPublication: boolean;
     username: string;
+    userId: number;
 }

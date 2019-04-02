@@ -399,6 +399,7 @@ export function sendSubmission() {
             publicationDate: state.submissionState.publicationDate,
             allowPublication: state.submissionState.allowPublication,
             username: username,
+            userId: userid,
         };
 
         return api.uploadStoreFiles(apiServerUrl, uploadData)
