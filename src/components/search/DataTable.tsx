@@ -66,7 +66,7 @@ class TablePaginationActions extends React.Component<TablePaginationActionsProps
     };
 
     handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        const last = Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 2);
+        const last = Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1);
         this.props.onChangePage(event, last);
     };
 
