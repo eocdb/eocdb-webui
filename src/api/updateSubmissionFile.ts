@@ -28,6 +28,11 @@ export function updateSubmissionFile(
     formData.append('path', uploadData.path);
     formData.append('username', uploadData.username);
 
+    let headers = new Headers();
+
+    headers.append('Content-Type', 'text/json');
+    headers.append('Authorization', 'Basic ' + btoa('eumes8t:se8b8ss'));
+
     return callApi(
         apiServerUrl + '/store/upload/submissionfile/' + submissionFile.submission_id + '/' + submissionFile.index,
         undefined,
