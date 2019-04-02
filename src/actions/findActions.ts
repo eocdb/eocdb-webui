@@ -194,6 +194,23 @@ export function updateFoundDatasets(foundDatasets: QueryResult): UpdateFoundData
     };
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_SAVE_SEARCH_TITLE = 'UPDATE_SAVE_SEARCH_TITLE';
+export type UPDATE_SAVE_SEARCH_TITLE = typeof UPDATE_SAVE_SEARCH_TITLE;
+
+export interface UpdateSaveSearchTitle {
+    type: UPDATE_SAVE_SEARCH_TITLE;
+    saveSearchTitle: string;
+}
+
+export function updateSaveSearchTitle(saveSearchTitle: string): UpdateSaveSearchTitle {
+    return {
+        type: UPDATE_SAVE_SEARCH_TITLE, saveSearchTitle
+    };
+}
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -201,5 +218,6 @@ export type SearchFormAction = UpdateDatasetQuery
     | UpdateFoundDatasets
     | UpdateSearchHistory
     | UpdateSelectedSearchHistory
+    | UpdateSaveSearchTitle
     | StartLoading
     | StopLoading;

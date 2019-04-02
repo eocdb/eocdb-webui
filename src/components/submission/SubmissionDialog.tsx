@@ -1,4 +1,4 @@
-import { Checkbox, Theme, WithStyles } from "@material-ui/core";
+import { Checkbox, FormControlLabel, Theme, WithStyles } from "@material-ui/core";
 import createStyles from "@material-ui/core/styles/createStyles";
 import * as React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -53,8 +53,8 @@ interface SubmissionDialogProps extends WithStyles<typeof styles> {
     onDocfilesChange: (acceptedFiles: File[]) => void;
     docFilesValue: File[];
 
-    onPublicationDateChange: (publicationDate: string|null) => void;
-    publicationDate: string|null;
+    onPublicationDateChange: (publicationDate: string | null) => void;
+    publicationDate: string | null;
 
     onFileSubmit: () => void;
 
@@ -165,15 +165,19 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                             animateYearScrolling={false}
                             value={this.props.publicationDate}
                             onChange={this.props.onPublicationDateChange}
-                            
+
                             className={classes.textField}
                         />
                     </Grid>
                     <Grid item>
-                        <Checkbox
-                            value={'publish'}
-                            checked={this.props.allowPublication}
-                            onChange={this.handlePublicationDateChange}
+                        <FormControlLabel
+                            control={<Checkbox
+                                value={'publish'}
+                                checked={this.props.allowPublication}
+                                onChange={this.handlePublicationDateChange}
+                            />
+                            }
+                            label={'Publish Data (Y)'}
                         />
                     </Grid>
                     <Grid item>

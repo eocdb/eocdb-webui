@@ -7,6 +7,7 @@ export interface SearchFormState {
     datasetQuery: DatasetQuery;
     foundDatasets: QueryResult;
     searchHistory: SearchHistoryItem[];
+    saveSearchTitle: string;
     loading: boolean;
 }
 
@@ -31,6 +32,7 @@ export function newSearchFormState() {
                 }
             }
         ],
+        saveSearchTitle: '',
         foundDatasets: {
             locations: new Map(),
             datasets: [],

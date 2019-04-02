@@ -27,6 +27,7 @@ import { DatePicker } from 'material-ui-pickers';
 import { SliderRange } from "../../types/advancedSearchDialog";
 import { SearchHistoryItem } from "../../types/dataset";
 import { User } from "../../model/User";
+import InputDialog from "./InputDialog";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -68,6 +69,13 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     helpDialogOpen: boolean;
     openHelpDialog: () => void;
     closeHelpDialog: () => void;
+
+    saveSearchDialogOpen: boolean;
+    openSaveSearchDialog: () => void;
+    closeSaveSearchDialog: () => void;
+
+    updateSaveSearchTitle: (saveSearchTitle: string) => void;
+    saveSearchTitle: string;
 
     loading: boolean;
     startLoading: () => void;
@@ -119,13 +127,17 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         );
     };
 
+    handleUpdateSaveSearchTitle = (saveSearchTitle: string) => {
+        this.props.updateSaveSearchTitle(saveSearchTitle);
+    };
+
     handleSaveFilter = () => {
         let key = 'flt_';
         if (this.props.user) {
             key = this.props.user.name + '_';
         }
 
-        const item: SearchHistoryItem = {key: key + Date(), query: Object.assign(this.props.datasetQuery)};
+        const item: SearchHistoryItem = {key: this.props.saveSearchTitle, query: Object.assign(this.props.datasetQuery)};
         let history = this.props.searchHistory.map((item: SearchHistoryItem) => {
             return item;
         });
@@ -133,7 +145,9 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         history.push(item);
         this.props.updateSearchHistory(history);
 
-        localStorage.setItem('user_' + Date.now(), JSON.stringify(item.query));
+        localStorage.setItem(key + this.props.saveSearchTitle, JSON.stringify(item.query));
+
+        this.props.closeSaveSearchDialog();
     };
 
     handleSearchExprChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -255,9 +269,18 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                                 onClick={this.handleClear}>
                             Clear
                         </Button>
+                        <InputDialog
+                            open={this.props.saveSearchDialogOpen}
+                            onClose={this.props.closeSaveSearchDialog}
+                            label={'Title'}
+                            title={'Title of Saved Search'}
+                            value={this.props.saveSearchTitle}
+                            onSave={this.handleSaveFilter}
+                            onChange={this.handleUpdateSaveSearchTitle}
+                        />
                         <Button className={classes.button}
-                                onClick={this.handleSaveFilter}>
-                            Save Filter
+                                onClick={this.props.openSaveSearchDialog}>
+                            Save Search
                         </Button>
 
                     </Grid>

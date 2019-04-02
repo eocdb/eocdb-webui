@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Theme, Tooltip, WithStyles } from "@material-ui/core";
+import { TableSortLabel, Theme, Tooltip, WithStyles } from "@material-ui/core";
 import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import TableHead from "@material-ui/core/TableHead/TableHead";
@@ -17,6 +17,101 @@ import Chip from "@material-ui/core/Chip";
 import { Submission } from "../../model";
 import { User } from "../../model/User";
 import { blue, green, orange, red } from "@material-ui/core/colors";
+
+
+function desc(a: any, b: any, orderBy: any) {
+    if (b[orderBy] < a[orderBy]) {
+        return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+        return 1;
+    }
+    return 0;
+}
+
+
+function stableSort(array: any, cmp: any) {
+    const stabilizedThis = array.map((el: any, index: any) => [el, index]);
+    stabilizedThis.sort((a: any, b: any) => {
+        const order = cmp(a[0], b[0]);
+        if (order !== 0) return order;
+        return a[1] - b[1];
+    });
+    return stabilizedThis.map((el: any) => el[0]);
+}
+
+
+function getSorting(order: any, orderBy: any) {
+    return order === 'desc' ? (a: any, b: any) => desc(a, b, orderBy) : (a: any, b: any) => -desc(a, b, orderBy);
+}
+
+
+interface EnhancedTableHeadProps {
+    onRequestSort: (event: any, property: any) => void;
+    order: 'asc' | 'desc';
+    orderBy: string;
+}
+
+
+const cols = [
+    {id: 'submission_id', numeric: false, disablePadding: true, label: 'Submission ID'},
+    {id: 'submission_date', numeric: true, disablePadding: false, label: 'Submission Date'},
+    {id: 'publication_date', numeric: true, disablePadding: false, label: 'Publication Date'},
+    {id: 'allow_publication', numeric: true, disablePadding: false, label: 'Allow Publication'},
+    {id: 'status', numeric: true, disablePadding: false, label: 'Status'},
+];
+
+
+class EnhancedTableHead extends React.Component<EnhancedTableHeadProps> {
+    constructor(props: EnhancedTableHeadProps) {
+        super(props);
+
+    }
+
+
+    createSortHandler = (property: any) => (event: any) => {
+        this.props.onRequestSort(event, property);
+    };
+
+    render() {
+        const {order, orderBy} = this.props;
+
+        return (
+            <TableHead>
+                <TableRow>
+                    {cols.map(
+                        row => (
+                            <TableCell
+                                key={row.id}
+                                sortDirection={orderBy === row.id ? order : false}
+                            >
+                                <Tooltip
+                                    title="Sort"
+                                    placement={row.numeric ? 'bottom-end' : 'bottom-start'}
+                                    enterDelay={300}
+                                >
+                                    <TableSortLabel
+                                        active={orderBy === row.id}
+                                        direction={order}
+                                        onClick={this.createSortHandler(row.id)}
+                                    >
+                                        {row.label}
+                                    </TableSortLabel>
+                                </Tooltip>
+                            </TableCell>
+                        ),
+                        this,
+                    )}
+                    <TableCell
+                        key={'action'}
+                    >
+                        Action
+                    </TableCell>
+                </TableRow>
+            </TableHead>
+        );
+    }
+}
 
 
 const styles = (theme: Theme) => createStyles(
@@ -65,9 +160,20 @@ interface SubmissionTableProps extends WithStyles<typeof styles> {
 }
 
 
-class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
+interface SubmissionTableState {
+    order: 'asc' | 'desc';
+    orderBy: string;
+}
+
+
+class SubmissionTable extends React.PureComponent<SubmissionTableProps, SubmissionTableState> {
     constructor(props: SubmissionTableProps) {
         super(props);
+
+        this.state = {
+            order: 'asc',
+            orderBy: 'submission_id',
+        };
     }
 
     getColourForStatus = (status: string) => {
@@ -90,11 +196,24 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
         return "yellow"
     };
 
+    handleRequestSort = (event: any, property: any) => {
+        const orderBy = property;
+        let order: 'asc' | 'desc' = 'desc';
+
+        if (this.state.orderBy === property && this.state.order === 'desc') {
+            order = 'asc';
+        }
+
+        this.setState({order, orderBy});
+    };
+
+
     render() {
         if (!this.props.show) {
             return null;
         }
 
+        const {order, orderBy} = this.state;
         const {classes, submissionsValue, user} = this.props;
 
         return (
@@ -111,18 +230,11 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                         </Button>
                     </Grid>
                     <Table className={classes.table}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>SubmissionId</TableCell>
-                                <TableCell>Submission Date</TableCell>
-                                <TableCell>Publication Date</TableCell>
-                                <TableCell>Status</TableCell>
-                                <TableCell>Action</TableCell>
-                            </TableRow>
-                        </TableHead>
+                        <EnhancedTableHead onRequestSort={this.handleRequestSort} order={order} orderBy={orderBy}/>
                         <TableBody>
-                            {submissionsValue.map((row: Submission) => {
+                            {stableSort(submissionsValue, getSorting(order, orderBy)).map((row: Submission) => {
                                 const colour = this.getColourForStatus(row.status);
+
                                 console.log(row);
                                 return (
                                     <TableRow
@@ -131,14 +243,24 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps> {
                                         key={row.submission_id}
                                         tabIndex={-1}
                                     >
-                                        <TableCell component="th" scope="row">
+                                        <TableCell component="th" scope="row" padding="none">
                                             {row.submission_id}
                                         </TableCell>
                                         <TableCell>
-                                            {row.date}
+                                            {row.date ?
+                                                new Date(Date.parse(row.date)).toDateString() : ""}
                                         </TableCell>
                                         <TableCell>
-                                            {row.publication_date}
+                                            {row.publication_date ?
+                                                new Date(Date.parse(row.publication_date)).toDateString() : ""}
+                                        </TableCell>
+                                        <TableCell>
+                                            {row.allow_publication ?
+                                                <Icon style={{color: green.A400}}
+                                                      className={classes.rightIcon}>done</Icon> :
+                                                <Icon style={{color: red.A400}}
+                                                      className={classes.rightIcon}>pan_tool</Icon>
+                                            }
                                         </TableCell>
                                         <TableCell>
                                             <Chip

@@ -101,6 +101,34 @@ export function closeAdvancedSearchDialog(): CloseAdvancedSearchDialog {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+export const OPEN_SAVE_SEARCH_DIALOG = 'OPEN_SAVE_SEARCH_DIALOG';
+export type OPEN_SAVE_SEARCH_DIALOG = typeof OPEN_SAVE_SEARCH_DIALOG;
+
+export interface OpenSaveSearchDialog {
+    type: OPEN_SAVE_SEARCH_DIALOG;
+}
+
+export function openSaveSearchDialog(): OpenSaveSearchDialog {
+    return {type: OPEN_SAVE_SEARCH_DIALOG};
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const CLOSE_SAVE_SEARCH_DIALOG = 'CLOSE_SAVE_SEARCH_DIALOG';
+export type CLOSE_SAVE_SEARCH_DIALOG = typeof CLOSE_SAVE_SEARCH_DIALOG;
+
+export interface CloseSaveSearchDialog {
+    type: CLOSE_SAVE_SEARCH_DIALOG;
+}
+
+export function closeSaveSearchDialog(): CloseSaveSearchDialog {
+    return {type: CLOSE_SAVE_SEARCH_DIALOG};
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const OPEN_HELP_DIALOG = 'OPEN_HELP_DIALOG';
 export type OPEN_HELP_DIALOG = typeof OPEN_HELP_DIALOG;
 
@@ -160,6 +188,8 @@ export type DashboardAction = ChangeDrawer
     | CloseConfigDialog
     | OpenAdvancedSearchDialog
     | CloseAdvancedSearchDialog
+    | OpenSaveSearchDialog
+    | CloseSaveSearchDialog
     | OpenHelpDialog
     | CloseHelpDialog
     | OpenHelpMetaInfoDialog

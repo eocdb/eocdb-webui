@@ -4,7 +4,7 @@ import {
     START_LOADING,
     STOP_LOADING,
     UPDATE_DATASET_QUERY,
-    UPDATE_FOUND_DATASETS,
+    UPDATE_FOUND_DATASETS, UPDATE_SAVE_SEARCH_TITLE,
     UPDATE_SEARCH_HISTORY
 } from '../actions/findActions';
 
@@ -21,6 +21,9 @@ export function findReducer(state: SearchFormState, action: SearchFormAction): S
         }
         case UPDATE_FOUND_DATASETS: {
             return {...state, foundDatasets: action.foundDatasets};
+        }
+        case UPDATE_SAVE_SEARCH_TITLE:{
+            return {...state, saveSearchTitle: action.saveSearchTitle}
         }
         case UPDATE_SEARCH_HISTORY: {
             return {...state, searchHistory: action.searchHistory}

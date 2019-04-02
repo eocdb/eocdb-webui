@@ -111,7 +111,9 @@ class DashPanels extends React.PureComponent<DashPanelsProps> {
     render() {
         return (
             <div>
-                <SearchPanel user={this.props.user} searchHistory={this.props.searchHistory} show={this.props.currentDrawer == 'Search'}/>
+                <SearchPanel user={this.props.user}
+                             searchHistory={this.props.searchHistory}
+                             show={this.props.currentDrawer == 'Search'}/>
                 <HomePanel show={this.props.currentDrawer == 'Home'}/>
                 <SubmissionPanel show={this.props.currentDrawer == 'Submit'}/>
                 <BrowsePanel show={this.props.currentDrawer == 'Browse'}/>

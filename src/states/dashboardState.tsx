@@ -5,6 +5,7 @@ export interface DashboardState {
     loginDialogOpen: boolean;
     configDialogOpen: boolean,
     advancedSearchDialogOpen: boolean;
+    saveSearchDialogOpen: boolean;
     helpDialogOpen: boolean;
     helpMetaInfoDialogOpen: boolean;
     helpMetaInfoKey: string;
@@ -18,6 +19,7 @@ export function newDashboardState() {
         loginDialogOpen: false,
         configDialogOpen: false,
         advancedSearchDialogOpen: false,
+        saveSearchDialogOpen: false,
         helpDialogOpen: false,
         helpMetaInfoDialogOpen: false,
         helpMetaInfoKey: '',
