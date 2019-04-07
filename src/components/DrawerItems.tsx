@@ -37,14 +37,8 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
             }
         }
 
-        let adminAllowed = false;
-
-        if(this.props.user){
-            if(this.props.user.roles.indexOf('admin') > -1){
-                adminAllowed = true;
-            }
-        }
-
+        const adminAllowed = this.props.user && (this.props.user.roles.indexOf('admin') > -1);
+        submitAllowed = adminAllowed ? adminAllowed : submitAllowed;
         return (
             <List>
                 <div>
@@ -66,7 +60,7 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
                         </ListItemIcon>
                         <ListItemText primary="Browse"/>
                     </ListItem>
-                    <ListItem disabled={!submitAllowed} key={'Submit'} onClick={this.handleSubmissionClick} button>
+                    <ListItem disabled={!submitAllowed } key={'Submit'} onClick={this.handleSubmissionClick} button>
                         <ListItemIcon>
                             <CloudUpload/>
                         </ListItemIcon>

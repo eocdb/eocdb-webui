@@ -205,16 +205,28 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
     };
 
     handleUploadSubmissionFileDialogOnSave = (submissionFile: SubmissionFile, files: File[]) => {
-        const uploadData = {
-            dataFiles: files,
-            docFiles: [],
-            submissionId: submissionFile.submission_id,
-            path: submissionFile.filename,
-            publicationDate: null,
-            allowPublication: false,
-            username: this.props.user.name,
-            userId: this.props.user.id,
-        };
+        let uploadData: UploadData =  {
+                dataFiles: [],
+                docFiles: [],
+                submissionId: submissionFile.submission_id,
+                path: submissionFile.filename,
+                publicationDate: null,
+                allowPublication: false,
+                username: this.props.user.name,
+                userId: this.props.user.id,
+            };
+        if (submissionFile.filetype === "DOCUMENT") {
+            uploadData = {
+                ...uploadData,
+                docFiles: files,
+            };
+        }
+        else {
+            uploadData = {
+                ...uploadData,
+                dataFiles: files,
+            };
+        }
 
         this.props.uploadSubmissionFile(submissionFile, uploadData);
         this.props.closeUploadSubmissionFileDialog();

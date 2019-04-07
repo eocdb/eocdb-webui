@@ -621,10 +621,7 @@ export function deleteSubmission(submissionId: string) {
 
         const user = state.sessionState.user;
 
-        let userid = 0;
-        if (user) {
-            userid = user.id;
-        }
+        const userid = user ? user.id : 0;
 
         return api.deleteSubmission(apiServerUrl, submissionId)
             .then(() => {
