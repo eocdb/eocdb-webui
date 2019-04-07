@@ -10,7 +10,7 @@ import SubmissionDialog from "./SubmissionDialog";
 import SubmissionIssueDialog from "./SubmissionIssueDialog";
 import YesNoAlert from "./YesNoAlert";
 import { User } from "../../model/User";
-import SingleFileUpload from "./SingleFileUpload";
+import SingleFileUploadDialog from "./SingleFileUploadDialog";
 import { UploadData } from "../../model/UploadData";
 
 
@@ -313,7 +313,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                 >
                     Do you really want to delete the Submission: {this.props.selectedSubmission.submission_id}?
                 </YesNoAlert>
-                <SingleFileUpload
+                <SingleFileUploadDialog
                     label={'Upload'}
                     onCancel={this.handleOploadSubmissionFileDialogOnCancel}
                     onSave={this.handleUploadSubmissionFileDialogOnSave}

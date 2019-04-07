@@ -2,14 +2,17 @@ import * as React from "react";
 import {
     Button,
     createStyles,
-    Icon, List, ListItem, ListItemIcon, Typography,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle, Icon, List, ListItem, ListItemIcon, Typography,
     withStyles,
     WithStyles
 } from "@material-ui/core";
 
 import FolderIcon from '@material-ui/icons/Folder';
 
-import Dropzone, {DropzoneState} from "react-dropzone";
+import Dropzone, { DropzoneState } from "react-dropzone";
 
 
 const styles = createStyles({
@@ -32,6 +35,10 @@ const styles = createStyles({
 
 interface SingleFileUploadProps<T> extends WithStyles<typeof styles> {
     label: string;
+    open: boolean;
+    onCancel: () => void;
+    onSave: (value: T, file: File[]) => void;
+
     value: T;
 }
 
@@ -51,6 +58,11 @@ class SingleFileUpload<T> extends React.Component<SingleFileUploadProps<T>, Sing
             color: '#F0F0F0',
         }
     }
+
+    handleOnSave = (value: T) => {
+        this.props.onSave(value, this.state.files);
+        this.props.onCancel();
+    };
 
     handleOnDrop = (files: File[]) => {
         this.setState({files: files, color: '#F0F0F0'});
@@ -94,27 +106,43 @@ class SingleFileUpload<T> extends React.Component<SingleFileUploadProps<T>, Sing
         ));
 
         return (
-            <Dropzone
-                onDrop={this.handleOnDrop}
-                onDragEnter={this.handleDragOver}
-                accept={'.sb, .dat, .txt'}
+            <Dialog
+                open={this.props.open}
+                onClose={this.props.onCancel}
             >
-                {({getRootProps, getInputProps, isDragActive, isDragReject}: DropzoneState) => (
-                    <section>
-                        <div style={{backgroundColor: isDragReject ? 'red' : '#F0F0F0"'}}
-                             className={classes.dropzone} {...getRootProps()}>
-                            <input {...getInputProps()} />
-                            <Typography component={'p'}>
-                                Drag 'n' drop your file here, or click to select
-                            </Typography>
-                            <Icon style={{color: '#909090'}}>cloud_upload</Icon>
-                        </div>
-                        <List dense>
-                            {files}
-                        </List>
-                    </section>
-                )}
-            </Dropzone>
+                <DialogTitle id="form-dialog-title">Upload new Submission File</DialogTitle>
+                <DialogContent>
+                    <Dropzone
+                        onDrop={this.handleOnDrop}
+                        onDragEnter={this.handleDragOver}
+                        //accept={'.sb, .dat, .txt'}
+                    >
+                        {({getRootProps, getInputProps, isDragActive, isDragReject}: DropzoneState) => (
+                            <section>
+                                <div style={{backgroundColor: isDragReject ? 'red' : '#F0F0F0"'}}
+                                     className={classes.dropzone} {...getRootProps()}>
+                                    <input {...getInputProps()} />
+                                    <Typography component={'p'}>
+                                        Drag 'n' drop your file here, or click to select
+                                    </Typography>
+                                    <Icon style={{color: '#909090'}}>cloud_upload</Icon>
+                                </div>
+                                <List dense>
+                                    {files}
+                                </List>
+                            </section>
+                        )}
+                    </Dropzone>
+                </DialogContent>
+                <DialogActions className={classes.appBar}>
+                    <Button key={'Cancel'} onClick={this.props.onCancel} color="primary">
+                        Cancel
+                    </Button>
+                    <Button key={'Save'} onClick={() => this.handleOnSave(this.props.value)} color="primary">
+                        Save
+                    </Button>
+                </DialogActions>
+            </Dialog>
         )
     }
 }
