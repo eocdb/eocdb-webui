@@ -11,7 +11,7 @@ export function getSubmissionsForUser(apiServerUrl: string, user: number): Promi
     return callJsonApi<Submission[]>(
         apiServerUrl + '/store/upload/user/' + user, undefined,
         {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'

@@ -186,7 +186,7 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                             label={'Drag and drop DATA files here or click'}
                             onChange={this.handleOndropDatafiles}
                             files={this.props.dataFilesValue}
-                            //acceptedFiles={['.dat', '.csv', '.txt', '.sb']}
+                            acceptedFiles={['.dat', '.csv', '.txt', '.sb']}
                         />
                     </Grid>
                     <Grid item>
@@ -195,6 +195,7 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                             label={'Drag and drop DOCUMENT files here or click'}
                             onChange={this.handleOndropDocfiles}
                             files={this.props.docFilesValue}
+                            acceptedFiles={undefined}
                         />
                     </Grid>
                 </Grid>

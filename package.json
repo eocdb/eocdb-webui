@@ -22,7 +22,7 @@
     "leaflet.markercluster": "^1.4.1",
     "luxon": "^1.11.4",
     "material-design-icons": "^3.0.1",
-    "material-ui-dropzone": "https://github.com/dzelge/material-ui-dropzone.git#make_preview_optional",
+    "material-ui-dropzone": "https://github.com/dzelge/material-ui-dropzone.git#make_preview_optional_2",
     "material-ui-pickers": "^2.2.4",
     "material-ui-slider": "^3.0.0",
     "material-ui-upload": "^1.2.1",
