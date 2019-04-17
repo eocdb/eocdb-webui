@@ -42,6 +42,7 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
         if(this.props.user){
             if(this.props.user.roles.indexOf('admin') > -1){
                 adminAllowed = true;
+                submitAllowed = true;
             }
         }
 
