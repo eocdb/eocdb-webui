@@ -9,9 +9,9 @@ import {
 import SearchPanel from '../../components/search/SearchPanel';
 import {
     closeAdvancedSearchDialog,
-    closeHelpDialog, closeSaveSearchDialog,
+    closeHelpDialog, closeProductGroupsHelpDialog, closeSaveSearchDialog,
     openAdvancedSearchDialog,
-    openHelpDialog, openSaveSearchDialog,
+    openHelpDialog, openProductGroupsHelpDialog, openSaveSearchDialog,
 } from "../../actions/dashboardActions";
 import {
     updateOptShallow,
@@ -20,6 +20,7 @@ import {
     updateWaterDepth,
     updateWavelength
 } from "../../actions/advancedFindActions";
+import { updateSelectedRegions } from "../../actions/searchMapActions";
 
 
 const mapStateToProps = (state: AppState) => {
@@ -29,6 +30,7 @@ const mapStateToProps = (state: AppState) => {
         advancedSearchDialogOpen: state.dashboardState.advancedSearchDialogOpen,
         saveSearchDialogOpen: state.dashboardState.saveSearchDialogOpen,
         helpDialogOpen: state.dashboardState.helpDialogOpen,
+        productGroupsHelpDialogOpen: state.dashboardState.productGroupsHelpDialogOpen,
         loading: state.searchFormState.loading,
 
         //searchHistory: state.searchFormState.searchHistory,
@@ -56,6 +58,9 @@ const mapDispatchToProps = {
     openHelpDialog,
     closeHelpDialog,
 
+    openProductGroupsHelpDialog,
+    closeProductGroupsHelpDialog,
+
     startLoading,
 
     updateSearchHistory,
@@ -67,6 +72,8 @@ const mapDispatchToProps = {
     updateOptShallow,
     updateProducts,
     updateProductValue,
+
+    updateSelectedRegions,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPanel);

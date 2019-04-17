@@ -230,7 +230,7 @@ class DataTable extends React.Component<DataTableProps> {
     };
 
     getBoundsFromSelectedDatasets = (selectedDatasets: string[]) => {
-        let bounds = new LatLngBounds(new LatLng(0,0), new LatLng(0,0));
+        let bounds = new LatLngBounds(new LatLng(0, 0), new LatLng(0, 0));
 
         for (let feat of selectedDatasets) {
             let feat_str = this.props.data.locations[feat];
@@ -252,10 +252,9 @@ class DataTable extends React.Component<DataTableProps> {
 
             const bounds = this.getBoundsFromSelectedDatasets(selectedDatasets);
 
-            this.props.updateSelectedDatasets(selectedDatasets,  bounds);
-        }
-        else{
-            this.props.updateSelectedDatasets([],  undefined);
+            this.props.updateSelectedDatasets(selectedDatasets, bounds);
+        } else {
+            this.props.updateSelectedDatasets([], undefined);
         }
     };
 
@@ -282,7 +281,7 @@ class DataTable extends React.Component<DataTableProps> {
             );
         }
 
-        this.props.updateSelectedDatasets(newSelected,  new LatLngBounds(new LatLng(0,0), new LatLng(0,0)));
+        this.props.updateSelectedDatasets(newSelected, new LatLngBounds(new LatLng(0, 0), new LatLng(0, 0)));
     };
 
     isSelected = (id: string) => {
@@ -298,7 +297,6 @@ class DataTable extends React.Component<DataTableProps> {
         const {classes, data, rowsPerPage, page, selectedDatasets} = this.props;
         const {datasets, total_count} = data;
         const numSelected = selectedDatasets.length;
-        const hrefStyle: React.CSSProperties = {color: 'black', textDecoration: "none"};
 
         return (
             <Paper className={classes.root}>
@@ -341,7 +339,7 @@ class DataTable extends React.Component<DataTableProps> {
                                 disabled={numSelected == 0}
                             />
                         }
-                        label="Include Docs"
+                        label="Include Documents"
                         onChange={this.handleUpdateDownloadDocs}
                     />
                 </Grid>
@@ -372,23 +370,18 @@ class DataTable extends React.Component<DataTableProps> {
                                     aria-checked={this.isSelected(row.id)}
                                     tabIndex={-1}
                                     selected={this.isSelected(row.id)}
-                                    onClick={(event) => this.handleClick(event, row.id, selectedDatasets)}
+                                    // onClick={(event) => this.handleClick(event, row.id, selectedDatasets)}
                                 >
                                     <TableCell padding="checkbox">
                                         <Checkbox
                                             checked={this.isSelected(row.id)}
                                             value={row.id}
+                                            onClick={(event) => this.handleClick(event, row.id, selectedDatasets)}
                                         />
                                     </TableCell>
                                     <TableCell component="th" scope="row">
                                         <Typography variant="button" gutterBottom>
-                                            <a
-                                                href={this.props.apiServerUrl + "/store/download?id=" + row.id}
-                                                download={fileName + '.zip'}
-                                                style={hrefStyle}
-                                            >
-                                                {fileName}
-                                            </a>
+                                            {fileName}
                                         </Typography>
                                         <Typography>
                                             {dirName}

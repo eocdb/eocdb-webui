@@ -6,7 +6,10 @@ export interface DashboardState {
     configDialogOpen: boolean,
     advancedSearchDialogOpen: boolean;
     saveSearchDialogOpen: boolean;
+
     helpDialogOpen: boolean;
+    productGroupsHelpDialogOpen: boolean;
+
     helpMetaInfoDialogOpen: boolean;
     helpMetaInfoKey: string;
 
@@ -21,6 +24,7 @@ export function newDashboardState() {
         advancedSearchDialogOpen: false,
         saveSearchDialogOpen: false,
         helpDialogOpen: false,
+        productGroupsHelpDialogOpen: false,
         helpMetaInfoDialogOpen: false,
         helpMetaInfoKey: '',
         searchHistory: [],

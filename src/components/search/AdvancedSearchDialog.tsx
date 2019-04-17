@@ -135,7 +135,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                     <DialogTitle id="form-dialog-title">Advanced Search</DialogTitle>
                     <Grid spacing={32} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
                         <Grid item xs={12}>
-                            <Typography component={'h2'}>Wavelength</Typography>
+                            <Typography component={'h2'}>Wavelength options</Typography>
                             <RadioSelect items={wavelengthItems}
                                          selectedValue={wavelengthValue}
                                          onChange={this.handleWaveLengthSelect}
@@ -151,7 +151,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <Typography component={'h2'}>Select Optical</Typography>
+                            <Typography component={'h2'}>Include optically shallow waters</Typography>
                             <RadioSelect items={items}
                                          selectedValue={this.props.optShallowValue}
                                          onChange={this.props.onOptShallowChange}

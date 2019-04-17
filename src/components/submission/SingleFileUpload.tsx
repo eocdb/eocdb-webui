@@ -38,6 +38,7 @@ interface SingleFileUploadProps<T> extends WithStyles<typeof styles> {
     open: boolean;
     onCancel: () => void;
     onSave: (value: T, file: File[]) => void;
+    accept?: string;
 
     value: T;
 }
@@ -115,7 +116,7 @@ class SingleFileUpload<T> extends React.Component<SingleFileUploadProps<T>, Sing
                     <Dropzone
                         onDrop={this.handleOnDrop}
                         onDragEnter={this.handleDragOver}
-                        accept={'.sb, .dat, .txt'}
+                        accept={this.props.accept}
                     >
                         {({getRootProps, getInputProps, isDragActive, isDragReject}: DropzoneState) => (
                             <section>

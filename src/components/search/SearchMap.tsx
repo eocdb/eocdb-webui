@@ -218,7 +218,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     onEastChange={this.props.updateManualBBoxEast}
                 />
                 <Button onClick={this.handleManualBBoxInputOpen}>
-                    Enter BBox
+                    Manually enter coordinates
                 </Button>
 
                 <Map ref={this.mapRef} bounds={bounds} center={this.props.position} zoom={this.props.zoom} maxZoom={24}>

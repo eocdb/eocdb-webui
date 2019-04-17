@@ -11,7 +11,7 @@ import SubmissionIssueDialog from "./SubmissionIssueDialog";
 import YesNoAlert from "./YesNoAlert";
 import { User } from "../../model/User";
 import SingleFileUpload from "./SingleFileUpload";
-import { UploadData } from "../../model/UploadData";
+import { SingleUpload } from "../../model/UploadData";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -57,7 +57,7 @@ interface SubmissionPanelProps extends WithStyles<typeof styles> {
     selectedSubmission: Submission;
     updateSelectedSubmission: (selectedSubmissionId: string) => void;
 
-    uploadSubmissionFile: (submissionFile: SubmissionFile, uploadData: UploadData) => void;
+    uploadSubmissionFile: (submissionFile: SubmissionFile, uploadData: SingleUpload) => void;
 
     deleteSubmission: (submissionId: string) => void;
 
@@ -206,8 +206,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
 
     handleUploadSubmissionFileDialogOnSave = (submissionFile: SubmissionFile, files: File[]) => {
         const uploadData = {
-            dataFiles: files,
-            docFiles: [],
+            file: files[0],
             submissionId: submissionFile.submission_id,
             path: submissionFile.filename,
             publicationDate: null,
@@ -320,6 +319,8 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     open={this.props.uploadSubmissionFileDialogOpen}
 
                     value={this.props.selectedSubmissionFile}
+                    accept={this.props.selectedSubmissionFile.filetype === 'MEASUREMENT' ? '.sb, .dat, .txt' : undefined}
+
                 />
             </div>
         );

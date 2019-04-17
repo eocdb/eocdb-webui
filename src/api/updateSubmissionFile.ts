@@ -1,5 +1,5 @@
 import { callApi } from './callApi';
-import { UploadData } from "../model/UploadData";
+import { SingleUpload } from "../model/UploadData";
 import { SubmissionFile } from "../model/SubmissionFile";
 
 
@@ -12,17 +12,11 @@ import { SubmissionFile } from "../model/SubmissionFile";
 export function updateSubmissionFile(
     apiServerUrl: string,
     submissionFile: SubmissionFile,
-    uploadData: UploadData): Promise<Response> {
+    uploadData: SingleUpload): Promise<Response> {
 
     let formData  = new FormData();
 
-    for(let file of uploadData.dataFiles) {
-        formData.append('datasetfiles', file, file.name);
-    }
-
-    for(let file of uploadData.docFiles) {
-        formData.append('docfiles', file, file.name);
-    }
+    formData.append('files', uploadData.file, uploadData.file.name);
 
     formData.append('submissionid', uploadData.submissionId);
     formData.append('path', uploadData.path);

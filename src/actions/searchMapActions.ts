@@ -14,7 +14,8 @@ export interface UpdateSelectedRegions {
     drawBounds: boolean;
 }
 
-export function updateSelectedRegions(selectedRegions: GeoJsonObject, selectedBounds: LatLngBounds, drawBounds: boolean): UpdateSelectedRegions {
+export function updateSelectedRegions(selectedRegions: GeoJsonObject, selectedBounds: LatLngBounds, drawBounds: boolean)
+    : UpdateSelectedRegions {
     return {type: UPDATE_SELECTED_REGIONS, selectedRegions, selectedBounds, drawBounds};
 }
 
@@ -112,6 +113,22 @@ export interface OpenManualBBoxDialog {
 export function openManualBBoxDialog(): OpenManualBBoxDialog {
     return {type: OPEN_MANUAL_BBOX_DIALOG};
 }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const CLEAR_BBOX = 'CLEAR_BBOX';
+export type CLEAR_BBOX = typeof CLEAR_BBOX;
+
+export interface ClearBbox {
+    type: CLEAR_BBOX;
+}
+
+export function clearBbox(): ClearBbox {
+    return {type: CLEAR_BBOX};
+}
+
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

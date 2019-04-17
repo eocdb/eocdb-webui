@@ -55,7 +55,7 @@ class SubmissionIssueDialog extends React.Component<SubmissionIssueDialogProps> 
         let issues:DatasetIssue[] = [];
         let fileName = 'unknown';
 
-        if(submissionFileValue) {
+        if(submissionFileValue && submissionFileValue.result) {
             issues = submissionFileValue.result.issues;
             fileName = submissionFileValue.filename;
         }

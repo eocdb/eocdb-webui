@@ -4,6 +4,7 @@ import { postMessage, MessageLogAction } from "./messageLogActions";
 import { AppState } from "../states/appState";
 import { DatasetValidationResult, UploadData, Submission, SubmissionFile } from "../model";
 import { StopLoading, UpdateSearchHistory } from "./findActions";
+import { SingleUpload } from "../model/UploadData";
 
 
 /**
@@ -528,7 +529,7 @@ export function getSubmissionFile(submissionId: string, submissionFileIndex: num
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-export function updateSubmissionFile(submissionFile: SubmissionFile, uploadData: UploadData) {
+export function updateSubmissionFile(submissionFile: SubmissionFile, uploadData: SingleUpload) {
     return (dispatch: Dispatch<UpdateSubmission | UpdateSubmissionsForUser | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();

@@ -28,6 +28,9 @@ import { SliderRange } from "../../types/advancedSearchDialog";
 import { SearchHistoryItem } from "../../types/dataset";
 import { User } from "../../model/User";
 import InputDialog from "./InputDialog";
+import { ProductGroupsInfo } from "../messages/Help/productgroups";
+import { GeoJsonObject } from "geojson";
+import { LatLngBounds } from "leaflet";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -66,6 +69,10 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     openAdvancedSearchDialog: () => void;
     closeAdvancedSearchDialog: () => void;
 
+    productGroupsHelpDialogOpen: boolean;
+    openProductGroupsHelpDialog: () => void;
+    closeProductGroupsHelpDialog: () => void;
+
     helpDialogOpen: boolean;
     openHelpDialog: () => void;
     closeHelpDialog: () => void;
@@ -100,6 +107,47 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     updateSearchHistory: (searchHistory: SearchHistoryItem[]) => void;
     searchHistory: SearchHistoryItem[];
 
+    // SearchMap Properties
+
+    updateSelectedRegions: (selectedRegions: GeoJsonObject, selectedBounds?: LatLngBounds, drawBounds?: boolean) => void;
+
+/*    position: LatLng;
+    zoom: number;
+
+    updateSelectedRegions: (selectedRegions: GeoJsonObject, selectedBounds?: LatLngBounds, drawBounds?: boolean) => void;
+    testMarkerCluster?: boolean;
+
+    foundDatasets: QueryResult;
+    drawMeasurementPoints?: boolean;
+
+    updateSelectedDatasets: (selectedDatasets: string[], selectedBounds?: LatLngBounds) => void;
+    selectedDatasets: string[];
+
+    selectedBounds?: LatLngBounds;
+    mapBounds?: LatLngBounds;
+    drawBounds: boolean;
+
+    selectedManualBBox: LatLngBounds;
+    updateManualBBox: (selectedBBox: LatLngBounds) => void;
+    openManualBBoxDialog: () => void;
+    closeManualBBoxDialog: () => void;
+    manualBBoxInputOpen: boolean;
+
+    updateManualBBoxSouth: (south: number | string) => void;
+    selectedBBoxSouth: number | string;
+
+    updateManualBBoxWest: (west: number | string) => void;
+    selectedBBoxWest: number | string;
+
+    updateManualBBoxNorth: (north: number | string) => void;
+    selectedBBoxNorth: number | string;
+
+    updateManualBBoxEast: (east: number | string) => void;
+    selectedBBoxEast: number | string;
+
+    selectedRectangleFromAdvancedDialog?: BBoxValue;*/
+
+
     user?: User|null;
 }
 
@@ -125,6 +173,12 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                 shallow: undefined,
             }
         );
+
+        this.props.updateWavelength('all');
+        this.props.updateWaterDepth([0, 1000]);
+        this.props.updateOptShallow('');
+        this.props.updateProducts([]);
+        this.props.updateSelectedRegions({type: 'Polygon'});
     };
 
     handleUpdateSaveSearchTitle = (saveSearchTitle: string) => {
@@ -241,6 +295,13 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
                             className={classes.searchField}
                         />
+                        <IconButton
+                            onClick={this.props.openProductGroupsHelpDialog}
+                        >
+                            <Icon color={"secondary"}>
+                                help
+                            </Icon>
+                        </IconButton>
                         <TextField
                             id={'lucene-search'}
                             key={'lucene-search'}
@@ -259,9 +320,16 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             </Icon>
                         </IconButton>
                         <HelpDialog
+                            open={this.props.productGroupsHelpDialogOpen}
+                            onClose={this.props.closeProductGroupsHelpDialog}
+                            title={'Product Groups'}
+                        >
+                            {ProductGroupsInfo}
+                        </HelpDialog>
+                        <HelpDialog
                             open={this.props.helpDialogOpen}
                             onClose={this.props.closeHelpDialog}
-                            title={'Filter Help'}
+                            title={'Search Help'}
                         >
                             {FindHelpText}
                         </HelpDialog>

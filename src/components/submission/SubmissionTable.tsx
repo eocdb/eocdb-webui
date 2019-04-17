@@ -192,6 +192,8 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                 return orange.A100;
             case 'PUBLISHED':
                 return red.A400;
+            case 'PROCESSED':
+                return red.A100;
         }
         return "yellow"
     };
@@ -251,7 +253,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                 new Date(Date.parse(row.date)).toDateString() : ""}
                                         </TableCell>
                                         <TableCell>
-                                            {row.publication_date ?
+                                            {row.publication_date && row.publication_date !== "" ?
                                                 new Date(Date.parse(row.publication_date)).toDateString() : ""}
                                         </TableCell>
                                         <TableCell>

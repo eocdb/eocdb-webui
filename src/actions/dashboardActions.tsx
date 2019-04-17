@@ -155,6 +155,33 @@ export function closeHelpDialog(): CloseHelpDialog {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+export const OPEN_PRODUCTGROUPSHELP_DIALOG = 'OPEN_PRODUCTGROUPSHELP_DIALOG';
+export type OPEN_PRODUCTGROUPSHELP_DIALOG = typeof OPEN_PRODUCTGROUPSHELP_DIALOG;
+
+export interface OpenProductGroupsHelpDialog {
+    type: OPEN_PRODUCTGROUPSHELP_DIALOG;
+}
+
+export function openProductGroupsHelpDialog(): OpenProductGroupsHelpDialog {
+    return {type: OPEN_PRODUCTGROUPSHELP_DIALOG};
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const CLOSE_PRODUCTGROUPSHELP_DIALOG = 'CLOSE_PRODUCTGROUPSHELP_DIALOG';
+export type CLOSE_PRODUCTGROUPSHELP_DIALOG = typeof CLOSE_PRODUCTGROUPSHELP_DIALOG;
+
+export interface CloseProductGroupsHelpDialog {
+    type: CLOSE_PRODUCTGROUPSHELP_DIALOG;
+}
+
+export function closeProductGroupsHelpDialog(): CloseProductGroupsHelpDialog {
+    return {type: CLOSE_PRODUCTGROUPSHELP_DIALOG};
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const OPEN_HELP_METAINFO_DIALOG = 'OPEN_HELP_METAINFO_DIALOG';
 export type OPEN_HELP_METAINFO_DIALOG = typeof OPEN_HELP_METAINFO_DIALOG;
 
@@ -192,5 +219,7 @@ export type DashboardAction = ChangeDrawer
     | CloseSaveSearchDialog
     | OpenHelpDialog
     | CloseHelpDialog
+    | OpenProductGroupsHelpDialog
+    | CloseProductGroupsHelpDialog
     | OpenHelpMetaInfoDialog
     | CloseHelpMetaInfoDialog;
