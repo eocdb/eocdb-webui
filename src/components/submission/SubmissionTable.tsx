@@ -147,7 +147,7 @@ interface SubmissionTableProps extends WithStyles<typeof styles> {
     onSubmissionProcess: (selectedSubmissionId: string) => void;
     onSubmissionReject: (selectedSubmissionId: string) => void;
     onSubmissionHalt: (selectedSubmissionId: string) => void;
-    onSubmissionRestart: (selectedSubmissionId: string) => void;
+    onSubmissionRestart: (selectedSubmission: Submission) => void;
     onSubmissionSubmit: (selectedSubmissionId: string) => void;
     onSubmissionDelete: (selectedSubmissionId: string) => void;
 
@@ -280,23 +280,27 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                     <Icon className={classes.rightIcon}>list</Icon>
                                                 </Button>
                                             </Tooltip>
-                                            {row.status === 'PAUSED' ?
-                                                <Button
-                                                    onClick={() => this.props.onSubmissionRestart(
-                                                        row.submission_id
-                                                    )}
-                                                >
-                                                    <Icon className={classes.rightIcon}>play_arrow</Icon>
+                                            {row.status === 'PAUSED' || row.status === 'CANCELED' ?
+                                                <Tooltip title="Restart Submission" aria-label="RestartSubmission">
+                                                    <Button
+                                                        onClick={() => this.props.onSubmissionRestart(
+                                                            row
+                                                        )}
+                                                    >
+                                                        <Icon className={classes.rightIcon}>play_arrow</Icon>
 
-                                                </Button>
+                                                    </Button>
+                                                </Tooltip>
                                                 :
-                                                <Button
-                                                    onClick={() => this.props.onSubmissionHalt(
-                                                        row.submission_id
-                                                    )}
-                                                >
-                                                    <Icon className={classes.rightIcon}>pause</Icon>
-                                                </Button>
+                                                <Tooltip title="Pause Submission" aria-label="PauseSubmission">
+                                                    <Button
+                                                        onClick={() => this.props.onSubmissionHalt(
+                                                            row.submission_id
+                                                        )}
+                                                    >
+                                                        <Icon className={classes.rightIcon}>pause</Icon>
+                                                    </Button>
+                                                </Tooltip>
                                             }
                                             <Tooltip title="Cancel Submission" aria-label="CancelSubmission">
                                                 <Button

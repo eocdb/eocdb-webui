@@ -124,8 +124,20 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
         this.props.setSubmissionStatus(selectedSubmissionId, 'PAUSED');
     };
 
-    handleRestartSubmission = (selectedSubmissionId: string) => {
-        this.props.setSubmissionStatus(selectedSubmissionId, 'SUBMITTED');
+    handleRestartSubmission = (selectedSubmission: Submission) => {
+        let ok = true;
+        for (let file of selectedSubmission.file_refs){
+            if (file.status === "ERROR") {
+                ok = false;
+            }
+        }
+
+        if (ok) {
+            this.props.setSubmissionStatus(selectedSubmission.submission_id, 'VALIDATED');
+        }
+        else{
+            this.props.setSubmissionStatus(selectedSubmission.submission_id, 'SUBMITTED');
+        }
     };
 
 
