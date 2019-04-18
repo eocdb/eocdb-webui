@@ -12,12 +12,16 @@ import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import List from "@material-ui/core/List/List";
 
+//const ReactMarkdown = require('react-markdown/with-html')
+
+//const markdown = `
+//This block of Markdown contains <a href="https://en.wikipedia.org/wiki/HTML">HTML</a>, and will require the <code>html-parser</code> AST plugin to be loaded, in addition to setting the <code class="prop">escapeHtml</code> property to false.
+//`;
 
 import { Dataset } from "../../model";
 import { DatasetMetaData } from "../../types/dataset";
 import HelpDialog from "../messages/HelpDialog";
 import { MetaInfoHelpText } from "../messages/Help/MetaInfo";
-
 
 
 const styles = () => createStyles({
@@ -39,6 +43,7 @@ interface MetaInfoDialogProps extends WithStyles<typeof styles> {
     openHelpDialog: (helpMetaInfoKey: string) => void;
     helpMetaInfoKey: string;
 }
+
 
 class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
     constructor(props: MetaInfoDialogProps) {
@@ -78,6 +83,10 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
             >
                 <DialogTitle id="form-dialog-title">Settings</DialogTitle>
                 <DialogContent>
+                    {/*<ReactMarkdown
+                        source={markdown}
+                        escapeHtml={false}
+                    />*/}
                     {this.renderInfo(this.props.dataset.metadata)}
                     <HelpDialog
                         open={this.props.helpDialogOpen}

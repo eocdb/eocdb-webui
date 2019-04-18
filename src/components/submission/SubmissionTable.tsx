@@ -209,7 +209,6 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
         this.setState({order, orderBy});
     };
 
-
     render() {
         if (!this.props.show) {
             return null;
@@ -237,7 +236,6 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                             {stableSort(submissionsValue, getSorting(order, orderBy)).map((row: Submission) => {
                                 const colour = this.getColourForStatus(row.status);
 
-                                console.log(row);
                                 return (
                                     <TableRow
                                         hover

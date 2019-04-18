@@ -29,6 +29,8 @@ interface SearchMapProps extends WithStyles<typeof styles> {
     position: LatLng;
     zoom: number;
 
+    clearLayers?: () => void;
+
     updateSelectedRegions: (selectedRegions: GeoJsonObject, selectedBounds?: LatLngBounds, drawBounds?: boolean) => void;
     testMarkerCluster?: boolean;
 
@@ -299,7 +301,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
             if (e.layer) {
                 this.layers.push(e.layer);
             }
-            this.props.updateSelectedRegions(selectedRegion, bounds);
+            this.props.updateSelectedRegions(selectedRegion, bounds, this.props.drawBounds);
         }
     };
 
