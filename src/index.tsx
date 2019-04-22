@@ -9,6 +9,7 @@ import { appReducer } from './reducers/appReducer';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
+import 'config/links.md';
 import 'typeface-roboto';
 import { updateStoreInfo } from "./actions/configActions";
 import { SearchHistoryItem } from "./types/dataset";
