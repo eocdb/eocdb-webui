@@ -6,11 +6,12 @@ import { withStyles } from '@material-ui/core/styles';
 
 import HomePanel from './home/HomePanel';
 import BrowsePanel from './browse/BrowsePanel';
-import AdminPanel from './admin/AdminPanel';
+import AdminPanel from '../containers/admin/AdminPanel';
 import SubmissionPanel from "../containers/submission/SubmissionPanel";
 import SearchPanel from '../containers/search/SearchPanel';
 import {SearchHistoryItem} from "../types/dataset";
 import { User } from "../model/User";
+import LinksPanel from "../containers/links/LinksPanel";
 
 
 const drawerWidth = 240;
@@ -117,6 +118,7 @@ class DashPanels extends React.PureComponent<DashPanelsProps> {
                 <HomePanel show={this.props.currentDrawer == 'Home'}/>
                 <SubmissionPanel show={this.props.currentDrawer == 'Submit'}/>
                 <BrowsePanel show={this.props.currentDrawer == 'Browse'}/>
+                <LinksPanel show={this.props.currentDrawer == "Links"}/>
                 <AdminPanel show={this.props.currentDrawer == 'Admin'}/>
             </div>
         );

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Typography from '@material-ui/core/Typography/Typography';
-import { Theme, WithStyles } from '@material-ui/core';
+import {Button, Theme, WithStyles} from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
 import EditContentDialog from "./EditContentDialog";
@@ -16,6 +16,11 @@ const styles = (theme: Theme) => createStyles(
 
 interface AdminPanelProps extends WithStyles<typeof styles> {
     show: boolean;
+    linksContentDialogOpen: boolean;
+    openLinksContentDialog: () => void;
+    closeLinksContentDialog: () => void;
+
+    updateLinksContent: (content: string) => void;
 }
 
 class AdminPanel extends React.PureComponent<AdminPanelProps> {
@@ -44,8 +49,17 @@ class AdminPanel extends React.PureComponent<AdminPanelProps> {
                 >
                     ADMIN
                 </Typography>
+                <Button
+                    onClick={this.props.openLinksContentDialog}
+                >
+                    Open Link
+                </Button>
+                <EditContentDialog
+                    handleClose={this.props.closeLinksContentDialog}
+                    open={this.props.linksContentDialogOpen}
 
-                <EditContentDialog handleClose={this.handleClose} open={true}/>
+                    onSave={this.props.updateLinksContent}
+                />
             </div>
         );
     }

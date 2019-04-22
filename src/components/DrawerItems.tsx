@@ -66,6 +66,12 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
                         </ListItemIcon>
                         <ListItemText primary="Submit"/>
                     </ListItem>
+                    <ListItem key={'Links'} onClick={() => this.props.handleClick('Links')} button>
+                        <ListItemIcon>
+                            <SettingsApplications/>
+                        </ListItemIcon>
+                        <ListItemText primary="Linke"/>
+                    </ListItem>
                     <ListItem disabled={!adminAllowed}  key={'Admin'} onClick={() => this.props.handleClick('Admin')} button>
                         <ListItemIcon>
                             <SettingsApplications/>

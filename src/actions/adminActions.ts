@@ -33,4 +33,4 @@ export function updateLinksContent(linksContent: string): UpdateLinksContent  {
     return {type: UPDATE_LINKS_CONTENT, linksContent};
 }
 
-export type  LinksContentAction = OpenLinksContentDialog | CloseLinksContentDialog | UpdateLinksContent;
+export type  AdminAction = OpenLinksContentDialog | CloseLinksContentDialog | UpdateLinksContent;

@@ -19,6 +19,7 @@ const styles = (theme: Theme) => createStyles({});
 interface EditMarkdownContentDialogProps extends WithStyles<typeof styles> {
     open: boolean;
     handleClose: () => void;
+    onSave: (content: string) => void;
 }
 
 interface EditMarkdownContentDialogState {
@@ -52,6 +53,11 @@ class EditMarkdownContentDialog extends React.Component<EditMarkdownContentDialo
         this.setState({tab})
     };
 
+    handleSave = (event: React.MouseEvent) => {
+        const content = this.state.value;
+        this.props.onSave(content);
+    };
+
     render() {
         const input = '# This is a header\n\nAnd this is a paragraph';
 
@@ -81,9 +87,9 @@ class EditMarkdownContentDialog extends React.Component<EditMarkdownContentDialo
                         <Button onClick={this.props.handleClose} color="primary">
                             Cancel
                         </Button>
-                        {/*<Button onClick={this.handleApiServerUrlSave} color="primary">*/}
-                            {/*Save*/}
-                        {/*</Button>*/}
+                        <Button onClick={this.handleSave} color="primary">
+                            Save
+                        </Button>
                     </DialogActions>
                 </Dialog>
             </div>
