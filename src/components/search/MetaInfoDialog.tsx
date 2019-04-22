@@ -19,7 +19,6 @@ import HelpDialog from "../messages/HelpDialog";
 import { MetaInfoHelpText } from "../messages/Help/MetaInfo";
 
 
-
 const styles = () => createStyles({
     root: {},
     helpDialog: {
