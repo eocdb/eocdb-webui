@@ -3,6 +3,7 @@ import Typography from '@material-ui/core/Typography/Typography';
 import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
+import EditContentDialog from "./EditContentDialog";
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles(
@@ -22,6 +23,10 @@ class AdminPanel extends React.PureComponent<AdminPanelProps> {
         super(props);
     }
 
+    handleClose = () => {
+
+    };
+
     render() {
         if (!this.props.show) {
             return null;
@@ -39,6 +44,8 @@ class AdminPanel extends React.PureComponent<AdminPanelProps> {
                 >
                     ADMIN
                 </Typography>
+
+                <EditContentDialog handleClose={this.handleClose} open={true}/>
             </div>
         );
     }
