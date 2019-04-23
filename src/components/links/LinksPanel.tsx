@@ -24,16 +24,16 @@ class LinkaPanel extends React.PureComponent<LinksPanelProps> {
         super(props);
     }
 
-    options = () => {
+    options = {
         overrides: {
-            h1: { component: props => <Typography gutterBottom variant="h4" {...this.props} /> },
-            h2: { component: props => <Typography gutterBottom variant="h6" {...this.props} /> },
-            h3: { component: props => <Typography gutterBottom variant="subtitle1" {...this.props} /> },
-            h4: { component: props => <Typography gutterBottom variant="caption" paragraph {...this.props} /> },
-            p: { component: props => <Typography paragraph {...this.props} /> },
+            h1: { component: (props: any) => <Typography gutterBottom variant="h4" {...props} /> },
+            h2: { component: (props: any) => <Typography gutterBottom variant="h6" {...props} /> },
+            h3: { component: (props: any) => <Typography gutterBottom variant="subtitle1" {...props} /> },
+            h4: { component: (props: any) => <Typography gutterBottom variant="caption" paragraph {...props} /> },
+            p: { component: (props: any) => <Typography paragraph {...props} /> },
             li: {
-                component: withStyles(styles)(({ classes, ...props }) => (
-                    <li className={classes.listItem}>
+                component: withStyles(styles)(({ classes, ...props }: any) => (
+                    <li className={this.props.classes.listItem}>
                         <Typography component="span" {...props} />
                     </li>
                 )),
@@ -58,7 +58,7 @@ class LinkaPanel extends React.PureComponent<LinksPanelProps> {
                 >
                     BROWSE
                 </Typography>
-                <ReactMarkdown options={options}>
+                <ReactMarkdown options={this.options}>
                     {this.props.content}
                 </ReactMarkdown>
             </div>
