@@ -330,6 +330,13 @@
   resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-1.11.1.tgz#819d730cf8ada52bec9c4a1d94347d1250f22c5d"
   integrity sha512-XBHQ7rzpOHyJudEQcMyoT67Np61FTb6S2jWqWQER/U7H2NAS+dpC8wv5T+6ygV5g/yJQdaojQbsJQiweool0Aw==
 
+"@types/markdown-to-jsx@^6.9.0":
+  version "6.9.0"
+  resolved "https://registry.yarnpkg.com/@types/markdown-to-jsx/-/markdown-to-jsx-6.9.0.tgz#799fb134f91ffe585dba826f3029101910750de4"
+  integrity sha512-LO/oxz+ZfwBDciiVGqLhhdyeWt196kgICe0QS88K1a2u/FgUF1QkeMAm4zdnAo1kNgo2KgFP1Uqy2IiPJLWppA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/node@*":
   version "11.11.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.11.0.tgz#070e9ce7c90e727aca0e0c14e470f9a93ffe9390"
@@ -6637,6 +6644,14 @@ markdown-escapes@^1.0.0:
   resolved "https://registry.yarnpkg.com/markdown-escapes/-/markdown-escapes-1.0.2.tgz#e639cbde7b99c841c0bacc8a07982873b46d2122"
   integrity sha512-lbRZ2mE3Q9RtLjxZBZ9+IMl68DKIXaVAhwvwn9pmjnPLS0h/6kyBMgNhqi1xFJ/2yv6cSyv0jbiZavZv93JkkA==
 
+markdown-to-jsx@^6.9.4:
+  version "6.9.4"
+  resolved "https://registry.yarnpkg.com/markdown-to-jsx/-/markdown-to-jsx-6.9.4.tgz#ed1e6925e643f7a0ee2fed90f28d16b4402aad09"
+  integrity sha512-Fvx2ZhiknGmcLsWVjIq6MmiN9gcCot8w+jzwN2mLXZcQsJGRN3Zes5Sp5M9YNIzUy/sDyuOTjimFdtAcvvmAPQ==
+  dependencies:
+    prop-types "^15.6.2"
+    unquote "^1.1.0"
+
 marked@~0.3.6:
   version "0.3.19"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
@@ -10749,6 +10764,11 @@ unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
   integrity sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=
+
+unquote@^1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/unquote/-/unquote-1.1.1.tgz#8fded7324ec6e88a0ff8b905e7c098cdc086d544"
+  integrity sha1-j97XMk7G6IoP+LkF58CYzcCG1UQ=
 
 unset-value@^1.0.0:
   version "1.0.0"
