@@ -1,7 +1,7 @@
 import { User } from '../model';
-// import { UserRole } from "../types/user";
+//import { UserRole } from "../types/user";
 
-// const testRoles: UserRole[] = ['admin', 'submit'];
+//const testRoles: UserRole[] = ['admin', 'submit'];
 
 export interface SessionState {
     user: User | null;
@@ -12,15 +12,6 @@ export interface SessionState {
 export function newSessionState() {
     return {
         user: null,
-        /*user: {
-            id: 8877827454,
-            name: 'scott',
-            roles: testRoles,
-            firstName: '',
-            lastName: '',
-            email: '',
-            phone: ''
-        },*/
         userLoginError: null,
         userLoginInProgress: false,
     }

@@ -5,6 +5,7 @@ import { User } from '../model';
 export function loginUser(apiServerUrl: string, name: string, password: string): Promise<User> {
     return callJsonApi<User>(apiServerUrl + '/users/login', undefined, {
         method: 'post',
+        credentials: "same-origin",
         body: JSON.stringify({username: name, password: password})
     })
         .then((obj: any) => ({

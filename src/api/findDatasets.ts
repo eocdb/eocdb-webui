@@ -39,9 +39,11 @@ type QueryComponent = [string, string];
  * @param apiServerUrl: URL of the OCDB API
  * @param datasetQuery: query parameters to pass to the search dataset get request
  */
-export function findDatasets(apiServerUrl: string, datasetQuery: DatasetQuery): Promise<QueryResult> {
+export function findDatasets(apiServerUrl: string, datasetQuery: DatasetQuery, userId: number): Promise<QueryResult> {
 
     const queryComponents = collectComponents(datasetQuery);
+
+    queryComponents.push(['user_id', `${userId}`]);
 
     return callJsonApi<QueryResult>(apiServerUrl + '/datasets', queryComponents);
 }

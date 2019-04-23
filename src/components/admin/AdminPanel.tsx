@@ -1,8 +1,9 @@
 import * as React from 'react';
-import Typography from '@material-ui/core/Typography/Typography';
-import { Theme, WithStyles } from '@material-ui/core';
+import {Button, Theme, WithStyles} from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
+import EditContentDialog from "./EditContentDialog";
+import { Link } from "@material-ui/icons";
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles(
@@ -15,6 +16,13 @@ const styles = (theme: Theme) => createStyles(
 
 interface AdminPanelProps extends WithStyles<typeof styles> {
     show: boolean;
+    linksContentDialogOpen: boolean;
+    openLinksContentDialog: () => void;
+    closeLinksContentDialog: () => void;
+
+    updateLinksContent: (content: string) => void;
+    saveLinksContent: (content: string) => void;
+    linksContent: string;
 }
 
 class AdminPanel extends React.PureComponent<AdminPanelProps> {
@@ -22,23 +30,31 @@ class AdminPanel extends React.PureComponent<AdminPanelProps> {
         super(props);
     }
 
+    handleSave = (content: string) => {
+        this.props.saveLinksContent(content);
+        this.props.updateLinksContent(content);
+    };
+
     render() {
         if (!this.props.show) {
             return null;
         }
 
-        const {classes} = this.props;
         return (
             <div>
-                <Typography
-                    component="h1"
-                    variant="h5"
-                    color="inherit"
-                    noWrap
-                    className={classes.title}
+                <Button
+                    onClick={this.props.openLinksContentDialog}
                 >
-                    ADMIN
-                </Typography>
+                    Edit Links
+                    <Link/>
+                </Button>
+                <EditContentDialog
+                    onClose={this.props.closeLinksContentDialog}
+                    open={this.props.linksContentDialogOpen}
+
+                    onSave={this.handleSave}
+                    content={this.props.linksContent}
+                />
             </div>
         );
     }

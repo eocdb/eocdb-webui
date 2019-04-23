@@ -195,6 +195,7 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                             label={'Drag and drop DOCUMENT files here or click'}
                             onChange={this.handleOndropDocfiles}
                             files={this.props.docFilesValue}
+                            acceptedFiles={undefined}
                         />
                     </Grid>
                 </Grid>

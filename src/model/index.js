@@ -11,3 +11,4 @@ export {Submission} from './Submission';
 export {SubmissionFile} from './SubmissionFile';
 export {UploadData} from './UploadData';
 export {User} from 'src/model/User';
+export {Links} from './Links';

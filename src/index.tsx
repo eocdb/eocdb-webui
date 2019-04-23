@@ -13,6 +13,7 @@ import 'typeface-roboto';
 import { updateStoreInfo } from "./actions/configActions";
 import { SearchHistoryItem } from "./types/dataset";
 import { updateSearchHistory } from "./actions/findActions";
+import { getLinks } from "./actions/adminActions";
 
 const logger = createLogger({collapsed: true});
 const store = createStore(appReducer, applyMiddleware(thunk, logger));
@@ -34,6 +35,7 @@ for (let i = 0; i < localStorage.length; i++) {
 
 store.dispatch(updateSearchHistory(history));
 store.dispatch(updateStoreInfo() as any);
+store.dispatch(getLinks() as any);
 
 ReactDOM.render(
     <Provider store={store}>

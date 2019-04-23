@@ -12,5 +12,7 @@ export {getSubmissionFile} from './getSubmissionFile';
 export {updateSubmissionFile} from './updateSubmissionFile';
 export {deleteSubmissionFile} from './deleteSubmissionFile';
 export {downloadSubmissionFile} from './downloadSubmissionFile';
+export {getLinks} from './getLinks'
+export {saveLinks} from './saveLinks'
 export {HTTPError} from './errors';
 

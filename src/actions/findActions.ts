@@ -156,8 +156,9 @@ export function searchDatasets() {
         let datasetQuery = state.searchFormState.datasetQuery;
 
         datasetQuery = collectDatasetQuery(state, datasetQuery);
+        const userId = state.sessionState.user ? state.sessionState.user.id : 0;
 
-        return api.findDatasets(apiServerUrl, datasetQuery)
+        return api.findDatasets(apiServerUrl, datasetQuery, userId)
             .then((foundDatasets: QueryResult) => {
                 dispatch(updateFoundDatasets(foundDatasets));
                 if (foundDatasets.total_count == 0){

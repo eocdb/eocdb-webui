@@ -15,7 +15,7 @@ interface FileUploadProps extends WithStyles<typeof styles> {
     label: string;
     onChange: (acceptedFiles: File[]) => void;
     files: File[];
-    acceptedFiles?: string[] | undefined;
+    acceptedFiles?: string[];
 }
 
 
