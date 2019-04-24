@@ -11,6 +11,7 @@ Welcome to OCDB's documentation!
    :caption: Contents:
 
    eocdb-webui
+   eocdb-api-cli
 
 
 
