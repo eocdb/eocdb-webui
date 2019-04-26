@@ -41,6 +41,10 @@ submission file table by clicking 'list files' on the submission table item.
 
 ### Submission Actions
 
+__List Submission Files__:
+
+![list](static/list.png)
+
 __Process Data__:
 
 When pushing this button, the data will be processed into the database and, 
