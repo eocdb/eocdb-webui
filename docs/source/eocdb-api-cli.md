@@ -178,26 +178,113 @@ __Get Submission__:
 
 ```bash
 
-eocdb-cli ds get --id 5c6d634961d82d28bf8cebed
+eocdb-cli sbm get --submission-id <submission-id>
 
 ```
 
 
 ```python
 
-api.get_dataset(dataset_id='5c6d634961d82d28bf8cebed')
+api.get_submission(<submission-id>)
 
 ```
+
+
+__Get Submissions for a specific User__:
+
+
+```bash
+
+eocdb-cli sbm user --user-id <user-id>
+
+```
+
+
+```python
+
+api.get_submissions_for_user(<user-id>)
+
+```
+
 
 __Delete Submission__:
 
 
+```bash
 
-__Download Submission__:
+eocdb-cli sbm delete --submission-id <submission-id>
+
+```
+
+
+```python
+
+api.delete_submission(<submission-id>)
+
+```
+
+
+__Update Submission Status__:
+
+
+```bash
+
+eocdb-cli sbm status --submission-id <submission-id> --status <status>
+
+```
+
+
+```python
+
+api.update_submission_status(<submission-id>, <status>)
+
+```
+
 
 __Download Submission File__:
 
+
+```bash
+
+eocdb-cli sbm download --submission-id <submission-id> --index <index>
+
+```
+
+
+```python
+
+api.download_submission_file(<submission-id>, <index>)
+
+```
+
+
 __Upload Submission File__:
+
+
+```bash
+
+eocdb-cli sbm upl --submission-id <submission-id> --index <index> --file <file>
+
+```
+
+
+```python
+
+api.upload_submission_file(<submission-id>, <index>, <file>)
+
+```
+
+
+## General
+
+__Get License__
+
+
+```bash
+
+eocdb-cli lic
+
+```
 
 
 ## Development
