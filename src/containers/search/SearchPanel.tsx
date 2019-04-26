@@ -9,9 +9,9 @@ import {
 import SearchPanel from '../../components/search/SearchPanel';
 import {
     closeAdvancedSearchDialog,
-    closeHelpDialog, closeProductGroupsHelpDialog, closeSaveSearchDialog,
+    closeHelpDialog, closeHelpMetaInfoDialog, closeProductGroupsHelpDialog, closeSaveSearchDialog,
     openAdvancedSearchDialog,
-    openHelpDialog, openProductGroupsHelpDialog, openSaveSearchDialog,
+    openHelpDialog, openHelpMetaInfoDialog, openProductGroupsHelpDialog, openSaveSearchDialog,
 } from "../../actions/dashboardActions";
 import {
     updateOptShallow,
@@ -20,7 +20,18 @@ import {
     updateWaterDepth,
     updateWavelength
 } from "../../actions/advancedFindActions";
-import { updateSelectedRegions } from "../../actions/searchMapActions";
+import {
+    closeManualBBoxDialog,
+    openManualBBoxDialog,
+    updateManualBBox, updateManualBBoxEast, updateManualBBoxNorth, updateManualBBoxSouth, updateManualBBoxWest,
+    updateSelectedRegions
+} from "../../actions/searchMapActions";
+import {
+    closeMetaInfoDialog, closePlotDialog, downloadDatasets, openMetaInfoDialog, openPlotDialog, startDownloading,
+    updateDataPage,
+    updateDataRowsPerPage, updateDataset, updateDownloadDocs, updatePlotData, updatePlotState,
+    updateSelectedDatasets
+} from "../../actions/dataTableActions";
 
 
 const mapStateToProps = (state: AppState) => {
@@ -42,6 +53,45 @@ const mapStateToProps = (state: AppState) => {
         selectedOptShallow: state.advancedSearchState.selectedOptShallow,
         selectedProducts: state.advancedSearchState.selectedProducts,
         productInputValue: state.advancedSearchState.productInputValue,
+
+        // SearchMap
+
+        position: state.searchMapState.position,
+        zoom: state.searchMapState.zoom,
+        testMarkerCluster: true,
+        foundDatasets: state.searchFormState.foundDatasets,
+        selectedDatasets: state.dataTableState.selectedDatasets,
+        selectedBounds: state.searchMapState.selectedBounds,
+
+        drawBounds: state.searchMapState.drawBounds,
+        selectedManualBBox: state.searchMapState.selectedManualBounds,
+        manualBBoxInputOpen: state.searchMapState.manualBBoxInputOpen,
+        selectedBBoxSouth: state.searchMapState.selectedBBoxSouth,
+        selectedBBoxWest: state.searchMapState.selectedBBoxWest,
+        selectedBBoxNorth: state.searchMapState.selectedBBoxNorth,
+        selectedBBoxEast: state.searchMapState.selectedBBoxEast,
+
+        // DataTable
+
+        page: state.dataTableState.page,
+        rowsPerPage: state.dataTableState.rowsPerPage,
+
+        metaInfoDialogOpen: state.dataTableState.metaInfoDialogOpen,
+        helpMetaInfoDialogOpen: state.dashboardState.helpMetaInfoDialogOpen,
+        helpMetaInfoKey: state.dashboardState.helpMetaInfoKey,
+        plotDialogOpen: state.dataTableState.plotDialogOpen,
+
+        data: state.searchFormState.foundDatasets,
+        dataset: state.dataTableState.dataset,
+        downloadDocs: state.dataTableState.downloadDocs,
+
+        apiServerUrl: state.configState.apiServerUrl,
+
+        downloading: state.dataTableState.downloading,
+
+        plotState: state.dataTableState.plotState,
+        plotData: state.dataTableState.plotData,
+
     };
 };
 
@@ -74,6 +124,36 @@ const mapDispatchToProps = {
     updateProductValue,
 
     updateSelectedRegions,
+
+    // SearchMap
+
+    updateSelectedDatasets,
+
+    openManualBBoxDialog,
+    closeManualBBoxDialog,
+    updateManualBBox,
+    updateManualBBoxSouth,
+    updateManualBBoxWest,
+    updateManualBBoxNorth,
+    updateManualBBoxEast,
+
+    // Data Table
+
+    updateDataPage,
+    updateDataRowsPerPage,
+    closeMetaInfoDialog,
+    openMetaInfoDialog,
+    openHelpMetaInfoDialog,
+    closeHelpMetaInfoDialog,
+    openPlotDialog,
+    closePlotDialog,
+    updateDataset,
+    updateDownloadDocs,
+    downloadDatasets,
+    startDownloading,
+    updatePlotState,
+    updatePlotData,
 };
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPanel);

@@ -5,7 +5,7 @@ import { Links } from "../model/Links";
 /**
  *
  * @param apiServerUrl: URL of the OCDB API
- * @param submissionId: ID of the submission
+ * @param content: Markdown Content of Links Page
  */
 export function saveLinks(apiServerUrl: string, content: string): Promise<Links> {
     const result = {content: content};

@@ -13,10 +13,10 @@ import {
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
 
-import SearchMap from '../../containers/search/SearchMap';
+import SearchMap from './SearchMap';
 import { DatasetQuery } from '../../api';
 import { ProductGroup, StoreInfo } from '../../model';
-import DataTable from "../../containers/search/DataTable";
+import DataTable from "./DataTable";
 import AdvancedSearchDialog from "./AdvancedSearchDialog";
 import AdvancedSearchLog from "./AdvancedSearchLog";
 import MultipleSelectTextField, { Suggestion } from "./MultipleSelectTextField";
@@ -30,7 +30,11 @@ import { User } from "../../model/User";
 import InputDialog from "./InputDialog";
 import { ProductGroupsInfo } from "../messages/Help/productgroups";
 import { GeoJsonObject } from "geojson";
-import { LatLngBounds } from "leaflet";
+import { LatLng, LatLngBounds } from "leaflet";
+import { BBoxValue } from "./BBoxInput";
+import { QueryResult } from "../../model/QueryResult";
+import { PlotRecord, PlotState } from "../../states/dataTableState";
+import { Dataset } from "../../model/Dataset";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -109,9 +113,7 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
 
     // SearchMap Properties
 
-    updateSelectedRegions: (selectedRegions: GeoJsonObject, selectedBounds?: LatLngBounds, drawBounds?: boolean) => void;
-
-/*    position: LatLng;
+    position: LatLng;
     zoom: number;
 
     updateSelectedRegions: (selectedRegions: GeoJsonObject, selectedBounds?: LatLngBounds, drawBounds?: boolean) => void;
@@ -145,10 +147,50 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     updateManualBBoxEast: (east: number | string) => void;
     selectedBBoxEast: number | string;
 
-    selectedRectangleFromAdvancedDialog?: BBoxValue;*/
+    selectedRectangleFromAdvancedDialog?: BBoxValue;
+
+    // Data Table
+
+    data: QueryResult;
+    page: number;
+    rowsPerPage: number;
+
+    updateDataPage: (page: number) => void;
+    updateDataRowsPerPage: (rowsPerPage: number) => void;
+
+    metaInfoDialogOpen: boolean;
+    openMetaInfoDialog: () => void;
+    closeMetaInfoDialog: () => void;
+
+    helpMetaInfoDialogOpen: boolean;
+    openHelpMetaInfoDialog: (helpMetaInfoKey: string) => void;
+    closeHelpMetaInfoDialog: () => void;
+    helpMetaInfoKey: string;
+
+    plotDialogOpen: boolean;
+    openPlotDialog: () => void;
+    closePlotDialog: () => void;
+
+    updateDataset: (datasetId: string) => void;
+    dataset: Dataset;
+
+    apiServerUrl: string;
+    downloadDocs: boolean;
+    updateDownloadDocs: (downloadDocs: boolean) => void;
+
+    startDownloading: () => void;
+
+    downloadDatasets: (selectedDatasets: string[]) => void;
+    downloading: boolean;
+
+    updatePlotState: (plotState: PlotState) => void;
+    plotState: PlotState;
+
+    updatePlotData: (plotData: PlotRecord[]) => void;
+    plotData: PlotRecord[];
 
 
-    user?: User|null;
+    user?: User | null;
 }
 
 
@@ -191,7 +233,10 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
             key = this.props.user.name + '_';
         }
 
-        const item: SearchHistoryItem = {key: this.props.saveSearchTitle, query: Object.assign(this.props.datasetQuery)};
+        const item: SearchHistoryItem = {
+            key: this.props.saveSearchTitle,
+            query: Object.assign(this.props.datasetQuery)
+        };
         let history = this.props.searchHistory.map((item: SearchHistoryItem) => {
             return item;
         });
@@ -392,10 +437,89 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             onProductsChange={this.props.updateProducts}
                             productsValue={this.props.selectedProducts}
                         />
-                        <DataTable />
+                        <DataTable
+                            data={this.props.data}
+                            page={this.props.page}
+                            rowsPerPage={this.props.rowsPerPage}
+
+                            updateDataPage={this.props.updateDataPage}
+                            updateDataRowsPerPage={this.props.updateDataRowsPerPage}
+
+                            metaInfoDialogOpen={this.props.metaInfoDialogOpen}
+                            openMetaInfoDialog={this.props.openMetaInfoDialog}
+                            closeMetaInfoDialog={this.props.closeMetaInfoDialog}
+
+                            helpMetaInfoDialogOpen={this.props.helpMetaInfoDialogOpen}
+                            openHelpMetaInfoDialog={this.props.openHelpMetaInfoDialog}
+                            closeHelpMetaInfoDialog={this.props.closeHelpMetaInfoDialog}
+                            helpMetaInfoKey={this.props.helpMetaInfoKey}
+
+                            plotDialogOpen={this.props.plotDialogOpen}
+                            openPlotDialog={this.props.openPlotDialog}
+                            closePlotDialog={this.props.closePlotDialog}
+
+                            updateDataset={this.props.updateDataset}
+                            dataset={this.props.dataset}
+
+                            apiServerUrl={this.props.apiServerUrl}
+                            downloadDocs={this.props.downloadDocs}
+                            updateDownloadDocs={this.props.updateDownloadDocs}
+
+                            startDownloading={this.props.startDownloading}
+
+                            downloadDatasets={this.props.downloadDatasets}
+                            downloading={this.props.downloading}
+
+                            updatePlotState={this.props.updatePlotState}
+                            plotState={this.props.plotState}
+
+                            updatePlotData={this.props.updatePlotData}
+                            plotData={this.props.plotData}
+
+                            searchDatasets={this.props.searchDatasets}
+                            selectedDatasets={this.props.selectedDatasets}
+                            updateSelectedDatasets={this.props.updateSelectedDatasets}
+                            startLoading={this.props.startLoading}
+                        />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <SearchMap/>
+                        <SearchMap
+                            position={this.props.position}
+                            zoom={this.props.zoom}
+
+                            updateSelectedRegions={this.props.updateSelectedRegions}
+                            testMarkerCluster={this.props.testMarkerCluster}
+
+                            drawMeasurementPoints={this.props.drawMeasurementPoints}
+                            foundDatasets={this.props.foundDatasets}
+
+                            updateSelectedDatasets={this.props.updateSelectedDatasets}
+                            selectedDatasets={this.props.selectedDatasets}
+
+                            selectedBounds={this.props.selectedBounds}
+                            mapBounds={this.props.mapBounds}
+                            drawBounds={this.props.drawBounds}
+
+                            selectedManualBBox={this.props.selectedManualBBox}
+                            updateManualBBox={this.props.updateManualBBox}
+                            openManualBBoxDialog={this.props.openManualBBoxDialog}
+                            closeManualBBoxDialog={this.props.closeManualBBoxDialog}
+                            manualBBoxInputOpen={this.props.manualBBoxInputOpen}
+
+                            updateManualBBoxSouth={this.props.updateManualBBoxSouth}
+                            selectedBBoxSouth={this.props.selectedBBoxSouth}
+
+                            updateManualBBoxWest={this.props.updateManualBBoxWest}
+                            selectedBBoxWest={this.props.selectedBBoxWest}
+
+                            updateManualBBoxNorth={this.props.updateManualBBoxNorth}
+                            selectedBBoxNorth={this.props.selectedBBoxNorth}
+
+                            updateManualBBoxEast={this.props.updateManualBBoxEast}
+                            selectedBBoxEast={this.props.selectedBBoxEast}
+
+                            selectedRectangleFromAdvancedDialog={this.props.selectedRectangleFromAdvancedDialog}
+                        />
                     </Grid>
                 </Grid>
             </div>

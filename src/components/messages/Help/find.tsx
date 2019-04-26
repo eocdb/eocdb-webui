@@ -1,7 +1,15 @@
-import { List, ListItem, Typography } from "@material-ui/core";
+import { Link, List, ListItem, ListItemText, Typography } from "@material-ui/core";
 import * as React from "react";
 
 import SyntaxHighlighter from 'react-syntax-highlighter';
+
+function listItem(item: string, descr: string): any {
+    return (
+        <ListItem component={'span'} key={item}>
+            <ListItemText secondary={descr} primary={item}/>
+        </ListItem>
+    )
+}
 
 export const FindHelpText = (
     <div>
@@ -10,8 +18,8 @@ export const FindHelpText = (
         </Typography>
         <Typography variant={"body1"} gutterBottom>
             The expression field allows to filter datasets for keywords. This can be done by either
-            giving keywords or by using the so-called Lucene Syntax (link). The following will give some
-            example on how to use the expression field.
+            giving keywords or by using the so-called <Link href={'https://lucene.apache.org/core/2_9_4/queryparsersyntax.html'}>Lucene Syntax</Link>.
+            The following will give some example on how to use the expression field.
         </Typography>
 
         <Typography variant={"body1"} gutterBottom>
@@ -65,16 +73,17 @@ export const FindHelpText = (
         <Typography variant={"h5"} gutterBottom>
             Searchable Meta Fields
         </Typography>
+
         <List dense={true}>
-            <ListItem>received</ListItem>
-            <ListItem>identifier_product_doi</ListItem>
-            <ListItem>investigators</ListItem>
-            <ListItem>affiliations</ListItem>
-            <ListItem>contact</ListItem>
-            <ListItem>experiment</ListItem>
-            <ListItem>cruise</ListItem>
-            <ListItem>data_file_name</ListItem>
-            <ListItem>data_type</ListItem>
+            {listItem('received', 'Date Received')}
+            {listItem('identifier_product_doi', 'Product DOI. ')}
+            {listItem('investigators', 'Investigators reponsible for the Measurements.')}
+            {listItem('affiliations', 'The Affiliations of the Investigators.')}
+            {listItem('contact', 'Contact (Email Address) of the Investigators.')}
+            {listItem('experiment', 'Identifier of the Experiment')}
+            {listItem('cruise', 'Identifier of the Cruise')}
+            {listItem('data_file_name', 'The name of the original data file')}
+            {listItem('data_type', 'The data type (e.g. scan)')}
         </List>
     </div>
 );

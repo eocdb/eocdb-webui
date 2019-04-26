@@ -15,7 +15,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 import DrawerItems from './DrawerItems';
 import DashPanels from './DashPanels';
-import LoginDialog from '../containers/user/LoginDialog'; // TODO: dependency issue here!
+import LoginDialog from './user/LoginDialog';
 import ConfigDialog from './admin/ConfigDialog';
 import SearchHistory from "./search/SearchHistory";
 import { User } from "../model";
@@ -135,6 +135,19 @@ interface DashboardProps extends WithStyles<typeof styles> {
 
     updateDatasetQuery: (datasetQuery: DatasetQuery) => void;
     searchDatasets: () => void;
+
+    // LoginDialog
+
+    loginDialogProps: {
+        open: boolean;
+        userName: string;
+        userLoginError: string | null;
+        userLoginInProgress: boolean;
+
+        loginUser: (name: string, password: string) => void;
+        openRegistrationDialog: () => void;
+        closeLoginDialog: () => void;
+    }
 }
 
 
@@ -198,7 +211,9 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         return (
             <div className={classes.root}>
                 <CssBaseline/>
-                <LoginDialog/>
+                <LoginDialog
+                    {...this.props.loginDialogProps}
+                />
                 <ConfigDialog open={this.props.configDialogOpen}
                               handleClose={this.handleConfigClose}
                               apiServerUrlChange={this.handleApiServerUrlChange}

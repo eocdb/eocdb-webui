@@ -24,6 +24,13 @@ const mapStateToProps = (state: AppState) => {
         user: state.sessionState.user,
 
         searchHistory: state.searchFormState.searchHistory,
+
+        loginDialogProps: {
+            open: state.dashboardState.loginDialogOpen,
+            userName: state.sessionState.user ? state.sessionState.user.name : '',
+            userLoginError: state.sessionState.userLoginError,
+            userLoginInProgress: state.sessionState.userLoginInProgress,
+        }
     }
 };
 
@@ -44,6 +51,12 @@ const mapDispatchToProps = {
     searchDatasets,
 
     apiServerUrlChange: configServer, // TODO: rename apiServerUrlChange --> configServer
+
+    loginDialogProps: {
+        loginUser,
+        closeLoginDialog,
+        openRegistrationDialog,
+    }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

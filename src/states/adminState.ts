@@ -3,5 +3,5 @@ export interface AdminState {
 }
 
 export function newAdminState() {
-    return {linksContentDialogOpen: false};
+    return ({linksContentDialogOpen: false});
 }
