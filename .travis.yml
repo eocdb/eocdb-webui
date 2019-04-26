@@ -1,0 +1,36 @@
+language: node_js
+node_js:
+  - "stable"
+cache:
+  yarn: true
+  directories:
+    - node_modules
+script:
+  - yarn install
+  - yarn run build
+  #- yarn run test
+after_success:
+  - codecov
+
+before_deploy:
+  # Set up git user name and tag this commit
+#  - git config --local user.name "bcdev"
+#  - git config --local user.email "bcdev@brockmann-consult.de"
+#  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+#  - git tag $TRAVIS_TAG
+  - tar czvf build_v0.1.0dev1.tgz build
+deploy:
+  - provider: pages
+    skip_cleanup: true
+    github_token: $github_token
+    local_dir: build
+    on:
+      branch: dzelge_submit
+  - provider: releases
+    api_key: $github_token
+    file: build_v0.1.0dev1.tgz
+    skip_cleanup: true
+    draft: true
+    on:
+      branch: dzelge_submit
+
