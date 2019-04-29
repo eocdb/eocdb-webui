@@ -1,6 +1,4 @@
-# eocdb-validation-rules
-
-## OCDB Validation Rules
+# OCDB Data Import Validation Rules
 
 The OCDB database system applied validation rules on data submission. These rules are based on
 the NASA Seabass rules, but can have differences. The rules apply on the header (meta data) if
