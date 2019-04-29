@@ -12,6 +12,7 @@ Welcome to the EUMETSAT OCDB Database System!
    :maxdepth: 2
    :caption: Contents:
 
+   eocdb-data-access-policy
    eocdb-webui
    eocdb-api-cli
    eocdb-valication-rules
