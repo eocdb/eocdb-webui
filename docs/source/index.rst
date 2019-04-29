@@ -6,11 +6,12 @@
 Welcome to the EUMETSAT OCDB Database System!
 ================================
 
+.. _EUMETSAT OCDB: http://ocdb.eumetsat.int
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   eocdb-intro
    eocdb-webui
    eocdb-api-cli
    eocdb-valication-rules
