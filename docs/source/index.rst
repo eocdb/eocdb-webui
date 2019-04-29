@@ -6,7 +6,9 @@
 Welcome to the EUMETSAT OCDB Database System!
 ================================
 
-.. _EUMETSAT OCDB: http://ocdb.eumetsat.int
+The EUMETSAT OCDB_
+
+.. _OCDB: http://ocdb.eumetsat.int
 
 .. toctree::
    :maxdepth: 2

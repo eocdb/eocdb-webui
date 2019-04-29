@@ -1,6 +1,6 @@
 # OCDB Download Terms and Conditions
 
-##Notice to users
+## Notice to users
 
 The public domain data you are about to download are contributed by the International OCDB Federation. Each site has a Principal Investigator(s) (PI) , responsible for deployment, maintenance and data collection. The PI has priority use of the data collected at the site. The PI is entitled to be informed of any other use of that site data.
 
