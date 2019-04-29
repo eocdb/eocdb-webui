@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/bcdev/eocdb-webui.svg?branch=master)](https://travis-ci.org/bcdev/eocdb-webui)
 [![Docker Repository on Quay](https://quay.io/repository/bcdev/eocdb-webui/status "Docker Repository on Quay")](https://quay.io/repository/bcdev/eocdb-webui)
 
+[EUMETSAT DATABASE](http://eocdb.readthedocs.org)
 
 # EUMETSAT Ocean Colour Database
 

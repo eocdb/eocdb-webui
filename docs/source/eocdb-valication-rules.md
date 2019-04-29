@@ -1,0 +1,406 @@
+## OCDB Validation Rules
+
+
+### Header
+
+- field: investigators: field_required
+- field: affiliations: field_required
+- field: contact: field_required
+- field: experiment: field_required
+- field: cruise: field_required
+- field: station: field_optional
+- field: north_latitude: field_required
+- field: south_latitude: field_required
+- field: east_longitude: field_required
+- field: west_longitude: field_required
+- field: start_date: field_required
+- field: end_date: field_required
+- field: start_time: field_required
+- field: end_time: field_required
+- field: station_alt_id: field_obsolete
+- field: data_file_name: field_required
+- field: associated_archives: field_obsolete
+- field: associated_archive_types: field_obsolete
+- field: associated_files: field_obsolete
+- field: associated_file_types: field_obsolete
+- field: original_file_name: field_obsolete
+- field: documents: field_required
+- field: calibration_files: field_required
+- field: data_type: field_required
+- field: missing: field_required
+- field: delimiter: field_required
+- field: fields: field_required
+- field: units: field_required
+- field: data_status: field_optional
+- field: parameters: field_obsolete
+- field: water_depth: field_required
+- field: measurement_depth: field_obsolete
+- field: secchi_depth: field_optional
+- field: cloud_percent: field_optional
+- field: wave_height: field_optional
+- field: wind_speed: field_optional
+- field: volfilt: field_obsolete
+- field: begin_header: field_obsolete
+- field: end_header: field_obsolete
+- field: end_header@: field_obsolete
+- field: received: field_obsolete
+- field: identifier_product_doi: field_obsolete
+- field: below_detection_limit: field_obsolete
+- field: above_detection_limit: field_obsolete
+- field: optical_depth_warning: field_obsolete
+- field: area: field_obsolete
+- field: null_correction: field_obsolete
+- field: biotic_setting: field_obsolete
+- field: biotic_class: field_obsolete
+- field: biotic_subclass: field_obsolete
+- field: biotic_group: field_obsolete
+- field: biotic_community: field_obsolete
+- field: geoform_tectonic_setting: field_obsolete
+- field: geoform_physiographic_setting: field_obsolete
+- field: geoform_origin: field_obsolete
+- field: geoform: field_obsolete
+- field: geoform_type: field_obsolete
+- field: substrate_origin: field_obsolete
+- field: substrate_class: field_obsolete
+- field: substrate_subclass: field_obsolete
+- field: substrate_group: field_obsolete
+- field: substrate_subgroup: field_obsolete
+- field: water_column_biogeochemical_feature: field_obsolete
+- field: water_column_hydroform_class: field_obsolete
+- field: water_column_hydroform: field_obsolete
+- field: water_column_hydroform_type: field_obsolete
+s- field: water_column_layer: field_obsolete
+- field: water_column_salinity: field_obsolete
+- field: water_column_temperature: field_obsolete
+- field: chemical_formula: field_obsolete
+- field: mass_to_charge: field_obsolete
+
+## Records
+
+- name: a, unit: 1/m, data type: number, lower_bound: 0
+- name: a*ph, unit: m^2/mg, data type: number, lower_bound: -1e-05
+- name: a*srfa, unit: m^2/mg, data type: number
+- name: aaer, unit: 1/m, data type: number, lower_bound: 0
+- name: abs, unit: none, data type: number, lower_bound: 0
+- name: abs_blank_ap, unit: none, data type: number, lower_bound: 0
+- name: abs_blank_ad, unit: none, data type: number, lower_bound: 0
+- name: abs_blank_ag, unit: none, data type: number, lower_bound: 0
+- name: abs*, unit: m^2/mg, data type: number, lower_bound: 0
+- name: abs_ad, unit: none, data type: number, lower_bound: 0
+- name: abs_ag, unit: none, data type: number, lower_bound: 0
+- name: abs_ap, unit: none, data type: number, lower_bound: 0
+- name: abs_nacl, unit: none, data type: number, lower_bound: 0
+- name: abundance, unit: none, data type: number, lower_bound: 0
+- name: ad, unit: 1/m, data type: number, lower_bound: 0
+- name: ad_unc, unit: 1/m, data type: number, lower_bound: 0
+- name: adg, unit: 1/m, data type: number, lower_bound: 0
+- name: ag, unit: 1/m, data type: number, lower_bound: 0
+- name: agp, unit: 1/m, data type: number, lower_bound: 0
+- name: asrfa, unit: 1/m, data type: number
+- name: allo, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: alpha-beta-car, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: altitude, unit: m, data type: number, lower_bound: 0
+- name: am, unit: none, data type: number, lower_bound: 0
+- name: angstrom, unit: none, data type: number, lower_bound: 0
+- name: anth, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: aot, unit: none, data type: number, lower_bound: 0.005, upper_bound: 2.0
+- name: amc, unit: umol, data type: number
+- name: amc-leu, unit: umol/l/hr, data type: number
+- name: ap, unit: 1/m, data type: number, lower_bound: 0
+- name: ap_unc, unit: 1/m, data type: number, lower_bound: 0
+- name: aph, unit: 1/m, data type: number, lower_bound: 0
+- name: aph_unc, unit: 1/m, data type: number, lower_bound: 0
+- name: asta, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: at, unit: degreesC, data type: number, lower_bound: 0
+- name: aw, unit: 1/m, data type: number, lower_bound: 0
+- name: b, unit: 1/m, data type: number, lower_bound: 0
+- name: bb, unit: 1/m, data type: number, lower_bound: 0
+- name: bbp, unit: 1/m, data type: number, lower_bound: 0
+- name: bbp_bp, unit: none, data type: number, lower_bound: 0
+- name: bbw, unit: 1/m, data type: number, lower_bound: 0
+- name: bchl_a, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: bactp, unit: pmol/L/hr, data type: number, lower_bound: 0
+- name: bact_abun, unit: cells/L, data type: number, lower_bound: 0
+- name: beta-beta-car, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: beta-epi-car, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: beta-psi-car, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: bin_depth, unit: m, data type: number, lower_bound: 0
+- name: bincount, unit: none, data type: number, lower_bound: 0
+- name: bp, unit: 1/m, data type: number, lower_bound: 0
+- name: bsi, unit: mmol/m^3, data type: number, lower_bound: 0
+- name: but-fuco, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: bw, unit: 1/m, data type: number, lower_bound: 0
+- name: c, unit: 1/m, data type: number, lower_bound: 0
+- name: c2h3n_h, unit: ppbv, data type: number, lower_bound: 0
+- name: c2h4o_h, unit: ppbv, data type: number, lower_bound: 0
+- name: c2h6s_h, unit: ppbv, data type: number, lower_bound: 0
+- name: c3h6o_h, unit: ppbv, data type: number, lower_bound: 0
+- name: c5h8_h, unit: ppbv, data type: number, lower_bound: 0
+- name: c6h6_h, unit: ppbv, data type: number, lower_bound: 0
+- name: cantha, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: cdmf, unit: volts,ppb, data type: number, lower_bound: 0
+- name: cdom, unit: mg/m^3,ug/l,ppb, data type: number, lower_bound: 0
+- name: cg, unit: 1/m, data type: number, lower_bound: 0
+- name: cgp, unit: 1/m, data type: number, lower_bound: 0
+- name: ch4o_h, unit: ppbv, data type: number, lower_bound: 0
+- name: ch4s_h, unit: ppbv, data type: number, lower_bound: 0
+- name: chl, unit: mg/m^3,ug/l, data type: number, lower_bound: 0, upper_bound: 100
+- name: chl_ex, unit: mg/m^3,ug/l, data type: number, lower_bound: 0, upper_bound: 100
+- name: chl_a, unit: mg/m^3,ug/l, data type: number, lower_bound: 0, upper_bound: 100
+- name: chl_a_allom, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: chl_a_prime, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: chl_b, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: chl_c, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: chl_c1, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: chl_c1c2, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: chl_c2, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: chl_c3, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: chlide_a, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: chlide_b, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: cloud, unit: %, data type: number, lower_bound: 0
+- name: cnw, unit: 1/m, data type: number, lower_bound: 0
+- name: cond, unit: mmho/cm, data type: number, lower_bound: 0
+- name: cp, unit: 1/m, data type: number, lower_bound: 0
+- name: cp_gamma, unit: none, data type: number
+- name: croco, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: cw, unit: 1/m, data type: number, lower_bound: 0
+- name: cycle, unit: none, data type: number, lower_bound: 0
+- name: day, unit: dd, data type: number, lower_bound: 1
+- name: depth, unit: m,meters, data type: number, lower_bound: 0
+- name: dewpoint, unit: degreesC, data type: number
+- name: diadchr, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: diadino, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: diato, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: dic, unit: umol/kg, data type: number, lower_bound: 0
+- name: dino, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: dmsa, unit: ppt, data type: number
+- name: dmssw, unit: nmol/l, data type: number, lower_bound: 0
+- name: dna, unit: mg/m^3, data type: number, lower_bound: 0
+- name: doc, unit: umol/kg, data type: number, lower_bound: 0
+- name: dp, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: dv_chl_a, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: dv_chl_b, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: echin, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: ed, unit: uW/cm^2/nm,uWcm-2nm-1, data type: number, lower_bound: -0.001, upper_bound: 250.0
+- name: edgnd, unit: volts, data type: number
+- name: edpitch, unit: degrees, data type: number
+- name: edroll, unit: degrees, data type: number
+- name: elapsed_time, unit: seconds, data type: number, lower_bound: 0
+- name: elw, unit: uW/cm^2, data type: number, lower_bound: 0
+- name: epar, unit: uE/cm^2/s, data type: number, lower_bound: 0
+- name: epi-epi-car, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: es, unit: uW/cm^2/nm,uWcm-2nm-1, data type: number, lower_bound: -0.001, upper_bound: 250.0
+- name: esgnd, unit: volts, data type: number
+- name: esky, unit: uW/cm^2/nm,uWcm-2nm-1, data type: number
+- name: espitch, unit: degrees, data type: number
+- name: esroll, unit: degrees, data type: number
+- name: esun, unit: uW/cm^2/nm,uWcm-2nm-1, data type: number
+- name: esw, unit: uW/cm^2, data type: number
+- name: et-8-carot, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: et-chlide_a, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: et-chlide_b, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: eu, unit: uW/cm^2/nm,uWcm-2nm-1, data type: number, lower_bound: 0
+- name: eugnd, unit: volts, data type: number
+- name: eupar, unit: uE/cm^2/s, data type: number, lower_bound: 0
+- name: f0, unit: uW/cm^2/nm, data type: number, lower_bound: 0
+- name: f-initial, unit: none, data type: number, lower_bound: 0
+- name: fm, unit: none, data type: number, lower_bound: 0
+- name: fv_fm, unit: none, data type: number, lower_bound: 0
+- name: fuco, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: g, unit: d-1,1/d,d^-1, data type: number
+- name: g_herb, unit: d-1,1/d,d^-1, data type: number
+- name: gyro, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: heading, unit: degrees, data type: number, lower_bound: 0, upper_bound: 360.0
+- name: hex-fuco, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: hex-kfuco, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: hour, unit: hh, data type: number, lower_bound: 0, upper_bound: 23
+- name: it, unit: degreesC, data type: number, lower_bound: 0
+- name: iso_c2h3n_h, unit: ppbv, data type: number, lower_bound: 0
+- name: iso_c2h4o_h, unit: ppbv, data type: number, lower_bound: 0
+- name: iso_c2h6s_h, unit: ppbv, data type: number, lower_bound: 0
+- name: iso_c3h6o_h, unit: ppbv, data type: number, lower_bound: 0
+- name: iso_ch4o_h, unit: ppbv, data type: number, lower_bound: 0
+- name: jd, unit: jjj, data type: number, lower_bound: 1, upper_bound: 366
+- name: kd, unit: 1/m,m-1, data type: number, lower_bound: 0
+- name: kl, unit: 1/m,m-1, data type: number, lower_bound: 0
+- name: knf, unit: 1/m,m-1, data type: number, lower_bound: 0
+- name: kpar, unit: 1/m,m-1, data type: number, lower_bound: 0
+- name: ku, unit: 1/m,m-1, data type: number, lower_bound: 0
+- name: lat, unit: degrees, data type: number, lower_bound: -90.0, upper_bound: 90.0
+- name: lightlevel, unit: %, data type: number
+- name: lon, unit: degrees, data type: number, lower_bound: -180.0, upper_bound: 180.0
+- name: lsi, unit: mmol/m^3, data type: number, lower_bound: 0
+- name: lsky, unit: uW/cm^2/nm,uWcm-2nm-1, data type: number, lower_bound: 0
+- name: lt, unit: uW/cm^2/nm,uWcm-2nm-1, data type: number
+- name: lu, unit: uW/cm^2/nm,uWcm-2nm-1, data type: number, lower_bound: -0.001, upper_bound: 5.0
+- name: lugnd, unit: volts, data type: number
+- name: lut, unit: mg/m^3,ug/l, data type: number
+- name: lw, unit: uW/cm^2/nm,uWcm-2nm-1, data type: number, lower_bound: -0.001, upper_bound: 5.0
+- name: lwn, unit: uW/cm^2/nm,uWcm-2nm-1, data type: number, lower_bound: -0.001
+- name: lwnex, unit: uW/cm^2/nm,uWcm-2nm-1, data type: number, lower_bound: -0.001
+- name: lyco, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: me-chlinde_a, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: me-chlinde_b, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: mg_dvp, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: minute, unit: mn, data type: number, lower_bound: 0, upper_bound: 60
+- name: monado, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: month, unit: mo, data type: number, lower_bound: 1, upper_bound: 12
+- name: mpf, unit: none, data type: number, lower_bound: 0
+- name: muf, unit: umol, data type: number
+- name: muf-but, unit: umol/l/hr, data type: number
+- name: muf-glu, unit: umol/l/hr, data type: number
+- name: muf-po4, unit: umol/l/hr, data type: number
+- name: mv_chl_a, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: mv_chl_b, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: mz, unit: none, data type: number, lower_bound: 0
+- name: n2_fix, unit: ug/m^3/d, data type: number, lower_bound: 0
+- name: nadir, unit: degrees, data type: number
+- name: nanoeukaryote_abun, unit: cell/l, data type: number
+- name: nanoeukaryote_biovol, unit: m^3/l, data type: number
+- name: nanoeukaryote_ug/l, unit: m^3/l, data type: number
+- name: natf, unit: nE/m^2/sr/s, data type: number, lower_bound: 0
+- name: neo, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: nccb, unit: nmol/m^2/hr, data type: number, lower_bound: 0
+- name: ncpb, unit: nmol/m^2/hr, data type: number, lower_bound: 0
+- name: nh4, unit: nmol/m^3, data type: number, lower_bound: 0
+- name: no2, unit: nmol/m^3, data type: number, lower_bound: 0
+- name: no2_no3, unit: nmol/m^3, data type: number, lower_bound: 0
+- name: no3, unit: nmol/m^3, data type: number, lower_bound: 0
+- name: npf, unit: none, data type: number, lower_bound: 0
+- name: npp, unit: mg/m^3/d,ug/l/d, data type: number, lower_bound: 0
+- name: nrb, unit: photoelectrons/usec/shot, data type: number, lower_bound: 0
+- name: oxygen, unit: ml/L, data type: number, lower_bound: 0
+- name: oxygen_saturation, unit: %, data type: number, lower_bound: 0
+- name: oz, unit: dobson, data type: number, lower_bound: 0
+- name: p-457, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: par, unit: uE/cm^2/s, data type: number, lower_bound: 0
+- name: pc, unit: mg/m^3, data type: number, lower_bound: 0
+- name: pco2, unit: uatm, data type: number, lower_bound: 0
+- name: perid, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: pdrift, unit: mbar, data type: number, lower_bound: 0
+- name: ph, unit: none, data type: number, lower_bound: 0, upper_bound: 14
+- name: phaeo, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: phide_a, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: phide_b, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: phide_c, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: phytin_a, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: phytin_b, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: phytin_c, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: phytyl-chl_c, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: phyto_carbon, unit: ug/l, data type: number, lower_bound: 0
+- name: pic, unit: mol/m^3, data type: number, lower_bound: 0
+- name: pim, unit: mg/l, data type: number
+- name: picoeukaryote_abun, unit: cell/l, data type: number
+- name: picoeukaryote_biovol, unit: m^3/l, data type: number
+- name: picoeukaryote_carbon, unit: ug/l, data type: number
+- name: pitch, unit: degrees, data type: number
+- name: pn, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: po4, unit: nmol/m^3, data type: number, lower_bound: 0
+- name: poc, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: pom, unit: mg/l, data type: number
+- name: pon, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: pp, unit: mgC/mgchla/hr, data type: number, lower_bound: 0
+- name: ppc, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: ppc_tcar, unit: none, data type: number, lower_bound: 0
+- name: ppc_tpg, unit: none, data type: number, lower_bound: 0
+- name: ppf, unit: none, data type: number, lower_bound: 0
+- name: pras, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: pressure, unit: dbar, data type: number, lower_bound: 0
+- name: pressure_atm, unit: mbar, data type: number, lower_bound: 0
+- name: prochlorococcus_abun, unit: cell/l, data type: number
+- name: prochlorococcus_biovol, unit: m^3/l, data type: number
+- name: prochlorococcus_carbon, unit: ug/l, data type: number
+- name: psc, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: psc_tcar, unit: none, data type: number, lower_bound: 0
+- name: psd, unit: ul/l, data type: number, lower_bound: 0
+- name: psp, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: psp_tpg, unit: none, data type: number, lower_bound: 0
+- name: pulse_width, unit: seconds, data type: number, lower_bound: 0
+- name: pvel, unit: m/s, data type: number, lower_bound: 0
+- name: pyrophide_a, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: pyrophytin_a, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: pyrophytin_b, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: pyrophytin_c, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: q, unit: sr, data type: number, lower_bound: 0
+- name: qc, unit: none, data type: number
+- name: *_qc, unit: none, data type: number
+- name: r, unit: none, data type: number, lower_bound: 0
+- name: relabundance, unit: %, data type: number
+- name: relaz, unit: degrees, data type: number
+- name: rf, unit: uW/cm^2/nm/sr, data type: number, lower_bound: 0
+- name: rl, unit: 1/sr, data type: number, lower_bound: 0
+- name: roll, unit: degrees, data type: number
+- name: rpi, unit: none, data type: number, lower_bound: 0
+- name: rrs, unit: 1/sr,sr^-1, data type: number, lower_bound: 0
+- name: rtilt, unit: degrees, data type: number
+- name: s_ad, unit: Slope, data type: number, lower_bound: 0
+- name: s_ag, unit: Slope, data type: number, lower_bound: 0
+- name: sal, unit: PSU, data type: number, lower_bound: 0
+- name: saz, unit: degrees, data type: number, lower_bound: 0
+- name: sdy, unit: ddd, data type: number, lower_bound: 0
+- name: second, unit: ss, data type: number, lower_bound: 0, upper_bound: 59
+- name: senz, unit: degrees, data type: number, lower_bound: 0
+- name: sig, unit: mV, data type: number
+- name: sigma_psii, unit: angstrom^2, data type: number, lower_bound: 0
+- name: sigma_theta, unit: kg/m^3, data type: number, lower_bound: 0
+- name: sigmat, unit: kg/m^3, data type: number, lower_bound: 0
+- name: sio4, unit: mmol/m^3, data type: number, lower_bound: 0
+- name: siphn, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: siphx, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: speed_f_w, unit: m/s, data type: number
+- name: spm, unit: mg/L, data type: number, lower_bound: 0
+- name: sst, unit: degreesC, data type: number
+- name: stimf, unit: volts, data type: number, lower_bound: 0
+- name: synechococcus_abun, unit: cell/l, data type: number
+- name: synechococcus_biovol, unit: m^3/l, data type: number
+- name: synechococcus_carbon, unit: ug/l, data type: number
+- name: sz, unit: m, data type: number, lower_bound: 0
+- name: sza, unit: degrees, data type: number, lower_bound: 0
+- name: tacc, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: tacc_tchla, unit: none, data type: number, lower_bound: 0
+- name: tcar, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: tchl, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: tchl_tcar, unit: none, data type: number, lower_bound: 0
+- name: tchla_tpg, unit: none, data type: number, lower_bound: 0
+- name: tdn, unit: mmol/m^3, data type: number, lower_bound: 0
+- name: tdrift, unit: degreesC, data type: number, lower_bound: 0
+- name: tilt, unit: degrees, data type: number
+- name: time, unit: hh:mm:ss, data type: time
+- name: time_processed, unit: hh:mm:ss, data type: time
+- name: tot_chl_a, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: tot_chl_b, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: tot_chl_c, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: tpg, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: trans, unit: %, data type: number, lower_bound: 0
+- name: turbidity, unit: NTU, data type: number
+- name: u, unit: d-1,1/d,d^-1, data type: number
+- name: u_ph, unit: d-1,1/d,d^-1, data type: number
+- name: u_zoo, unit: d-1,1/d,d^-1, data type: number
+- name: urea, unit: mmol/m^3, data type: number, lower_bound: 0
+- name: vauch, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: velnorth, unit: m/s, data type: number
+- name: veleast, unit: m/s, data type: number
+- name: velup, unit: m/s, data type: number
+- name: viola, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+- name: vocair, unit: ppbv, data type: number, lower_bound: 0
+- name: vocair, unit: ppbv, data type: number, lower_bound: 0
+- name: volfilt, unit: L, data type: number, lower_bound: 0
+- name: vsf, unit: 1/m/sr, data type: number, lower_bound: 0
+- name: vsfg, unit: 1/m/sr, data type: number, lower_bound: 0
+- name: vsfp, unit: 1/m/sr, data type: number, lower_bound: 0
+- name: vsfw, unit: 1/m/sr, data type: number, lower_bound: 0
+- name: vsf_angle, unit: degrees, data type: number, lower_bound: 0
+- name: water_depth, unit: m, data type: number, lower_bound: 0
+- name: waveht, unit: m, data type: number, lower_bound: 0
+- name: wavelength, unit: nm, data type: number, lower_bound: 0
+- name: wdir, unit: degrees, data type: number, lower_bound: 0, upper_bound: 360
+- name: wind, unit: m/s, data type: number, lower_bound: 0
+- name: wt, unit: degreesC, data type: number, lower_bound: -4, upper_bound: 40
+- name: wvp, unit: cm, data type: number, lower_bound: 0
+- name: year, unit: yyyy, data type: number, lower_bound: 1975, upper_bound: 2019
+- name: z_90, unit: m, data type: number, lower_bound: 0
+- name: z_dcm, unit: m, data type: number, lower_bound: 0
+- name: z_eu, unit: m, data type: number, lower_bound: 0
+- name: z_mld, unit: m, data type: number, lower_bound: 0
+- name: zea, unit: mg/m^3,ug/l, data type: number, lower_bound: 0
+

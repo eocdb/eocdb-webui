@@ -3,17 +3,18 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to OCDB's documentation!
+Welcome to the EUMETSAT OCDB's documentation!
 ================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   eocdb-intro
    eocdb-webui
    eocdb-api-cli
-
-
+   eocdb-rest
+   eocdb-validation-rules
 
 Indices and tables
 ==================
