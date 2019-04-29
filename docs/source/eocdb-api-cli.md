@@ -18,11 +18,11 @@ EUMETSAT Ocean Colour Database (OCDB) Python Client
 __Config__:
 
 In order to access the database you need to configure the client.
-The default address is ```http://194.76.223.169```.
+The default address is ```http://ocdb.eumetsat.int```.
 
 ```bash
 
-eocdb-cli conf server_url http://194.76.223.169
+eocdb-cli conf server_url http://ocdb.eumetsat.int
 
 ```
 
@@ -35,14 +35,14 @@ api = new_api()
 
 api.config
 
-#Out[11]: {'server_url': 'http://eocdb-server:4000'}
+#Out[11]: {'server_url': 'http://ocdb.eumetsat.int'}
 
 
-api.server_url='http://localhost:4000'
+api.server_url='http://ocdb.eumetsat.int'
 
 api.config
 
-#Out[18]: {'server_url': 'http://localhost:4000'}
+#Out[18]: {'server_url': 'http://ocdb.eumetsat.int'}
 
 
 ```
@@ -284,10 +284,3 @@ __Get License__
 eocdb-cli lic
 
 ```
-
-
-## Development
-
-### Testing
-
-    $ pytest --cov=eocdb_client --cov-report html

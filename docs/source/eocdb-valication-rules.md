@@ -1,7 +1,13 @@
 ## OCDB Validation Rules
 
+The OCDB database system applied validation rules on data submission. These rules are based on
+the NASA Seabass rules, but can have differences. The rules apply on the header (meta data) if
+a Seabass file as well as on records.
 
 ### Header
+
+The header rules essentially check the existence of a header field. If a header field is required
+an error is reported. An optional or obsolete field is tagged with a warning in the data validation report.
 
 - field: investigators: field_required
 - field: affiliations: field_required
@@ -76,6 +82,9 @@ s- field: water_column_layer: field_obsolete
 - field: mass_to_charge: field_obsolete
 
 ## Records
+
+Each record is checked against the below rules. The majority of teh rules encompass
+checks on valid units, data type, and bounds if defined.
 
 - name: a, unit: 1/m, data type: number, lower_bound: 0
 - name: a*ph, unit: m^2/mg, data type: number, lower_bound: -1e-05

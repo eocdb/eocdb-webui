@@ -10,7 +10,8 @@ export function downloadStoreFiles(apiServerUrl: string, datasetQuery: DatasetQu
 }
 
 
-export function downloadStoreFilesByIds(apiServerUrl: string, selectedDatasets: string[], downloadDocs: boolean)
+export function downloadStoreFilesByIds(apiServerUrl: string, selectedDatasets: string[], downloadDocs: boolean,
+                                        fileName?: string)
     : Promise<Blob> {
     const queryComponents = {id_list: selectedDatasets, docs: downloadDocs};
 
@@ -23,5 +24,6 @@ export function downloadStoreFilesByIds(apiServerUrl: string, selectedDatasets: 
             },
             method: 'POST',
             body: JSON.stringify(queryComponents),
-        });
+        },
+        fileName);
 }

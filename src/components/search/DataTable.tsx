@@ -181,7 +181,7 @@ export interface DataTableProps extends WithStyles<typeof styles> {
     startLoading: () => void;
     startDownloading: () => void;
 
-    downloadDatasets: (selectedDatasets: string[]) => void;
+    downloadDatasets: () => void;
     downloading: boolean;
 
     updatePlotState: (plotState: PlotState) => void;
@@ -288,9 +288,9 @@ class DataTable extends React.Component<DataTableProps> {
         return this.props.selectedDatasets.indexOf(id) !== -1;
     };
 
-    handleDownloadClick = (selectedDatasets: string[]) => {
+    handleDownloadClick = () => {
         this.props.startDownloading();
-        this.props.downloadDatasets(selectedDatasets);
+        this.props.downloadDatasets();
     };
 
     render() {
@@ -325,7 +325,7 @@ class DataTable extends React.Component<DataTableProps> {
                             key={"btn_download33"}
                             className={classes.button}
                             disabled={numSelected == 0}
-                            onClick={() => this.handleDownloadClick(selectedDatasets)}
+                            onClick={() => this.handleDownloadClick()}
                     >
                         Download
                         <Icon className={classes.rightIcon}>archive</Icon>

@@ -15,10 +15,3 @@ Welcome to the EUMETSAT OCDB's documentation!
    eocdb-api-cli
    eocdb-rest
    eocdb-validation-rules
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
