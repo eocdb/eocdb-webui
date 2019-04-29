@@ -13,5 +13,5 @@ Welcome to the EUMETSAT OCDB Database System!
    eocdb-intro
    eocdb-webui
    eocdb-api-cli
+   eocdb-valication-rules
    eocdb-rest
-   eocdb-validation-rules
