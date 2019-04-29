@@ -118,7 +118,6 @@ interface DashboardProps extends WithStyles<typeof styles> {
     openLoginDialog: () => void;
     closeLoginDialog: () => void;
     loginUser: (name: string, password: string) => void;
-    openRegistrationDialog: () => void;
 
     configDialogOpen: boolean;
     openConfigDialog: () => void;
@@ -138,16 +137,10 @@ interface DashboardProps extends WithStyles<typeof styles> {
 
     // LoginDialog
 
-    loginDialogProps: {
-        open: boolean;
-        userName: string;
-        userLoginError: string | null;
-        userLoginInProgress: boolean;
-
-        loginUser: (name: string, password: string) => void;
-        openRegistrationDialog: () => void;
-        closeLoginDialog: () => void;
-    }
+    userName: string;
+    userLoginError: string | null;
+    userLoginInProgress: boolean;
+    openRegistrationDialog: () => void;
 }
 
 
@@ -212,8 +205,15 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             <div className={classes.root}>
                 <CssBaseline/>
                 <LoginDialog
-                    {...this.props.loginDialogProps}
+                    open={this.props.loginDialogOpen}
+                    userName={this.props.userName}
+                    userLoginError={this.props.userLoginError}
+                    userLoginInProgress={this.props.userLoginInProgress}
+                    openRegistrationDialog={this.props.openRegistrationDialog}
+                    closeLoginDialog={this.props.closeLoginDialog}
+                    loginUser={this.props.loginUser}
                 />
+
                 <ConfigDialog open={this.props.configDialogOpen}
                               handleClose={this.handleConfigClose}
                               apiServerUrlChange={this.handleApiServerUrlChange}
