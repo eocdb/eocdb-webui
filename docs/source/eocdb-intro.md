@@ -1,2 +1,3 @@
-# The EUMESAT Ocean Colour Database
+# eocdb-intro
+
 
