@@ -2,7 +2,6 @@
 
 EUMETSAT Ocean Colour Database (OCDB) Python Client
 
-
 ## Installation
 
 ```bash
