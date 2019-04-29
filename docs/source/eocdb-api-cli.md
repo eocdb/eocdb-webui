@@ -1,4 +1,4 @@
-# eocdb-client
+# The OCDB Command Line Client and Python API
 
 EUMETSAT Ocean Colour Database (OCDB) Python Client
 
