@@ -20,8 +20,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'OCDB'
-copyright = '2019, helge dzierzon'
-author = 'helge dzierzon'
+copyright = '2019, Copernicus'
+author = 'Copernicus'
 
 # The short X.Y version
 version = ''
@@ -134,7 +134,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'OCDB.tex', 'OCDB Documentation',
-     'helge dzierzon', 'manual'),
+     'Copernicus', 'manual'),
 ]
 
 
