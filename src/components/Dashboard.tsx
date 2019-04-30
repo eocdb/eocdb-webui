@@ -140,6 +140,8 @@ interface DashboardProps extends WithStyles<typeof styles> {
     userName: string;
     userLoginError: string | null;
     userLoginInProgress: boolean;
+
+    logoutUser: () => void;
     openRegistrationDialog: () => void;
 }
 
@@ -212,6 +214,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                     openRegistrationDialog={this.props.openRegistrationDialog}
                     closeLoginDialog={this.props.closeLoginDialog}
                     loginUser={this.props.loginUser}
+                    logoutUser={this.props.logoutUser}
                 />
 
                 <ConfigDialog open={this.props.configDialogOpen}

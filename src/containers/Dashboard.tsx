@@ -11,7 +11,7 @@ import {
 } from '../actions/dashboardActions';
 import {configServer} from '../actions/configActions'
 import Dashboard from '../components/Dashboard';
-import {loginUser} from '../actions/userActions';
+import { loginUser, logoutUser } from '../actions/userActions';
 import {getSubmissionsForUser} from "../actions/submissionActions";
 import { searchDatasets, updateDatasetQuery, updateSearchHistory } from "../actions/findActions";
 
@@ -41,6 +41,7 @@ const mapDispatchToProps = {
     closeConfigDialog,
 
     loginUser,
+    logoutUser,
     openRegistrationDialog,
 
     updateSubmissions: getSubmissionsForUser,
