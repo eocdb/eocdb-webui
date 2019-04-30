@@ -180,7 +180,7 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
 
     startDownloading: () => void;
 
-    downloadDatasets: (selectedDatasets: string[]) => void;
+    downloadDatasets: () => void;
     downloading: boolean;
 
     updatePlotState: (plotState: PlotState) => void;

@@ -3,22 +3,21 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to the EUMETSAT OCDB's documentation!
+Welcome to the Copernicus OCDB Database System (OCDB)!
 ================================
+
+The Copernicus OCDB_
+
+.. _OCDB: http://ocdb.eumetsat.int
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   eocdb-intro
+   eocdb-data-access-policy
    eocdb-webui
    eocdb-api-cli
+   eocdb-valication-rules
    eocdb-rest
-   eocdb-validation-rules
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. image:: static/logos.png

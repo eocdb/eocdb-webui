@@ -1,13 +1,19 @@
 [![Build Status](https://travis-ci.org/bcdev/eocdb-webui.svg?branch=master)](https://travis-ci.org/bcdev/eocdb-webui)
 [![Docker Repository on Quay](https://quay.io/repository/bcdev/eocdb-webui/status "Docker Repository on Quay")](https://quay.io/repository/bcdev/eocdb-webui)
+[![Documentation Status](https://readthedocs.org/projects/eocdb/badge/?version=latest)](https://eocdb.readthedocs.io/en/latest/?badge=latest)
 
-[EUMETSAT DATABASE](http://eocdb.readthedocs.org)
+[COPERNICUS OCDB DATABASE](http://eocdb.readthedocs.org)
 
-# EUMETSAT Ocean Colour Database
+# COPERNICUS Ocean Colour Database / WebUI
 
-## Install
+The COPERNICUS Ocean Colour Database stores in-situ data collected on ocean ship cruises. The aim is to 
+provide an environment that follows FAIR principles (findable, accessible, interoperable, reusable).  
 
-The WEBUI uses the fowllowing technologies:
+## Installation
+
+## Custom Installation
+
+The WebUI uses the following technologies:
 
 - React
 - Typescript
@@ -15,9 +21,8 @@ The WEBUI uses the fowllowing technologies:
 - yarn
 - leaflet
 
-
-To install a development version install the above dependencies and execute the following steps that
-will install all dependencies and start a dev server on port 3000:
+To install a development version, you will need to install git, nodejs and yarn and execute the following steps that
+will install all dependencies and start a development server on port 3000:
 
 ```bash
 
@@ -28,30 +33,26 @@ yarn start
 
 ``` 
 
-
 For installing a production version we encourage you to use our docker container. The
 container exposes port 3000. It is up to you to map it to a different port.
 
 
 ```bash
-
-docker run https://quay.io/bcdev/eocdb-webui:latest
-
+docker run -p 3000:3000 quay.io/bcdev/eocdb-webui:latest
 ``` 
 
 
 We also provide a repository that allows to install the whole OCDB infrastructure including
-the backend server, mongo DB, and this WEBUI. Running all services will require docker as
-well as docker-compose. The build process will copy the WEBUI static files into the server
-image. 'up -d' will start two containers: One mongodb databse server and teh backend server which also
-serves the WEBUI site. 
+the backend server, Mongo DB, and this WebUI. Running all services will require docker as
+well as docker-compose to be installed on your system. The build process will copy the WEBUI 
+static files into the server image. 'up -d' will start two containers: One mongodb database server 
+and the backend server which serves the RESTful service as well as the WebUI site. 
 
 ```bash
-
-git clone https://github.com/bcdev/eocdb-services/
+git clone https://github.com/bcdev/eocdb-services
+cd eocdb-services
 docker-compose build
 docker-compose up -d
-
 ``` 
 
 The following example shows the running server on [ocdb.eumetsat.int](https://ocdb.eumetsat.int). 
@@ -66,6 +67,5 @@ $ ./docker-compose ps
     eocdb-services_eocdb-server_1   /bin/bash -c source activa ...   Up (healthy)   0.0.0.0:80->4000/tcp
 
 ```
-
 
 

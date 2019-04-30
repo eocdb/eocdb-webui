@@ -34,8 +34,11 @@ export function callApi(endpointUrl: string, queryComponents?: QueryComponent[],
         });
 }
 
-function download(blob: Blob){
-    const fileName: string = 'download.zip';
+function download(blob: Blob, fileName?: string){
+    if (!fileName) {
+        const dtt = new Date(Date.now());
+        fileName = 'insitu_' + dtt.toDateString() + '.zip';
+    }
     const objectUrl: string = URL.createObjectURL(blob);
     const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
 
@@ -49,10 +52,11 @@ function download(blob: Blob){
 }
 
 
-export function callBlobApi(endpointUrl: string, queryComponents?: QueryComponent[], init?: RequestInit): Promise<Blob> {
+export function callBlobApi(endpointUrl: string, queryComponents?: QueryComponent[], init?: RequestInit, fileName?: string)
+    : Promise<Blob> {
     return callApi(endpointUrl, queryComponents, init).then(response => response.blob())
         .then((blob: Blob) => {
-            download(blob);
+            download(blob, fileName);
 
             return blob;
         });
