@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to the EUMETSAT OCDB Database System!
+Welcome to the Copernicus OCDB Database System (OCDB)!
 ================================
 
-The EUMETSAT OCDB_
+The Copernicus OCDB_
 
 .. _OCDB: http://ocdb.eumetsat.int
 
