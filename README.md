@@ -5,9 +5,12 @@
 
 # EUMETSAT Ocean Colour Database
 
-## Install
+The EUMETSAT Ocean Colour Database stores in-situ data collected on ocean ship cruises. The aim is to 
+provide an environment that follows FAIR principles (findable, accessible, interoperable, reusable).  
 
-The WEBUI uses the fowllowing technologies:
+## Installation
+
+The WEBUI uses the following technologies:
 
 - React
 - Typescript
@@ -16,8 +19,8 @@ The WEBUI uses the fowllowing technologies:
 - leaflet
 
 
-To install a development version install the above dependencies and execute the following steps that
-will install all dependencies and start a dev server on port 3000:
+To install a development version, you will need to install nodejs and yarn and execute the following steps that
+will install all dependencies and start a development server on port 3000:
 
 ```bash
 
@@ -27,7 +30,6 @@ yarn install
 yarn start
 
 ``` 
-
 
 For installing a production version we encourage you to use our docker container. The
 container exposes port 3000. It is up to you to map it to a different port.
@@ -43,7 +45,7 @@ docker run https://quay.io/bcdev/eocdb-webui:latest
 We also provide a repository that allows to install the whole OCDB infrastructure including
 the backend server, mongo DB, and this WEBUI. Running all services will require docker as
 well as docker-compose. The build process will copy the WEBUI static files into the server
-image. 'up -d' will start two containers: One mongodb databse server and teh backend server which also
+image. 'up -d' will start two containers: One mongodb database server and teh backend server which also
 serves the WEBUI site. 
 
 ```bash
