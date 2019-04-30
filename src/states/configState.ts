@@ -1,4 +1,4 @@
-import { DEFAULT_API_SERVER_URL } from "../api/config";
+import { SERVER_CONFIG } from "../api/config";
 
 export interface ConfigState {
     apiServerUrl: string;
@@ -6,6 +6,6 @@ export interface ConfigState {
 
 export function newConfigState() {
     return {
-        apiServerUrl: DEFAULT_API_SERVER_URL,
+        apiServerUrl: SERVER_CONFIG,
     }
 }

@@ -171,6 +171,10 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     openPlotDialog: () => void;
     closePlotDialog: () => void;
 
+    termsDialogOpen: boolean;
+    openTermsDialog: () => void;
+    closeTermsDialog: () => void;
+
     updateDataset: (datasetId: string) => void;
     dataset: Dataset;
 
@@ -457,6 +461,10 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             plotDialogOpen={this.props.plotDialogOpen}
                             openPlotDialog={this.props.openPlotDialog}
                             closePlotDialog={this.props.closePlotDialog}
+
+                            termsDialogOpen={this.props.termsDialogOpen}
+                            openTermsDialog={this.props.openTermsDialog}
+                            closeTermsDialog={this.props.closeTermsDialog}
 
                             updateDataset={this.props.updateDataset}
                             dataset={this.props.dataset}

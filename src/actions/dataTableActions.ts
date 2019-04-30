@@ -255,6 +255,31 @@ export function updatePlotData(plotData: PlotRecord[]): UpdatePlotData {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+export const OPEN_TERMS_DIALOG = 'OPEN_TERMS_DIALOG';
+export type OPEN_TERMS_DIALOG = typeof OPEN_TERMS_DIALOG;
+
+export interface OpenTermsDialog {
+    type: OPEN_TERMS_DIALOG;
+}
+
+export function openTermsDialog(): OpenTermsDialog {
+    return {type: OPEN_TERMS_DIALOG};
+}
+
+export const CLOSE_TERMS_DIALOG = 'CLOSE_TERMS_DIALOG';
+export type CLOSE_TERMS_DIALOG = typeof CLOSE_TERMS_DIALOG;
+
+export interface CloseTermsDialog {
+    type: CLOSE_TERMS_DIALOG;
+}
+
+export function closeTermsDialog(): CloseTermsDialog {
+    return {type: CLOSE_TERMS_DIALOG};
+}
+
+
+
 export type DataTableAction = UpdateDataPage
     | UpdateDataRowsPerPage
     | OpenMetaInfoDialog
@@ -263,6 +288,8 @@ export type DataTableAction = UpdateDataPage
     | CloseMetaInfoDialog
     | OpenPlotDialog
     | ClosePlotDialog
+    | OpenTermsDialog
+    | CloseTermsDialog
     | UpdateDataset
     | UpdateDownloadDocs
     | UpdateSelectedDatasets

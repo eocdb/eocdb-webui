@@ -1,4 +1,4 @@
-# OCDB Download Terms and Conditions
+const TERMS = `
 
 ## Notice to users
 
@@ -34,3 +34,6 @@ However if the OCDB data are a principal component of the paper then co-authorsh
 If you accept the above conditions, please click the "Accept" button below to download the ZIP file. 
 If you do not agree with the above conditions, click "Do Not Accept" to return to the data plots.
 
+`;
+
+export default TERMS;
