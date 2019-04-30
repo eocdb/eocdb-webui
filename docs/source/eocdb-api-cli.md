@@ -4,7 +4,7 @@ EUMETSAT Ocean Colour Database (OCDB) Python Client
 
 ## Installation
 
-```bash
+```console
     git clone https://github.com/bcdev/eocdb-client
     cd eocdb-client
     conda env create
@@ -13,24 +13,19 @@ EUMETSAT Ocean Colour Database (OCDB) Python Client
 ```
 
 
-## Getting Started
-
-__Config__:
+## Configure
 
 In order to access the database you need to configure the RESTful API server address.
 The default address is ```http://ocdb.eumetsat.int```.
 
 
 cli:
-```bash
-
+```console
 eocdb-cli conf server_url http://ocdb.eumetsat.int
-
 ```
 
 python:
 ```python
-
 from eocdb_client.api.OCDBApi import new_api
 
 api = new_api()
@@ -39,11 +34,10 @@ api.config
 api.set
 
 #Out[11]: {'server_url': 'http://ocdb.eumetsat.int'}
-
 ```
 
 
-__Search Database__:
+## Search Database
 
 
 The database can be searched using the so-called Lucene syntax. The Lucene
@@ -53,18 +47,14 @@ chaining of queries, and using wild cards.
 The first example searches for instance attempts to find data files
 that include the name Colleen in the investigators meta field.
 
-bash:
-```bash
-
+console:
+```console
 eocdb-cli ds find --expr "investigators: *Colleen*"
-
 ```
 
 python:
 ```python
-
 api.find_datasets(investigators="*Colleen*")
-
 ```
 
 Possible fields are:
@@ -92,17 +82,13 @@ a dummy user that should be present in the EUMETSAT production database. Scott
 does not have any privileges.
 
 cli:
-```bash
-
+```console
 eocdb-cli user login --user scott --password tiger
-
 ```
 
 python:
 ```python
-
 api.login_user(username='scott', password='tiger')
-
 ```
 
 
@@ -112,17 +98,13 @@ To add a user, specify the required user information
 
 
 cli:
-```bash
-
+```console
 eocdb-cli user add -u admin -p admin -fn Submit -ln Submit -em jj -ph hh -r admin
-
 ```
 
 python:
 ```python
-
 api.add_user(username='<user_name>', password='<passwd>', roles=['<role1>, <role2>'])
-
 ```
 
 
@@ -130,17 +112,13 @@ __Get User Information__:
 
 
 cli:
-```bash
-
+```console
 eocdb-cli user get --user scott --api-key <your key>
-
 ```
 
 python:
 ```python
-
 api.get_user(name=<user_name>)
-
 ```
 
 
@@ -148,17 +126,13 @@ __Delete a User__:
 
 
 cli:
-```bash
-
+```console
 eocdb-cli user delete --user scott --api-key <your key>
-
 ```
 
 python:
 ```python
-
 api.delete_user(name=<user_name>)
-
 ```
 
 
@@ -166,21 +140,17 @@ __Update an Existing User__:
 
 
 cli:
-```bash
-
+```console
 eocdb-cli user update --key last_name --value <your value>
-
 ```
 
 python:
 ```python
-
 from eocdb_client.api.OCDBApi import new_api
 
 api = new_api()
 
 api.update_user(name=<user_name>, key=<key>, value=<value>)
-
 ```
 
 
@@ -190,17 +160,13 @@ __Get Submission__:
 
 
 cli:
-```bash
-
+```console
 eocdb-cli sbm get --submission-id <submission-id>
-
 ```
 
 python:
 ```python
-
 api.get_submission(<submission-id>)
-
 ```
 
 
@@ -208,17 +174,13 @@ __Get Submissions for a specific User__:
 
 
 cli:
-```bash
-
+```console
 eocdb-cli sbm user --user-id <user-id>
-
 ```
 
 python:
 ```python
-
 api.get_submissions_for_user(<user-id>)
-
 ```
 
 
@@ -226,17 +188,13 @@ __Delete Submission__:
 
 
 cli:
-```bash
-
+```console
 eocdb-cli sbm delete --submission-id <submission-id>
-
 ```
 
 python:
 ```python
-
 api.delete_submission(<submission-id>)
-
 ```
 
 
@@ -257,18 +215,14 @@ The following list shows the different statuses and the impact changing them:
 - PAUSED: The user pauses the submission. This indicates that the admin shall not publish or process the data
 
 cli:
-```bash
-
+```console
 eocdb-cli sbm status --submission-id <submission-id> --status <status>
-
 ```
 
 
 python
 ```python
-
 api.update_submission_status(<submission-id>, <status>)
-
 ```
 
 
@@ -279,18 +233,14 @@ This command will download a single submission file. Please be aware that the ve
 status. Do not use this feature to download data.
 
 cli:
-```bash
-
+```console
 eocdb-cli sbm download --submission-id <submission-id> --index <index>
-
 ```
 
 
 python
 ```python
-
 api.download_submission_file(<submission-id>, <index>)
-
 ```
 
 
@@ -302,18 +252,14 @@ replace both documents and measurements.
 
 
 cli
-```bash
-
+```console
 eocdb-cli sbm upload --submission-id <submission-id> --index <index> --file <file>
-
 ```
 
 
 python
 ```python
-
 api.upload_submission_file(<submission-id>, <index>, <file>)
-
 ```
 
 
@@ -322,8 +268,6 @@ api.upload_submission_file(<submission-id>, <index>, <file>)
 __Get License__
 
 
-```bash
-
+```console
 eocdb-cli lic
-
 ```
