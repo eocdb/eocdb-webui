@@ -3,15 +3,18 @@ import thunk from "redux-thunk";
 import * as fetchMock from 'fetch-mock'
 
 import {
-    searchDatasets,
     START_LOADING,
-    startLoading,
     STOP_LOADING,
+    UPDATE_DATASET_QUERY,
+    UPDATE_FOUND_DATASETS,
+    UPDATE_SEARCH_HISTORY,
+    startLoading,
+    searchDatasets,
     stopLoading,
-    UPDATE_DATASET_QUERY, UPDATE_FOUND_DATASETS, UPDATE_SEARCH_HISTORY,
-    updateDatasetQuery, updateFoundDatasets
+    updateDatasetQuery,
+    updateFoundDatasets
 } from "./findActions";
-import { DEFAULT_API_SERVER_URL } from "../api/config";
+import { SERVER_CONFIG } from "../api/config";
 import { LatLng } from "leaflet";
 
 
@@ -21,7 +24,7 @@ const mockStore = configureMockStore(middlewares);
 const EUMETSAT_LAT_LNG = new LatLng(49.858996564, 8.622830842);
 
 const initState = {
-    configState: {apiServerUrl: DEFAULT_API_SERVER_URL},
+    configState: {apiServerUrl: SERVER_CONFIG},
     searchFormState: {
         datasetQuery: {
             startDate: "1980-01-01",
@@ -134,7 +137,7 @@ describe('searchFormActions', () => {
 
     it('Should fetch datasets', () => {
         const queryComponents = '?start_time=1980-01-01&end_time=2020-01-01&offset=1&count=5&geojson=true';
-        const apiServerUrl = DEFAULT_API_SERVER_URL + '/datasets' + queryComponents;
+        const apiServerUrl = SERVER_CONFIG + '/datasets' + queryComponents;
 
         fetchMock.getOnce(apiServerUrl, {
             body: {},
@@ -146,7 +149,7 @@ describe('searchFormActions', () => {
             {searchHistory: [], type: UPDATE_SEARCH_HISTORY},
             {loading: false, type: STOP_LOADING},
             {messageText: "Data Loaded", messageType: "success", type: "POST_MESSAGE"}
-            ];
+        ];
 
         const store = mockStore(initState);
 

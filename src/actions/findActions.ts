@@ -97,7 +97,7 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
         datasetQuery = {...datasetQuery, region: selectedBounds.toBBoxString()};
     }
 
-    if (!state.sessionState.user){
+    if (!state.sessionState.user) {
         datasetQuery = {...datasetQuery, status: 'PUBLISHED'};
     }
 
@@ -161,10 +161,9 @@ export function searchDatasets() {
         return api.findDatasets(apiServerUrl, datasetQuery, userId)
             .then((foundDatasets: QueryResult) => {
                 dispatch(updateFoundDatasets(foundDatasets));
-                if (foundDatasets.total_count == 0){
+                if (foundDatasets.total_count == 0) {
                     dispatch(postMessage('warning', 'Empty Result'));
-                }
-                else {
+                } else {
                     dispatch(postMessage('success', foundDatasets.total_count + ' Datasets Found'));
                 }
             })
@@ -211,6 +210,19 @@ export function updateSaveSearchTitle(saveSearchTitle: string): UpdateSaveSearch
     };
 }
 
+export const UPDATE_TERMS = 'UPDATE_TERMS';
+export type UPDATE_TERMS = typeof UPDATE_TERMS ;
+
+
+export interface UpdateTerms {
+    type: UPDATE_TERMS;
+    terms: string;
+}
+
+export function updateTerms(terms: string): UpdateTerms {
+    return {type: UPDATE_TERMS, terms};
+}
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -221,4 +233,5 @@ export type SearchFormAction = UpdateDatasetQuery
     | UpdateSelectedSearchHistory
     | UpdateSaveSearchTitle
     | StartLoading
-    | StopLoading;
+    | StopLoading
+    | UpdateTerms;

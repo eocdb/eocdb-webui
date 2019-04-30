@@ -23,13 +23,27 @@ import {
 import {
     closeManualBBoxDialog,
     openManualBBoxDialog,
-    updateManualBBox, updateManualBBoxEast, updateManualBBoxNorth, updateManualBBoxSouth, updateManualBBoxWest,
+    updateManualBBox,
+    updateManualBBoxEast,
+    updateManualBBoxNorth,
+    updateManualBBoxSouth,
+    updateManualBBoxWest,
     updateSelectedRegions
 } from "../../actions/searchMapActions";
 import {
-    closeMetaInfoDialog, closePlotDialog, downloadDatasets, openMetaInfoDialog, openPlotDialog, startDownloading,
+    closeMetaInfoDialog,
+    closePlotDialog, closeTermsDialog,
+    downloadDatasets,
+    openMetaInfoDialog,
+    openPlotDialog,
+    openTermsDialog,
+    startDownloading,
     updateDataPage,
-    updateDataRowsPerPage, updateDataset, updateDownloadDocs, updatePlotData, updatePlotState,
+    updateDataRowsPerPage,
+    updateDataset,
+    updateDownloadDocs,
+    updatePlotData,
+    updatePlotState,
     updateSelectedDatasets
 } from "../../actions/dataTableActions";
 
@@ -80,6 +94,7 @@ const mapStateToProps = (state: AppState) => {
         helpMetaInfoDialogOpen: state.dashboardState.helpMetaInfoDialogOpen,
         helpMetaInfoKey: state.dashboardState.helpMetaInfoKey,
         plotDialogOpen: state.dataTableState.plotDialogOpen,
+        termsDialogOpen: state.dataTableState.termsDialogOpen,
 
         data: state.searchFormState.foundDatasets,
         dataset: state.dataTableState.dataset,
@@ -147,6 +162,8 @@ const mapDispatchToProps = {
     closeHelpMetaInfoDialog,
     openPlotDialog,
     closePlotDialog,
+    openTermsDialog,
+    closeTermsDialog,
     updateDataset,
     updateDownloadDocs,
     downloadDatasets,

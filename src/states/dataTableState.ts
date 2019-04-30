@@ -20,6 +20,7 @@ export interface DataTableState {
 
     metaInfoDialogOpen: boolean;
     plotDialogOpen: boolean;
+    termsDialogOpen: boolean;
 
     dataset: Dataset;
 
@@ -41,6 +42,7 @@ export function newDataTableState() {
 
         metaInfoDialogOpen: false,
         plotDialogOpen: false,
+        termsDialogOpen: false,
         downloadDocs: false,
 
         dataset: {

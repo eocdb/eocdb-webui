@@ -31,6 +31,7 @@ export function closeLinksContentDialog(): CloseLinksContentDialog  {
 export const UPDATE_LINKS_CONTENT = 'UPDATE_LINKS_CONTENT ';
 export type UPDATE_LINKS_CONTENT  = typeof UPDATE_LINKS_CONTENT ;
 
+
 export interface UpdateLinksContent {
     type: UPDATE_LINKS_CONTENT;
     linksContent: string;

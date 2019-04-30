@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography/Typography';
 import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
-import ReactMarkdown from"markdown-to-jsx";
+import ReactMarkdown from "markdown-to-jsx";
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles(

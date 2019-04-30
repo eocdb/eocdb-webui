@@ -27,6 +27,8 @@ import green from "@material-ui/core/colors/green";
 import { PlotRecord, PlotState } from "../../states/dataTableState";
 import PlotDialog from "./PlotDialog";
 import { geoJSON, LatLng, LatLngBounds } from "leaflet";
+import { TermsDialog } from "./TermsDialog";
+
 
 const path = require('path');
 
@@ -168,6 +170,10 @@ export interface DataTableProps extends WithStyles<typeof styles> {
     openPlotDialog: () => void;
     closePlotDialog: () => void;
 
+    termsDialogOpen: boolean;
+    openTermsDialog: () => void;
+    closeTermsDialog: () => void;
+
     updateDataset: (datasetId: string) => void;
     dataset: Dataset;
 
@@ -291,6 +297,7 @@ class DataTable extends React.Component<DataTableProps> {
     handleDownloadClick = () => {
         this.props.startDownloading();
         this.props.downloadDatasets();
+        this.props.closeTermsDialog();
     };
 
     render() {
@@ -319,13 +326,18 @@ class DataTable extends React.Component<DataTableProps> {
                     plotData={this.props.plotData}
                     updatePlotData={this.props.updatePlotData}
                 />
+                <TermsDialog
+                    open={this.props.termsDialogOpen}
+                    onDisagree={this.props.closeTermsDialog}
+                    onAgree={this.handleDownloadClick}
+                />
                 <Grid container justify={"flex-end"}>
                     <Button variant={"contained"}
                             color={"primary"}
                             key={"btn_download33"}
                             className={classes.button}
                             disabled={numSelected == 0}
-                            onClick={() => this.handleDownloadClick()}
+                            onClick={() => this.props.openTermsDialog()}
                     >
                         Download
                         <Icon className={classes.rightIcon}>archive</Icon>

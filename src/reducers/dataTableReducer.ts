@@ -12,7 +12,10 @@ import {
     UPDATE_SELECTED_DATASETS,
     STOP_DOWNLOADING,
     START_DOWNLOADING,
-    UPDATE_PLOT_STATE, UPDATE_PLOT_DATA,
+    UPDATE_PLOT_STATE,
+    UPDATE_PLOT_DATA,
+    OPEN_TERMS_DIALOG,
+    CLOSE_TERMS_DIALOG,
 } from "../actions/dataTableActions";
 
 
@@ -40,6 +43,12 @@ export function dataTableReducer(state: DataTableState, action: DataTableAction)
         }
         case CLOSE_PLOT_DIALOG: {
             return {...state, plotDialogOpen: false};
+        }
+        case OPEN_TERMS_DIALOG: {
+            return {...state, termsDialogOpen: true};
+        }
+        case CLOSE_TERMS_DIALOG: {
+            return {...state, termsDialogOpen: false};
         }
         case UPDATE_DATASET: {
             return {...state, dataset: action.dataset}
