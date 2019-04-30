@@ -19,3 +19,5 @@ The EUMETSAT OCDB_
    eocdb-api-cli
    eocdb-valication-rules
    eocdb-rest
+
+.. image:: static/logos.png

@@ -1,10 +1,10 @@
 # The OCDB Command Line Client and Python API
 
-EUMETSAT Ocean Colour Database (OCDB) Python Client
+Copernicus Ocean Colour Database (OCDB) Python Client
 
 ## Installation
 
-```console
+```bash
     git clone https://github.com/bcdev/eocdb-client
     cd eocdb-client
     conda env create
@@ -20,7 +20,7 @@ The default address is ```http://ocdb.eumetsat.int```.
 
 
 cli:
-```console
+```bash
 eocdb-cli conf server_url http://ocdb.eumetsat.int
 ```
 
@@ -47,8 +47,8 @@ chaining of queries, and using wild cards.
 The first example searches for instance attempts to find data files
 that include the name Colleen in the investigators meta field.
 
-console:
-```console
+bash:
+```bash
 eocdb-cli ds find --expr "investigators: *Colleen*"
 ```
 
@@ -82,7 +82,7 @@ a dummy user that should be present in the EUMETSAT production database. Scott
 does not have any privileges.
 
 cli:
-```console
+```bash
 eocdb-cli user login --user scott --password tiger
 ```
 
@@ -98,7 +98,7 @@ To add a user, specify the required user information
 
 
 cli:
-```console
+```bash
 eocdb-cli user add -u admin -p admin -fn Submit -ln Submit -em jj -ph hh -r admin
 ```
 
@@ -112,7 +112,7 @@ __Get User Information__:
 
 
 cli:
-```console
+```bash
 eocdb-cli user get --user scott --api-key <your key>
 ```
 
@@ -126,7 +126,7 @@ __Delete a User__:
 
 
 cli:
-```console
+```bash
 eocdb-cli user delete --user scott --api-key <your key>
 ```
 
@@ -140,7 +140,7 @@ __Update an Existing User__:
 
 
 cli:
-```console
+```bash
 eocdb-cli user update --key last_name --value <your value>
 ```
 
@@ -160,7 +160,7 @@ __Get Submission__:
 
 
 cli:
-```console
+```bash
 eocdb-cli sbm get --submission-id <submission-id>
 ```
 
@@ -174,7 +174,7 @@ __Get Submissions for a specific User__:
 
 
 cli:
-```console
+```bash
 eocdb-cli sbm user --user-id <user-id>
 ```
 
@@ -188,7 +188,7 @@ __Delete Submission__:
 
 
 cli:
-```console
+```bash
 eocdb-cli sbm delete --submission-id <submission-id>
 ```
 
@@ -215,7 +215,7 @@ The following list shows the different statuses and the impact changing them:
 - PAUSED: The user pauses the submission. This indicates that the admin shall not publish or process the data
 
 cli:
-```console
+```bash
 eocdb-cli sbm status --submission-id <submission-id> --status <status>
 ```
 
@@ -233,7 +233,7 @@ This command will download a single submission file. Please be aware that the ve
 status. Do not use this feature to download data.
 
 cli:
-```console
+```bash
 eocdb-cli sbm download --submission-id <submission-id> --index <index>
 ```
 
@@ -252,7 +252,7 @@ replace both documents and measurements.
 
 
 cli
-```console
+```bash
 eocdb-cli sbm upload --submission-id <submission-id> --index <index> --file <file>
 ```
 
@@ -268,6 +268,6 @@ api.upload_submission_file(<submission-id>, <index>, <file>)
 __Get License__
 
 
-```console
+```bash
 eocdb-cli lic
 ```
