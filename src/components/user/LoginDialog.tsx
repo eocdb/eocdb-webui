@@ -177,10 +177,10 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
                     <Button onClick={this.handleCancel} color="primary">
                         Cancel
                     </Button>
-                    <Button disabled={this.props.userName !== ''} onClick={this.handleLogout} color="primary">
+                    <Button disabled={this.props.userName === ''} onClick={this.handleLogout} color="primary">
                         Logout
                     </Button>
-                    <Button disabled={this.props.userName === ''}  onClick={this.handleLogin} color="primary">
+                    <Button disabled={this.props.userName !== ''}  onClick={this.handleLogin} color="primary">
                         Login
                     </Button>
                     <Button onClick={this.handleRegister} color="secondary">
