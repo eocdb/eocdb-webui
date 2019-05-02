@@ -44,6 +44,8 @@ interface LoginDialogProps extends WithStyles<typeof styles> {
     userLoginInProgress: boolean;
 
     loginUser: (name: string, password: string) => void;
+    logoutUser: () => void;
+
     openRegistrationDialog: () => void;
     closeLoginDialog: () => void;
 }
@@ -62,21 +64,36 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
         password: '',
     };
 
-    // static getDerivedStateFromProps(props: LoginDialogProps, state: LoginDialogState): LoginDialogState {
-    //     console.log(props);
-    //     return {...state, userName: props.userName || ''};
-    // }
-
     private handleDialogClose = () => {
         // ?
     };
 
     private handleLogin = () => {
         this.props.loginUser(this.state.userName, this.state.password);
+        this.setState({
+            userName: '',
+            password: '',
+            showPassword: false,
+        });
+        this.props.closeLoginDialog();
+    };
+
+    private handleLogout = () => {
+        this.props.logoutUser();
+        this.setState({
+            userName: '',
+            password: '',
+            showPassword: false,
+        });
         this.props.closeLoginDialog();
     };
 
     private handleCancel = () => {
+        this.setState({
+            userName: '',
+            password: '',
+            showPassword: false,
+        });
         this.props.closeLoginDialog();
     };
 
@@ -160,7 +177,10 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
                     <Button onClick={this.handleCancel} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={this.handleLogin} color="primary">
+                    <Button disabled={this.props.userName === ''} onClick={this.handleLogout} color="primary">
+                        Logout
+                    </Button>
+                    <Button disabled={this.props.userName !== ''}  onClick={this.handleLogin} color="primary">
                         Login
                     </Button>
                     <Button onClick={this.handleRegister} color="secondary">

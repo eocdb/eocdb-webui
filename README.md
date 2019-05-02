@@ -2,14 +2,13 @@
 [![Docker Repository on Quay](https://quay.io/repository/bcdev/eocdb-webui/status "Docker Repository on Quay")](https://quay.io/repository/bcdev/eocdb-webui)
 [![Documentation Status](https://readthedocs.org/projects/eocdb/badge/?version=latest)](https://eocdb.readthedocs.io/en/latest/?badge=latest)
 
-[COPERNICUS OCDB DATABASE](http://eocdb.readthedocs.org)
+- [Copernicus OCDB Docs](http://ocdb.readthedocs.org)
+- [Copernicus OCDB](http://ocdb.eumetsat.int)
 
-# COPERNICUS Ocean Colour Database / WebUI
+# Copernicus Ocean Colour Database / WebUI
 
-The COPERNICUS Ocean Colour Database stores in-situ data collected on ocean ship cruises. The aim is to 
+The [Copernicus](https://www.copernicus.eu) Ocean Colour Database stores in-situ data collected on ocean ship cruises. The aim is to 
 provide an environment that follows FAIR principles (findable, accessible, interoperable, reusable).  
-
-## Installation
 
 ## Custom Installation
 

@@ -7,6 +7,38 @@ import { MessageLogAction, postMessage } from "./messageLogActions";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+export const LOGOUT_USER = 'LOGOUT_USER';
+export type LOGOUT_USER = typeof LOGOUT_USER;
+
+export interface LogoutUser {
+    type: LOGOUT_USER;
+}
+
+function _logoutUser(): LogoutUser {
+    return {type: LOGOUT_USER};
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export function logoutUser() {
+    return (dispatch: Dispatch<LogoutUser | MessageLogAction>, getState: () => AppState) => {
+        api.logoutUser(getState().configState.apiServerUrl)
+            .then(() => {
+                dispatch(_logoutUser())
+            })
+            .then(() => {
+                dispatch(postMessage('success', 'Logout successful'));
+            })
+            .catch((error: string) => {
+                dispatch(postMessage('error', error + ''));
+            });
+    };
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export function loginUser(name: string, password: string) {
     return (dispatch: Dispatch<LoginUser | StartUserLogin | MessageLogAction>, getState: () => AppState) => {
         dispatch(_startUserLogin());
@@ -55,4 +87,4 @@ function _loginUser(user: User | null, userLoginError: string | null): LoginUser
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type UserAction = LoginUser | StartUserLogin;
+export type UserAction = LoginUser | LogoutUser | StartUserLogin;

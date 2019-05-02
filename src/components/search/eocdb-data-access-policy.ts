@@ -1,38 +1,35 @@
 const TERMS = `
 
-## Notice to users
+The in-situ data you are about to download are made available by the Copernicus 
+Database of Ocean Colour In Situ Fiducial Reference Measurements. The data are contributed, 
+on a voluntary basis, by different Principal Investigators (PIs) responsible for data collection and processing. 
+The Database is maintained by EUMETSAT.
 
-The public domain data you are about to download are contributed by the International OCDB Federation. Each site has a Principal Investigator(s) (PI) , responsible for deployment, maintenance and data collection. The PI has priority use of the data collected at the site. The PI is entitled to be informed of any other use of that site data.
+## Using data
 
-The Principal Investigator(s) and Co-Investigator(s) of 'AAOT' is(are):. If you intend to use the following data please consult with him/her/them via e-mail(s) :
+Please consult with the PIs via e-mail on the use of the data. PIs’ names, 
+affiliations, projects, and contacts are provided together with the data. 
+
+## Guidelines for data use and publication
+
+It is requested that every practical attempt is made to honour the following guidelines:
+
+- __Always acknowledge the data providers!__ 
+  The acknowledgement may read:
+  _We thank the PI(s) for their effort in collecting the data used in this investigation and for making them available._
 
 
-Recommended guidelines for data use and publication:
-Although journal paper authorship and acknowledgement is the domain of the senior author and no policy is universally applicable, the OCDB contributors ask that every practical attempt be made to honor the following general guidelines.
+- __Publishing data from a 'few’ selected projects, sites or cruises__:
+  Please consider co-authorship for the PI(s). 
 
-## Using OCDB data
+- __If the in-situ data are a principal component of the publication__:
+  Offer co-authorship to the PI(s).
+  
+If you accept the above conditions, please click the "Accept" button below to proceed downloading. 
+If you do not agree with the above conditions, click "Do Not Accept" to return to the website.
+ 
+EUMETSAT will not be held responsible for any data errors or misuse.
 
-Please consult with the PI(s) and Co-I(s) of the data to be used.
-
-## Referencing
-Always cite the appropriate key OCDB papers for any publications as well as cite relevant manuscripts pertaining to previously published site data.
-
-## Publishing OCDB data from a 'few' sites
-
-Please consider authorship for the PI(s) and Co-I(s) and/or the following acknowledgement:
-
-We thank the (Project/PI(s)/Co-I(s)) for (its/theirs) effort in establishing and maintaining (site name(s)) sites.
-
-## Publishing data from 'many' sites
-
-A general acknowledgement is typically sufficient and may read:
-
-We thank the (PI(s) and Co-I(s)) and their staff for establishing and maintaining the (#)sites used in this investigation.
-
-However if the OCDB data are a principal component of the paper then co-authorship to PI and Co-I(s) should be offered.
-
-If you accept the above conditions, please click the "Accept" button below to download the ZIP file. 
-If you do not agree with the above conditions, click "Do Not Accept" to return to the data plots.
 
 `;
 
