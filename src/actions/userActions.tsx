@@ -3,6 +3,7 @@ import * as api from '../api'
 import { AppState } from '../states/appState';
 import { User } from '../model';
 import { MessageLogAction, postMessage } from "./messageLogActions";
+import { ChangeDrawer, changeDrawer } from "./dashboardActions";
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -22,7 +23,8 @@ function _logoutUser(): LogoutUser {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export function logoutUser() {
-    return (dispatch: Dispatch<LogoutUser | MessageLogAction>, getState: () => AppState) => {
+    return (dispatch: Dispatch<LogoutUser | ChangeDrawer | MessageLogAction>, getState: () => AppState) => {
+        dispatch(changeDrawer("Search"));
         api.logoutUser(getState().configState.apiServerUrl)
             .then(() => {
                 dispatch(_logoutUser())

@@ -1,4 +1,4 @@
-export const API_SERVER_VERSION='v0.1.0';
+export const API_SERVER_VERSION='v0.1.5';
 
 export const SERVER_CONFIG = " https://ocdb.eumetsat.int/eocdb/api/" + API_SERVER_VERSION;
 
