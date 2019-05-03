@@ -69,7 +69,7 @@
     "@types/react": "^16.7.6",
     "@types/react-dom": "^16.0.9",
     "@types/react-dropzone": "^4.2.2",
-    "@types/react-leaflet": "^1.1.6",
+    "@types/react-leaflet": "^2.2.1",
     "@types/react-leaflet-markercluster": "^2.0.0",
     "@types/react-redux": "^6.0.9",
     "@types/react-select": "^2.0.13",

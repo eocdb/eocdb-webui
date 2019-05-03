@@ -187,6 +187,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     };
 
     handleUpdateDatasetQuery = (selectedHistoryItem: SearchHistoryItem) => {
+        console.log(selectedHistoryItem.query);
         this.props.updateDatasetQuery(selectedHistoryItem.query);
         this.props.searchDatasets();
     };

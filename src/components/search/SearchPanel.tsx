@@ -237,6 +237,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
             key = this.props.user.name + '_';
         }
 
+        console.log(this.props.datasetQuery);
         const item: SearchHistoryItem = {
             key: this.props.saveSearchTitle,
             query: Object.assign(this.props.datasetQuery)
@@ -344,13 +345,6 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
                             className={classes.searchField}
                         />
-                        <IconButton
-                            onClick={this.props.openProductGroupsHelpDialog}
-                        >
-                            <Icon color={"secondary"}>
-                                help
-                            </Icon>
-                        </IconButton>
                         <TextField
                             id={'lucene-search'}
                             key={'lucene-search'}

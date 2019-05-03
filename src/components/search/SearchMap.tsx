@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Button, Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
-import { FeatureGroup, Map, Marker, Popup, Rectangle, TileLayer } from 'react-leaflet'
+import { FeatureGroup, Map, Marker, Popup, Rectangle, TileLayer, LeafletConsumer, LeafletContext } from 'react-leaflet'
 import { geoJSON, Icon, LatLng, LatLngBounds } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 import MarkerClusterGroup from "react-leaflet-markercluster";
@@ -14,6 +14,7 @@ import marker from './marker.png';
 import { BBoxValue } from "./BBoxInput";
 import { createRef } from "react";
 import BBoxInput from "./BBoxInputDialog";
+import Control from "./Control";
 
 
 // FIXME: forman did not find any typedefs for 'react-leaflet-draw', 2018.11.xx
@@ -190,6 +191,9 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         this.props.updateManualBBoxSouth(south);
     };
 
+    handleButtonClick = () => {
+    };
+
     render() {
         const bounds = this.getBoundsFromDatasets();
 
@@ -219,11 +223,21 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     east={this.props.selectedBBoxEast}
                     onEastChange={this.props.updateManualBBoxEast}
                 />
-                <Button onClick={this.handleManualBBoxInputOpen}>
-                    Manually enter coordinates
-                </Button>
 
                 <Map ref={this.mapRef} bounds={bounds} center={this.props.position} zoom={this.props.zoom} maxZoom={24}>
+                    <Control position="topright">
+                        <LeafletConsumer>
+                            {(leaflet: LeafletContext) => {
+                                console.log("leaflet.map:", leaflet.map);
+                                return (
+                                    <Button style={{backgroundColor: 'rgba(200, 200, 200, 0.5)'}}
+                                            onClick={this.handleManualBBoxInputOpen}>
+                                        Manually enter coordinates
+                                    </Button>
+                                );
+                            }}
+                        </LeafletConsumer>
+                    </Control>
                     <TileLayer
                         zIndex={1}
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

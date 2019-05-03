@@ -2,7 +2,7 @@ import * as React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Home, Search, SettingsApplications, CloudUpload, ViewList, Link } from '@material-ui/icons';
+import { Search, SettingsApplications, CloudUpload, Link } from '@material-ui/icons';
 import List from '@material-ui/core/List/List';
 import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
@@ -49,12 +49,12 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
         return (
             <List>
                 <div>
-                    <ListItem key={'Home'} onClick={() => this.props.handleClick('Home')} button>
+                    {/*<ListItem key={'Home'} onClick={() => this.props.handleClick('Home')} button>
                         <ListItemIcon>
                             <Home/>
                         </ListItemIcon>
                         <ListItemText primary="Home"/>
-                    </ListItem>
+                    </ListItem>*/}
                     <ListItem key={'Search'} onClick={() => this.props.handleClick('Search')} button>
                         <ListItemIcon>
                             <Search/>
@@ -67,12 +67,12 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
                         </ListItemIcon>
                         <ListItemText primary="Links"/>
                     </ListItem>
-                    <ListItem key={'Browse'} onClick={() => this.props.handleClick('Browse')} button>
+                    {/*<ListItem key={'Browse'} onClick={() => this.props.handleClick('Browse')} button>
                         <ListItemIcon>
                             <ViewList/>
                         </ListItemIcon>
                         <ListItemText primary="Browse"/>
-                    </ListItem>
+                    </ListItem>*/}
                     <ListItem disabled={!submitAllowed} key={'Submit'} onClick={this.handleSubmissionClick} button>
                         <ListItemIcon>
                             <CloudUpload/>
