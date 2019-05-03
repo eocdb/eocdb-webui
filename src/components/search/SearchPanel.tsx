@@ -46,6 +46,7 @@ const styles = (theme: Theme) => createStyles({
     },
     textField: {},
     button: {},
+    buttonAdvanced: {fontSize: 'small'},
     filterButton: {},
     rightIcon: {},
     tableContainer: {},
@@ -396,7 +397,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
                     </Grid>
                     <Grid item container justify={"flex-end"} xs={12} sm>
-                        <Button className={classes.button}
+                        <Button className={classes.buttonAdvanced}
                                 onClick={this.props.openAdvancedSearchDialog}>
                             Advanced Options
                         </Button>

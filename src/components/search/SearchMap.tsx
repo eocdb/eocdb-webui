@@ -224,7 +224,8 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     onEastChange={this.props.updateManualBBoxEast}
                 />
 
-                <Map ref={this.mapRef} bounds={bounds} center={this.props.position} zoom={this.props.zoom} maxZoom={24}>
+                <Map style={{zIndex: 1}} ref={this.mapRef} bounds={bounds} center={this.props.position}
+                     zoom={this.props.zoom} maxZoom={24}>
                     <Control position="topright">
                         <LeafletConsumer>
                             {(leaflet: LeafletContext) => {
