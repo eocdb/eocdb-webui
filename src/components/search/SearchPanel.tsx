@@ -247,7 +247,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
         history.push(item);
         this.props.updateSearchHistory(history);
-
+        console.info(JSON.stringify(item.query));
         localStorage.setItem(key + this.props.saveSearchTitle, JSON.stringify(item.query));
 
         this.props.closeSaveSearchDialog();

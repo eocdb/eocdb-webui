@@ -75,6 +75,7 @@ export function updateSearchHistory(searchHistory: SearchHistoryItem[]): UpdateS
     };
 }
 
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export const UPDATE_SELECTED_SEARCH_HISTORY = 'UPDATE_SELECTED_SEARCH_HISTORY';
 export type UPDATE_SELECTED_SEARCH_HISTORY = typeof UPDATE_SELECTED_SEARCH_HISTORY;
@@ -93,8 +94,12 @@ export function updateSelectedSearchHistory(selectedSearchHistory: SearchHistory
 
 function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): DatasetQuery {
     const selectedBounds = state.searchMapState.selectedBounds;
+
     if (selectedBounds) {
         datasetQuery = {...datasetQuery, region: selectedBounds.toBBoxString()};
+    }
+    else {
+        //datasetQuery = {...datasetQuery, region: ''};
     }
 
     if (!state.sessionState.user) {
@@ -149,7 +154,8 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export function searchDatasets() {
-    return (dispatch: Dispatch<UpdateFoundDatasets | MessageLogAction | UpdateSearchHistory | StopLoading>, getState: ()
+    return (dispatch: Dispatch<UpdateFoundDatasets | MessageLogAction | UpdateSearchHistory | StopLoading
+        | UpdateDatasetQuery>, getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
@@ -168,6 +174,7 @@ export function searchDatasets() {
                 }
             })
             .then(() => {
+                dispatch(updateDatasetQuery(datasetQuery));
                 dispatch(stopLoading());
                 return 0;
             })
