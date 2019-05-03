@@ -9,7 +9,7 @@ import {Submission} from "../model";
 export function getSubmissionsForUser(apiServerUrl: string, user: number): Promise<Submission[]> {
 
     return callJsonApi<Submission[]>(
-        apiServerUrl + '/store/upload/user/' + user, undefined,
+        apiServerUrl + '/store/upload/user', undefined,
         {
             method: 'GET',
             headers: {
