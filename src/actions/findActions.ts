@@ -142,7 +142,7 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
 
     if (expression) {
         if (expression.search(':') == -1) {
-            newExpression = 'pathValue:*' + expression + '*';
+            newExpression = 'path:*' + expression + '*';
         }
 
         datasetQuery = {...datasetQuery, searchExpr: newExpression};
