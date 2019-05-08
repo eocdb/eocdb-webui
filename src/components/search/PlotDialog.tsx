@@ -15,9 +15,11 @@ import { Suggestion } from "./MultipleSelectTextField";
 import Grid from "@material-ui/core/Grid";
 
 
+/*
 import {
     Simplify,
 } from 'simplify-ts';
+*/
 
 
 const styles = (theme: Theme) => createStyles({
@@ -55,7 +57,7 @@ const round = (value: number, precision: number) => {
     return Math.round(precision * value) / precision;
 };
 
-const colors = ['red', 'green', 'pink', 'yellow'];
+//const colors = ['red', 'green', 'pink', 'yellow'];
 
 class PlotDialog extends React.Component<PlotDialogProps> {
     constructor(props: PlotDialogProps) {
@@ -76,15 +78,9 @@ class PlotDialog extends React.Component<PlotDialogProps> {
             });
             //return Simplify3D(points, 0.5, false);
         } else {
-            const points = records.map((record: number[]) => {
+            return records.map((record: number[]) => {
                 return {x: round(+record[x], precision), y: round(+record[y], precision)};
             });
-
-            if (points.length < 1000) {
-                return points;
-            } else {
-                return Simplify(points, 0.5, false);
-            }
         }
     };
 
@@ -192,14 +188,14 @@ class PlotDialog extends React.Component<PlotDialogProps> {
                                 selectedItem={{label: selectedYField, value: selectedYField}}
                                 onChange={this.handleUpdateYField}
                                 placeholder={'Y...'}
-                                label={'Y'}
+                                label={'Y1'}
                             />
                             <InputSelect
                                 items={selectItems}
                                 selectedItem={{label: selectedZField, value: selectedZField}}
                                 onChange={this.handleUpdateZField}
                                 placeholder={'Z...'}
-                                label={'Z'}
+                                label={'Y2'}
                             />
 
                             <Button onClick={this.handleUpdatePlot} color="secondary">
@@ -228,8 +224,8 @@ class PlotDialog extends React.Component<PlotDialogProps> {
                                 <Scatter yAxisId="right" name={selectedZField} data={plotData} fill="#82ca9d">
                                     {
                                         plotData.map((entry, index) => {
-                                            console.log(entry);
-                                            return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                                            // fill={colors[index % colors.length]}
+                                            return <Cell key={`cell-${index}`}  />
                                         })
                                     }
                                 </Scatter>

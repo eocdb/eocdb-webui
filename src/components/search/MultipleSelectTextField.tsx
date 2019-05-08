@@ -91,7 +91,7 @@ interface MultipleSelectTextFieldProps extends WithStyles<typeof styles> {
 }
 
 const ControlComponent = (props: any) => (
-    <div>
+    <div style={{zIndex: 1000}}>
         {/*<h1 style={
             {
                 textAlign: 'left',
@@ -104,7 +104,7 @@ const ControlComponent = (props: any) => (
         }>
             <span style={{backgroundColor: 'white'}}>kljnd</span>
         </h1>*/}
-        <components.Input id={'testin'} {...props} />
+        <components.Input style={{zIndex: 1000}} id={'testin'} {...props} />
     </div>
 );
 

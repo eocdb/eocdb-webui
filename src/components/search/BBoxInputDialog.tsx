@@ -24,6 +24,12 @@ const styles = (theme: Theme) => createStyles({
         marginRight: theme.spacing.unit / 2,
         marginTop: theme.spacing.unit / 2,
     },
+    dialogContent: {
+        marginLeft: theme.spacing.unit * 4,
+        marginRight: theme.spacing.unit * 4,
+        marginTop: theme.spacing.unit * 4,
+        marginBottom: theme.spacing.unit * 4,
+    },
     textField: {},
     button: {},
     rightIcon: {},
@@ -34,17 +40,17 @@ interface BBoxInputProps extends WithStyles<typeof styles> {
     open: boolean;
     onClose: () => void;
 
-    onSouthChange: (south: number|string) => void;
-    south: number|string;
+    onSouthChange: (south: number | string) => void;
+    south: number | string;
 
-    onWestChange: (west: number|string) => void;
-    west: number|string;
+    onWestChange: (west: number | string) => void;
+    west: number | string;
 
-    onNorthChange: (north: number|string) => void;
-    north: number|string;
+    onNorthChange: (north: number | string) => void;
+    north: number | string;
 
-    onEastChange: (east: number|string) => void;
-    east: number|string;
+    onEastChange: (east: number | string) => void;
+    east: number | string;
 
     onBBoxSave: (selectedBounds: LatLngBounds) => void;
 }
@@ -93,61 +99,74 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
                 onClose={this.props.onClose}
                 //TransitionComponent={Transition}
             >
-                <DialogTitle id="form-dialog-title">Manual BBox Input</DialogTitle>
-                <Grid spacing={32} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
-                    <Grid item xs={12}>
-                        <TextField
-                            id={'bbox_bottom'}
-                            label={'South'}
-                            variant={'outlined'}
-                            type={"number"}
-                            className={classes.searchField}
-                            onBlur={this.handleSouthChange}
-                            defaultValue={this.props.south}
-                        />
+                <div className={classes.dialogContent}>
+                    <DialogTitle id="form-dialog-title">Coordinates</DialogTitle>
+
+                    <Grid spacing={32} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
+                        <Grid item xs={12}>
+                            <TextField
+                                id={'bbox_bottom'}
+                                label={'South'}
+                                variant={'outlined'}
+                                type={"number"}
+                                className={classes.searchField}
+                                onBlur={this.handleSouthChange}
+                                defaultValue={this.props.south}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                id={'bbox_left'}
+                                label={'West'}
+                                variant={'outlined'}
+                                type={"number"}
+                                className={classes.searchField}
+                                onChange={this.handleWestChange}
+                                defaultValue={this.props.west}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                id={'bbox_top'}
+                                label={'North'}
+                                variant={'outlined'}
+                                type={"number"}
+                                className={classes.searchField}
+                                onChange={this.handleNorthChange}
+                                defaultValue={this.props.north}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                id={'bbox_right'}
+                                label={'East'}
+                                variant={'outlined'}
+                                type={"number"}
+                                className={classes.searchField}
+                                onChange={this.handleEastChange}
+                                defaultValue={this.props.east}
+                            />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            id={'bbox_left'}
-                            label={'West'}
-                            variant={'outlined'}
-                            type={"number"}
-                            className={classes.searchField}
-                            onChange={this.handleWestChange}
-                            defaultValue={this.props.west}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            id={'bbox_top'}
-                            label={'North'}
-                            variant={'outlined'}
-                            type={"number"}
-                            className={classes.searchField}
-                            onChange={this.handleNorthChange}
-                            defaultValue={this.props.north}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            id={'bbox_right'}
-                            label={'East'}
-                            variant={'outlined'}
-                            type={"number"}
-                            className={classes.searchField}
-                            onChange={this.handleEastChange}
-                            defaultValue={this.props.east}
-                        />
-                    </Grid>
-                </Grid>
-                <DialogActions>
-                    <Button onClick={() => this.handleOnChange()}>
-                        Apply
-                    </Button>
-                    <Button onClick={this.props.onClose}>
-                        Cancel
-                    </Button>
-                </DialogActions>
+                    <DialogActions>
+                        <Button
+                            onClick={() => this.handleOnChange()}
+                            aria-label="Close"
+                            variant="contained"
+                            color="secondary"
+                        >
+                            Apply
+                        </Button>
+                        <Button
+                            onClick={this.props.onClose}
+                            aria-label="Close"
+                            variant="contained"
+                            color="secondary"
+                        >
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                </div>
             </Dialog>
         )
     }
