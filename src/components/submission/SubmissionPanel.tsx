@@ -331,7 +331,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     open={this.props.uploadSubmissionFileDialogOpen}
 
                     value={this.props.selectedSubmissionFile}
-                    accept={this.props.selectedSubmissionFile.filetype === 'MEASUREMENT' ? '.sb, .dat, .txt' : undefined}
+                    accept={this.props.selectedSubmissionFile.filetype === 'MEASUREMENT' ? '.sb, .dat, .txt, .csv' : undefined}
 
                 />
             </div>
