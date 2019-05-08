@@ -1,4 +1,6 @@
-The in-situ data you are about to download are made available by the Copernicus 
+# Using Data
+
+The in-situ data are made available by the Copernicus 
 Database of Ocean Colour In Situ Fiducial Reference Measurements. The data are contributed, 
 on a voluntary basis, by different Principal Investigators (PIs) responsible for data collection and processing. 
 The Database is maintained by EUMETSAT.
