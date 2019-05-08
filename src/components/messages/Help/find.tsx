@@ -19,7 +19,8 @@ export const FindHelpText = (
         <Typography variant={"body1"} gutterBottom>
             The expression field allows to filter datasets for keywords. This can be done by either
             giving keywords or by using the so-called <Link href={'https://lucene.apache.org/core/2_9_4/queryparsersyntax.html'}>Lucene Syntax</Link>.
-            The following will give some example on how to use the expression field.
+            The following will give some example on how to use the expression field. For more documentation
+            please brows to the <Link href={"https://ocdb.readthedocs.io/en/latest/"}>OCDB Help</Link>.
         </Typography>
 
         <Typography variant={"body1"} gutterBottom>
@@ -31,9 +32,9 @@ export const FindHelpText = (
         </SyntaxHighlighter>
 
         <Typography variant={"body1"} gutterBottom>
-            Teh above filter can result in a long and unclear list. It may terefore be desirable
+            Teh above filter can result in a long and unclear list. It may, therefore, be desirable
             to filter for an exact match in an specific field. The following example wil search for Colleen_Mouw
-            in the field 'investiators'
+            in the field 'investigators'
         </Typography>
         <SyntaxHighlighter language='javascript'>
             investigators: Colleen_Mouw
