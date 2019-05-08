@@ -1,4 +1,4 @@
-# Using Data
+# OCDB Download Terms and Conditions
 
 The in-situ data are made available by the Copernicus 
 Database of Ocean Colour In Situ Fiducial Reference Measurements. The data are contributed, 
