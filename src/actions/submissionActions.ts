@@ -414,7 +414,7 @@ export function sendSubmission() {
                     })
             })
             .then(() => {
-                dispatch(postMessage("success", 'Files Loaded'));
+                dispatch(postMessage("success", 'Submissions Loaded'));
             })
             .catch((error: string) => {
                 dispatch(postMessage('error', error + ''));
