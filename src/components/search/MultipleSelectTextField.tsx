@@ -58,10 +58,11 @@ const customStyles = {
         'min-height': '56px',
         'background-color': '#FAFAFA',
         label: 'red',
+        //zIndex: 999,
     }),
     container: (base: CSSProperties) => ({
         ...base,
-        //zIndex: 9999, // get select item list on top of everything.
+        zIndex: 999, // get select item list on top of everything.
     })
 };
 
@@ -140,16 +141,17 @@ class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldPro
         // const {placeholder} = this.props;
 
         //const plh = placeholder? placeholder : 'Select...';
+        //const reactSelectStyles = base => ({ ...base, zIndex: 999 })
 
         return (
             <FormControl
                 className={this.props.className}
             >
                 <InputLabel
-                    style={{backgroundColor: '#FAFAFA', width: this.props.inputLabelWidth, paddingLeft: 8}}
+                    style={{zIndex: 9999, backgroundColor: '#FAFAFA', width: this.props.inputLabelWidth, paddingLeft: 8}}
                     shrink
                     variant={"outlined"}
-                    htmlFor='testin'
+                    htmlFor='testing'
                 >
                     {this.props.inputLabel}
                 </InputLabel>
