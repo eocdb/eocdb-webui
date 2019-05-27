@@ -12,6 +12,7 @@ import SearchPanel from '../containers/search/SearchPanel';
 import {SearchHistoryItem} from "../types/dataset";
 import { User } from "../model/User";
 import LinksPanel from "../containers/links/LinksPanel";
+import MatchupPanel from "./matchup/MatchupPanel";
 
 
 const drawerWidth = 240;
@@ -119,6 +120,7 @@ class DashPanels extends React.PureComponent<DashPanelsProps> {
                 <SubmissionPanel show={this.props.currentDrawer == 'Submit'}/>
                 <BrowsePanel show={this.props.currentDrawer == 'Browse'}/>
                 <LinksPanel show={this.props.currentDrawer == "Links"}/>
+                <MatchupPanel show={this.props.currentDrawer == "Matchup"}/>
                 <AdminPanel show={this.props.currentDrawer == 'Admin'}/>
             </div>
         );

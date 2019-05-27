@@ -30,8 +30,6 @@ interface SearchMapProps extends WithStyles<typeof styles> {
     position: LatLng;
     zoom: number;
 
-    clearLayers?: () => void;
-
     updateSelectedRegions: (selectedRegions: GeoJsonObject, selectedBounds?: LatLngBounds, drawBounds?: boolean) => void;
     testMarkerCluster?: boolean;
 
@@ -165,9 +163,9 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     };
 
     handleClearLayers = () => {
-        for (let i in this.layers) {
-            this.editableFeatureGroupRef.leafletElement.removeLayer(this.layers[i]);
-        }
+        this.layers.forEach(function (element) {
+            this.editableFeatureGroupRef.leafletElement.removeLayer(element);
+        });
     };
 
     handleBBoxSave = (selectedBBox: LatLngBounds) => {
