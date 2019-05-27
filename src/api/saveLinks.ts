@@ -14,6 +14,7 @@ export function saveLinks(apiServerUrl: string, content: string): Promise<Links>
         undefined,
         {
             method: 'POST',
+            credentials: "same-origin",
             body: JSON.stringify(result),
         }
     );
