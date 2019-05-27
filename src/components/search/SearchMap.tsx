@@ -163,9 +163,9 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     };
 
     handleClearLayers = () => {
-        this.layers.forEach(function (element) {
-            this.editableFeatureGroupRef.leafletElement.removeLayer(element);
-        });
+        for (let i in this.layers) {
+            this.editableFeatureGroupRef.leafletElement.removeLayer(this.layers[i]);
+        }
     };
 
     handleBBoxSave = (selectedBBox: LatLngBounds) => {
