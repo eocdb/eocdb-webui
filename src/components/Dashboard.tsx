@@ -128,6 +128,7 @@ interface DashboardProps extends WithStyles<typeof styles> {
 
     user?: User | null;
     updateSubmissions: () => void;
+    getMatchupFiles: () => void;
 
     searchHistory: SearchHistoryItem[];
     updateSearchHistory: (searchHistory: SearchHistoryItem[]) => void;
@@ -271,7 +272,9 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         </IconButton>
                     </div>
                     <Divider/>
-                    <DrawerItems updateSubmissions={this.props.updateSubmissions} user={this.props.user}
+                    <DrawerItems updateSubmissions={this.props.updateSubmissions}
+                                 getMatchupFiles={this.props.getMatchupFiles}
+                                 user={this.props.user}
                                  handleClick={this.handleDrawerChanged}/>
                     <Divider/>
 

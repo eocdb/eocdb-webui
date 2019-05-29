@@ -457,7 +457,7 @@ export function getSubmissionsForUser() {
                 dispatch(updateSubmissionsForUser(submissions));
             })
             .then(() => {
-                dispatch(postMessage("success", 'Files Loaded'));
+                dispatch(postMessage("success", 'Submissions Loaded'));
             })
             .catch((error: string) => {
                 dispatch(postMessage('error', error + ''));

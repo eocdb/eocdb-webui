@@ -12,7 +12,7 @@ import SearchPanel from '../containers/search/SearchPanel';
 import {SearchHistoryItem} from "../types/dataset";
 import { User } from "../model/User";
 import LinksPanel from "../containers/links/LinksPanel";
-import MatchupPanel from "./matchup/MatchupPanel";
+import MatchupPanel from "../containers/matchup/MatchUpPanel";
 
 
 const drawerWidth = 240;

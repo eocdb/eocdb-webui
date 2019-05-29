@@ -15,6 +15,7 @@ const styles = (theme: Theme) => createStyles({});
 interface DrawerItemsProps extends WithStyles<typeof styles> {
     handleClick: (currentDrawer: string) => void;
     updateSubmissions: () => void;
+    getMatchupFiles: () => void;
     user?: User | null;
 }
 
@@ -26,6 +27,11 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
     handleSubmissionClick = () => {
         this.props.handleClick('Submit');
         this.props.updateSubmissions();
+    };
+
+    handleMatchupClick = () => {
+        this.props.handleClick('Matchup');
+        this.props.getMatchupFiles();
     };
 
     render() {
@@ -73,7 +79,7 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
                         </ListItemIcon>
                         <ListItemText primary="Browse"/>
                     </ListItem>*/}
-                    <ListItem key={'Matchup'} onClick={() => this.props.handleClick('Matchup')} button>
+                    <ListItem key={'Matchup'} onClick={() => this.handleMatchupClick()} button>
                         <ListItemIcon>
                             <Link/>
                         </ListItemIcon>

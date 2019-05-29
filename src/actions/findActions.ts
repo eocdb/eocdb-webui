@@ -85,6 +85,8 @@ export interface UpdateSelectedSearchHistory {
     selectedSearchHistory: SearchHistoryItem;
 }
 
+
+// noinspection JSUnusedGlobalSymbols
 export function updateSelectedSearchHistory(selectedSearchHistory: SearchHistoryItem): UpdateSelectedSearchHistory {
     return {
         type: UPDATE_SELECTED_SEARCH_HISTORY, selectedSearchHistory,
@@ -234,6 +236,7 @@ export interface UpdateTerms {
     terms: string;
 }
 
+// noinspection JSUnusedGlobalSymbols
 export function updateTerms(terms: string): UpdateTerms {
     return {type: UPDATE_TERMS, terms};
 }

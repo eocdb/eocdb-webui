@@ -1,6 +1,6 @@
 import { ConfigState, newConfigState } from '../states/configState';
 
-import { ConfigAction, SET_API_SERVER_URL } from '../actions/configActions';
+import { ConfigAction, GET_MATCHUP_FILES, SET_API_SERVER_URL } from '../actions/configActions';
 
 const initialState = newConfigState();
 
@@ -11,6 +11,8 @@ export function configReducer(state: ConfigState, action: ConfigAction): ConfigS
     switch (action.type) {
         case SET_API_SERVER_URL:
             return {...state, apiServerUrl: action.apiServerUrl};
+        case GET_MATCHUP_FILES:
+            return {...state, matchupFiles: action.matchupFiles}
     }
     return state;
 }
