@@ -37,7 +37,7 @@ export function callApi(endpointUrl: string, queryComponents?: QueryComponent[],
 function download(blob: Blob, fileName?: string){
     if (!fileName) {
         const dtt = new Date(Date.now());
-        fileName = 'insitu_' + dtt.toDateString() + '.zip';
+        fileName = 'insitu_' + dtt.getFullYear() + '-' + dtt.getMonth() + '-' + dtt.getDay() + '.zip';
     }
     const objectUrl: string = URL.createObjectURL(blob);
     const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;

@@ -751,6 +751,33 @@ export function downloadSubmissionFile(submissionId: string, index: number) {
     };
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const OPEN_HELP_DIALOG = 'OPEN_HELP_DIALOG';
+export type OPEN_HELP_DIALOG = typeof OPEN_HELP_DIALOG;
+
+export interface OpenHelpDialog {
+    type: OPEN_HELP_DIALOG;
+}
+
+export function openHelpDialog(): OpenHelpDialog {
+    return {type: OPEN_HELP_DIALOG};
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const CLOSE_HELP_DIALOG = 'CLOSE_HELP_DIALOG';
+export type CLOSE_HELP_DIALOG = typeof CLOSE_HELP_DIALOG;
+
+export interface CloseHelpDialog {
+    type: CLOSE_HELP_DIALOG;
+}
+
+export function closeHelpDialog(): CloseHelpDialog {
+    return {type: CLOSE_HELP_DIALOG};
+}
+
+
 
 export type SubmitAction = OpenSubmitSteps
     | CloseSubmitSteps
@@ -778,4 +805,6 @@ export type SubmitAction = OpenSubmitSteps
     | SendSubmission
     | UpdateSubmissionPublicationDate
     | UpdateSelectedSubmissionFile
-    | UpdateCurrentSubmissionFileIndex;
+    | UpdateCurrentSubmissionFileIndex
+    | OpenHelpDialog
+    | CloseHelpDialog;

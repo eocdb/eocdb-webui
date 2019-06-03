@@ -36,6 +36,8 @@ import {
     updateAllowPublication
 } from "../../actions/submissionActions";
 import SubmissionPanel from "../../components/submission/SubmissionPanel";
+import { openHelpDialog } from "../../actions/searchMapActions";
+import { closeHelpDialog } from "../../actions/dashboardActions";
 
 
 const mapStateToProps = (state: AppState) => {
@@ -66,6 +68,7 @@ const mapStateToProps = (state: AppState) => {
         allowPublication: state.submissionState.allowPublication,
 
         user: state.sessionState.user,
+        helpDialogOpen: state.submissionState.helpDialogOpen,
     };
 };
 
@@ -116,6 +119,9 @@ const mapDispatchToProps = {
 
     sendSubmission,
     clearSubmissionForm,
+
+    openHelpDialog,
+    closeHelpDialog,
 };
 
 

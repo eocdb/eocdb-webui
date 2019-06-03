@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Icon, IconButton, Typography, WithStyles } from "@material-ui/core";
+import { WithStyles } from "@material-ui/core";
 import createStyles from "@material-ui/core/styles/createStyles";
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -13,9 +13,6 @@ import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import List from "@material-ui/core/List/List";
 
 import { Dataset } from "../../model";
-import { DatasetMetaData } from "../../types/dataset";
-import HelpDialog from "../messages/HelpDialog";
-import { MetaInfoHelpText } from "../messages/Help/MetaInfo";
 
 
 const styles = () => createStyles({
@@ -45,22 +42,23 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
     }
 
     // noinspection JSMethodCanBeStatic
-    renderInfo(metadata: DatasetMetaData) {
+    renderInfo(dataset: Dataset) {
+        const metadata = dataset.metadata;
+        const attributes = dataset.attributes.join(',');
         let items = [];
         for (let key in metadata) {
             items.push(
                 <ListItem component={'span'} key={key}>
                     <ListItemText secondary={metadata[key]} primary={key}/>
-                    <IconButton
-                        onClick={() => this.props.openHelpDialog(key)}
-                    >
-                        <Icon color={"secondary"}>
-                            help
-                        </Icon>
-                    </IconButton>
                 </ListItem>
             );
         }
+        items.push(
+            <ListItem component={'span'} key={'fields'}>
+                <ListItemText secondary={attributes} primary={'fields'}/>
+            </ListItem>
+        );
+
         return (
             <List>
                 {items}
@@ -77,20 +75,7 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
             >
                 <DialogTitle id="form-dialog-title">Settings</DialogTitle>
                 <DialogContent>
-                    {this.renderInfo(this.props.dataset.metadata)}
-                    <HelpDialog
-                        open={this.props.helpDialogOpen}
-                        onClose={this.props.closeHelpDialog}
-                        title={'Meta Info Help'}
-                    >
-                        <Typography variant="button" gutterBottom>
-                            {this.props.helpMetaInfoKey}
-                        </Typography>
-                        <Typography component={'p'}>
-                            {MetaInfoHelpText[this.props.helpMetaInfoKey]}
-                        </Typography>
-                    </HelpDialog>
-
+                    {this.renderInfo(this.props.dataset)}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.props.handleClose} color="primary">

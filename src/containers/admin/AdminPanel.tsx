@@ -8,11 +8,15 @@ import {
     updateLinksContent
 } from "../../actions/adminActions";
 import AdminPanel from "../../components/admin/AdminPanel";
+import { closeConfigDialog, openConfigDialog } from "../../actions/dashboardActions";
+import { configServer } from "../../actions/configActions";
 
 const mapStateToProps = (state: AppState) => {
     return {
         linksContentDialogOpen: state.linksPageState.editContentDialogOpen,
         linksContent: state.linksPageState.content,
+        apiServerUrl: state.configState.apiServerUrl,
+        configDialogOpen: state.dashboardState.configDialogOpen,
     };
 };
 
@@ -22,6 +26,9 @@ const mapDispatchToProps = {
     closeLinksContentDialog,
     updateLinksContent,
     saveLinksContent,
+    openConfigDialog,
+    closeConfigDialog,
+    configServer,
 };
 
 

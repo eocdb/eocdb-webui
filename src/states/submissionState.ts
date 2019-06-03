@@ -25,6 +25,8 @@ export interface SubmissionState {
 
     foundSubmissions: Submission[];
 
+    helpDialogOpen: boolean;
+
     submissionPublicationDate: string | null;
 }
 
@@ -74,6 +76,7 @@ export function newSubmissionState() {
             }
         },
 
+        helpDialogOpen: false,
         submissionPublicationDate: null,
     }
 }
