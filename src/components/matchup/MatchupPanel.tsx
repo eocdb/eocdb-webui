@@ -3,7 +3,7 @@ import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
 
-import MUIDataTable, { FilterType } from "mui-datatables";
+import MUIDataTable from "mui-datatables";
 import { MatchupFiles } from "../../model/MatchupFiles";
 
 
@@ -43,7 +43,7 @@ class MatchupPanel extends React.PureComponent<MatchupPanelProps> {
         }
 
         const options = {
-            filterType: 'textField' as FilterType,
+            filterType: 'textField' as any,
             onRowClick: this.handleRowClick
         };
 
