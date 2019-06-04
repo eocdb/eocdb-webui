@@ -186,6 +186,7 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     startDownloading: () => void;
 
     downloadDatasets: () => void;
+    downloadDataset: (id: string) => void;
     downloading: boolean;
 
     updatePlotState: (plotState: PlotState) => void;
@@ -471,6 +472,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             startDownloading={this.props.startDownloading}
 
                             downloadDatasets={this.props.downloadDatasets}
+                            downloadDataset={this.props.downloadDataset}
                             downloading={this.props.downloading}
 
                             updatePlotState={this.props.updatePlotState}
