@@ -25,8 +25,10 @@ import {
     CLOSE_UPLOAD_SUBMISSION_FILE_DIALOG,
     OPEN_SUBMISSION_PUBLICATION_DATE_DIALOG,
     CLOSE_SUBMISSION_PUBLICATION_DATE_DIALOG,
-    UPDATE_SUBMISSION_PUBLICATION_DATE, UPDATE_PUBLICATION_DATE, UPDATE_ALLOW_PUBLICATION
+    UPDATE_SUBMISSION_PUBLICATION_DATE, UPDATE_PUBLICATION_DATE, UPDATE_ALLOW_PUBLICATION,
+    CLOSE_HELP_DIALOG, OPEN_HELP_DIALOG
 } from "../actions/submissionActions";
+
 
 
 const initialState = newSubmissionState();
@@ -85,6 +87,10 @@ export function submissionReducer(state: SubmissionState = initialState, action:
             return {...state, currentSubmissionFileIndex: action.currentSubmissionFileIndex};
         case SEND_SUBMISSION:
             return {...state, currentDatasetValidationResults: action.currentDatasetValidationResults};
+        case OPEN_HELP_DIALOG:
+            return {...state, helpDialogOpen: true};
+        case CLOSE_HELP_DIALOG:
+            return {...state, helpDialogOpen: false};
         case UPDATE_SUBMISSION_PUBLICATION_DATE:
             return {...state, submissionPublicationDate: action.submissionPublicationDate};
         default:

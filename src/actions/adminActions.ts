@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { MessageLogAction } from "./messageLogActions";
+import { MessageLogAction, postMessage } from "./messageLogActions";
 import { AppState } from "../states/appState";
 import { UpdateFoundDatasets } from "./findActions";
 
@@ -78,6 +78,13 @@ export function saveLinksContent(content: string){
             .then((links: Links) => {
                 return dispatch(_saveLinksContent(links.content))
             })
+            .then(() => {
+                return dispatch(postMessage('success', 'Links saved. '))
+            })
+            .catch((error: string) => {
+                return dispatch(postMessage('error', 'Could not save Links: ' + error))
+            })
+
     }
 }
 

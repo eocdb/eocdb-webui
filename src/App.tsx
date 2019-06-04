@@ -6,8 +6,6 @@ import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 
 import { MuiPickersUtilsProvider } from 'material-ui-pickers';
-//import * as MomentUtils from '@date-io/moment';
-//import DateFnsUtils from '@date-io/date-fns';
 import LuxonUtils from '@date-io/luxon';
 
 

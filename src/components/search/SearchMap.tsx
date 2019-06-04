@@ -30,8 +30,6 @@ interface SearchMapProps extends WithStyles<typeof styles> {
     position: LatLng;
     zoom: number;
 
-    clearLayers?: () => void;
-
     updateSelectedRegions: (selectedRegions: GeoJsonObject, selectedBounds?: LatLngBounds, drawBounds?: boolean) => void;
     testMarkerCluster?: boolean;
 

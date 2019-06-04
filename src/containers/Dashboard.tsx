@@ -9,7 +9,7 @@ import {
     closeLoginDialog,
     openRegistrationDialog
 } from '../actions/dashboardActions';
-import {configServer} from '../actions/configActions'
+import { configServer, getMatchupFiles } from '../actions/configActions'
 import Dashboard from '../components/Dashboard';
 import { loginUser, logoutUser } from '../actions/userActions';
 import {getSubmissionsForUser} from "../actions/submissionActions";
@@ -45,6 +45,7 @@ const mapDispatchToProps = {
     openRegistrationDialog,
 
     updateSubmissions: getSubmissionsForUser,
+    getMatchupFiles: getMatchupFiles,
     updateDatasetQuery,
     updateSearchHistory,
     searchDatasets,

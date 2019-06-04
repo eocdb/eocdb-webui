@@ -12,7 +12,8 @@ import Icon from '@material-ui/core/Icon/Icon';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { Theme, WithStyles } from '@material-ui/core';
 import IconButton from "@material-ui/core/IconButton/IconButton";
-import { KeyboardArrowLeft, KeyboardArrowRight, Settings } from "@material-ui/icons";
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import TableFooter from "@material-ui/core/TableFooter/TableFooter";
@@ -366,7 +367,7 @@ class DataTable extends React.Component<DataTableProps> {
                                 />
                             </TableCell>
                             <TableCell>File</TableCell>
-                            <TableCell>Tools</TableCell>
+                            <TableCell>Meta/Plots</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -404,7 +405,7 @@ class DataTable extends React.Component<DataTableProps> {
                                             color="inherit"
                                             onClick={() => this.handleMetaInfoOpen(row.id)}
                                         >
-                                            <Settings/>
+                                            <Icon className={classes.rightIcon}>list</Icon>
                                         </IconButton>
                                         <Button
                                             color={"inherit"}

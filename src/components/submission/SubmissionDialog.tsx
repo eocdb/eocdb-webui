@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, Theme, WithStyles } from "@material-ui/core";
+import { Checkbox, FormControlLabel, Icon, IconButton, Theme, WithStyles } from "@material-ui/core";
 import createStyles from "@material-ui/core/styles/createStyles";
 import * as React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -9,7 +9,8 @@ import { CloudUpload } from "@material-ui/icons";
 import Button from "@material-ui/core/Button/Button";
 import Grid from "@material-ui/core/Grid";
 import { DatePicker } from "material-ui-pickers";
-//import { Cancel } from "@material-ui/icons";
+import HelpDialog from "../messages/HelpDialog";
+import SubmissionHelpText from "../messages/Help/submission";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -59,6 +60,10 @@ interface SubmissionDialogProps extends WithStyles<typeof styles> {
     onFileSubmit: () => void;
 
     onClearForm: () => void;
+
+    helpDialogOpen: boolean;
+    openHelpDialog: () => void;
+    closeHelpDialog: () => void;
 }
 
 
@@ -107,6 +112,13 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
         return (
             <div className={classes.root}>
                 <Grid container justify={"flex-end"}>
+                    <IconButton
+                        onClick={this.props.openHelpDialog}
+                    >
+                        <Icon color={"secondary"}>
+                            help
+                        </Icon>
+                    </IconButton>
                     <Button variant="contained"
                             color="secondary"
                             className={classes.button}
@@ -129,6 +141,13 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                     >
                         Close
                     </Button>
+                    <HelpDialog
+                        open={this.props.helpDialogOpen}
+                        onClose={this.props.closeHelpDialog}
+                        title={'Submission Help'}
+                    >
+                        {SubmissionHelpText}
+                    </HelpDialog>
                 </Grid>
                 <Grid container justify={"flex-start"} spacing={16} direction={"column"}>
                     <Grid item>
@@ -186,7 +205,9 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                             label={'Drag and drop DATA files here or click'}
                             onChange={this.handleOndropDatafiles}
                             files={this.props.dataFilesValue}
-                            acceptedFiles={['.dat', '.csv', '.txt', '.sb']}
+                            acceptedFiles={['text/plain', 'text/csv', 'text/x-csv','application/vnd.ms-excel',
+                                'application/csv', 'application/x-csv', 'text/comma-separated-values',
+                                'text/x-comma-separated-values', 'text/tab-separated-values']}
                         />
                     </Grid>
                     <Grid item>

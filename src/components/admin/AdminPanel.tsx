@@ -3,7 +3,10 @@ import {Button, Theme, WithStyles} from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
 import EditContentDialog from "./EditContentDialog";
-import { Link } from "@material-ui/icons";
+import Link from "@material-ui/icons/Link";
+import Settings from "@material-ui/icons/Settings";
+import ConfigDialog from "./ConfigDialog";
+
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles(
@@ -23,6 +26,13 @@ interface AdminPanelProps extends WithStyles<typeof styles> {
     updateLinksContent: (content: string) => void;
     saveLinksContent: (content: string) => void;
     linksContent: string;
+
+    configDialogOpen: boolean;
+    openConfigDialog: () => void;
+    closeConfigDialog: () => void;
+
+    apiServerUrl: string;
+    configServer: (url: string) => void;
 }
 
 class AdminPanel extends React.PureComponent<AdminPanelProps> {
@@ -33,6 +43,20 @@ class AdminPanel extends React.PureComponent<AdminPanelProps> {
     handleSave = (content: string) => {
         this.props.saveLinksContent(content);
         this.props.updateLinksContent(content);
+    };
+
+    handleConfigOpen = () => {
+        //console.log('test');
+        this.props.openConfigDialog();
+    };
+
+    handleConfigClose = () => {
+        this.props.closeConfigDialog();
+    };
+
+    handleApiServerUrlChange = (url: string) => {
+        this.props.configServer(url);
+        this.handleConfigClose();
     };
 
     render() {
@@ -48,12 +72,22 @@ class AdminPanel extends React.PureComponent<AdminPanelProps> {
                     Edit Links
                     <Link/>
                 </Button>
+                <Button
+                    onClick={this.props.openConfigDialog}
+                >
+                    Settings
+                    <Settings/>
+                </Button>
                 <EditContentDialog
                     onClose={this.props.closeLinksContentDialog}
                     open={this.props.linksContentDialogOpen}
 
                     onSave={this.handleSave}
                     content={this.props.linksContent}
+                />
+                <ConfigDialog open={this.props.configDialogOpen}
+                              handleClose={this.handleConfigClose}
+                              apiServerUrlChange={this.handleApiServerUrlChange}
                 />
             </div>
         );

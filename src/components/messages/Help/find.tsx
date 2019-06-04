@@ -17,10 +17,10 @@ export const FindHelpText = (
             Expression Search
         </Typography>
         <Typography variant={"body1"} gutterBottom>
-            The expression field allows to filter datasets for keywords. This can be done by either
-            giving keywords or by using the so-called <Link href={'https://lucene.apache.org/core/2_9_4/queryparsersyntax.html'}>Lucene Syntax</Link>.
+            The expression field allows filtering datasets for keywords. This can be done by either
+            giving keywords or by using the so-called <Link target={'_blank'} href={'https://lucene.apache.org/core/2_9_4/queryparsersyntax.html'}>Lucene Syntax</Link>.
             The following will give some example on how to use the expression field. For more documentation
-            please brows to the <Link href={"https://ocdb.readthedocs.io/en/latest/"}>OCDB Help</Link>.
+            please brows to the <Link target={'_blank'} href={"https://ocdb.readthedocs.io/en/latest/"}>OCDB Help</Link>.
         </Typography>
 
         <Typography variant={"body1"} gutterBottom>
@@ -85,6 +85,27 @@ export const FindHelpText = (
             {listItem('cruise', 'Identifier of the Cruise')}
             {listItem('data_file_name', 'The name of the original data file')}
             {listItem('data_type', 'The data type (e.g. scan)')}
+        </List>
+
+        <Typography variant={"h5"} gutterBottom>
+            Product Groups
+        </Typography>
+
+        <List dense={true}>
+            {listItem('a', 'Spectral absorption coefficients: a, ap, aph, ad, ag')}
+            {listItem('b', 'Spectral scattering coefficients: b, bp')}
+            {listItem('bb', 'Spectral backscattering coefficients: bb, bbp, beta (VSF)')}
+            {listItem('c', 'Spectral attenuation coefficients: c, cg, cp, cpg')}
+            {listItem('DC', 'Dissolved carbon: DIC, DOC, pCO2, alkalinity, CDOM')}
+            {listItem('PC', 'Particulate carbon: PIC, POC')}
+            {listItem('SPM', 'Suspended particulate matter')}
+            {listItem('AOT', 'Aerosol optical properties: AOT, angstrom, water vapor, ozone')}
+            {listItem('nutrients', 'Si, N, P, oxygen')}
+            {listItem('CTD', 'Hydrography: Wt, Sal/Cond, sigmaT')}
+            {listItem('fluorescence', 'Fluorescence')}
+            {listItem('productivity', 'NPP, NCP, GPP, PP')}
+            {listItem('Chl', 'Chlorophyll-a only')}
+            {listItem('HPLC', 'HPLC: Phytoplankton pigments')}
         </List>
     </div>
 );

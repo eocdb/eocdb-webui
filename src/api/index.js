@@ -14,6 +14,7 @@ export {updateSubmissionFile} from './updateSubmissionFile';
 export {deleteSubmissionFile} from './deleteSubmissionFile';
 export {downloadSubmissionFile} from './downloadSubmissionFile';
 export {getLinks} from './getLinks'
+export {getMatchupFiles} from './getMatchupFiles'
 export {saveLinks} from './saveLinks'
 export {getTextFile} from './getTextFile'
 export {HTTPError} from './errors';

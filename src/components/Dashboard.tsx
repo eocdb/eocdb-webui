@@ -10,7 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { AccountCircle, Settings } from '@material-ui/icons';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import createStyles from '@material-ui/core/styles/createStyles';
 
 import DrawerItems from './DrawerItems';
@@ -22,6 +22,7 @@ import { User } from "../model";
 import partnerLogos from "../resources/logos.png"
 import { SearchHistoryItem } from "../types/dataset";
 import { DatasetQuery } from "../api/findDatasets";
+import Help from "@material-ui/icons/Help";
 
 
 const drawerWidth = 240;
@@ -128,6 +129,7 @@ interface DashboardProps extends WithStyles<typeof styles> {
 
     user?: User | null;
     updateSubmissions: () => void;
+    getMatchupFiles: () => void;
 
     searchHistory: SearchHistoryItem[];
     updateSearchHistory: (searchHistory: SearchHistoryItem[]) => void;
@@ -187,7 +189,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     };
 
     handleUpdateDatasetQuery = (selectedHistoryItem: SearchHistoryItem) => {
-        console.log(selectedHistoryItem.query);
         this.props.updateDatasetQuery(selectedHistoryItem.query);
         this.props.searchDatasets();
     };
@@ -250,8 +251,11 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 
                         <img alt={'OCDB Logo'} src={partnerLogos} width={300} className={classes.logo}/>
 
-                        <IconButton color="inherit" onClick={this.props.openConfigDialog}>
-                            <Settings/>
+                        <IconButton color="inherit"
+                                    target={'_blank'}
+                                    href={'http://ocdb.readthedocs.io/'}
+                        >
+                            <Help/>
                         </IconButton>
                         <IconButton color="inherit" onClick={this.props.openLoginDialog}>
                             <AccountCircle/>
@@ -271,7 +275,9 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         </IconButton>
                     </div>
                     <Divider/>
-                    <DrawerItems updateSubmissions={this.props.updateSubmissions} user={this.props.user}
+                    <DrawerItems updateSubmissions={this.props.updateSubmissions}
+                                 getMatchupFiles={this.props.getMatchupFiles}
+                                 user={this.props.user}
                                  handleClick={this.handleDrawerChanged}/>
                     <Divider/>
 

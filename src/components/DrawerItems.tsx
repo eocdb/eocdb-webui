@@ -2,12 +2,16 @@ import * as React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Search, SettingsApplications, CloudUpload, Link } from '@material-ui/icons';
+import Search from '@material-ui/icons/Search';
+import SettingsApplications from '@material-ui/icons/SettingsApplications';
+import CloudUpload from '@material-ui/icons/CloudUpload';
+import Link from '@material-ui/icons/Link';
 import List from '@material-ui/core/List/List';
 import { Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
 import { User } from "../model";
+import AttachFile from "@material-ui/icons/AttachFile";
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({});
@@ -15,6 +19,7 @@ const styles = (theme: Theme) => createStyles({});
 interface DrawerItemsProps extends WithStyles<typeof styles> {
     handleClick: (currentDrawer: string) => void;
     updateSubmissions: () => void;
+    getMatchupFiles: () => void;
     user?: User | null;
 }
 
@@ -26,6 +31,11 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
     handleSubmissionClick = () => {
         this.props.handleClick('Submit');
         this.props.updateSubmissions();
+    };
+
+    handleMatchupClick = () => {
+        this.props.handleClick('Matchup');
+        this.props.getMatchupFiles();
     };
 
     render() {
@@ -73,6 +83,12 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
                         </ListItemIcon>
                         <ListItemText primary="Browse"/>
                     </ListItem>*/}
+                    <ListItem key={'Matchup'} onClick={() => this.handleMatchupClick()} button>
+                        <ListItemIcon>
+                            <AttachFile/>
+                        </ListItemIcon>
+                        <ListItemText primary="Matchup"/>
+                    </ListItem>
                     <ListItem disabled={!submitAllowed} key={'Submit'} onClick={this.handleSubmissionClick} button>
                         <ListItemIcon>
                             <CloudUpload/>
