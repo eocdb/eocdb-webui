@@ -52,14 +52,35 @@ that include the name Colleen in the investigators meta field.
 bash:
 ```bash
 ocdb-cli ds find --expr "investigators: *Colleen*"
+
+{
+  "locations": {},
+  "total_count": 900,
+  "datasets": [
+    {
+      "id": "5c6d632661d82d28bf8ce807",
+      "path": "URI/Mouw/NIH-NSF_Lake_Erie/URI_Lake_Erie_2013/archive/URI_Lake_Erie20130820_2_0m_ag.txt"
+    },
+    ...
 ```
 
 python:
 ```python
-api.find_datasets(investigators="*Colleen*")
+api.find_datasets(expression="investigators:*Colleen*")
+
+{
+  "locations": {},
+  "total_count": 900,
+  "datasets": [
+    {
+      "id": "5c6d632661d82d28bf8ce807",
+      "path": "URI/Mouw/NIH-NSF_Lake_Erie/URI_Lake_Erie_2013/archive/URI_Lake_Erie20130820_2_0m_ag.txt"
+    },
+    ...
 ```
 
-Possible fields are:
+
+__Possible fields are__:
 
 - __received__: Date Received
 - __identifier_product_doi__: Product DOI
@@ -70,7 +91,37 @@ Possible fields are:
 - __cruise__: Identifier of the Cruise
 - __data_file_name__: The name of the original data file
 - __data_type__: The data type (e.g. scan)
+- __data_file_name__: name of teh original data file
+- __documents__: Comma separated list of uploaded supplementary documents
+- __data_status__: e.g. final
+- __start_date__: start of measurements,
+- __end_date__: end of measurements
+- __water_depth__: Water depths on measurement
+- __measurement_depth__: Measurement depth
+- __secchi_depth__: Secchi depth
+- __missing__: Fill value
+- __delimiter__: Delimiter of data file e.g. tab
+- __units__: Comma separated list of units e.g. "nm,1/m,1/m"
 
+
+## Get Datasets
+
+The search engine returns a list of datasets. In order to retrieve the actual data you, you will have 
+to use the result and obtain dataset IDs. A dataset ID can be used to get actual data:
+
+python:
+```python
+api.get_dataset(dataset_id='5c6d632661d82d28bf8ce807', fmt='pandas')
+
+Out[10]: 
+     wavelength      ag   ag_sd
+0           300  6.1015  0.2407
+1           301  5.9565  0.2389
+2           302  5.8140  0.2352
+3           303  5.6763  0.2318
+...
+
+```
 
 ## User Management
 
@@ -272,3 +323,27 @@ ocdb-cli lic
 
 ## List of functions/CLI commands
 
+| Operation                                | CLI              | API                           | Parameters                                                                                                                                              | 
+|------------------------------------------|------------------|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------| 
+| Upload Submission                        | sbm upload       | upload_submission             | store_path: str, dataset_files: Sequence[str], doc_files: Sequence[str], path: str,  submission_id: str, publication_date: str, allow_publication: bool | 
+| Download Datasets by Ids                 | ds download      | download_datasets_by_ids      | ids: List[str], download_docs: bool, out_fn: Optional[str]                                                                                              | 
+| Delete Datasets by submission            | ds  del-by-sb    | delete_datasets_by_submission | submission_id: str                                                                                                                                      | 
+| Get Datasets by submission               | ds get-by-sb     | get_datasets_by_submission    | submission_id: str                                                                                                                                      | 
+| Get a single dataset by ID               | ds get           | get_dataset                   | dataset_id: str, fmt: str                                                                                                                               | 
+| Find datasets                            | ds find          | find_datasets                 |                                                                                                                                                         | 
+| Get submisison by ID                     | sbm get          | get_submission                | submission_id: str                                                                                                                                      | 
+| Get submissions for user                 | sbm user         | get_submissions_for_user      | user_id: str                                                                                                                                            | 
+| Update status of a submission            | sbm status       | update_submission_status      | submission_id: str, status: str                                                                                                                         | 
+| Delete an entire submission              | sbm delete       | delete_submission             | submission_id: str                                                                                                                                      | 
+| Create a submission                      | sbm upload       | upload_submission             | store_path: str, dataset_files: Sequence[str], doc_files: Sequence[str], path: str, submission_id: str, publication_date: str, allow_publication: bool  | 
+| Download a submission file               | sbmfile download | download_submission_file      | submission_id: str, index: int, out_fn: Optional[str]                                                                                                   | 
+| Get a submission file                    | sbmfile get      | get_submission_file           | submission_id: str, index: int                                                                                                                          | 
+| Delete a submission file                 | sbmfile delete   | delete_submission_file        | submission_id: str, index: int                                                                                                                          | 
+| Upload a submission file                 | sbmfile upload   | upload_submission_file        | submission_id: str, index: int, file_name: str                                                                                                          | 
+| Validate a submission file before upload | sbmfile validate | validate_submission_file      | file_name: str                                                                                                                                          | 
+| Add a user                               | user add         | add_user                      | username: str, password: str, email: str, roles: Sequence[str], first_name: str = '',last_name: str = '', phone: str = ''                               | 
+| Delete a user                            | user delete      | delete_user                   | username: str                                                                                                                                           | 
+| Update a user                            | user update      | update_user                   | username: str, key: str, value: str                                                                                                                     | 
+| Get user info                            | user get         | get_user                      | username: str                                                                                                                                           | 
+| Login                                    | user login       | login_user                    | username: Optional[str], password: Optional[str]                                                                                                        | 
+| Logout                                   | user logout      | logout_user                   |                                                                                                                                                         | 

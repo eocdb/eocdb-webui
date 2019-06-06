@@ -1,5 +1,7 @@
 # Deployment
 
+## WebUI
+
 The WEBUI uses the following technologies:
 
 - React
@@ -13,8 +15,8 @@ will install all dependencies and start a development server on port 3000:
 
 ```bash
 
-git clone https://github.com/bcdev/eocdb-webui.git
-cd  eocdb-webui
+git clone https://github.com/bcdev/ocdb-webui.git
+cd  ocdb-webui
 yarn install
 yarn start
 
@@ -36,8 +38,8 @@ static files into the server image. 'up -d' will start two containers: One mongo
 and the backend server which serves the RESTful service as well as the WEBUI site.
 
 ```bash
-git clone https://github.com/bcdev/eocdb-services
-cd eocdb-services
+git clone https://github.com/bcdev/ocdb-services
+cd ocdb-services
 docker-compose build
 docker-compose up -d
 ```
@@ -54,3 +56,7 @@ $ ./docker-compose ps
     eocdb-services_eocdb-server_1   /bin/bash -c source activa ...   Up (healthy)   0.0.0.0:80->4000/tcp
 
 ```
+
+## CLI/Python API
+
+
