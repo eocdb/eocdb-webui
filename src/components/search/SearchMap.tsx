@@ -41,9 +41,9 @@ interface SearchMapProps extends WithStyles<typeof styles> {
 
     selectedBounds?: LatLngBounds;
     mapBounds?: LatLngBounds;
-    drawBounds: boolean;
+    drawBounds?: boolean;
 
-    selectedManualBBox: LatLngBounds;
+    selectedManualBBox?: LatLngBounds;
     updateManualBBox: (selectedBBox: LatLngBounds) => void;
     openManualBBoxDialog: () => void;
     closeManualBBoxDialog: () => void;
@@ -64,6 +64,7 @@ interface SearchMapProps extends WithStyles<typeof styles> {
     selectedRectangleFromAdvancedDialog?: BBoxValue;
 }
 
+
 const DRAW_OPTIONS = {
     circle: true,
     rectangle: true,
@@ -82,6 +83,11 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     //private myEditControl: any = null;
     private mapRef = createRef<Map>();
     private layers: any = [];
+
+    constructor(props: SearchMapProps) {
+        super(props);
+    }
+
 
     createMarker(lat: number, lon: number, key: string, dsId: string) {
         if (this.props.selectedDatasets.indexOf(dsId) >= 0) {
@@ -161,6 +167,12 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
         return bounds;
     };
+
+    componentDidUpdate(prevProps: Readonly<SearchMapProps>, prevState: Readonly<{}>, snapshot?: any): void {
+        if(!this.props.selectedBounds){
+            this.handleClearLayers();
+        }
+    }
 
     handleClearLayers = () => {
         for (let i in this.layers) {

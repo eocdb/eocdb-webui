@@ -33,7 +33,6 @@ class MatchupPanel extends React.PureComponent<MatchupPanelProps> {
 
     // noinspection JSUnusedLocalSymbols
     handleRowClick = (rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => {
-         console.log(rowData);
          window.open('ftp://ftp.eumetsat.int' + rowData[1] + '/' + rowData[0]);
     };
 
@@ -44,7 +43,8 @@ class MatchupPanel extends React.PureComponent<MatchupPanelProps> {
 
         const options = {
             filterType: 'textField' as any,
-            onRowClick: this.handleRowClick
+            onRowClick: this.handleRowClick,
+            selectableRows: 'none' as any,
         };
 
         const data = this.props.matchupFiles.map((item: MatchupFiles) => {

@@ -156,7 +156,7 @@ interface SubmissionTableProps extends WithStyles<typeof styles> {
 
     submissionsValue: Submission[];
 
-    user: User;
+    user: User | null;
 }
 
 
@@ -215,8 +215,11 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
         }
 
         const {order, orderBy} = this.state;
-        const {classes, submissionsValue, user} = this.props;
-        const adminAllowed = this.props.user && (this.props.user.roles.indexOf('admin') === -1);
+        const {classes, submissionsValue} = this.props;
+
+        const user = this.props.user === null ? undefined : this.props.user;
+
+        const adminAllowed = user && (user.roles.indexOf('admin') === -1);
 
         return (
             <div>
@@ -306,7 +309,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                     onClick={() => this.props.onSubmissionReject(
                                                         row.submission_id
                                                     )}
-                                                    disabled={user.roles.indexOf('admin') === -1}
+                                                    disabled={user && user.roles.indexOf('admin') === -1}
                                                 >
                                                     <Icon className={classes.rightIcon}>power_settings_new</Icon>
                                                 </Button>

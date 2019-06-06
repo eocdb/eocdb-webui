@@ -403,6 +403,9 @@ export function sendSubmission() {
             userId: userid,
         };
 
+        if(!state.submissionState.path){
+            return dispatch(postMessage('error', 'Please give path'));
+        }
         return api.uploadStoreFiles(apiServerUrl, uploadData)
             .then((datasetValidationResults: DatasetValidationResult[]) => {
                 dispatch(_sendSubmission(datasetValidationResults));

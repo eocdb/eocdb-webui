@@ -19,14 +19,14 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'OCDB'
+project = 'Copernics Ocean Colour Database'
 copyright = '2019, Copernicus'
 author = 'Copernicus'
 
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '0.1.0'
+release = '0.2'
 
 
 # -- General configuration ---------------------------------------------------

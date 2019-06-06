@@ -103,7 +103,7 @@ interface SubmissionPanelProps extends WithStyles<typeof styles> {
     openHelpDialog: () => void;
     closeHelpDialog: () => void;
 
-    user: User;
+    user: User | null;
 }
 
 
@@ -221,18 +221,20 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
     };
 
     handleUploadSubmissionFileDialogOnSave = (submissionFile: SubmissionFile, files: File[]) => {
-        const uploadData = {
-            file: files[0],
-            submissionId: submissionFile.submission_id,
-            path: submissionFile.filename,
-            publicationDate: null,
-            allowPublication: false,
-            username: this.props.user.name,
-            userId: this.props.user.id,
-        };
+        if(this.props.user) {
+            const uploadData = {
+                file: files[0],
+                submissionId: submissionFile.submission_id,
+                path: submissionFile.filename,
+                publicationDate: null,
+                allowPublication: false,
+                username: this.props.user.name,
+                userId: this.props.user.id,
+            };
 
-        this.props.uploadSubmissionFile(submissionFile, uploadData);
-        this.props.closeUploadSubmissionFileDialog();
+            this.props.uploadSubmissionFile(submissionFile, uploadData);
+            this.props.closeUploadSubmissionFileDialog();
+        }
     };
 
     handleDownloadSubmissionFile = (submissionFile: SubmissionFile) => {
