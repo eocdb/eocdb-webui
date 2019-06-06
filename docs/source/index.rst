@@ -14,10 +14,15 @@ The Copernicus OCDB_
    :maxdepth: 2
    :caption: Contents:
 
-   eocdb-webui
-   eocdb-api-cli
-   eocdb-valication-rules
-   eocdb-rest
-   eocdb-data-access-policy
+   ocdb-webui
+   ocdb-api-cli
+   ocdb-valication-rules
+   ocdb-rest
+   ocdb-data-access-policy
+   ocdb-tech-docs
+   ocdb-tech-deployment
+
+
+
 
 .. image:: static/logos.png

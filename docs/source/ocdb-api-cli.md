@@ -5,35 +5,37 @@ Copernicus Ocean Colour Database (OCDB) Python Client
 ## Installation
 
 ```bash
-    git clone https://github.com/bcdev/eocdb-client
-    cd eocdb-client
+    git clone https://github.com/bcdev/ocdb-client
+    cd ocdb-client
     conda env create
-    source activate eocdb-client-dev
-    python setup.py develop
+    [conda] activate ocdb-client
+    python setup.py install
 ```
 
 
 ## Configure
 
 In order to access the database you need to configure the RESTful API server address.
-The default address is ```http://ocdb.eumetsat.int```.
+The default address is ```https://ocdb.eumetsat.int```.
 
 
 cli:
 ```bash
-eocdb-cli conf server_url http://ocdb.eumetsat.int
+ocdb-cli conf 
+
+https://ocdb.eumetsat.int
 ```
 
 python:
 ```python
-from eocdb_client.api.OCDBApi import new_api
+from ocdb_client.api.OCDBApi import new_api
 
 api = new_api()
 
 api.config
 api.set
 
-#Out[11]: {'server_url': 'http://ocdb.eumetsat.int'}
+#Out[11]: {'server_url': 'https://ocdb.eumetsat.int'}
 ```
 
 
@@ -49,7 +51,7 @@ that include the name Colleen in the investigators meta field.
 
 bash:
 ```bash
-eocdb-cli ds find --expr "investigators: *Colleen*"
+ocdb-cli ds find --expr "investigators: *Colleen*"
 ```
 
 python:
@@ -77,13 +79,13 @@ __Login User__:
 The login procedure will ask for a user name and password. You can specify the password
  as an option. However, under normal circumstances we advice to use the command line prompt.
 
-The example below will login a user with the user name 'scott'. 'scott' is
-a dummy user that should be present in the EUMETSAT production database. Scott
+The example below will login a user with the user name 'admin'. 'admin' is
+a dummy user that should be present in the Copernicus production database. Scott
 does not have any privileges.
 
 cli:
 ```bash
-eocdb-cli user login --user scott --password tiger
+ocdb-cli user login --user scott --password tiger
 ```
 
 python:
@@ -110,10 +112,9 @@ api.add_user(username='<user_name>', password='<passwd>', roles=['<role1>, <role
 
 __Get User Information__:
 
-
 cli:
 ```bash
-eocdb-cli user get --user scott --api-key <your key>
+ocdb-cli user get --user scott
 ```
 
 python:
@@ -127,7 +128,7 @@ __Delete a User__:
 
 cli:
 ```bash
-eocdb-cli user delete --user scott --api-key <your key>
+ocdb-cli user delete --user scott
 ```
 
 python:
@@ -141,15 +142,11 @@ __Update an Existing User__:
 
 cli:
 ```bash
-eocdb-cli user update --key last_name --value <your value>
+ocdb-cli user update --key last_name --value <your value>
 ```
 
 python:
 ```python
-from eocdb_client.api.OCDBApi import new_api
-
-api = new_api()
-
 api.update_user(name=<user_name>, key=<key>, value=<value>)
 ```
 
@@ -161,7 +158,7 @@ __Get Submission__:
 
 cli:
 ```bash
-eocdb-cli sbm get --submission-id <submission-id>
+ocdb-cli sbm get --submission-id <submission-id>
 ```
 
 python:
@@ -175,7 +172,7 @@ __Get Submissions for a specific User__:
 
 cli:
 ```bash
-eocdb-cli sbm user --user-id <user-id>
+ocdb-cli sbm user --user-id <user-id>
 ```
 
 python:
@@ -189,7 +186,7 @@ __Delete Submission__:
 
 cli:
 ```bash
-eocdb-cli sbm delete --submission-id <submission-id>
+ocdb-cli sbm delete --submission-id <submission-id>
 ```
 
 python:
@@ -216,7 +213,7 @@ The following list shows the different statuses and the impact changing them:
 
 cli:
 ```bash
-eocdb-cli sbm status --submission-id <submission-id> --status <status>
+ocdb-cli sbm status --submission-id <submission-id> --status <status>
 ```
 
 
@@ -234,7 +231,7 @@ status. Do not use this feature to download data.
 
 cli:
 ```bash
-eocdb-cli sbm download --submission-id <submission-id> --index <index>
+ocdb-cli sbm download --submission-id <submission-id> --index <index>
 ```
 
 
@@ -253,7 +250,7 @@ replace both documents and measurements.
 
 cli
 ```bash
-eocdb-cli sbm upload --submission-id <submission-id> --index <index> --file <file>
+ocdb-cli sbm upload --submission-id <submission-id> --index <index> --file <file>
 ```
 
 
@@ -269,5 +266,9 @@ __Get License__
 
 
 ```bash
-eocdb-cli lic
+ocdb-cli lic
 ```
+
+
+## List of functions/CLI commands
+

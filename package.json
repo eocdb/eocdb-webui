@@ -4,7 +4,7 @@
   "homepage": ".",
   "private": true,
   "scripts": {
-    "start": "yarn run react-scripts-ts start",
+    "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
