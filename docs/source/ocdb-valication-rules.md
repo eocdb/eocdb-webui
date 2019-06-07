@@ -433,7 +433,14 @@ checks on valid __unit__s, __data type__, and bounds if defined.
 .. csv-table:: The contents of 
    :widths: 15 40 20
    :header: "Field Suffix","Units","Description"
-   :file: source/static/validation/field_suffix.txt
+   
+   _abun,cell/L,cell abundance for a particular (phytoplankton) taxonomic type
+   _biovol,m^3/L,bio-volume for a particular (phytoplankton) taxonomic type
+   _carbon,ug/L,carbon concentration for a particular (phytoplankton) taxonomic type
+   _bincount,none,Number of records averaged into a bin or reported measurement specific to the prefix that _bincount is attached to. The field "bincount" can simply be used if the bincount applies to all forms of data in the file, but this field suffix (i.e., "<field>_bincount") can be used multiple times in the same file for field-specific numbers.
+   _cv,unitless,Coefficient of Variation. Append "_cv" to the end of the field name it describes e.g., bb532_cv
+   _sd,same as base field's units,Standard Deviation. Append "_sd" to the end of the field name it describes e.g., chl_sd
+   _se,same as base field's units,Standard Error. Append "_se" to the end of the field name it describes, e.g., chl_se
 
 ```
 
