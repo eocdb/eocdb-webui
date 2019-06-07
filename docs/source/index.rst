@@ -14,7 +14,7 @@ The Copernicus OCDB_
    :maxdepth: 2
    :caption: Contents:
 
-   ocdb_search
+   ocdb-search
    ocdb-webui
    ocdb-api-cli
    ocdb-valication-rules
