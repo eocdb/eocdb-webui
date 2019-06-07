@@ -29,6 +29,14 @@ version = ''
 release = '0.2'
 
 
+import recommonmark
+from recommonmark.parser import CommonMarkParser
+from recommonmark.transform import AutoStructify
+
+source_parsers = {
+    '.md': CommonMarkParser
+}
+
 # -- General configuration ---------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -42,7 +50,8 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
-    'recommonmark'
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

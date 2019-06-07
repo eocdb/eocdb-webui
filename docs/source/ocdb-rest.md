@@ -11,3 +11,5 @@
 | body row 2 | Cells may span columns.| 
 +------------+------------+-----------+ 
 ```
+
+`$ y=\sum_{i=1}^n g(x_i) $`
