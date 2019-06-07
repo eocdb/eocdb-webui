@@ -82,6 +82,7 @@ api.find_datasets(expression="investigators:*Colleen*")
 
 __Possible fields are__:
 
+- __path__: 
 - __received__: Date Received
 - __identifier_product_doi__: Product DOI
 - __investigators__: Primary Investigators (PIs) of the experiment
