@@ -1,6 +1,6 @@
 site_name: Copernicus Ocean Colour Database
 
-nav:
+pages:
   - Home: index.md
   - Rest: source/ocdb-rest.md
 
