@@ -428,6 +428,14 @@ checks on valid __unit__s, __data type__, and bounds if defined.
 
 ## Field Modifiers
 
+```eval_rst
+
+.. csv-table:: The contents of 
+   :widths: 15 40 20
+   :header: "Field Suffix","Units","Description"
+   :file: static/validation/field_suffix.txt
+
+```
 
 |Field Modifiers|Units                     |Description                                                                                                                                                                                                         |FIELD4                      |FIELD5          |FIELD6                            |FIELD7                |FIELD8       |
 |---------------|--------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|----------------|----------------------------------|----------------------|-------------|
