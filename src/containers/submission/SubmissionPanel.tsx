@@ -69,6 +69,8 @@ const mapStateToProps = (state: AppState) => {
 
         user: state.sessionState.user,
         helpDialogOpen: state.submissionState.helpDialogOpen,
+
+        submissionSucceeded: state.submissionState.submissionSucceeded,
     };
 };
 

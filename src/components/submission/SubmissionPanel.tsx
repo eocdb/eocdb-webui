@@ -104,6 +104,8 @@ interface SubmissionPanelProps extends WithStyles<typeof styles> {
     closeHelpDialog: () => void;
 
     user: User;
+
+    submissionSucceeded: boolean;
 }
 
 
@@ -231,8 +233,11 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
             userId: this.props.user.id,
         };
 
+        console.error(this.props.submissionSucceeded);
         this.props.uploadSubmissionFile(submissionFile, uploadData);
-        this.props.closeUploadSubmissionFileDialog();
+        if(this.props.submissionSucceeded) {
+            this.props.closeUploadSubmissionFileDialog();
+        }
     };
 
     handleDownloadSubmissionFile = (submissionFile: SubmissionFile) => {
@@ -274,7 +279,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     helpDialogOpen={this.props.helpDialogOpen}
                     openHelpDialog={this.props.openHelpDialog}
                     closeHelpDialog={this.props.closeHelpDialog}
-
+                    submissionSucceeded={this.props.submissionSucceeded}
             />
                 <SubmissionTable
                     show={!this.props.submissionDialogOpen}
