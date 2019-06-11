@@ -1,8 +1,8 @@
 # OCDB Data Import Validation Rules
 
-The OCDB database system applied validation rules on data submission. These rules are based on
-the NASA Seabass rules, but can have differences. The rules apply on the header (meta data) if
-a Seabass file as well as on records.
+The OCDB database system applies data validation rules during data submission. Teh aim is to
+ensure inter-operability. Please refer to for more information about the structure
+of these rules. This chapter will list the current rules.
 
 ### Header
 
@@ -453,6 +453,23 @@ checks on valid __unit__s, __data type__, and bounds if defined.
 
 .. csv-table:: The contents of 
    :widths: 15 40 20
-   :header: "Field Suffix","Units","Description"
+   :header: "Field Suffix1","Units","Description"
    :file: source/ocdb_fields.csv
+```
+
+```eval_rst
+
+.. csv-table:: The contents of 
+   :widths: 15 40 20
+   :header: "Field Suffix2","Units","Description"
+   :file: ocdb_fields.csv
+```
+
+
+```eval_rst
+
+.. csv-table:: The contents of 
+   :widths: 15 40 20
+   :header: "Field Suffix3","Units","Description"
+   :file: docs/source/ocdb_fields.csv
 ```
