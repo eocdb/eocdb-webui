@@ -417,11 +417,10 @@ checks on valid __unit__s, __data type__, and bounds if defined.
 
 ```eval_rst
 
-.. csv-table:: The contents of 
+.. csv-table:: field Suffixes
    :widths: 15 40 20
    :header-rows: 1
-   
-    :file: ocdb-suffixes.csv
+   :file: ocdb-suffixes.csv
 ```
 
 ## Field Modifiers
@@ -431,8 +430,7 @@ checks on valid __unit__s, __data type__, and bounds if defined.
 .. csv-table:: The contents of 
    :widths: 15 40 20
    :header-rows: 1
-   
-    :file: ocdb-modifiers.csv
+   :file: ocdb-modifiers.csv
 ```
 
 ## Fields
@@ -443,7 +441,6 @@ checks on valid __unit__s, __data type__, and bounds if defined.
 .. csv-table:: The contents of 
    :widths: 15 40 20
    :header-rows: 1
-   
    :file: ocdb_fields.csv
 ```
 
