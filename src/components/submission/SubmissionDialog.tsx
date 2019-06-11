@@ -64,6 +64,7 @@ interface SubmissionDialogProps extends WithStyles<typeof styles> {
     helpDialogOpen: boolean;
     openHelpDialog: () => void;
     closeHelpDialog: () => void;
+    submissionSucceeded: boolean;
 }
 
 
@@ -98,8 +99,10 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
 
     handleFileSubmit = () => {
         this.props.onFileSubmit();
-        this.props.onClearForm();
-        this.props.onClose();
+        if(this.props.submissionSucceeded) {
+            this.props.onClearForm();
+            this.props.onClose();
+        }
     };
 
     render() {

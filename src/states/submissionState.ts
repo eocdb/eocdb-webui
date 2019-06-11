@@ -28,6 +28,8 @@ export interface SubmissionState {
     helpDialogOpen: boolean;
 
     submissionPublicationDate: string | null;
+
+    submissionSucceeded: boolean;
 }
 
 export function newSubmissionState() {
@@ -78,5 +80,7 @@ export function newSubmissionState() {
 
         helpDialogOpen: false,
         submissionPublicationDate: null,
+
+        submissionSucceeded: false,
     }
 }

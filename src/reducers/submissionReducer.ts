@@ -26,7 +26,7 @@ import {
     OPEN_SUBMISSION_PUBLICATION_DATE_DIALOG,
     CLOSE_SUBMISSION_PUBLICATION_DATE_DIALOG,
     UPDATE_SUBMISSION_PUBLICATION_DATE, UPDATE_PUBLICATION_DATE, UPDATE_ALLOW_PUBLICATION,
-    CLOSE_HELP_DIALOG, OPEN_HELP_DIALOG
+    CLOSE_HELP_DIALOG, OPEN_HELP_DIALOG, UPDATE_SUBMISSION_SUCCEEDED
 } from "../actions/submissionActions";
 
 
@@ -93,6 +93,8 @@ export function submissionReducer(state: SubmissionState = initialState, action:
             return {...state, helpDialogOpen: false};
         case UPDATE_SUBMISSION_PUBLICATION_DATE:
             return {...state, submissionPublicationDate: action.submissionPublicationDate};
+        case UPDATE_SUBMISSION_SUCCEEDED:
+            return {...state, submissionSucceeded: action.submissionSucceeded};
         default:
             return state;
     }

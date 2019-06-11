@@ -384,7 +384,6 @@ class DataTable extends React.Component<DataTableProps> {
                                     aria-checked={this.isSelected(row.id)}
                                     tabIndex={-1}
                                     selected={this.isSelected(row.id)}
-                                    onClick={() => this.props.downloadDataset(row.id)}
                                 >
                                     <TableCell padding="checkbox">
                                         <Checkbox
@@ -393,7 +392,7 @@ class DataTable extends React.Component<DataTableProps> {
                                             onClick={(event) => this.handleClick(event, row.id, selectedDatasets)}
                                         />
                                     </TableCell>
-                                    <TableCell component="th" scope="row">
+                                    <TableCell style={{cursor: 'pointer'}} onClick={() => this.props.downloadDataset(row.id)} component="th" scope="row">
                                         <Typography variant="button" gutterBottom>
                                             {fileName}
                                         </Typography>
