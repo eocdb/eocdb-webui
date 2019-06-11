@@ -1,4 +1,4 @@
-Field Name, Units, Description, Description, Description
+Field Name, Units, Description
 a,1/m,Total absorption coefficient (aw + ap + ag),,Total absorption coefficient (aw + ap + ag)
 a*ph,m^2/mg,Chlorophyll a specific absorption coefficient,,Chlorophyll a specific absorption coefficient
 a*srfa,m^2/mg,Specific absorption coefficient of Suwanee River Fulvic Acid standard,,Specific absorption coefficient of Suwanee River Fulvic Acid standard
