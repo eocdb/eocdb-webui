@@ -4,9 +4,9 @@ The aim of the Copernicus Ocean Colour Databas (OCDB) is to provide a platform t
 ocean related _in-situ_ measurements. This tool enables researchers to upload
 their own _in-situ_ data provided using the the [Seabass data format](https://earthdata.nasa.gov/esdis/eso/standards-and-references/ascii-file-format-guidelines-for-earth-science-data/seabass-data-file-format). 
 
-The main features of the OCDB database system are rhe provision of the data to teh research
+The main features of the OCDB database system are rhe provision of the data to the research
 community with an enhanced search facility. Further, data that is uploaded by
-teh researcher will automatically validated during the upload process which includes
+the researcher will automatically validated during the upload process which includes
 a report on the validation. The researcher also keeps full control over
 the submission and publication process.     
 
@@ -22,6 +22,8 @@ and also allows chaining.
 __Examples__:
 
 
+
+
 ## Submissions
 
 In this section we describe how to submit data. We assume that you have a user 
@@ -31,7 +33,7 @@ account and have logged in to the system. When clicking on the submission sectio
 
 If you want to add a new submission click on New Submission on the top rihht corner.
 A new dialog will open. Please add an identifier for your submission and a path
-teh submissions will be stored under. This will be used to intermittantly 
+the submissions will be stored under. This will be used to intermittantly 
 store your data files and will be used when zipping data files on download.
 
 When submitting data, you will be asked to provide a publication date. Leave this empty if you do not desire your data to be searchible. Otherwise, indicate
