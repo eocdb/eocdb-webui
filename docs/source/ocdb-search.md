@@ -37,8 +37,7 @@ investigators: ?Colleen?
 __Operators AND/OR__:
 
 ```
-investigators: *Colleen*
-investigators: ?Colleen?
+investigators: *Colleen* AND investigators: Helge
 ```
 
 
@@ -48,6 +47,8 @@ __Operators Lower/Greater Than__:
 investigators: *Colleen*
 investigators: ?Colleen?
 ```
+
+
 
 
 
@@ -74,6 +75,4 @@ HPLC         HPLC: Phytoplankton pigments
 ============ =============================================================
 ```
 
-
-## Possible Fields
 

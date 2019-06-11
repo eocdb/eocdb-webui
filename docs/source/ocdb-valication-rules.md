@@ -413,27 +413,6 @@ checks on valid __unit__s, __data type__, and bounds if defined.
 - __name__: z_mld, __unit__: m, __data type__: number, __lower bound__: 0
 - __name__: zea, __unit__: mg/m^3,ug/l, __data type__: number, __lower bound__: 0
 
-## Field suffixes
-
-```eval_rst
-
-.. csv-table:: The contents of 
-   :widths: 15 40 20
-   :header-rows: 1
-   
-    :file: ocdb-suffixes.csv
-```
-
-## Field Modifiers
-
-```eval_rst
-
-.. csv-table:: The contents of 
-   :widths: 15 40 20
-   :header-rows: 1
-   
-    :file: ocdb-modifiers.csv
-```
 
 ## Fields
 
