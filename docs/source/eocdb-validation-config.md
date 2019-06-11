@@ -1,5 +1,15 @@
 # Validation configuration
-Every in-situ measurement document entering the OC-DB system is validated 
+
+```eval_rst
+
+.. csv-table:: The contents of 
+   :widths: 15 40 20
+   :header-rows: 1
+   
+    :file: ocdb-modifiers.csv
+```
+
+Every _in-situ_ measurement document entering the OCDB system is validated 
 against a list of rules before being accepted by the system. 
 The validation rules can be freely configured using the configuration file 
 "validation_config.json"
