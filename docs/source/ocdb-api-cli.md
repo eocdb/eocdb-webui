@@ -1,8 +1,14 @@
 # The OCDB Command Line Client and Python API
 
-Copernicus Ocean Colour Database (OCDB) Python Client
+Automation and easy access is important. The OCDB database system does,
+therefore,
+offer a python command line interface as well as a Python API to access
+as well as manage submissions and users. 
+
 
 ## Installation
+
+To install the CLI and API, please use following steps.
 
 ```bash
     git clone https://github.com/bcdev/ocdb-client
@@ -15,7 +21,7 @@ Copernicus Ocean Colour Database (OCDB) Python Client
 
 ## Configure
 
-In order to access the database you need to configure the RESTful API server address.
+In order to access the database you need to configure the REST API server address.
 The default address is ```https://ocdb.eumetsat.int```.
 
 
@@ -24,6 +30,8 @@ cli:
 ocdb-cli conf 
 
 https://ocdb.eumetsat.int
+
+ocdb-cli cond server_url [some url]
 ```
 
 python:
@@ -33,9 +41,11 @@ from ocdb_client.api.OCDBApi import new_api
 api = new_api()
 
 api.config
-api.set
 
 #Out[11]: {'server_url': 'https://ocdb.eumetsat.int'}
+
+api.set(server_url="[some server url]")
+
 ```
 
 
@@ -324,27 +334,67 @@ ocdb-cli lic
 
 ## List of functions/CLI commands
 
-| Operation                                | CLI              | API                           | Parameters                                                                                                                                              | 
-|------------------------------------------|------------------|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------| 
-| Upload Submission                        | sbm upload   | upload_submission             | store_path: str, dataset_files: Sequence[str], doc_files: Sequence[str], path: str,  submission_id: str, publication_date: str, allow_publication: bool | 
-| Download datasets by Ids                 | ds download      | download_datasets_by_ids      | ids: List[str], download_docs: bool, out_fn: Optional[str]                                                                                              | 
-| Delete datasets by submission            | ds del-by-sb     | delete_datasets_by_submission | submission_id: str                                                                                                                                      | 
-| Get datasets by submission               | ds get-by-sb     | get_datasets_by_submission    | submission_id: str                                                                                                                                      | 
-| Get a single dataset by ID               | ds get           | get_dataset                   | dataset_id: str, fmt: str                                                                                                                               | 
-| Find datasets                            | ds find          | find_datasets                 |                                                                                                                                                         | 
-| Get submission by ID                     | sbm get          | get_submission                | submission_id: str                                                                                                                                      | 
-| Get submissions for user                 | sbm user         | get_submissions_for_user      | user_id: str                                                                                                                                            | 
-| Update status of a submission            | sbm status       | update_submission_status      | submission_id: str, status: str                                                                                                                         | 
-| Delete an entire submission              | sbm delete       | delete_submission             | submission_id: str                                                                                                                                      | 
-| Create a submission                      | sbm upload       | upload_submission             | store_path: str, dataset_files: Sequence[str], doc_files: Sequence[str], path: str, submission_id: str, publication_date: str, allow_publication: bool  | 
-| Download a submission file               | sbmfile download | download_submission_file      | submission_id: str, index: int, out_fn: Optional[str]                                                                                                   | 
-| Get a submission file                    | sbmfile get      | get_submission_file           | submission_id: str, index: int                                                                                                                          | 
-| Delete a submission file                 | sbmfile delete   | delete_submission_file        | submission_id: str, index: int                                                                                                                          | 
-| Upload a submission file                 | sbmfile upload   | upload_submission_file        | submission_id: str, index: int, file_name: str                                                                                                          | 
-| Validate a submission file before upload | sbmfile validate | validate_submission_file      | file_name: str                                                                                                                                          | 
-| Add a user                               | user add         | add_user                      | username: str, password: str, email: str, roles: Sequence[str], first_name: str = '',last_name: str = '', phone: str = ''                               | 
-| Delete a user                            | user delete      | delete_user                   | username: str                                                                                                                                           | 
-| Update a user                            | user update      | update_user                   | username: str, key: str, value: str                                                                                                                     | 
-| Get user info                            | user get         | get_user                      | username: str                                                                                                                                           | 
-| Login                                    | user login       | login_user                    | username: Optional[str], password: Optional[str]                                                                                                        | 
-| Logout                                   | user logout      | logout_user                   |                                                                                                                                                         | 
+
+```eval_rst
++-----------+----+--------+--------------------------------------------+
+| Operation | CL | API    | Parameters                                 |
+|           | I  |        |                                            |
++===========+====+========+============================================+
+| Upload    | sb | upload | store_path: str, dataset_files:            |
+| Submissio | m  | _submi | Sequence[str], doc_files: Sequence[str],   |
+| n         | up | ssion  | path: str, submission_id: str,             |
+|           | lo |        | publication_date: str, allow_publication:  |
+|           | ad |        | bool                                       |
++-----------+----+--------+--------------------------------------------+
+| Download  | ds | downlo | ids: List[str], download_docs: bool,       |
+| datasets  | do | ad_dat | out_fn: Optional[str]                      |
+| by Ids    | wn | asets_ |                                            |
+|           | lo | by_ids |                                            |
+|           | ad |        |                                            |
++-----------+----+--------+--------------------------------------------+
+| Delete    | ds | delete | submission_id: str                         |
+| datasets  | de | _datas |                                            |
+| by        | l- | ets_by |                                            |
+| submissio | by | _submi |                                            |
+| n         | -s | ssion  |                                            |
+|           | b  |        |                                            |
++-----------+----+--------+--------------------------------------------+
+| Get       | ds | get_da | submission_id: str                         |
+| datasets  | ge | tasets |                                            |
+| by        | t- | _by_su |                                            |
+| submissio | by | bmissi |                                            |
+| n         | -s | on     |                                            |
+|           | b  |        |                                            |
++-----------+----+--------+--------------------------------------------+
+| Get a     | ds | get_da | dataset_id: str, fmt: str                  |
+| single    | ge | taset  |                                            |
+| dataset   | t  |        |                                            |
+| by ID     |    |        |                                            |
++-----------+----+--------+--------------------------------------------+
+| Find      | ds | find_d |                                            |
+| datasets  | fi | ataset |                                            |
+|           | nd | s      |                                            |
++-----------+----+--------+--------------------------------------------+
+| Get       | sb | get_su | submission_id: str                         |
+| submissio | m  | bmissi |                                            |
+| n         | ge | on     |                                            |
+| by ID     | t  |        |                                            |
++-----------+----+--------+--------------------------------------------+
+| Get       | sb | get_su | user_id: str                               |
+| submissio | m  | bmissi |                                            |
+| ns        | us | ons_fo |                                            |
+| for user  | er | r_user |                                            |
++-----------+----+--------+--------------------------------------------+
+| Update    | sb | update | submission_id: str, status: str            |
+| status of | m  | _submi |                                            |
+| a         | st | ssion_ |                                            |
+| submissio | at | status |                                            |
+| n         | us |        |                                            |
++-----------+----+--------+--------------------------------------------+
+| Delete an | sb | delete | submission_id: str                         |
+| entire    | m  | _submi |                                            |
+| submissio | de | ssion  |                                            |
+| n         | le |        |                                            |
+|           | te |        |                                            |
++-----------+----+--------+--------------------------------------------+
+```
