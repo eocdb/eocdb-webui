@@ -180,6 +180,24 @@ export function downloadDatasets() {
     };
 }
 
+export function downloadDataset(id: string) {
+    return (dispatch: Dispatch<UpdateSelectedDatasets | StopDownloading | MessageLogAction>, getState: ()
+        => AppState) => {
+        const state = getState();
+        const apiServerUrl = state.configState.apiServerUrl;
+        const datasetIds = [id];
+        const downloadDocs = state.dataTableState.downloadDocs;
+
+        return api.downloadStoreFilesByIds(apiServerUrl, datasetIds, downloadDocs)
+            .then(() => {
+                dispatch(stopDownloading());
+            })
+            .catch((error: string) => {
+                dispatch(postMessage('error', error + ''));
+            });
+    };
+}
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

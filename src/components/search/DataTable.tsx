@@ -189,6 +189,7 @@ export interface DataTableProps extends WithStyles<typeof styles> {
     startDownloading: () => void;
 
     downloadDatasets: () => void;
+    downloadDataset: (id: string) => void;
     downloading: boolean;
 
     updatePlotState: (plotState: PlotState) => void;
@@ -383,7 +384,6 @@ class DataTable extends React.Component<DataTableProps> {
                                     aria-checked={this.isSelected(row.id)}
                                     tabIndex={-1}
                                     selected={this.isSelected(row.id)}
-                                    // onClick={(event) => this.handleClick(event, row.id, selectedDatasets)}
                                 >
                                     <TableCell padding="checkbox">
                                         <Checkbox
@@ -392,7 +392,7 @@ class DataTable extends React.Component<DataTableProps> {
                                             onClick={(event) => this.handleClick(event, row.id, selectedDatasets)}
                                         />
                                     </TableCell>
-                                    <TableCell component="th" scope="row">
+                                    <TableCell style={{cursor: 'pointer'}} onClick={() => this.props.downloadDataset(row.id)} component="th" scope="row">
                                         <Typography variant="button" gutterBottom>
                                             {fileName}
                                         </Typography>

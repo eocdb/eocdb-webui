@@ -5,6 +5,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 import MUIDataTable from "mui-datatables";
 import { MatchupFiles } from "../../model/MatchupFiles";
+// import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+// import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -36,6 +38,17 @@ class MatchupPanel extends React.PureComponent<MatchupPanelProps> {
          window.open('ftp://ftp.eumetsat.int' + rowData[1] + '/' + rowData[0]);
     };
 
+    // getMuiTheme = () => createMuiTheme({
+    //     overrides: {
+    //         MUIDataTableBodyCell: {
+    //             root: {
+    //                 backgroundColor: "#FF0000",
+    //                 cursor: 'pointer'
+    //             }
+    //         }
+    //     }
+    // });
+
     render() {
         if (!this.props.show) {
             return null;
@@ -53,12 +66,12 @@ class MatchupPanel extends React.PureComponent<MatchupPanelProps> {
 
         return (
             <div>
-                <MUIDataTable
-                    title={"Matchup Files"}
-                    data={data}
-                    columns={columns}
-                    options={options}
-                />
+                    <MUIDataTable
+                        title={"Matchup Files"}
+                        data={data}
+                        columns={columns}
+                        options={options}
+                    />
             </div>
         );
     }

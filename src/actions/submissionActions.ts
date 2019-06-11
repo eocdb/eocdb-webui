@@ -379,9 +379,25 @@ export function _sendSubmission(currentDatasetValidationResults: DatasetValidati
     }
 }
 
+export const UPDATE_SUBMISSION_SUCCEEDED = 'UPDATE_SUBMISSION_SUCCEEDED';
+export type UPDATE_SUBMISSION_SUCCEEDED = typeof UPDATE_SUBMISSION_SUCCEEDED;
+
+export interface UpdateSubmissionSucceeded {
+    type: UPDATE_SUBMISSION_SUCCEEDED;
+    submissionSucceeded: boolean;
+}
+
+export function _updateSubmissionSucceeded(submissionSucceeded: boolean): UpdateSubmissionSucceeded{
+
+    return {
+        type: UPDATE_SUBMISSION_SUCCEEDED,
+        submissionSucceeded
+    }
+}
 
 export function sendSubmission() {
-    return (dispatch: Dispatch<SubmitAction | MessageLogAction | UpdateSearchHistory | StopLoading>, getState: ()
+    return (dispatch: Dispatch<SubmitAction | MessageLogAction | UpdateSubmissionSucceeded
+        | UpdateSearchHistory | StopLoading>, getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
@@ -419,7 +435,11 @@ export function sendSubmission() {
             .then(() => {
                 dispatch(postMessage("success", 'Submissions Loaded'));
             })
+            .then(() => {
+                dispatch(_updateSubmissionSucceeded(true));
+            })
             .catch((error: string) => {
+                dispatch(_updateSubmissionSucceeded(false));
                 dispatch(postMessage('error', error + ''));
             });
     };
@@ -810,4 +830,5 @@ export type SubmitAction = OpenSubmitSteps
     | UpdateSelectedSubmissionFile
     | UpdateCurrentSubmissionFileIndex
     | OpenHelpDialog
-    | CloseHelpDialog;
+    | CloseHelpDialog
+    | UpdateSubmissionSucceeded;

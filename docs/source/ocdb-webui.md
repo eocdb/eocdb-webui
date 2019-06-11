@@ -1,18 +1,26 @@
-# User Manual for the EOCDB Web
+# User Manual for the OCDB Web
 
-The aim of the Ocean Colour Databas (OCDB) is to provide a platform to publish
+The aim of the Copernicus Ocean Colour Databas (OCDB) is to provide a platform to publish
 ocean related _in-situ_ measurements. This tool enables researchers to upload
-their own _in-situ_ data provided in the Seabass data format. This system will
-validate the data and make it searchable. This is an attempt to make data findable, accessible, interoperable as well as reusable (FAIR principles, quote).
+their own _in-situ_ data provided using the the [Seabass data format](https://earthdata.nasa.gov/esdis/eso/standards-and-references/ascii-file-format-guidelines-for-earth-science-data/seabass-data-file-format). 
+
+The main features of the OCDB database system are rhe provision of the data to teh research
+community with an enhanced search facility. Further, data that is uploaded by
+teh researcher will automatically validated during the upload process which includes
+a report on the validation. The researcher also keeps full control over
+the submission and publication process.     
 
 ## Search
 
-All data the submittor has agreed to publish is searchable for the public. 
+All data the submitter has agreed to publish is searchable for the public. 
 The OCDB WebUI offers a search interface. Main feature of that interface is the search text field.
 You can enter a single keyword which will attempt to find data using the meta
-data fields provided by the submittor. This field also allows to use the
+data fields provided by the submitter. This field also allows to use the
 so-called Lucene syntax which enables you to search for specific field values
 and also allows chaining.
+
+__Examples__:
+
 
 ## Submissions
 

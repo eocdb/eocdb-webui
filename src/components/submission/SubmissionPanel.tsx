@@ -103,6 +103,7 @@ interface SubmissionPanelProps extends WithStyles<typeof styles> {
     openHelpDialog: () => void;
     closeHelpDialog: () => void;
 
+    submissionSucceeded: boolean;
     user: User | null;
 }
 
@@ -276,7 +277,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     helpDialogOpen={this.props.helpDialogOpen}
                     openHelpDialog={this.props.openHelpDialog}
                     closeHelpDialog={this.props.closeHelpDialog}
-
+                    submissionSucceeded={this.props.submissionSucceeded}
             />
                 <SubmissionTable
                     show={!this.props.submissionDialogOpen}
