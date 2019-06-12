@@ -6,7 +6,9 @@ Go to [GitHub](https://github.com) and create an account for yourself.
 In future you will be able to use your internal BitBucket infrastructure
 to do exactly the same.
 
-## Step 2: Click on an md file
+![register](static/webui/docs_github_register.png)
+
+## Step 2: Edit an md file
 
 Go to the [OCDB docs](https://github.com) and click on an md file. On
 the top right corner you find an edit button. Click it and an editor will 
@@ -14,6 +16,10 @@ open.
 
 The editor uses so-called markdown. Markdown documents are great for
 these kinds of documents but have two issues: images and tables.
+
+
+![open](static/webui/docs_open_md_file.png)
+![edit](static/webui/docs_edit_md.png)
 
 ## A brief on Markdown
 
@@ -134,3 +140,5 @@ but will refered to as:
 ```markdown
 ![submission](static/webui/submission_dialog.png)
 ```
+
+![upload](static/webui/docs_upload_files.png)
