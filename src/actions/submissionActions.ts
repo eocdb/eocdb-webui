@@ -419,24 +419,17 @@ export function sendSubmission() {
             userId: userid,
         };
 
-        if(!state.submissionState.path){
-            return dispatch(postMessage('error', 'Please give path'));
-        }
         return api.uploadStoreFiles(apiServerUrl, uploadData)
             .then((datasetValidationResults: DatasetValidationResult[]) => {
                 dispatch(_sendSubmission(datasetValidationResults));
+                dispatch(postMessage("success", 'Submission Sent'));
+                dispatch(_updateSubmissionSucceeded(true));
             })
             .then(() => {
-                return api.getSubmissionsForUser(apiServerUrl, userid)
+                api.getSubmissionsForUser(apiServerUrl, userid)
                     .then((submissions: Submission[]) => {
                         dispatch(updateSubmissionsForUser(submissions));
                     })
-            })
-            .then(() => {
-                dispatch(postMessage("success", 'Submissions Loaded'));
-            })
-            .then(() => {
-                dispatch(_updateSubmissionSucceeded(true));
             })
             .catch((error: string) => {
                 dispatch(_updateSubmissionSucceeded(false));
