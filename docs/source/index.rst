@@ -18,6 +18,7 @@ The Copernicus OCDB_
    ocdb-webui
    ocdb-api-cli
    ocdb-valication-rules
+   ocdb-valication-config
    ocdb-rest
    ocdb-data-access-policy
    ocdb-tech-docs

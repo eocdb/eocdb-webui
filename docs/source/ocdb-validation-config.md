@@ -1,13 +1,5 @@
 # Validation configuration
 
-```eval_rst
-
-.. csv-table:: The contents of 
-   :widths: 15 40 20
-   :header-rows: 1
-   
-    :file: ocdb-modifiers.csv
-```
 
 Every _in-situ_ measurement document entering the OCDB system is validated 
 against a list of rules before being accepted by the system. 
@@ -266,5 +258,40 @@ Example:
 
 ## Errors and Warnings
 
-* messages list
-* resolving engine - tags
+The OCDB validation system allows to customize most of the error and warning messages. Messages can be either 
+literal messages (i.e. these are displayed "as is" ) or can refer to a predefined message using the "@" character.
+
+Example:
+
+    {
+      "name": "adg",
+      "unit": "1/m",
+      "lower_bound": 0,
+      "data_type": "number",
+      "value_error": "@field_out_of_bounds",
+      "unit_error": "This field has a faulty unit"
+    } 
+    
+The "value_error" is referring to a message template while the "unit_error" is using a literal error message.
+
+The predefined messages are stored in the sections "errors" and "warnings" of the configuration file. A message is 
+defined by a message name and the message text. Validation rules always refer to the name using the pattern "@name".
+
+Example:
+
+    "errors": [
+        {
+            "name": "south_north_mismatch",
+            "message": "South_latitude is larger than north_latitude"
+           }
+    ]
+
+The versatility of this message-system is supported by the possibility to use tags in the message templates. 
+A tag is added to a message by writing the tag name in curly braces. Example:
+
+    {
+      "name": "field_has_wrong_unit",
+      "message": "The units of '{field_name}', should be '{unit}', not '{bad_unit}'."
+    } 
+
+The possible tags for each validation rule is listed above in the descriptions of the rule parameters.
