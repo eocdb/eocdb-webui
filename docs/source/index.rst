@@ -22,6 +22,10 @@ The Copernicus OCDB_
    ocdb-data-access-policy
    ocdb-tech-docs
    ocdb-tech-deployment
+   ocdb-training
+   ocdb_training_ilaria
+   ocdb_training_ewa
+   ocdb_training_david
 
 
 
