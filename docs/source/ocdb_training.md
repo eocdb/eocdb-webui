@@ -90,4 +90,19 @@ docs [GitHub page](https://github.com/bcdev/ocdb_docs) and change the
 spellos in test.md.
 
 Once done, have a coffee. When you have finished enjoying the coffee
-check whether the [document](https://ocdb.readthedocs.io) has changed 
+check whether the [document](https://ocdb.readthedocs.io) has changed
+
+## Challenge 3
+
+Upload an image file to the documentation repository to an appropriate
+directory.
+
+## Challenge 4
+
+Include that image to the documentation
+
+## Challenge 5
+
+repeat that process using a csv file.
+
+
