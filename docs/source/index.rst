@@ -14,10 +14,10 @@ The Copernicus OCDB_
    :maxdepth: 2
    :caption: Contents:
 
-   ocdb-search
    ocdb-webui
    ocdb-api-cli
-   ocdb-valication-rules
+   ocdb-search
+   ocdb-validation-rules
    ocdb-rest
    ocdb-data-access-policy
    ocdb-tech-docs
