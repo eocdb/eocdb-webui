@@ -128,9 +128,9 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
 
     selectedBounds?: LatLngBounds;
     mapBounds?: LatLngBounds;
-    drawBounds: boolean;
+    drawBounds?: boolean;
 
-    selectedManualBBox: LatLngBounds;
+    selectedManualBBox?: LatLngBounds;
     updateManualBBox: (selectedBBox: LatLngBounds) => void;
     openManualBBoxDialog: () => void;
     closeManualBBoxDialog: () => void;

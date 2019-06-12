@@ -14,7 +14,7 @@ export function getSubmissionsForUser(apiServerUrl: string, user: number): Promi
             method: 'GET',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             credentials: "same-origin",
         }

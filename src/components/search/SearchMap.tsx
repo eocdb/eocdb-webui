@@ -41,9 +41,9 @@ interface SearchMapProps extends WithStyles<typeof styles> {
 
     selectedBounds?: LatLngBounds;
     mapBounds?: LatLngBounds;
-    drawBounds: boolean;
+    drawBounds?: boolean;
 
-    selectedManualBBox: LatLngBounds;
+    selectedManualBBox?: LatLngBounds;
     updateManualBBox: (selectedBBox: LatLngBounds) => void;
     openManualBBoxDialog: () => void;
     closeManualBBoxDialog: () => void;
@@ -64,6 +64,7 @@ interface SearchMapProps extends WithStyles<typeof styles> {
     selectedRectangleFromAdvancedDialog?: BBoxValue;
 }
 
+
 const DRAW_OPTIONS = {
     circle: true,
     rectangle: true,
@@ -82,6 +83,11 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     //private myEditControl: any = null;
     private mapRef = createRef<Map>();
     private layers: any = [];
+
+    constructor(props: SearchMapProps) {
+        super(props);
+    }
+
 
     createMarker(lat: number, lon: number, key: string, dsId: string) {
         if (this.props.selectedDatasets.indexOf(dsId) >= 0) {
@@ -162,6 +168,12 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         return bounds;
     };
 
+    componentDidUpdate(prevProps: Readonly<SearchMapProps>, prevState: Readonly<{}>, snapshot?: any): void {
+        if(!this.props.selectedBounds){
+            this.handleClearLayers();
+        }
+    }
+
     handleClearLayers = () => {
         for (let i in this.layers) {
             this.editableFeatureGroupRef.leafletElement.removeLayer(this.layers[i]);
@@ -238,21 +250,18 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                         </LeafletConsumer>
                     </Control>
                     <TileLayer
-                        zIndex={1}
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                     />
                     <TileLayer
-                        zIndex={1}
                         url="https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer/tile/{z}/{y}/{x}"
                         attribution="&copy; <a href=&quot;https://www.gebco.net/data_and_products/gridded_bathymetry_data/&quot;>GEBCO</a>, <a href=&quot;https://maps.ngdc.noaa.gov/&quot;>NOAHH</a> and contributors"
-                        maxZoom={9}
+                        maxZoom={6}
                     />
                     <TileLayer
-                        zIndex={1}
-                        url="https://a.tiles.mapbox.com/v3/mapbox.natural-earth-2/{z}/{x}/{y}.png"
-                        attribution="&copy; <a href=&quot;https://www.naturalearthdata.com/&quot;>MapBox</a>, <a href=&quot;https://www.mapbox.com/&quot;>MapBox</a> and contributors"
-                        maxZoom={6}
+                        url="https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_hillshade/MapServer/tile/{z}/{y}/{x}"
+                        attribution="&copy; <a href=&quot;https://www.gebco.net/data_and_products/gridded_bathymetry_data/&quot;>GEBCO</a>, <a href=&quot;https://maps.ngdc.noaa.gov/&quot;>NOAHH</a> and contributors"
+                        maxZoom={3}
                     />
 
                     {markerClusterGroup}

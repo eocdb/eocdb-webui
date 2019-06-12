@@ -61,8 +61,8 @@ export function collectComponents(datasetQuery: DatasetQuery) {
     collectTimeComponent(datasetQuery, queryComponents);
     collectRegionComponent(datasetQuery, queryComponents);
     collectSubmissionIdComponent(datasetQuery, queryComponents);
-    collectStatusComponent(datasetQuery, queryComponents);
-    collectUserIdComponent(datasetQuery, queryComponents);
+    //collectStatusComponent(datasetQuery, queryComponents);
+    //collectUserIdComponent(datasetQuery, queryComponents);
     collectProductComponents(datasetQuery, queryComponents);
     collectMeasurementTypeComponent(datasetQuery, queryComponents);
     collectWavelengthsTypeComponent(datasetQuery, queryComponents);
@@ -114,17 +114,17 @@ function collectSubmissionIdComponent(queryParameters: DatasetQuery, queryCompon
     }
 }
 
-function collectStatusComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
-    if (queryParameters.status) {
-        queryComponents.push(['status', queryParameters.status]);
-    }
-}
+// function collectStatusComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
+//     if (queryParameters.status) {
+//         queryComponents.push(['status', queryParameters.status]);
+//     }
+// }
 
-function collectUserIdComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
-    if (queryParameters.user_id) {
-        queryComponents.push(['user_id', `${queryParameters.user_id}`]);
-    }
-}
+// function collectUserIdComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
+//     if (queryParameters.user_id) {
+//         queryComponents.push(['user_id', `${queryParameters.user_id}`]);
+//     }
+// }
 
 function collectTimeComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
     if (queryParameters.startDate) {

@@ -13,6 +13,7 @@ export interface SearchMapState {
     selectedBBoxWest: number|string;
     selectedBBoxNorth: number|string;
     selectedBBoxEast: number|string;
+    clearLayers: boolean;
 }
 
 const EUMETSAT_LAT_LNG = new LatLng(49.858996564, 8.622830842);
@@ -20,12 +21,13 @@ const EUMETSAT_LAT_LNG = new LatLng(49.858996564, 8.622830842);
 export function newSearchMapState() {
     return {
         position: EUMETSAT_LAT_LNG,
-        zoom: 4,
+        zoom: 2,
         drawBounds: false,
         manualBBoxInputOpen: false,
         selectedBBoxSouth: '',
         selectedBBoxWest: '',
         selectedBBoxNorth: '',
         selectedBBoxEast: '',
+        clearLayers: false,
     }
 }
