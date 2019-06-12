@@ -21,8 +21,10 @@ and also allows chaining.
 
 __Examples__:
 
+![advanced](static/webui/advanced_options.png)
+![advanced](static/webui/save_search.png)
 
-
+![advanced](static/webui/select_region.png)
 
 ## Submissions
 
