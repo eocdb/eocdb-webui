@@ -1,13 +1,13 @@
-# User Manual for the OCDB Web
+# User Manual for the OCDB WebUI
 
 The aim of the Copernicus Ocean Colour Databas (OCDB) is to provide a platform to publish
 ocean related _in-situ_ measurements. This tool enables researchers to upload
-their own _in-situ_ data provided using the the [Seabass data format](https://earthdata.nasa.gov/esdis/eso/standards-and-references/ascii-file-format-guidelines-for-earth-science-data/seabass-data-file-format). 
+their own _in-situ_ data using the the [Seabass data format](https://earthdata.nasa.gov/esdis/eso/standards-and-references/ascii-file-format-guidelines-for-earth-science-data/seabass-data-file-format). 
 
-The main features of the OCDB database system are rhe provision of the data to the research
+The main features of the OCDB database system are the provision of the data to the research
 community with an enhanced search facility. Further, data that is uploaded by
-the researcher will automatically validated during the upload process which includes
-a report on the validation. The researcher also keeps full control over
+the researchers will automatically validated during the upload process which includes
+a report on the validation result. The researcher also keeps full control over
 the submission and publication process.     
 
 ## Search
@@ -19,7 +19,10 @@ data fields provided by the submitter. This field also allows to use the
 so-called Lucene syntax which enables you to search for specific field values
 and also allows chaining.
 
-__Examples__:
+Please refer to the search chapter for more details around the Lucene search syntax.
+
+
+
 
 ![advanced](static/webui/advanced_options.png)
 ![advanced](static/webui/save_search.png)
@@ -33,10 +36,9 @@ account and have logged in to the system. When clicking on the submission sectio
 
 ### New Submission
 
-If you want to add a new submission click on New Submission on the top rihht corner.
+If you want to add a new submission click on New Submission on the top right corner.
 A new dialog will open. Please add an identifier for your submission and a path
-the submissions will be stored under. This will be used to intermittantly 
-store your data files and will be used when zipping data files on download.
+where submissions files will be stored under. This will be used to i
 
 When submitting data, you will be asked to provide a publication date. Leave this empty if you do not desire your data to be searchible. Otherwise, indicate
 what date you would like your data to be available to the public.
@@ -120,20 +122,26 @@ From the above actions the following statuses for submissions derive.
 
 ### Submission File Actions
 
-When clicking on listing files for a submission a list of the data and document
+When clicking on listing files for a submission the data and document
 files are listed. This new table provides the following actions:
+
+__List Validation Issues__:
+
+List issues the system encountered when validating the data file.
+
+![list](static/webui/list.png)
 
 __Delete File__:
 
 Remove the file from the submission.
 
-![list](static/webui/delete.png)
+![delete](static/webui/delete.png)
 
 __Download File__:
 
 Download the file if a changed to the submission file is required.
 
-![list](static/webui/download.png)
+![download](static/webui/download.png)
 
 
 __Upload File__:
@@ -141,7 +149,7 @@ __Upload File__:
 Reupload a new version of the file. The old one will be overwritten. The 
 validation will be re-run.
 
-![list](static/webui/upload.png)
+![reupload](static/webui/upload.png)
 
 
 ### Submission File Statuses
