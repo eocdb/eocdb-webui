@@ -50,7 +50,7 @@ otherwise SUBMITTED. If the system finds errors you can view them in the
 submission file table by clicking 'list files' on the submission table item. 
 
 
-![list](static/webui/submission_dialog.png)
+![submission](static/webui/submission_dialog.png)
 
 ![list](static/webui/submission_validation_results.png)
 
