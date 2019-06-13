@@ -17,7 +17,7 @@ Install the ocdb-client:
 
 ### Challenge 2
 
-Change the password of the OCDB admin user
+Login as default admin user
 
 ### Challenge 3
 
