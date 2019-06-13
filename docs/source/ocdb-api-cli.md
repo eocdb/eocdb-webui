@@ -163,7 +163,7 @@ To add a user, specify the required user information
 
 cli:
 ```bash
-eocdb-cli user add -u admin -p admin -fn Submit -ln Submit -em jj -ph hh -r admin
+ocdb-cli user add -u admin -p admin -fn Submit -ln Submit -em jj -ph hh -r admin
 ```
 
 python:
