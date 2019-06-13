@@ -4,82 +4,115 @@ The OCDB database system applies data validation rules during data submission. T
 ensure inter-operability. Please refer to for more information about the structure
 of these rules. This chapter will list the current rules.
 
-### Header
+## Header
 
-The header rules essentially check the existence of a header __field__. If a header __field__ is required
-an error is reported. An optional or obsolete __field__ is tagged with a warning in the data validation report.
+The header rules essentially check the existence of a header __field__. If a header __field__ is required and not 
+present in the data submitted, an error is reported. An optional field raises an error only if the field does not contain 
+data. The existence of an obsolete __field__ in the data will raise a warning in the data validation report.
 
-- __field__: investigators: field_required
-- __field__: affiliations: field_required
-- __field__: contact: field_required
-- __field__: experiment: field_required
-- __field__: cruise: field_required
-- __field__: station: field_optional
-- __field__: north_latitude: field_required
-- __field__: south_latitude: field_required
-- __field__: east_longitude: field_required
-- __field__: west_longitude: field_required
-- __field__: start_date: field_required
-- __field__: end_date: field_required
-- __field__: start_time: field_required
-- __field__: end_time: field_required
-- __field__: station_alt_id: field_obsolete
-- __field__: data_file_name: field_required
-- __field__: associated_archives: field_obsolete
-- __field__: associated_archive_types: field_obsolete
-- __field__: associated_files: field_obsolete
-- __field__: associated_file_types: field_obsolete
-- __field__: original_file_name: field_obsolete
-- __field__: documents: field_required
-- __field__: calibration_files: field_required
-- __field__: data_type: field_required
-- __field__: missing: field_required
-- __field__: delimiter: field_required
-- __field__: fields: field_required
-- __field__: __unit__s: field_required
-- __field__: data_status: field_optional
-- __field__: parameters: field_obsolete
-- __field__: water_depth: field_required
-- __field__: measurement_depth: field_obsolete
-- __field__: secchi_depth: field_optional
-- __field__: cloud_percent: field_optional
-- __field__: wave_height: field_optional
-- __field__: wind_speed: field_optional
-- __field__: volfilt: field_obsolete
-- __field__: begin_header: field_obsolete
-- __field__: end_header: field_obsolete
-- __field__: end_header@: field_obsolete
-- __field__: received: field_obsolete
-- __field__: identifier_product_doi: field_obsolete
-- __field__: below_detection_limit: field_obsolete
-- __field__: above_detection_limit: field_obsolete
-- __field__: optical_depth_warning: field_obsolete
-- __field__: area: field_obsolete
-- __field__: null_correction: field_obsolete
-- __field__: biotic_setting: field_obsolete
-- __field__: biotic_class: field_obsolete
-- __field__: biotic_subclass: field_obsolete
-- __field__: biotic_group: field_obsolete
-- __field__: biotic_comm__unit__y: field_obsolete
-- __field__: geoform_tectonic_setting: field_obsolete
-- __field__: geoform_physiographic_setting: field_obsolete
-- __field__: geoform_origin: field_obsolete
-- __field__: geoform: field_obsolete
-- __field__: geoform_type: field_obsolete
-- __field__: substrate_origin: field_obsolete
-- __field__: substrate_class: field_obsolete
-- __field__: substrate_subclass: field_obsolete
-- __field__: substrate_group: field_obsolete
-- __field__: substrate_subgroup: field_obsolete
-- __field__: water_column_biogeochemical_feature: field_obsolete
-- __field__: water_column_hydroform_class: field_obsolete
-- __field__: water_column_hydroform: field_obsolete
-- __field__: water_column_hydroform_type: field_obsolete
-s- __field__: water_column_layer: field_obsolete
-- __field__: water_column_salinity: field_obsolete
-- __field__: water_column_temperature: field_obsolete
-- __field__: chemical_formula: field_obsolete
-- __field__: mass_to_charge: field_obsolete
+### Required fields
+
+* **investigators**: The contributors of the data file. Principal investigator is listed first, followed by any associate investigators.
+* **affiliations**: A list of affiliations (e.g. university, laboratory) for each investigator.
+* **contact**: An email address for one of the investigators or point of contact for the data file.
+* **experiment**: The name of the over-arching, long-term research project or funding program.
+* **cruise**: The name of the specific cruise (or subset of the experiment) where the data in the file were collected. 
+* **north_latitude**: The farthest north data in the file were collected (in decimal degrees). This header field requires a 
+[DEG] trailer. Latitudes south of the equator are negative.
+* **south_latitude**: The farthest south data in the file were collected (in decimal degrees). This header fields requires a 
+[DEG] trailer. Latitudes south of the equator are negative.
+* **east_longitude**: The farthest east data in the file were collected (in decimal degrees). This header field requires a 
+[DEG] trailer. Longitudes west of the Prime Meridian are negative.
+* **west_longitude**: The farthest west data in the file were collected (in decimal degrees). This header fields requires a 
+[DEG] trailer. Longitudes west of the Prime Meridian are negative.
+* **start_date**: The earliest date data in the file were collected (in YYYYMMDD).
+* **end_date**: The latest date data in the file were collected (in YYYYMMDD).
+* **start_time**: The earliest time of day measurements were collected during the start_date in the file (in HH:MM:SS). 
+Times are in Greenwich Mean Time. This header requires a [GMT] trailer.
+* **end_time**: The latest time of day data data were collected during the end_date in the file (in HH:MM:SS). 
+Times are in Greenwich Mean Time. This header requires a [GMT] trailer.
+* **data_file_name**: The current name of the data file.
+* **documents**: Refers to cruise reports, station logs, digital images, and other associated documentation that provide 
+additional information about the experiment and cruise. Every OCDB submission must be accompanied by an instrumentation/calibration 
+report that describes the instruments used, how they were calibrated and how data were collected and processed. Multiple documents 
+must be supplied as comma-separated list. 
+* **calibration_files**: Refers to supplementary files containing coefficients and techniques used to calibrate the 
+instruments used in data collection.
+* **data_type**: Describes the general collection method for the data. Accepted values include:
+    * *cast* for vertical profiles (e.g. optical packages, CTD)
+    * *flow_thru* for continuous data (e.g. shipboard, underway flow through systems)
+    * *above_water* for above surface radiometry data (e.g. ASD, SIMBAD, Satlantic SAS)
+    * *sunphoto* for sunphotometry data (e.g. MicroTops, PREDE)
+    * *mooring* for moored and buoy data
+    * *drifter* for drifter and drogue data
+    * *scan* for discrete hyperspectral measurements
+    * *lidar* for lidar and other active remote-sensing measurements (e.g. MPL)
+    * *pigment* for laboratory measured pigment data (e.g. fluorometry, spectrophotometry, HPLC)
+    * *bottle* for other types of measurements from water samples collected at discrete depths (e.g. nutrients)
+    * *diver* for measurements made by a diver
+    * *auv* for measurements made by an autonomous underwater vehicle (auv)
+    * *airborne* for measurements made via an aircraft
+* **missing**: Refers to the NULL value used as a numeric placeholder for any missing data in the data file.
+* **delimiter**: Indicates how the columns of data are delimited. Accepted delimiters include *tab*, *space*, and *comma*. 
+Only a single (1) delimiter is permitted per data file.
+* **fields**: A list of the field names for each column of data included in the data file, separated by *delimiter*. 
+Each entry describes the data in a single (1) column, and every column must have an entry.
+* **units**: A list of the units for each column of data included in the data file, separated by *delimiter*.
+* **water_depth**: The water (bottom) depth at the station where the data were collected (in meters). Set to *missing* if not known.
+
+### Optional fields
+* **station**: The name of the station or deployment where data in the file were obtained.
+* **data_status**: The condition, or status, of the data file. The value *preliminary* is used when the data are new 
+and the investigator intends to analyze the data further. The value *update* indicates the data are being resubmitted and 
+informs users that an additional resubmission will occur in the future. The value *final* is used when the investigator 
+has no intention of revisiting the data set.
+* **secchi_depth**: The secchi depth at the station where the data were collected (in meters).
+* **cloud_percent**: Percent cloud cover for the entire sky. For example: 0 indicates no clouds and 100 indicates completely overcast.
+* **wave_height**: The wave height at the station where the data were collected (in meters).
+* **wind_speed**: The wind speed at the station where the data were collected (in meters per second).
+
+### Obsolete fields
+* station_alt_id
+* associated_archives
+* associated_archive_types
+* associated_files
+* associated_file_types
+* original_file_name
+* parameters
+* measurement_depth
+* volfilt
+* end_header@
+* received
+* identifier_product_doi
+* below_detection_limit
+* above_detection_limit
+* optical_depth_warning
+* area
+* null_correction
+* biotic_setting
+* biotic_class
+* biotic_subclass
+* biotic_group
+* biotic_comm_unit_y
+* geoform_tectonic_setting
+* geoform_physiographic_setting
+* geoform_origin
+* geoform
+* geoform_type
+* substrate_origin
+* substrate_class
+* substrate_subclass
+* substrate_group
+* substrate_subgroup
+* water_column_biogeochemical_feature
+* water_column_hydroform_class
+* water_column_hydroform
+* water_column_hydroform_type
+* water_column_layer
+* water_column_salinity
+* water_column_temperature
+* chemical_formula
+* mass_to_charge
 
 ## Records
 
