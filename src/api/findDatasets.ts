@@ -44,8 +44,6 @@ export function findDatasets(apiServerUrl: string, datasetQuery: DatasetQuery, u
 
     const queryComponents = collectComponents(datasetQuery);
 
-    queryComponents.push(['user_id', `${userId}`]);
-
     return callJsonApi<QueryResult>(apiServerUrl + '/datasets', queryComponents);
 }
 
