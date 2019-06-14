@@ -8,6 +8,36 @@ import { ChangeDrawer, changeDrawer } from "./dashboardActions";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+export const OPEN_USER_REGISTRATION_DIALOG = 'OPEN_USER_REGISTRATION_DIALOG';
+export type OPEN_USER_REGISTRATION_DIALOG = typeof OPEN_USER_REGISTRATION_DIALOG;
+
+
+export interface OpenUserRegistrationDialog {
+    type: OPEN_USER_REGISTRATION_DIALOG;
+}
+
+export function openUserRegistrationDialog(): OpenUserRegistrationDialog {
+    return {
+        type: OPEN_USER_REGISTRATION_DIALOG
+    }
+}
+
+export const CLOSE_USER_REGISTRATION_DIALOG = 'CLOSE_USER_REGISTRATION_DIALOG';
+export type CLOSE_USER_REGISTRATION_DIALOG = typeof CLOSE_USER_REGISTRATION_DIALOG;
+
+
+export interface CloseUserRegistrationDialog {
+    type: CLOSE_USER_REGISTRATION_DIALOG;
+}
+
+export function closeUserRegistrationDialog(): CloseUserRegistrationDialog {
+    return {
+        type: CLOSE_USER_REGISTRATION_DIALOG
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const LOGOUT_USER = 'LOGOUT_USER';
 export type LOGOUT_USER = typeof LOGOUT_USER;
 
@@ -89,4 +119,4 @@ function _loginUser(user: User | null, userLoginError: string | null): LoginUser
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type UserAction = LoginUser | LogoutUser | StartUserLogin;
+export type UserAction = LoginUser | LogoutUser | StartUserLogin | OpenUserRegistrationDialog | CloseUserRegistrationDialog;
