@@ -320,7 +320,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                         row.submission_id
                                                     )}
                                                     disabled={adminAllowed}
-                                                > q
+                                                >
                                                     <Icon className={classes.rightIcon}>delete</Icon>
                                                 </Button>
                                             </Tooltip>

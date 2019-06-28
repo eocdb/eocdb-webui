@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -35,7 +34,7 @@ const styles = (theme: Theme) => createStyles({
 interface UserRegistrationDialogProps extends WithStyles<typeof styles> {
     open: boolean;
 
-    onClose: () => void;
+    onClose?: () => void;
 }
 
 interface UserRegistrationDialogState {
@@ -46,9 +45,7 @@ interface UserRegistrationDialogState {
 class UserRegistrationDialog extends React.Component<UserRegistrationDialogProps, UserRegistrationDialogState> {
     constructor(props: UserRegistrationDialogProps) {
         super(props);
-        this.state = {
-
-        };
+        this.state = {};
     }
 
     render() {
@@ -61,14 +58,16 @@ class UserRegistrationDialog extends React.Component<UserRegistrationDialogProps
                 >
                     <DialogTitle id="form-dialog-title">User Registration</DialogTitle>
                     <DialogContent>
+                        <Typography>
+                            To register, please contact <a
+                            href="mailto:ops@eumetsat.int?Subject=Copernicus OCDB User Registration" target="_top">
+                            Send Mail
+                        </a>, providing a request for OC-DB registration, with your name, email and affiliation
+                        </Typography>
                     </DialogContent>
-                    <Typography>
-                        For registration please email to bla[at]eumetsat.int. Please provide
-                        information about your affiliation.
-                    </Typography>
                     <DialogActions>
                         <Button onClick={this.props.onClose} color="primary">
-                        Close
+                            Close
                         </Button>
                         {/*<Button onClick={this.handleSave} color="primary">*/}
                         {/*Save*/}

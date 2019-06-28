@@ -23,6 +23,7 @@ import partnerLogos from "../resources/logos.png"
 import { SearchHistoryItem } from "../types/dataset";
 import { DatasetQuery } from "../api/findDatasets";
 import Help from "@material-ui/icons/Help";
+import UserRegistrationDialog from "./user/UserRegistrationDialog";
 
 
 const drawerWidth = 240;
@@ -144,7 +145,9 @@ interface DashboardProps extends WithStyles<typeof styles> {
     userLoginInProgress: boolean;
 
     logoutUser: () => void;
-    openRegistrationDialog: () => void;
+    openUserRegistrationDialog: () => void;
+    closeUserRegistrationDialog: () => void;
+    userRegistrationDialogOpen: boolean;
 }
 
 
@@ -213,12 +216,15 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                     userName={this.props.userName}
                     userLoginError={this.props.userLoginError}
                     userLoginInProgress={this.props.userLoginInProgress}
-                    openRegistrationDialog={this.props.openRegistrationDialog}
+                    openRegistrationDialog={this.props.openUserRegistrationDialog}
                     closeLoginDialog={this.props.closeLoginDialog}
                     loginUser={this.props.loginUser}
                     logoutUser={this.props.logoutUser}
                 />
-
+                <UserRegistrationDialog
+                    open={this.props.userRegistrationDialogOpen}
+                    onClose={this.props.closeUserRegistrationDialog}
+                />
                 <ConfigDialog open={this.props.configDialogOpen}
                               handleClose={this.handleConfigClose}
                               apiServerUrlChange={this.handleApiServerUrlChange}

@@ -42,15 +42,19 @@ function Transition(props: SlideProps) {
 }
 
 
-interface TermsDialogProps {
+export type DownloadTerms = 'SB' | 'OA' | 'OM'
+
+interface TermsDialogProps<T> {
     open: boolean;
+    title: string;
+    downloadTerms?: DownloadTerms;
     onDisagree: () => void;
     onAgree: () => void;
 }
 
 
-export class TermsDialog extends React.Component<TermsDialogProps> {
-    constructor(props: TermsDialogProps) {
+export class TermsDialog<T> extends React.Component<TermsDialogProps<T> > {
+    constructor(props: TermsDialogProps<T> ) {
         super(props);
     }
 
@@ -72,16 +76,20 @@ export class TermsDialog extends React.Component<TermsDialogProps> {
     };
 
     render() {
+        const downloadTerms = this.props.downloadTerms;
+
+        const terms = downloadTerms ? TERMS[downloadTerms] : TERMS['SB'];
+
         return (
             <Dialog
                 open={this.props.open}
                 onClose={this.props.onDisagree}
                 TransitionComponent={Transition}
             >
-                <DialogTitle id="form-dialog-title">OCDB Download Terms and Conditions</DialogTitle>
+                <DialogTitle id="form-dialog-title">{this.props.title}</DialogTitle>
                 <DialogContent>
                     <ReactMarkdown options={this.options}>
-                        {TERMS}
+                        {terms}
                     </ReactMarkdown>
                 </DialogContent>
                 <DialogActions>

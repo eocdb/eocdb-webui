@@ -40,10 +40,36 @@ export function closeLoginDialog(): CloseUserDialog {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export function openRegistrationDialog() {
-    // TODO: implement me
-    throw Error('Not implemented.');
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const OPEN_USER_REGISTRATION_DIALOG = 'OPEN_USER_REGISTRATION_DIALOG';
+export type OPEN_USER_REGISTRATION_DIALOG = typeof OPEN_USER_REGISTRATION_DIALOG;
+
+
+export interface OpenUserRegistrationDialog {
+    type: OPEN_USER_REGISTRATION_DIALOG;
 }
+
+export function openUserRegistrationDialog(): OpenUserRegistrationDialog {
+    return {
+        type: OPEN_USER_REGISTRATION_DIALOG
+    }
+}
+
+export const CLOSE_USER_REGISTRATION_DIALOG = 'CLOSE_USER_REGISTRATION_DIALOG';
+export type CLOSE_USER_REGISTRATION_DIALOG = typeof CLOSE_USER_REGISTRATION_DIALOG;
+
+
+export interface CloseUserRegistrationDialog {
+    type: CLOSE_USER_REGISTRATION_DIALOG;
+}
+
+export function closeUserRegistrationDialog(): CloseUserRegistrationDialog {
+    return {
+        type: CLOSE_USER_REGISTRATION_DIALOG
+    }
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -222,4 +248,6 @@ export type DashboardAction = ChangeDrawer
     | OpenProductGroupsHelpDialog
     | CloseProductGroupsHelpDialog
     | OpenHelpMetaInfoDialog
-    | CloseHelpMetaInfoDialog;
+    | CloseHelpMetaInfoDialog
+    | OpenUserRegistrationDialog
+    | CloseUserRegistrationDialog;

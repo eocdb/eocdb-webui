@@ -15,7 +15,7 @@ import {
     UPDATE_PLOT_STATE,
     UPDATE_PLOT_DATA,
     OPEN_TERMS_DIALOG,
-    CLOSE_TERMS_DIALOG,
+    CLOSE_TERMS_DIALOG, OPEN_TERMS_SINGLE_DIALOG, CLOSE_TERMS_SINGLE_DIALOG,
 } from "../actions/dataTableActions";
 
 
@@ -49,6 +49,12 @@ export function dataTableReducer(state: DataTableState, action: DataTableAction)
         }
         case CLOSE_TERMS_DIALOG: {
             return {...state, termsDialogOpen: false};
+        }
+        case OPEN_TERMS_SINGLE_DIALOG: {
+            return {...state, termsSingleDialogOpen: true};
+        }
+        case CLOSE_TERMS_SINGLE_DIALOG: {
+            return {...state, termsSingleDialogOpen: false};
         }
         case UPDATE_DATASET: {
             return {...state, dataset: action.dataset}

@@ -14,7 +14,10 @@ import {
     OPEN_HELP_METAINFO_DIALOG,
     CLOSE_HELP_METAINFO_DIALOG,
     OPEN_SAVE_SEARCH_DIALOG,
-    CLOSE_SAVE_SEARCH_DIALOG, OPEN_PRODUCTGROUPSHELP_DIALOG, CLOSE_PRODUCTGROUPSHELP_DIALOG
+    CLOSE_SAVE_SEARCH_DIALOG,
+    OPEN_PRODUCTGROUPSHELP_DIALOG,
+    CLOSE_PRODUCTGROUPSHELP_DIALOG,
+    OPEN_USER_REGISTRATION_DIALOG, CLOSE_USER_REGISTRATION_DIALOG
 } from '../actions/dashboardActions';
 
 const initialState = newDashboardState();
@@ -53,7 +56,11 @@ export function dashboardReducer(state: DashboardState, action: DashboardAction)
         case OPEN_HELP_METAINFO_DIALOG:
             return {...state, helpMetaInfoDialogOpen: true, helpMetaInfoKey: action.helpMetaInfoKey};
         case CLOSE_HELP_METAINFO_DIALOG:
-            return {...state, helpMetaInfoDialogOpen: false}
+            return {...state, helpMetaInfoDialogOpen: false};
+        case OPEN_USER_REGISTRATION_DIALOG:
+            return {...state, userRegistrationDialogOpen: true};
+        case CLOSE_USER_REGISTRATION_DIALOG:
+            return {...state, userRegistrationDialogOpen: false};
     }
     return state;
 }

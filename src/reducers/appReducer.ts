@@ -10,7 +10,8 @@ import { dataTableReducer } from "./dataTableReducer";
 import { advancedSearchReducer } from "./advancedSearchReducer";
 import { submissionReducer } from "./submissionReducer";
 import { alertReducer } from "./alertReducer";
-import {adminReducer} from "./adminReducer";
+import { adminReducer } from "./adminReducer";
+import { matchupReducer } from "./matchupReducer";
 
 export const appReducer = combineReducers(
     {
@@ -26,5 +27,6 @@ export const appReducer = combineReducers(
         advancedSearchState: advancedSearchReducer,
         submissionState: submissionReducer,
         linksPageState: adminReducer,
+        matchupState: matchupReducer,
     }
 );
