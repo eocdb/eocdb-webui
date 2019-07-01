@@ -155,7 +155,7 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
         //     newExpression = 'path:*' + expression + '*';
         // }
 
-        datasetQuery = {...datasetQuery, searchExpr: newExpression};
+        datasetQuery = {...datasetQuery, searchExpr: expression};
     }
 
     return datasetQuery;

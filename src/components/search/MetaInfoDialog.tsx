@@ -46,13 +46,23 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
         const metadata = dataset.metadata;
         const attributes = dataset.attributes.join(',');
         let items = [];
+
         for (let key in metadata) {
-            items.push(
-                <ListItem component={'span'} key={key}>
-                    <ListItemText secondary={metadata[key]} primary={key}/>
-                </ListItem>
-            );
+            if(metadata.hasOwnProperty(key)) {
+                let value = 'Type of content not known.';
+                if (typeof metadata[key] === "string") {
+                    value = metadata[key];
+                } else if (metadata[key] instanceof Array) {
+                    value = metadata[key].join(',');
+                }
+                items.push(
+                    <ListItem component={'span'} key={key}>
+                        <ListItemText secondary={value} primary={key}/>
+                    </ListItem>
+                );
+            }
         }
+
         items.push(
             <ListItem component={'span'} key={'fields'}>
                 <ListItemText secondary={attributes} primary={'fields'}/>
