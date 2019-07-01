@@ -6,8 +6,8 @@ import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import { SearchHistoryItem } from "../../types/dataset";
 import List from "@material-ui/core/List/List";
-import { Delete, Search } from "@material-ui/icons";
-import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
+import Delete from "@material-ui/icons/Delete";
+import Code from "@material-ui/icons/Code";
 import APICodeDialog from "./ApiCodeDialog";
 import { collectComponents, DatasetQuery } from "../../api/findDatasets";
 import { QueryComponent } from "../../api/callApi";
@@ -19,7 +19,7 @@ const styles = (theme: Theme) => createStyles({
         display: 'flex',
     },
     rightIcon: {
-
+        width: "10pt"
     }
 });
 
@@ -27,8 +27,8 @@ const styles = (theme: Theme) => createStyles({
 export function makeFunctionCall(url: string, queryComponents?: QueryComponent[]) {
     if (queryComponents && queryComponents.length > 0) {
         return queryComponents.map((kv: any) => {
-           //console.log(kv);
-           return `${kv[0]}="${kv[1]}"`;
+            //console.log(kv);
+            return `${kv[0]}="${kv[1]}"`;
         }).join(',')
     }
 
@@ -43,7 +43,7 @@ interface SearchHistoryProps extends WithStyles<typeof styles> {
 }
 
 
-interface SearchHistoryState{
+interface SearchHistoryState {
     apiCodeDialogOpen: boolean;
     query: string;
 }
@@ -79,31 +79,32 @@ class SearchHistory extends React.PureComponent<SearchHistoryProps, SearchHistor
                         query={this.state.query}
                     />
 
-                {searchHistory.map((item: SearchHistoryItem) => {
-                    console.log(item);
-                    return (
-                        <ListItem button key={item.key}>
-                            <ListItemIcon>
-                                <Search/>
-                            </ListItemIcon>
-                            <ListItemText onClick={() => this.props.onSearchHistoryItemClick(item)} primary={item.key}/>
-                            <Tooltip title="Delete History Item" aria-label="DeleteHistoryItem">
-                                <Button
-                                    onClick={() => this.props.onSearchHistoryItemDelete(item)}
-                                >
-                                    <Delete/>
-                                </Button>
-                            </Tooltip>
-                            <Tooltip title="Get API Code" aria-label="GetAPICodeItem">
+                    {searchHistory.map((item: SearchHistoryItem) => {
+                        return (
+                            <ListItem button key={item.key}>
                                 <Button
                                     onClick={() => this.handleApiCodeOpen(item.query)}
+                                    className={this.props.classes.rightIcon}
+                                    style={{marginLeft: '1pt', paddingLeft: '1pt', paddingRight: '1pt'}}
                                 >
-                                    <Delete/>
+                                    <Code/>
                                 </Button>
-                            </Tooltip>
-                        </ListItem>
-                    );
-                })}
+
+                                <ListItemText onClick={() => this.props.onSearchHistoryItemClick(item)}
+                                              primary={item.key}/>
+
+                                <Tooltip title="Delete History Item" aria-label="DeleteHistoryItem">
+                                    <Button
+                                        onClick={() => this.props.onSearchHistoryItemDelete(item)}
+                                        className={this.props.classes.rightIcon}
+                                    >
+                                        <Delete/>
+                                    </Button>
+                                </Tooltip>
+
+                            </ListItem>
+                        );
+                    })}
                 </div>
             </List>
         );
