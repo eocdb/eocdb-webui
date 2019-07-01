@@ -80,7 +80,7 @@ class AdminPanel extends React.PureComponent<AdminPanelProps> {
                     <Settings/>
                 </Button>
                 <EditJSON
-                    open={true}
+                    open={false}
                 />
                 <EditContentDialog
                     onClose={this.props.closeLinksContentDialog}
