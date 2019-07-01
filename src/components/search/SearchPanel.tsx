@@ -243,19 +243,30 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
             key = this.props.user.name + '_';
         }
 
-        console.log(this.props.datasetQuery);
-        const item: SearchHistoryItem = {
+        const newItem: SearchHistoryItem = {
             key: this.props.saveSearchTitle,
             query: Object.assign(this.props.datasetQuery)
         };
+
+        let newItemAdded = false;
+
         let history = this.props.searchHistory.map((item: SearchHistoryItem) => {
-            return item;
+            if(item.key != this.props.saveSearchTitle) {
+                return item;
+            }
+            else{
+                newItemAdded = true;
+                return newItem;
+            }
         });
 
-        history.push(item);
+        if(!newItemAdded){
+            history.push(newItem);
+        }
+
         this.props.updateSearchHistory(history);
-        console.info(JSON.stringify(item.query));
-        localStorage.setItem(key + this.props.saveSearchTitle, JSON.stringify(item.query));
+
+        localStorage.setItem(key + this.props.saveSearchTitle, JSON.stringify(newItem.query));
 
         this.props.closeSaveSearchDialog();
     };
