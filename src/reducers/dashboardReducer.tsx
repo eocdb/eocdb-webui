@@ -17,7 +17,10 @@ import {
     CLOSE_SAVE_SEARCH_DIALOG,
     OPEN_PRODUCTGROUPSHELP_DIALOG,
     CLOSE_PRODUCTGROUPSHELP_DIALOG,
-    OPEN_USER_REGISTRATION_DIALOG, CLOSE_USER_REGISTRATION_DIALOG
+    OPEN_USER_REGISTRATION_DIALOG,
+    CLOSE_USER_REGISTRATION_DIALOG,
+    OPEN_CHANGE_USER_LOGIN_DIALOG,
+    CLOSE_CHANGE_USER_LOGIN_DIALOG
 } from '../actions/dashboardActions';
 
 const initialState = newDashboardState();
@@ -61,6 +64,10 @@ export function dashboardReducer(state: DashboardState, action: DashboardAction)
             return {...state, userRegistrationDialogOpen: true};
         case CLOSE_USER_REGISTRATION_DIALOG:
             return {...state, userRegistrationDialogOpen: false};
+        case OPEN_CHANGE_USER_LOGIN_DIALOG:
+            return {...state, changeUserLoginDialogOpen: true};
+        case CLOSE_CHANGE_USER_LOGIN_DIALOG:
+            return {...state, changeUserLoginDialogOpen: false};
     }
     return state;
 }

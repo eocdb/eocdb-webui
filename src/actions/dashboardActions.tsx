@@ -40,6 +40,31 @@ export function closeLoginDialog(): CloseUserDialog {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+export const OPEN_CHANGE_USER_LOGIN_DIALOG = 'OPEN_CHANGE_USER_LOGIN_DIALOG';
+export type OPEN_CHANGE_USER_LOGIN_DIALOG = typeof OPEN_CHANGE_USER_LOGIN_DIALOG;
+
+export interface OpenChangeUserLoginDialog {
+    type: OPEN_CHANGE_USER_LOGIN_DIALOG;
+}
+
+export function openChangeUserLoginDialog(): OpenChangeUserLoginDialog {
+    return {type: OPEN_CHANGE_USER_LOGIN_DIALOG};
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const CLOSE_CHANGE_USER_LOGIN_DIALOG = 'CLOSE_CHANGE_USER_LOGIN_DIALOG';
+export type CLOSE_CHANGE_USER_LOGIN_DIALOG = typeof CLOSE_CHANGE_USER_LOGIN_DIALOG;
+
+export interface CloseChangeUserLoginDialog {
+    type: CLOSE_CHANGE_USER_LOGIN_DIALOG;
+}
+
+export function closeChangeUserLoginDialog(): CloseChangeUserLoginDialog {
+    return {type: CLOSE_CHANGE_USER_LOGIN_DIALOG};
+}
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const OPEN_USER_REGISTRATION_DIALOG = 'OPEN_USER_REGISTRATION_DIALOG';
@@ -250,4 +275,6 @@ export type DashboardAction = ChangeDrawer
     | OpenHelpMetaInfoDialog
     | CloseHelpMetaInfoDialog
     | OpenUserRegistrationDialog
-    | CloseUserRegistrationDialog;
+    | CloseUserRegistrationDialog
+    | OpenChangeUserLoginDialog
+    | CloseChangeUserLoginDialog;

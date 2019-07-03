@@ -42,6 +42,24 @@ export function logoutUser() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+export function changeLoginUser(username: string, oldPassword: string, newPassword1: string, newPassword2: string) {
+    return (dispatch: Dispatch<LogoutUser | ChangeDrawer | MessageLogAction>, getState: () => AppState) => {
+        const state = getState();
+
+        api.changeLoginUser(state.configState.apiServerUrl, username, oldPassword, newPassword1, newPassword2)
+            .then(() => {
+                dispatch(postMessage('success', 'Password Changed'));
+            })
+            .catch((error: string) => {
+                dispatch(postMessage('error', error + ''));
+            });
+    };
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export function loginUser(name: string, password: string) {
     return (dispatch: Dispatch<LoginUser | StartUserLogin | MessageLogAction>, getState: () => AppState) => {
         dispatch(_startUserLogin());

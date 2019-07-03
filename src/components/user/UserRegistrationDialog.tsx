@@ -61,8 +61,8 @@ class UserRegistrationDialog extends React.Component<UserRegistrationDialogProps
                         <Typography>
                             To register, please contact <a
                             href="mailto:ops@eumetsat.int?Subject=Copernicus OCDB User Registration" target="_top">
-                            Send Mail
-                        </a>, providing a request for OC-DB registration, with your name, email and affiliation
+                            Eumetsat
+                        </a>, providing a request for OC-DB registration, with your name, email and affiliation.
                         </Typography>
                     </DialogContent>
                     <DialogActions>

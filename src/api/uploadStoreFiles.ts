@@ -22,7 +22,7 @@ export function uploadStoreFiles(apiServerUrl: string, uploadData: UploadData)
         formData.append('publicationdate', uploadData.publicationDate);
     }
     else{
-        formData.append('publicationdate', Date.now().toString());
+        formData.append('publicationdate', 'none');
     }
 
     formData.append('allowpublication', `${uploadData.allowPublication}`);

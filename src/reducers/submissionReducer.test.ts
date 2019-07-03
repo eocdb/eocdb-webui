@@ -56,6 +56,7 @@ describe('submitStepsReducer', () => {
                 submission_id: '',
                 user_id: 0,
                 date: '',
+                path: '',
                 status: '',
                 files: [],
                 file_refs: [],

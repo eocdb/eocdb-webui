@@ -47,6 +47,7 @@ interface LoginDialogProps extends WithStyles<typeof styles> {
     logoutUser: () => void;
 
     openRegistrationDialog: () => void;
+    openChangeUserLoginDialog: () => void;
     closeLoginDialog: () => void;
 }
 
@@ -114,6 +115,14 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
         this.setState({showPassword: !this.state.showPassword});
     };
 
+    handlePasswordKeyPressed = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            this.handleLogin();
+        }
+
+    };
+
     render() {
         const {classes, open, userLoginError, userLoginInProgress,} = this.props;
         const {userName, password, showPassword} = this.state;
@@ -139,7 +148,9 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
                 <DialogTitle id="form-dialog-title">Login</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Please enter your login details here or register for a new account.
+                        {this.props.userName?'Hello ' + this.props.userName + '. Here you can logout' +
+                            'or change your password.':'Please enter your login details here or register for a new account.'}
+
                     </DialogContentText>
                     <TextField
                         className={classNames(classes.margin, classes.textField)}
@@ -149,6 +160,7 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
                         type="email"
                         fullWidth
                         value={userName}
+                        disabled={this.props.userName !== ''}
                         onChange={this.handleUserNameChange}
                     />
                     <FormControl className={classNames(classes.margin, classes.textField)} fullWidth>
@@ -158,6 +170,8 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
                             type={showPassword ? 'text' : 'password'}
                             value={password}
                             onChange={this.handlePasswordChange}
+                            onKeyPress={this.handlePasswordKeyPressed}
+                            disabled={this.props.userName !== ''}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
@@ -175,13 +189,16 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.handleCancel} color="primary">
-                        Cancel
+                        Close
                     </Button>
                     <Button disabled={this.props.userName === ''} onClick={this.handleLogout} color="primary">
                         Logout
                     </Button>
                     <Button disabled={this.props.userName !== ''}  onClick={this.handleLogin} color="primary">
                         Login
+                    </Button>
+                    <Button disabled={this.props.userName === ''} onClick={this.props.openChangeUserLoginDialog} color="secondary">
+                        Change Password
                     </Button>
                     <Button onClick={this.handleRegister} color="secondary">
                         Register

@@ -8,11 +8,11 @@ import {
     closeConfigDialog,
     closeLoginDialog,
     openUserRegistrationDialog,
-    closeUserRegistrationDialog
+    closeUserRegistrationDialog, openChangeUserLoginDialog, closeChangeUserLoginDialog
 } from '../actions/dashboardActions';
 import { configServer, getMatchupFiles } from '../actions/configActions'
 import Dashboard from '../components/Dashboard';
-import { loginUser, logoutUser } from '../actions/userActions';
+import { changeLoginUser, loginUser, logoutUser } from '../actions/userActions';
 import {getSubmissionsForUser} from "../actions/submissionActions";
 import { searchDatasets, updateDatasetQuery, updateSearchHistory } from "../actions/findActions";
 
@@ -33,6 +33,7 @@ const mapStateToProps = (state: AppState) => {
         userLoginInProgress: state.sessionState.userLoginInProgress,
 
         userRegistrationDialogOpen: state.dashboardState.userRegistrationDialogOpen,
+        changeUserLoginDialogOpen: state.dashboardState.changeUserLoginDialogOpen,
     }
 };
 
@@ -55,6 +56,10 @@ const mapDispatchToProps = {
 
     openUserRegistrationDialog,
     closeUserRegistrationDialog,
+
+    openChangeUserLoginDialog,
+    closeChangeUserLoginDialog,
+    changeLoginUser,
 
     apiServerUrlChange: configServer, // TODO: rename apiServerUrlChange --> configServer
 };

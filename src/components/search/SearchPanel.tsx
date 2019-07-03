@@ -271,6 +271,14 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         this.props.closeSaveSearchDialog();
     };
 
+    handleSearchExpKeyPressed = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            this.handleSearchDatasets();
+        }
+
+    };
+
     handleSearchExprChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const searchExpr = event.target.value;
         this.props.updateDatasetQuery({...this.props.datasetQuery, searchExpr});
@@ -371,6 +379,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             value={this.props.datasetQuery.searchExpr}
                             onChange={this.handleSearchExprChange}
                             onBlur={this.handleSearchExprBlur}
+                            onKeyPress={this.handleSearchExpKeyPressed}
                         />
                         <IconButton
                             onClick={this.props.openHelpDialog}

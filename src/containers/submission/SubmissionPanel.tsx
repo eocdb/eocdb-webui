@@ -33,7 +33,11 @@ import {
     updateSubmissionPublicationDate,
     updatePublicationDate,
     downloadSubmissionFile,
-    updateAllowPublication
+    updateAllowPublication,
+    updateSubmissionMessages,
+    hideSubmissionMessages,
+    openSubmissionMetaDialog,
+    closeSubmissionMetaDialog, updateSubmissionMeta
 } from "../../actions/submissionActions";
 import SubmissionPanel from "../../components/submission/SubmissionPanel";
 import { openHelpDialog } from "../../actions/searchMapActions";
@@ -44,6 +48,7 @@ const mapStateToProps = (state: AppState) => {
     return {
         submissionDialogOpen: state.submissionState.submissionDialogOpen,
         submissionFilesTableOpen: state.submissionState.submissionFilesDialogOpen,
+        submissionMetaDialogOpen: state.submissionState.submissionMetaDialogOpen,
         submissionFileIssueDialogOpen: state.submissionState.submissionFileIssueDialogOpen,
         deleteSubmissionFileAlertOpen: state.submissionState.deleteSubmissionFileAlertOpen,
         deleteSubmissionAlertOpen: state.submissionState.deleteSubmissionAlertOpen,
@@ -71,7 +76,9 @@ const mapStateToProps = (state: AppState) => {
         helpDialogOpen: state.submissionState.helpDialogOpen,
 
         submissionSucceeded: state.submissionState.submissionSucceeded,
-    };
+
+        submissionMessages: state.submissionState.submissionMessages,
+    }
 };
 
 
@@ -81,6 +88,9 @@ const mapDispatchToProps = {
 
     openSubmissionFilesTable: openSubmissionFilesDialog,
     closeSubmissionFilesTable: closeSubmissionFilesDialog,
+
+    openSubmissionMetaDialog,
+    closeSubmissionMetaDialog,
 
     openSubmissionFileIssueDialog: openSubmissionIssuesDialog,
     closeSubmissionFileIssueDialog: closeSubmissionIssuesDialog,
@@ -120,6 +130,9 @@ const mapDispatchToProps = {
     updateDocFiles,
 
     sendSubmission,
+    updateSubmissionMeta,
+    updateSubmissionMessages,
+    hideSubmissionMessages,
     clearSubmissionForm,
 
     openHelpDialog,

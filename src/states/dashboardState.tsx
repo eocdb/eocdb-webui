@@ -3,6 +3,7 @@ import { SearchHistoryItem } from "../types/dataset";
 export interface DashboardState {
     currentDrawer: string;
     loginDialogOpen: boolean;
+    changeUserLoginDialogOpen: boolean;
     userRegistrationDialogOpen: boolean;
     configDialogOpen: boolean,
     advancedSearchDialogOpen: boolean;
@@ -22,6 +23,7 @@ export function newDashboardState() {
         currentDrawer: 'Search',
         loginDialogOpen: false,
         userRegistrationDialogOpen: false,
+        changeUserLoginDialogOpen: false,
         configDialogOpen: false,
         advancedSearchDialogOpen: false,
         saveSearchDialogOpen: false,
