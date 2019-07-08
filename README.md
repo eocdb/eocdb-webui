@@ -26,7 +26,7 @@ will install all dependencies and start a development server on port 3000:
 ```bash
 
 git clone https://github.com/bcdev/eocdb-webui.git
-cd  eocdb-webui
+cd  ocdb-webui
 yarn install
 yarn start
 
@@ -37,7 +37,7 @@ container exposes port 3000. It is up to you to map it to a different port.
 
 
 ```bash
-docker run -p 3000:3000 quay.io/bcdev/eocdb-webui:latest
+docker run -p 3000:3000 quay.io/eocdb/ocdb-webui:latest
 ``` 
 
 
@@ -48,7 +48,7 @@ static files into the server image. 'up -d' will start two containers: One mongo
 and the backend server which serves the RESTful service as well as the WebUI site. 
 
 ```bash
-git clone https://github.com/bcdev/eocdb-services
+git clone https://github.com/eocdb/ocdb-services
 cd eocdb-services
 docker-compose build
 docker-compose up -d
@@ -62,8 +62,8 @@ $ ./docker-compose ps
 
                 Name                           Command                  State              Ports
     ----------------------------------------------------------------------------------------------------
-    eocdb-services_eocdb-db_1       docker-entrypoint.sh mongod      Up             27017/tcp
-    eocdb-services_eocdb-server_1   /bin/bash -c source activa ...   Up (healthy)   0.0.0.0:80->4000/tcp
+    ocdb-services_eocdb-db_1       docker-entrypoint.sh mongod      Up             27017/tcp
+    ocdb-services_eocdb-server_1   /bin/bash -c source activa ...   Up (healthy)   0.0.0.0:80->4000/tcp
 
 ```
 
