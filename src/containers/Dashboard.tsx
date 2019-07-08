@@ -7,13 +7,15 @@ import {
     openConfigDialog,
     closeConfigDialog,
     closeLoginDialog,
-    openRegistrationDialog
+    openUserRegistrationDialog,
+    closeUserRegistrationDialog, openChangeUserLoginDialog, closeChangeUserLoginDialog
 } from '../actions/dashboardActions';
 import { configServer, getMatchupFiles } from '../actions/configActions'
 import Dashboard from '../components/Dashboard';
-import { loginUser, logoutUser } from '../actions/userActions';
+import { changeLoginUser, loginUser, logoutUser } from '../actions/userActions';
 import {getSubmissionsForUser} from "../actions/submissionActions";
 import { searchDatasets, updateDatasetQuery, updateSearchHistory } from "../actions/findActions";
+
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -29,6 +31,9 @@ const mapStateToProps = (state: AppState) => {
         userName: state.sessionState.user ? state.sessionState.user.name : '',
         userLoginError: state.sessionState.userLoginError,
         userLoginInProgress: state.sessionState.userLoginInProgress,
+
+        userRegistrationDialogOpen: state.dashboardState.userRegistrationDialogOpen,
+        changeUserLoginDialogOpen: state.dashboardState.changeUserLoginDialogOpen,
     }
 };
 
@@ -42,13 +47,19 @@ const mapDispatchToProps = {
 
     loginUser,
     logoutUser,
-    openRegistrationDialog,
 
     updateSubmissions: getSubmissionsForUser,
     getMatchupFiles: getMatchupFiles,
     updateDatasetQuery,
     updateSearchHistory,
     searchDatasets,
+
+    openUserRegistrationDialog,
+    closeUserRegistrationDialog,
+
+    openChangeUserLoginDialog,
+    closeChangeUserLoginDialog,
+    changeLoginUser,
 
     apiServerUrlChange: configServer, // TODO: rename apiServerUrlChange --> configServer
 };

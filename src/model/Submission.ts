@@ -5,6 +5,7 @@ export interface Submission {
     user_id: number;
     date: string;
     status: string;
+    path: string;
     files: SubmissionFile[];
     file_refs: SubmissionFile[];
     publication_date: string;

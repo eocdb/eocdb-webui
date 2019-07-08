@@ -12,6 +12,8 @@ import YesNoAlert from "./YesNoAlert";
 import { User } from "../../model/User";
 import SingleFileUpload from "./SingleFileUpload";
 import { SingleUpload } from "../../model/UploadData";
+import { MessageLogEntry, MessageType } from "../../states/messageLogState";
+import SubmissionMetaDialog from "./SubmissionMetaDialog";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -26,6 +28,10 @@ interface SubmissionPanelProps extends WithStyles<typeof styles> {
     submissionDialogOpen: boolean;
     openSubmissionDialog: () => void,
     closeSubmissionDialog: () => void,
+
+    submissionMetaDialogOpen: boolean;
+    openSubmissionMetaDialog: () => void,
+    closeSubmissionMetaDialog: () => void,
 
     submissionFilesTableOpen: boolean;
     openSubmissionFilesTable: () => void,
@@ -89,13 +95,17 @@ interface SubmissionPanelProps extends WithStyles<typeof styles> {
     updateDocFiles: (acceptedFiles: File[]) => void;
     selectedDocFiles: File[];
 
-    updatePublicationDate: (publicationDate: string|null) => void;
-    selectedPublicationDate: string|null;
+    updatePublicationDate: (publicationDate: string | null) => void;
+    selectedPublicationDate: string | null;
 
     updateAllowPublication: (allowPublication: boolean) => void;
     allowPublication: boolean;
 
     sendSubmission: () => void;
+    updateSubmissionMeta: () => void;
+    updateSubmissionMessages: (messages: MessageLogEntry[]) => void;
+    submissionMessages: MessageLogEntry[];
+    hideSubmissionMessages: (id: number) => void;
 
     clearSubmissionForm: () => void;
 
@@ -117,6 +127,11 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
         this.props.openSubmissionDialog();
     };
 
+    handleOpenSubmissionMetaDialog = (submissionId: string) => {
+        this.props.updateSelectedSubmission(submissionId);
+        this.props.openSubmissionMetaDialog();
+    };
+
     handleApproveSubmission = (selectedSubmissionId: string) => {
         this.props.setSubmissionStatus(selectedSubmissionId, 'APPROVED');
     };
@@ -131,7 +146,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
 
     handleRestartSubmission = (selectedSubmission: Submission) => {
         let ok = true;
-        for (let file of selectedSubmission.file_refs){
+        for (let file of selectedSubmission.file_refs) {
             if (file.status === "ERROR") {
                 ok = false;
             }
@@ -139,8 +154,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
 
         if (ok) {
             this.props.setSubmissionStatus(selectedSubmission.submission_id, 'VALIDATED');
-        }
-        else{
+        } else {
             this.props.setSubmissionStatus(selectedSubmission.submission_id, 'SUBMITTED');
         }
     };
@@ -176,6 +190,11 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
     handleUpdateSubmission = (submissionId: string) => {
         this.props.updateSelectedSubmission(submissionId);
         this.props.openSubmissionFilesTable();
+    };
+
+    handleUpdateSubmissionMetaDialog = () => {
+        this.props.updateSubmissionMeta();
+        this.props.closeSubmissionMetaDialog();
     };
 
     handleDeleteSubmissionAlertCancel = () => {
@@ -222,7 +241,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
     };
 
     handleUploadSubmissionFileDialogOnSave = (submissionFile: SubmissionFile, files: File[]) => {
-        if(this.props.user) {
+        if (this.props.user) {
             const uploadData = {
                 file: files[0],
                 submissionId: submissionFile.submission_id,
@@ -240,6 +259,24 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
 
     handleDownloadSubmissionFile = (submissionFile: SubmissionFile) => {
         this.props.downloadSubmissionFile(submissionFile.submission_id, submissionFile.index);
+    };
+
+    handleSubmissionDialogOnDropRejected = (files: File[]) => {
+        const file_names: string[] = files.map((file: File) => {
+            return file.name
+        });
+
+        if (files.length > 10000000000) {
+            const base_message = `You are trying to submit more than 10 GB. Please contact ops@eumetsat.int to get support for large submission\n`;
+            const message = base_message + file_names.join('\n');
+            const message_log = {
+                id: 1,
+                type: 'error' as MessageType,
+                text: message
+            };
+
+            this.props.updateSubmissionMessages([message_log]);
+        }
     };
 
     render() {
@@ -274,11 +311,15 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
 
                     onClearForm={this.props.clearSubmissionForm}
 
+                    onDropRejected={this.handleSubmissionDialogOnDropRejected}
+                    submissionMessages={this.props.submissionMessages}
+                    onHideSubmissionMessages={this.props.hideSubmissionMessages}
+
                     helpDialogOpen={this.props.helpDialogOpen}
                     openHelpDialog={this.props.openHelpDialog}
                     closeHelpDialog={this.props.closeHelpDialog}
                     submissionSucceeded={this.props.submissionSucceeded}
-            />
+                />
                 <SubmissionTable
                     show={!this.props.submissionDialogOpen}
 
@@ -290,6 +331,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     onSubmissionProcess={this.handleProcessSubmission}
                     onSubmissionReject={this.handleCancelSubmission}
                     onSubmissionHalt={this.handleHaltSubmission}
+                    onSubmissionUpdate={this.handleSendSubmission}
                     onSubmissionRestart={this.handleRestartSubmission}
                     onSubmissionSubmit={this.handleSubmitSubmission}
                     onSubmissionDelete={this.handleDeleteSubmissionClick}
@@ -298,6 +340,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     onSubmissionPublish={this.handlePublishSubmission}
 
                     onSubmissionDialogOpen={this.handleOpenSubmissionDialog}
+                    onSubmissionDialogMetaOpen={this.handleOpenSubmissionMetaDialog}
 
                     user={this.props.user}
                 />
@@ -345,6 +388,32 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     value={this.props.selectedSubmissionFile}
                     accept={this.props.selectedSubmissionFile.filetype === 'MEASUREMENT' ? '.sb, .dat, .txt, .csv' : undefined}
 
+                />
+                <SubmissionMetaDialog
+                    submissionId={this.props.selectedSubmission.submission_id}
+                    show={this.props.submissionMetaDialogOpen}
+                    onClose={this.props.closeSubmissionMetaDialog}
+
+                    onSubmissionIdChange={this.props.updateSubmissionId}
+                    submissionIdValue={this.props.selectedSubmissionId}
+
+                    onPathChange={this.props.updatePath}
+                    pathValue={this.props.selectedPath}
+
+                    onAllowPublicationChange={this.props.updateAllowPublication}
+                    allowPublication={this.props.allowPublication}
+
+                    onPublicationDateChange={this.props.updatePublicationDate}
+                    publicationDate={this.props.selectedPublicationDate}
+
+                    onSubmit={this.handleUpdateSubmissionMetaDialog}
+
+                    onClearForm={this.props.clearSubmissionForm}
+
+                    helpDialogOpen={this.props.helpDialogOpen}
+                    openHelpDialog={this.props.openHelpDialog}
+                    closeHelpDialog={this.props.closeHelpDialog}
+                    submissionSucceeded={this.props.submissionSucceeded}
                 />
             </div>
         );

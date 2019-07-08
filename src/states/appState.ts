@@ -10,6 +10,8 @@ import { AdvancedSearchState } from "./advancedSearchState";
 import { SubmissionState } from "./submissionState";
 import {LinksPageState} from "./linksPageState";
 import {AdminState} from "./adminState";
+import { MatchupState } from "./matchupState";
+import { UserState } from "./userState";
 
 export interface AppState {
     configState:  ConfigState;
@@ -24,4 +26,6 @@ export interface AppState {
     submissionState: SubmissionState;
     linksPageState: LinksPageState;
     adminSate: AdminState;
+    matchupState: MatchupState;
+    userState: UserState;
 }

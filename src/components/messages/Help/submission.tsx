@@ -26,7 +26,7 @@ const SubmissionHelpText = (
         <Typography variant={"body1"} gutterBottom>
             The submission path helps you organising your data. Please user the following stricture:
             <SyntaxHighlighter language='javascript'>
-                affiliation(acronym!!)/project/cruise
+                AFFILIATION (acronym)/EXPERIMENT/CRUISE
             </SyntaxHighlighter>
         </Typography>
         <Typography variant={"h5"} gutterBottom>

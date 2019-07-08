@@ -175,6 +175,10 @@ export interface DataTableProps extends WithStyles<typeof styles> {
     openTermsDialog: () => void;
     closeTermsDialog: () => void;
 
+    termsSingleDialogOpen: boolean;
+    openTermsSingleDialog: () => void;
+    closeTermsSingleDialog: () => void;
+
     updateDataset: (datasetId: string) => void;
     dataset: Dataset;
 
@@ -206,7 +210,6 @@ class DataTable extends React.Component<DataTableProps> {
     }
 
     handleChangePage = (event: React.MouseEvent<HTMLButtonElement>, page: number) => {
-        console.log(event);
         this.props.updateDataPage(page);
         this.props.searchDatasets();
         this.props.startLoading();
@@ -235,6 +238,11 @@ class DataTable extends React.Component<DataTableProps> {
 
     handlePlotClose = () => {
         this.props.closePlotDialog();
+    };
+
+    handleDownloadSingleClick = (id: string) => {
+        this.props.updateDataset(id);
+        this.props.openTermsSingleDialog();
     };
 
     getBoundsFromSelectedDatasets = (selectedDatasets: string[]) => {
@@ -272,7 +280,7 @@ class DataTable extends React.Component<DataTableProps> {
     };
 
 
-    handleClick = (event: React.MouseEvent, id: string, selected: string[]) => {
+    handleClick = (id: string, selected: string[]) => {
         const selectedIndex = selected.indexOf(id);
         let newSelected: string[] = [];
 
@@ -289,7 +297,9 @@ class DataTable extends React.Component<DataTableProps> {
             );
         }
 
-        this.props.updateSelectedDatasets(newSelected, new LatLngBounds(new LatLng(0, 0), new LatLng(0, 0)));
+        this.props.updateSelectedDatasets(newSelected,
+            new LatLngBounds(new LatLng(0, 0), new LatLng(0, 0))
+        );
     };
 
     isSelected = (id: string) => {
@@ -300,6 +310,11 @@ class DataTable extends React.Component<DataTableProps> {
         this.props.startDownloading();
         this.props.downloadDatasets();
         this.props.closeTermsDialog();
+    };
+
+    handleTermsDialogAgreeClick = () => {
+        this.props.downloadDataset(this.props.dataset.id);
+        this.props.closeTermsSingleDialog();
     };
 
     render() {
@@ -329,9 +344,16 @@ class DataTable extends React.Component<DataTableProps> {
                     updatePlotData={this.props.updatePlotData}
                 />
                 <TermsDialog
+                    title={'OCDB Download Terms and Conditions'}
                     open={this.props.termsDialogOpen}
                     onDisagree={this.props.closeTermsDialog}
                     onAgree={this.handleDownloadClick}
+                />
+                <TermsDialog
+                    title={'OCDB Download Terms and Conditions'}
+                    open={this.props.termsSingleDialogOpen}
+                    onDisagree={this.props.closeTermsSingleDialog}
+                    onAgree={this.handleTermsDialogAgreeClick}
                 />
                 <Grid container justify={"flex-end"}>
                     <Button variant={"contained"}
@@ -389,10 +411,13 @@ class DataTable extends React.Component<DataTableProps> {
                                         <Checkbox
                                             checked={this.isSelected(row.id)}
                                             value={row.id}
-                                            onClick={(event) => this.handleClick(event, row.id, selectedDatasets)}
+                                            onClick={() => this.handleClick(row.id, selectedDatasets)}
                                         />
                                     </TableCell>
-                                    <TableCell style={{cursor: 'pointer'}} onClick={() => this.props.downloadDataset(row.id)} component="th" scope="row">
+                                    <TableCell style={{cursor: 'pointer'}}
+                                               onClick={() => this.handleDownloadSingleClick(row.id)}
+                                               component="th"
+                                               scope="row">
                                         <Typography variant="button" gutterBottom>
                                             {fileName}
                                         </Typography>

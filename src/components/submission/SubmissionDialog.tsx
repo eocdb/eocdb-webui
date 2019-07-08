@@ -11,6 +11,8 @@ import Grid from "@material-ui/core/Grid";
 import { DatePicker } from "material-ui-pickers";
 import HelpDialog from "../messages/HelpDialog";
 import SubmissionHelpText from "../messages/Help/submission";
+import { MessageLogEntry } from "../../states/messageLogState";
+import MessageLog from "../messages/MessageLog";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -61,10 +63,14 @@ interface SubmissionDialogProps extends WithStyles<typeof styles> {
 
     onClearForm: () => void;
 
+    onDropRejected: (files: File[]) => void;
+
     helpDialogOpen: boolean;
     openHelpDialog: () => void;
     closeHelpDialog: () => void;
     submissionSucceeded: boolean;
+    submissionMessages: MessageLogEntry[];
+    onHideSubmissionMessages: (id: number) => void;
 }
 
 
@@ -208,6 +214,7 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                             label={'Drag and drop DATA files here or click'}
                             onChange={this.handleOndropDatafiles}
                             files={this.props.dataFilesValue}
+                            onDropRejected={this.props.onDropRejected}
                             acceptedFiles={['text/plain', 'text/csv', 'text/x-csv','application/vnd.ms-excel',
                                 'application/csv', 'application/x-csv', 'text/comma-separated-values',
                                 'text/x-comma-separated-values', 'text/tab-separated-values']}
@@ -216,6 +223,7 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                     <Grid item>
                         <FileUpload
                             key={'drop-docfiles'}
+                            onDropRejected={this.props.onDropRejected}
                             label={'Drag and drop DOCUMENT files here or click'}
                             onChange={this.handleOndropDocfiles}
                             files={this.props.docFilesValue}
@@ -223,6 +231,10 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                         />
                     </Grid>
                 </Grid>
+                <MessageLog
+                    messages={this.props.submissionMessages}
+                    hideMessage={this.props.onHideSubmissionMessages}
+                />
             </div>
         );
     }

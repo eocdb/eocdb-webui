@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import MUIDataTable from "mui-datatables";
 import { MatchupFiles } from "../../model/MatchupFiles";
+import TermsDialog from "../search/TermsDialog";
 // import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 // import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 
@@ -19,13 +20,19 @@ const styles = (theme: Theme) => createStyles(
     });
 
 
-
 const columns = ["FileName", "Directory"];
 
 
 interface MatchupPanelProps extends WithStyles<typeof styles> {
     show: boolean;
     matchupFiles: MatchupFiles[];
+
+    termsDialogOpen: boolean;
+    openTermsDialog: () => void;
+    closeTermsDialog: () => void;
+
+    updateSelectedRowData: (rowData: string[]) => void;
+    selectedRowData: string[];
 }
 
 class MatchupPanel extends React.PureComponent<MatchupPanelProps> {
@@ -34,9 +41,25 @@ class MatchupPanel extends React.PureComponent<MatchupPanelProps> {
     }
 
     // noinspection JSUnusedLocalSymbols
-    handleRowClick = (rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => {
-         window.open('ftp://ftp.eumetsat.int' + rowData[1] + '/' + rowData[0]);
+    handleDownload = (rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => {
+        window.open('ftp://ftp.eumetsat.int' + rowData[1] + '/' + rowData[0]);
     };
+
+    // noinspection JSUnusedLocalSymbols
+    handleRowClick = (rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => {
+        this.props.updateSelectedRowData(rowData);
+        this.props.openTermsDialog();
+    };
+
+    handleTermsDialogAgreeClick = () => {
+        this.handleDownload(this.props.selectedRowData, {dataIndex: 0, rowIndex: 0});
+        this.props.closeTermsDialog();
+    };
+
+    handleTermsDialogDisAgreeClick = () => {
+        this.props.closeTermsDialog();
+    };
+
 
     // getMuiTheme = () => createMuiTheme({
     //     overrides: {
@@ -66,12 +89,19 @@ class MatchupPanel extends React.PureComponent<MatchupPanelProps> {
 
         return (
             <div>
-                    <MUIDataTable
-                        title={"Matchup Files"}
-                        data={data}
-                        columns={columns}
-                        options={options}
-                    />
+                <TermsDialog
+                    title={'OLCI in-situ Matchup Database Download Terms and Conditions'}
+                    open={this.props.termsDialogOpen}
+                    onDisagree={this.handleTermsDialogDisAgreeClick}
+                    onAgree={this.handleTermsDialogAgreeClick}
+                    downloadTerms={'OM'}
+                />
+                <MUIDataTable
+                    title={"Matchup Files"}
+                    data={data}
+                    columns={columns}
+                    options={options}
+                />
             </div>
         );
     }

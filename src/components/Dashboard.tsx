@@ -23,6 +23,8 @@ import partnerLogos from "../resources/logos.png"
 import { SearchHistoryItem } from "../types/dataset";
 import { DatasetQuery } from "../api/findDatasets";
 import Help from "@material-ui/icons/Help";
+import UserRegistrationDialog from "./user/UserRegistrationDialog";
+import ChangeLoginUserDialog from "./user/changeLoginUserDialog";
 
 
 const drawerWidth = 240;
@@ -144,7 +146,14 @@ interface DashboardProps extends WithStyles<typeof styles> {
     userLoginInProgress: boolean;
 
     logoutUser: () => void;
-    openRegistrationDialog: () => void;
+    openUserRegistrationDialog: () => void;
+    closeUserRegistrationDialog: () => void;
+    userRegistrationDialogOpen: boolean;
+
+    openChangeUserLoginDialog: () => void;
+    closeChangeUserLoginDialog: () => void;
+    changeUserLoginDialogOpen: boolean;
+    changeLoginUser: (username: string, oldPassword: string, newPassword1: string, newPassword2: string) => void;
 }
 
 
@@ -213,12 +222,24 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                     userName={this.props.userName}
                     userLoginError={this.props.userLoginError}
                     userLoginInProgress={this.props.userLoginInProgress}
-                    openRegistrationDialog={this.props.openRegistrationDialog}
+                    openRegistrationDialog={this.props.openUserRegistrationDialog}
                     closeLoginDialog={this.props.closeLoginDialog}
                     loginUser={this.props.loginUser}
                     logoutUser={this.props.logoutUser}
-                />
 
+                    openChangeUserLoginDialog={this.props.openChangeUserLoginDialog}
+                />
+                <UserRegistrationDialog
+                    open={this.props.userRegistrationDialogOpen}
+                    onClose={this.props.closeUserRegistrationDialog}
+                />
+                <ChangeLoginUserDialog
+                    open={this.props.changeUserLoginDialogOpen}
+                    onChangeUserLoginDialogClose={this.props.closeChangeUserLoginDialog}
+                    userLoginError={null}
+                    onLoginUserChange={this.props.changeLoginUser}
+                    userName={this.props.user ? this.props.user.name : ''}
+                />
                 <ConfigDialog open={this.props.configDialogOpen}
                               handleClose={this.handleConfigClose}
                               apiServerUrlChange={this.handleApiServerUrlChange}
@@ -253,7 +274,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 
                         <IconButton color="inherit"
                                     target={'_blank'}
-                                    href={'http://ocdb.readthedocs.io/'}
+                                    href={'https://bcdev.github.io/ocdb_docs'}
                         >
                             <Help/>
                         </IconButton>

@@ -140,6 +140,7 @@ interface SubmissionTableProps extends WithStyles<typeof styles> {
     show: boolean;
 
     onSubmissionDialogOpen: () => void;
+    onSubmissionDialogMetaOpen: (submissionId: string) => void;
 
     onSubmissionSelect: (selectedSubmissionId: string) => void;
 
@@ -149,6 +150,7 @@ interface SubmissionTableProps extends WithStyles<typeof styles> {
     onSubmissionHalt: (selectedSubmissionId: string) => void;
     onSubmissionRestart: (selectedSubmission: Submission) => void;
     onSubmissionSubmit: (selectedSubmissionId: string) => void;
+    onSubmissionUpdate: (selectedSubmissionId: string) => void;
     onSubmissionDelete: (selectedSubmissionId: string) => void;
 
     onSubmissionReady: (selectedSubmissionId: string) => void;
@@ -273,6 +275,16 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                             />
                                         </TableCell>
                                         <TableCell>
+                                            <Tooltip title="Update Submission" aria-label="updateSubmission">
+                                                <Button
+                                                    onClick={() => this.props.onSubmissionDialogMetaOpen(
+                                                        row.submission_id
+                                                    )}
+                                                    disabled={adminAllowed}
+                                                >
+                                                    <Icon className={classes.rightIcon}>edit</Icon>
+                                                </Button>
+                                            </Tooltip>
                                             <Tooltip title="List Files" aria-label="ListFiles">
                                                 <Button
                                                     onClick={() => this.props.onSubmissionSelect(

@@ -16,6 +16,7 @@ interface FileUploadProps extends WithStyles<typeof styles> {
     onChange: (acceptedFiles: File[]) => void;
     files: File[];
     acceptedFiles?: string[];
+    onDropRejected: (files: File[]) => void;
 }
 
 
@@ -28,12 +29,17 @@ class FileUpload extends React.Component<FileUploadProps> {
         this.props.onChange(files);
     };
 
+    handleOnDropRejected = (files: File[]) => {
+       this.props.onDropRejected(files);
+    };
+
     render() {
         return (
             <DropzoneArea
+                onDropRejected={this.handleOnDropRejected}
                 onChange={this.handleOnchange}
                 filesLimit={500}
-                maxFileSize={2000000000}
+                maxFileSize={1000000000}
                 showFileNamesInPreview={true}
                 acceptedFiles={this.props.acceptedFiles}
                 clearOnUnmount={true}

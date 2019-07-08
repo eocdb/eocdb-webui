@@ -1,8 +1,10 @@
 import { Submission, SubmissionFile, DatasetValidationResult } from "../model";
+import { MessageLogEntry } from "./messageLogState";
 
 export interface SubmissionState {
     submissionDialogOpen: boolean;
     submissionFilesDialogOpen: boolean;
+    submissionMetaDialogOpen: boolean;
     submissionFileIssueDialogOpen: boolean;
     deleteSubmissionFileAlertOpen: boolean;
     deleteSubmissionAlertOpen: boolean,
@@ -30,6 +32,8 @@ export interface SubmissionState {
     submissionPublicationDate: string | null;
 
     submissionSucceeded: boolean;
+
+    submissionMessages: MessageLogEntry[];
 }
 
 export function newSubmissionState() {
@@ -38,6 +42,7 @@ export function newSubmissionState() {
 
         submissionDialogOpen: false,
         submissionFilesDialogOpen: false,
+        submissionMetaDialogOpen: false,
         submissionFileIssueDialogOpen: false,
         deleteSubmissionFileAlertOpen: false,
         deleteSubmissionAlertOpen: false,
@@ -59,6 +64,7 @@ export function newSubmissionState() {
             submission_id: '',
             user_id: 0,
             date: '',
+            path: '',
             status: '',
             files: [],
             file_refs: [],
@@ -82,5 +88,8 @@ export function newSubmissionState() {
         submissionPublicationDate: null,
 
         submissionSucceeded: false,
+        submissionMessages: [],
+        newEntries: [],
+        oldEntries: [],
     }
 }

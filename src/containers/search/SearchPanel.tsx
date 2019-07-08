@@ -45,7 +45,7 @@ import {
     updateDownloadDocs,
     updatePlotData,
     updatePlotState,
-    updateSelectedDatasets
+    updateSelectedDatasets, openTermsSingleDialog, closeTermsSingleDialog
 } from "../../actions/dataTableActions";
 
 
@@ -96,6 +96,7 @@ const mapStateToProps = (state: AppState) => {
         helpMetaInfoKey: state.dashboardState.helpMetaInfoKey,
         plotDialogOpen: state.dataTableState.plotDialogOpen,
         termsDialogOpen: state.dataTableState.termsDialogOpen,
+        termsSingleDialogOpen: state.dataTableState.termsSingleDialogOpen,
 
         data: state.searchFormState.foundDatasets,
         dataset: state.dataTableState.dataset,
@@ -165,6 +166,8 @@ const mapDispatchToProps = {
     closePlotDialog,
     openTermsDialog,
     closeTermsDialog,
+    openTermsSingleDialog,
+    closeTermsSingleDialog,
     updateDataset,
     updateDownloadDocs,
     downloadDatasets,

@@ -5,6 +5,7 @@ import { AppState } from "../states/appState";
 import { DatasetValidationResult, UploadData, Submission, SubmissionFile } from "../model";
 import { StopLoading, UpdateSearchHistory } from "./findActions";
 import { SingleUpload } from "../model/UploadData";
+import { MessageLogEntry } from "../states/messageLogState";
 
 
 /**
@@ -45,6 +46,38 @@ export function closeSubmissionFilesDialog(): CloseSubmissionFilesDialog {
         type: CLOSE_SUBMISSION_FILES_DIALOG
     }
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const OPEN_SUBMISSION_META_DIALOG = 'OPEN_SUBMISSION_META_DIALOG';
+export type OPEN_SUBMISSION_META_DIALOG = typeof OPEN_SUBMISSION_META_DIALOG;
+
+
+export interface OpenSubmissionMetaDialog {
+    type: OPEN_SUBMISSION_META_DIALOG;
+}
+
+export function openSubmissionMetaDialog(): OpenSubmissionMetaDialog {
+    return {
+        type: OPEN_SUBMISSION_META_DIALOG
+    }
+}
+
+
+export const CLOSE_SUBMISSION_META_DIALOG = 'CLOSE_SUBMISSION_META_DIALOG';
+export type CLOSE_SUBMISSION_META_DIALOG = typeof CLOSE_SUBMISSION_META_DIALOG;
+
+
+export interface CloseSubmissionMetaDialog {
+    type: CLOSE_SUBMISSION_META_DIALOG;
+}
+
+export function closeSubmissionMetaDialog(): CloseSubmissionMetaDialog {
+    return {
+        type: CLOSE_SUBMISSION_META_DIALOG
+    }
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -396,7 +429,7 @@ export function _updateSubmissionSucceeded(submissionSucceeded: boolean): Update
 }
 
 export function sendSubmission() {
-    return (dispatch: Dispatch<SubmitAction | MessageLogAction | UpdateSubmissionSucceeded
+    return (dispatch: Dispatch<SubmitAction | MessageLogAction | UpdateSubmissionSucceeded | CloseSubmissionFilesDialog
         | UpdateSearchHistory | StopLoading>, getState: ()
         => AppState) => {
         const state = getState();
@@ -424,6 +457,7 @@ export function sendSubmission() {
                 dispatch(_sendSubmission(datasetValidationResults));
                 dispatch(postMessage("success", 'Submission Sent'));
                 dispatch(_updateSubmissionSucceeded(true));
+                dispatch(closeSubmitSteps());
             })
             .then(() => {
                 api.getSubmissionsForUser(apiServerUrl, userid)
@@ -437,7 +471,6 @@ export function sendSubmission() {
             });
     };
 }
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -705,6 +738,43 @@ export function setSubmissionStatus(submissionId: string, status: string, appDat
 }
 
 
+export function updateSubmissionMeta() {
+    return (dispatch: Dispatch<SetSubmissionStatus | UpdateSubmissionsForUser | MessageLogAction>, getState: ()
+        => AppState) => {
+        const state = getState();
+        const apiServerUrl = state.configState.apiServerUrl;
+
+        const user = state.sessionState.user;
+
+        const userid = user ? user.id : 0;
+
+        const submissionId = state.submissionState.selectedSubmission.submission_id;
+
+        const uploadData = {
+            submissionid: state.submissionState.submissionId,
+            path: state.submissionState.path,
+            publicationdate: state.submissionState.publicationDate,
+            allowpublication: state.submissionState.allowPublication,
+        };
+
+
+        return api.updateSubmission(apiServerUrl, submissionId, uploadData)
+            .then(() => {
+                return dispatch(postMessage("success", 'Submission' + submissionId + ' updated.'));
+            })
+            .then(() => {
+                return api.getSubmissionsForUser(apiServerUrl, userid)
+                    .then((submissions: Submission[]) => {
+                        dispatch(updateSubmissionsForUser(submissions));
+                    })
+            })
+            .catch((error: string) => {
+                return dispatch(postMessage('error', error + ''));
+            });
+    };
+}
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -794,11 +864,45 @@ export function closeHelpDialog(): CloseHelpDialog {
 }
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_SUBMISSION_MESSAGES = 'UPDATE_SUBMISSION_MESSAGES';
+export type UPDATE_SUBMISSION_MESSAGES = typeof UPDATE_SUBMISSION_MESSAGES;
+
+export interface UpdateSubmissionMessages {
+    type: UPDATE_SUBMISSION_MESSAGES;
+    submissionMessages: MessageLogEntry[];
+}
+
+export function updateSubmissionMessages(submissionMessages: MessageLogEntry[]): UpdateSubmissionMessages {
+    return {
+        type: UPDATE_SUBMISSION_MESSAGES,
+        submissionMessages
+    };
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const HIDE_SUBMISSION_MESSAGES = 'HIDE_SUBMISSION_MESSAGES';
+export type HIDE_SUBMISSION_MESSAGES = typeof HIDE_SUBMISSION_MESSAGES;
+
+export interface HideSubmissionMessages {
+    type: HIDE_SUBMISSION_MESSAGES;
+    messageId: number;
+}
+
+export function hideSubmissionMessages(messageId: number): HideSubmissionMessages {
+    return {type: HIDE_SUBMISSION_MESSAGES, messageId};
+}
+
+
 
 export type SubmitAction = OpenSubmitSteps
     | CloseSubmitSteps
     | OpenSubmissionFilesDialog
     | CloseSubmissionFilesDialog
+    | OpenSubmissionMetaDialog
+    | CloseSubmissionMetaDialog
     | OpenSubmissionIssuesDialog
     | CloseSubmissionIssuesDialog
     | OpenDeleteSubmissionFilesAlert
@@ -824,4 +928,6 @@ export type SubmitAction = OpenSubmitSteps
     | UpdateCurrentSubmissionFileIndex
     | OpenHelpDialog
     | CloseHelpDialog
-    | UpdateSubmissionSucceeded;
+    | UpdateSubmissionSucceeded
+    | UpdateSubmissionMessages
+    | HideSubmissionMessages;

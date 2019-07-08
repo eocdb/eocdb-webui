@@ -297,6 +297,31 @@ export function closeTermsDialog(): CloseTermsDialog {
 }
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+export const OPEN_TERMS_SINGLE_DIALOG = 'OPEN_TERMS_SINGLE_DIALOG';
+export type OPEN_TERMS_SINGLE_DIALOG = typeof OPEN_TERMS_SINGLE_DIALOG;
+
+export interface OpenTermsSingleDialog {
+    type: OPEN_TERMS_SINGLE_DIALOG;
+}
+
+export function openTermsSingleDialog(): OpenTermsSingleDialog {
+    return {type: OPEN_TERMS_SINGLE_DIALOG};
+}
+
+export const CLOSE_TERMS_SINGLE_DIALOG = 'CLOSE_TERMS_SINGLE_DIALOG';
+export type CLOSE_TERMS_SINGLE_DIALOG = typeof CLOSE_TERMS_SINGLE_DIALOG;
+
+export interface CloseTermsSingleDialog {
+    type: CLOSE_TERMS_SINGLE_DIALOG;
+}
+
+export function closeTermsSingleDialog(): CloseTermsSingleDialog {
+    return {type: CLOSE_TERMS_SINGLE_DIALOG};
+}
+
 
 export type DataTableAction = UpdateDataPage
     | UpdateDataRowsPerPage
@@ -308,6 +333,8 @@ export type DataTableAction = UpdateDataPage
     | ClosePlotDialog
     | OpenTermsDialog
     | CloseTermsDialog
+    | OpenTermsSingleDialog
+    | CloseTermsSingleDialog
     | UpdateDataset
     | UpdateDownloadDocs
     | UpdateSelectedDatasets

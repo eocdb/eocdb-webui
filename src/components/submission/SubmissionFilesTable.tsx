@@ -89,6 +89,7 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                     <TableHead>
                         <TableRow>
                             <TableCell>FileName</TableCell>
+                            <TableCell>Index</TableCell>
                             <TableCell>File Type</TableCell>
                             <TableCell>Status</TableCell>
                             <TableCell>Action</TableCell>
@@ -102,6 +103,9 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                                     <TableCell>
                                         {row.filename}
 
+                                    </TableCell>
+                                    <TableCell>
+                                        {row.index}
                                     </TableCell>
                                     <TableCell>
                                         {row.filetype}

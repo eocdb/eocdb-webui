@@ -6,6 +6,7 @@ import EditContentDialog from "./EditContentDialog";
 import Link from "@material-ui/icons/Link";
 import Settings from "@material-ui/icons/Settings";
 import ConfigDialog from "./ConfigDialog";
+import EditJSON from "./JSONEdit";
 
 
 // noinspection JSUnusedLocalSymbols
@@ -78,6 +79,9 @@ class AdminPanel extends React.PureComponent<AdminPanelProps> {
                     Settings
                     <Settings/>
                 </Button>
+                <EditJSON
+                    open={false}
+                />
                 <EditContentDialog
                     onClose={this.props.closeLinksContentDialog}
                     open={this.props.linksContentDialogOpen}

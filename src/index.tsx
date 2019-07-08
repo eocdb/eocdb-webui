@@ -25,7 +25,6 @@ for (let i = 0; i < localStorage.length; i++) {
 
     if (key) {
         const query = localStorage.getItem(key);
-        console.log(query);
         if (query) {
             history.push({key: key, query: JSON.parse(query)})
         }

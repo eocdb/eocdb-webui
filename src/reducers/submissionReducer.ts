@@ -25,8 +25,14 @@ import {
     CLOSE_UPLOAD_SUBMISSION_FILE_DIALOG,
     OPEN_SUBMISSION_PUBLICATION_DATE_DIALOG,
     CLOSE_SUBMISSION_PUBLICATION_DATE_DIALOG,
-    UPDATE_SUBMISSION_PUBLICATION_DATE, UPDATE_PUBLICATION_DATE, UPDATE_ALLOW_PUBLICATION,
-    CLOSE_HELP_DIALOG, OPEN_HELP_DIALOG, UPDATE_SUBMISSION_SUCCEEDED
+    UPDATE_SUBMISSION_PUBLICATION_DATE,
+    UPDATE_PUBLICATION_DATE,
+    UPDATE_ALLOW_PUBLICATION,
+    CLOSE_HELP_DIALOG,
+    OPEN_HELP_DIALOG,
+    UPDATE_SUBMISSION_SUCCEEDED,
+    UPDATE_SUBMISSION_MESSAGES,
+    HIDE_SUBMISSION_MESSAGES, OPEN_SUBMISSION_META_DIALOG, CLOSE_SUBMISSION_META_DIALOG
 } from "../actions/submissionActions";
 
 
@@ -40,9 +46,13 @@ export function submissionReducer(state: SubmissionState = initialState, action:
         case CLOSE_SUBMIT_STEPS:
             return {...state, submissionDialogOpen: false};
         case OPEN_SUBMISSION_FILES_DIALOG:
-            return {...state, submissionFilesDialogOpen: true};
+            return {...state, submissionSucceeded: false, submissionFilesDialogOpen: true};
         case CLOSE_SUBMISSION_FILES_DIALOG:
-            return {...state, submissionFilesDialogOpen: false};
+            return {...state, submissionSucceeded: false, submissionFilesDialogOpen: false};
+        case OPEN_SUBMISSION_META_DIALOG:
+            return {...state, submissionMetaDialogOpen: true};
+        case CLOSE_SUBMISSION_META_DIALOG:
+            return {...state, submissionMetaDialogOpen: false};
         case OPEN_SUBMISSION_ISSUES_DIALOG:
             return {...state, submissionFileIssueDialogOpen: true};
         case CLOSE_SUBMISSION_ISSUES_DIALOG:
@@ -66,7 +76,13 @@ export function submissionReducer(state: SubmissionState = initialState, action:
         case UPDATE_SUBMISSION_ID:
             return {...state, submissionId: action.submissionId};
         case UPDATE_SUBMISSION:
-            return {...state, selectedSubmission: action.submission};
+            return {...state,
+                selectedSubmission: action.submission,
+                submissionId: action.submission.submission_id,
+                path: action.submission.path,
+                publicationDate: action.submission.publication_date,
+                allowPublication: action.submission.allow_publication,
+            };
         case UPDATE_PATH:
             return {...state, path: action.path};
         case UPDATE_ALLOW_PUBLICATION:
@@ -78,7 +94,14 @@ export function submissionReducer(state: SubmissionState = initialState, action:
         case UPDATE_DOC_FILES:
             return {...state, docFiles: action.docFiles};
         case CLEAR_SUBMISSION_FORM:
-            return {...state, docFiles: [], dataFiles: [], submissionId: '', path: ''};
+            return {...state,
+                docFiles: [],
+                dataFiles: [],
+                submissionId: '',
+                path: '',
+                publicationDate: null,
+                allowPublication: false
+            };
         case UPDATE_SUBMISSIONS_FOR_USER:
             return {...state, foundSubmissions: action.submissions};
         case UPDATE_SELECTED_SUBMISSIONFILE:
@@ -95,6 +118,10 @@ export function submissionReducer(state: SubmissionState = initialState, action:
             return {...state, submissionPublicationDate: action.submissionPublicationDate};
         case UPDATE_SUBMISSION_SUCCEEDED:
             return {...state, submissionSucceeded: action.submissionSucceeded};
+        case UPDATE_SUBMISSION_MESSAGES:
+            return {...state, submissionMessages: action.submissionMessages};
+        case HIDE_SUBMISSION_MESSAGES:
+            return {...state, submissionMessages: []};
         default:
             return state;
     }

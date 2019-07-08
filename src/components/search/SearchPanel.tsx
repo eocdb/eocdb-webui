@@ -176,6 +176,10 @@ interface SearchPanelProps extends WithStyles<typeof styles> {
     openTermsDialog: () => void;
     closeTermsDialog: () => void;
 
+    termsSingleDialogOpen: boolean;
+    openTermsSingleDialog: () => void;
+    closeTermsSingleDialog: () => void;
+
     updateDataset: (datasetId: string) => void;
     dataset: Dataset;
 
@@ -239,21 +243,40 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
             key = this.props.user.name + '_';
         }
 
-        console.log(this.props.datasetQuery);
-        const item: SearchHistoryItem = {
+        const newItem: SearchHistoryItem = {
             key: this.props.saveSearchTitle,
             query: Object.assign(this.props.datasetQuery)
         };
+
+        let newItemAdded = false;
+
         let history = this.props.searchHistory.map((item: SearchHistoryItem) => {
-            return item;
+            if(item.key != this.props.saveSearchTitle) {
+                return item;
+            }
+            else{
+                newItemAdded = true;
+                return newItem;
+            }
         });
 
-        history.push(item);
+        if(!newItemAdded){
+            history.push(newItem);
+        }
+
         this.props.updateSearchHistory(history);
-        console.info(JSON.stringify(item.query));
-        localStorage.setItem(key + this.props.saveSearchTitle, JSON.stringify(item.query));
+
+        localStorage.setItem(key + this.props.saveSearchTitle, JSON.stringify(newItem.query));
 
         this.props.closeSaveSearchDialog();
+    };
+
+    handleSearchExpKeyPressed = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            this.handleSearchDatasets();
+        }
+
     };
 
     handleSearchExprChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -356,6 +379,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             value={this.props.datasetQuery.searchExpr}
                             onChange={this.handleSearchExprChange}
                             onBlur={this.handleSearchExprBlur}
+                            onKeyPress={this.handleSearchExpKeyPressed}
                         />
                         <IconButton
                             onClick={this.props.openHelpDialog}
@@ -461,6 +485,10 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             termsDialogOpen={this.props.termsDialogOpen}
                             openTermsDialog={this.props.openTermsDialog}
                             closeTermsDialog={this.props.closeTermsDialog}
+
+                            termsSingleDialogOpen={this.props.termsSingleDialogOpen}
+                            openTermsSingleDialog={this.props.openTermsSingleDialog}
+                            closeTermsSingleDialog={this.props.closeTermsSingleDialog}
 
                             updateDataset={this.props.updateDataset}
                             dataset={this.props.dataset}

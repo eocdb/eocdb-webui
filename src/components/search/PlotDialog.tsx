@@ -59,6 +59,12 @@ const round = (value: number, precision: number) => {
 
 //const colors = ['red', 'green', 'pink', 'yellow'];
 
+function isNumber(value: string | number): boolean
+{
+    return ((value != null) && !isNaN(Number(value.toString())));
+}
+
+
 class PlotDialog extends React.Component<PlotDialogProps> {
     constructor(props: PlotDialogProps) {
         super(props);
@@ -70,16 +76,21 @@ class PlotDialog extends React.Component<PlotDialogProps> {
 
         if (z) {
             return records.map((record: number[]) => {
+                console.log(record);
                 return {
-                    x: round(+record[x], precision),
-                    y: round(+record[y], precision),
-                    z: round(+record[z], precision)
+                    x: isNumber(record[x])?round(+record[x], precision):record[x],
+                    y: isNumber(record[y])?round(+record[y], precision):record[y],
+                    z: isNumber(record[z])?round(+record[z], precision):record[z],
                 };
             });
             //return Simplify3D(points, 0.5, false);
         } else {
+            let i = 1;
             return records.map((record: number[]) => {
-                return {x: round(+record[x], precision), y: round(+record[y], precision)};
+                const xv = isNumber(record[x])?round(+record[x], precision):i;
+                const yv = isNumber(record[y])?round(+record[y], precision):i;
+                i++;
+                return {x: xv, y: yv};
             });
         }
     };
@@ -155,6 +166,8 @@ class PlotDialog extends React.Component<PlotDialogProps> {
 
     render() {
         const {plotData, classes} = this.props;
+
+        console.log(plotData);
 
         const {attributes} = this.props.dataset;
 
