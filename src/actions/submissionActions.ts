@@ -429,7 +429,7 @@ export function _updateSubmissionSucceeded(submissionSucceeded: boolean): Update
 }
 
 export function sendSubmission() {
-    return (dispatch: Dispatch<SubmitAction | MessageLogAction | UpdateSubmissionSucceeded
+    return (dispatch: Dispatch<SubmitAction | MessageLogAction | UpdateSubmissionSucceeded | CloseSubmissionFilesDialog
         | UpdateSearchHistory | StopLoading>, getState: ()
         => AppState) => {
         const state = getState();
@@ -457,6 +457,7 @@ export function sendSubmission() {
                 dispatch(_sendSubmission(datasetValidationResults));
                 dispatch(postMessage("success", 'Submission Sent'));
                 dispatch(_updateSubmissionSucceeded(true));
+                dispatch(closeSubmitSteps());
             })
             .then(() => {
                 api.getSubmissionsForUser(apiServerUrl, userid)

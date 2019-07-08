@@ -148,7 +148,7 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
                 <DialogTitle id="form-dialog-title">Login</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        {this.props.userName?'Hello ' + this.props.userName + '. Here you can logout' +
+                        {this.props.userName?'Hello ' + this.props.userName + '. Here you can logout ' +
                             'or change your password.':'Please enter your login details here or register for a new account.'}
 
                     </DialogContentText>
