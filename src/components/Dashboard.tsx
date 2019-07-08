@@ -274,7 +274,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 
                         <IconButton color="inherit"
                                     target={'_blank'}
-                                    href={'https://bcdev.github.io/ocdb_docs'}
+                                    href={'https://ocdb.readthedocs.io'}
                         >
                             <Help/>
                         </IconButton>
