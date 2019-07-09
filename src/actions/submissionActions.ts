@@ -456,7 +456,6 @@ export function sendSubmission() {
             .then((datasetValidationResults: DatasetValidationResult[]) => {
                 dispatch(_sendSubmission(datasetValidationResults));
                 dispatch(postMessage("success", 'Submission Sent'));
-                dispatch(_updateSubmissionSucceeded(true));
                 dispatch(closeSubmitSteps());
             })
             .then(() => {
@@ -466,7 +465,6 @@ export function sendSubmission() {
                     })
             })
             .catch((error: string) => {
-                dispatch(_updateSubmissionSucceeded(false));
                 dispatch(postMessage('error', error + ''));
             });
     };
