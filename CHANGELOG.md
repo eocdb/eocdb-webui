@@ -1,3 +1,7 @@
+# Changes for Version 0.1.19
+
+- Added a temporary submission disclaimer for publishing data (#17)
+
 # Changed for Version 0.1.7
 
 - Fixed Submission Dialog closing on error
