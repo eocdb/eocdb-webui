@@ -98,14 +98,14 @@ export class TermsDialog<T> extends React.Component<TermsDialogProps<T> > {
                             variant="contained"
                             color="secondary"
                     >
-                        Agree
+                        Accept
                     </Button>
                     <Button onClick={this.props.onDisagree}
                             aria-label="Close"
                             variant="contained"
                             color="secondary"
                     >
-                        Disagree
+                        Decline
                     </Button>
                 </DialogActions>
             </Dialog>
