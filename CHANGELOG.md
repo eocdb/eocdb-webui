@@ -1,3 +1,8 @@
+# Changes for Version 0.1.20
+
+- Added legal agreement to inform about using HTML local storage. (#9)
+
+
 # Changes for Version 0.1.19
 
 - Added a temporary submission disclaimer for publishing data (#17)

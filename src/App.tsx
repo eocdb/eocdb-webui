@@ -7,6 +7,7 @@ import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 
 import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import LuxonUtils from '@date-io/luxon';
+import LegalAgreementDialog from "./containers/LegalAgreementDialog";
 
 
 const theme = createMuiTheme(
@@ -35,6 +36,7 @@ class App extends React.Component {
                         <CssBaseline/>
                         <Dashboard/>
                         <MessageLog/>
+                        <LegalAgreementDialog/>
                     </div>
                 </MuiPickersUtilsProvider>
             </MuiThemeProvider>

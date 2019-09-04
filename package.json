@@ -1,7 +1,7 @@
 {
   "name": "ocdb-webui",
   "version": "0.1.12",
-  "homepage": "https://ocdb.eumetsat.int",
+  "homepage": ".",
   "private": true,
   "scripts": {
     "start": "react-scripts-ts start",

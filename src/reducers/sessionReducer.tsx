@@ -1,7 +1,9 @@
-import { LOGIN_USER, LOGOUT_USER, START_USER_LOGIN, UserAction } from '../actions/userActions';
-import { SessionState, newSessionState } from '../states/sessionState';
+import { LOGIN_USER, LOGOUT_USER, START_USER_LOGIN, UPDATE_SETTINGS, UserAction } from '../actions/userActions';
+import { SessionState, newSessionState, storeUserSettings } from '../states/sessionState';
+
 
 const initialState = newSessionState();
+
 
 export function sessionReducer(state: SessionState, action: UserAction): SessionState {
     if (typeof state === 'undefined') {
@@ -17,6 +19,10 @@ export function sessionReducer(state: SessionState, action: UserAction): Session
         }
         case START_USER_LOGIN: {
             return {...state, userLoginInProgress: true};
+        }
+        case UPDATE_SETTINGS: {
+            storeUserSettings(action.settings);
+            return action.settings;
         }
     }
     return state;

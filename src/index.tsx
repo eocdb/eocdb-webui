@@ -23,7 +23,7 @@ let history: SearchHistoryItem[] = [];
 for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
 
-    if (key) {
+    if (key && !key.includes('ocdb')) {
         const query = localStorage.getItem(key);
         if (query) {
             history.push({key: key, query: JSON.parse(query)})
