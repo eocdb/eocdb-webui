@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { AppState } from '../states/appState';
 
 import LegalAgreementDialog from "../components/messages/LegalAgreementDialog";
-import { updateSettings } from "../actions/userActions";
+import { updateSession } from "../actions/userActions";
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -13,7 +13,7 @@ const mapStateToProps = (state: AppState) => {
 };
 
 const mapDispatchToProps = {
-    updateSettings,
+    updateSettings: updateSession,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LegalAgreementDialog);

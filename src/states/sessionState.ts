@@ -1,14 +1,12 @@
 import { User } from '../model';
 import { getLocalStorage, Storage } from "../tools/storage";
-//import { UserRole } from "../types/user";
-
-//const testRoles: UserRole[] = ['admin', 'submit'];
 
 export interface SessionState {
     user: User | null;
     userLoginError: string | null;
     userLoginInProgress: boolean;
     legalAgreementAccepted: boolean;
+    userLoggedIn: boolean;
 }
 
 
@@ -18,6 +16,7 @@ export function newSessionState() {
         userLoginError: null,
         userLoginInProgress: false,
         legalAgreementAccepted: false,
+        userLoggedIn: false,
     };
 
     return loadUserSettings(state);

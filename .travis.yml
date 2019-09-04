@@ -18,5 +18,6 @@ deploy:
     github_token: $github_token
     local_dir: build
     on:
-      branch: master
+      all_branches: true
+      condition: $TRAVIS_BRANCH =~ ^[0-9]+
 

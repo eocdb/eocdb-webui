@@ -116,7 +116,7 @@ export interface UpdateSettings {
     settings: SessionState;
 }
 
-export function updateSettings(settings: SessionState): UpdateSettings {
+export function updateSession(settings: SessionState): UpdateSettings {
     return {type: UPDATE_SETTINGS, settings};
 }
 
