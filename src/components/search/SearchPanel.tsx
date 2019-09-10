@@ -365,15 +365,16 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             selectedItems={this.getSelectedProducts()}
                             isMulti={true}
                             closeMenuOnSelect={true}
-                            inputLabel={'Product Groups'}
-                            inputLabelWidth={124}
+                            //inputLabel={'Product Groups'}
+                            placeholder={'Product Groups...'}
+                            //inputLabelWidth={124}
 
                             className={classes.searchField}
                         />
                         <TextField
                             id={'lucene-search'}
                             key={'lucene-search'}
-                            label={'Expression'}
+                            label={'Search...'}
                             variant={"outlined"}
                             className={classes.searchField}
                             value={this.props.datasetQuery.searchExpr}
