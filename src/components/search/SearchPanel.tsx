@@ -365,10 +365,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             selectedItems={this.getSelectedProducts()}
                             isMulti={true}
                             closeMenuOnSelect={true}
-                            //inputLabel={'Product Groups'}
                             placeholder={'Product Groups...'}
-                            //inputLabelWidth={124}
-
                             className={classes.searchField}
                         />
                         <TextField
