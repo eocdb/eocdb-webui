@@ -19,4 +19,5 @@ deploy:
     local_dir: build
     on:
       all_branches: true
+      condition: $TRAVIS_BRANCH =~ ^(staging)$
 
