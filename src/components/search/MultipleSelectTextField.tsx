@@ -92,7 +92,7 @@ interface MultipleSelectTextFieldProps extends WithStyles<typeof styles> {
 }
 
 const ControlComponent = (props: any) => (
-    <div style={{zIndex: 1000}}>
+    <div style={{zIndex: 1}}>
         {/*<h1 style={
             {
                 textAlign: 'left',
@@ -105,7 +105,7 @@ const ControlComponent = (props: any) => (
         }>
             <span style={{backgroundColor: 'white'}}>kljnd</span>
         </h1>*/}
-        <components.Input style={{zIndex: 1000}} id={'testin'} {...props} />
+        <components.Input style={{zIndex: 1}} id={'testin'} {...props} />
     </div>
 );
 
@@ -148,7 +148,7 @@ class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldPro
                 className={this.props.className}
             >
                 <InputLabel
-                    style={{zIndex: 9999, backgroundColor: '#FAFAFA', width: this.props.inputLabelWidth, paddingLeft: 8}}
+                    style={{zIndex: 1000, backgroundColor: '#FAFAFA', width: this.props.inputLabelWidth, paddingLeft: 8}}
                     shrink
                     variant={"outlined"}
                     htmlFor='testing'

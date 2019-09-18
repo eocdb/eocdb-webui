@@ -4,7 +4,7 @@ import { AppState } from '../states/appState';
 import { User } from '../model';
 import { MessageLogAction, postMessage } from "./messageLogActions";
 import { ChangeDrawer, changeDrawer } from "./dashboardActions";
-
+import { SessionState } from "../states/sessionState";
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -108,4 +108,18 @@ function _loginUser(user: User | null, userLoginError: string | null): LoginUser
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type UserAction = LoginUser | LogoutUser | StartUserLogin;
+export const UPDATE_SETTINGS = 'UPDATE_SETTINGS';
+export type UPDATE_SETTINGS = typeof UPDATE_SETTINGS;
+
+export interface UpdateSettings {
+    type: UPDATE_SETTINGS;
+    settings: SessionState;
+}
+
+export function updateSession(settings: SessionState): UpdateSettings {
+    return {type: UPDATE_SETTINGS, settings};
+}
+
+
+
+export type UserAction = LoginUser | LogoutUser | StartUserLogin | UpdateSettings;

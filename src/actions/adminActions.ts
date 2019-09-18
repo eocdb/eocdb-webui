@@ -52,6 +52,9 @@ export function getLinks(){
             .then((links: Links) => {
                 return dispatch(updateLinksContent(links.content))
             })
+            .catch((error: string) => {
+                return dispatch(postMessage('error', 'Could open Links: ' + error))
+            })
     }
 }
 

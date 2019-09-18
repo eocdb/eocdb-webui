@@ -1,6 +1,6 @@
 export const API_SERVER_VERSION='v0.1.6';
 
-let baseUrl = "https://ocdb.eumetsat.int";
+let baseUrl = 'http://localhost:4000';
 
 if (process.env.NODE_ENV === 'production') {
     baseUrl = "https://ocdb.eumetsat.int";
