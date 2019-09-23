@@ -78,6 +78,7 @@ export function newSubmissionState() {
             filename: '',
             status: 'OK',
             filetype: 'DOCUMENT',
+            creationdate: '',
             result: {
                 status: 'OK',
                 issues: [],

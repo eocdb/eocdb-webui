@@ -9,14 +9,11 @@ import { SubmissionFile } from "../model/SubmissionFile";
  * @param submissionFile: submission file
  * @param uploadData: interface to uploadData. Contains file names, user name, submission id, path
  */
-export function updateSubmissionFile(
+export function addSubmissionFile(
     apiServerUrl: string,
     submissionFile: SubmissionFile,
     uploadData: SingleUpload): Promise<Response> {
 
-    const data = submissionFile.index == -1 ? submissionFile.filetype : submissionFile.index;
-    const method = submissionFile.index == -1 ? 'POST' : 'PUT';
-    const action = submissionFile.index == -1 ? 'add' : 'upload';
     let formData  = new FormData();
 
     formData.append('files', uploadData.file, uploadData.file.name);
@@ -26,10 +23,10 @@ export function updateSubmissionFile(
     formData.append('username', uploadData.username);
 
     return callApi(
-        apiServerUrl + '/store/' + action + '/submissionfile/' + submissionFile.submission_id + '/' + data,
+        apiServerUrl + '/store/upload/submissionfile/' + submissionFile.submission_id + '/' + submissionFile.filetype,
         undefined,
         {
-            method: method,
+            method: 'PUT',
             body: formData,
         }
     );

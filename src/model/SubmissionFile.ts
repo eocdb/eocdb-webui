@@ -6,5 +6,6 @@ export interface SubmissionFile {
     filename: string;
     status: string;
     filetype: string;
+    creationdate: string;
     result: DatasetValidationResult;
 }
