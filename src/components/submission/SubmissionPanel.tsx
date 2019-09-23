@@ -184,7 +184,9 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
 
     handleSendSubmission = () => {
         this.props.sendSubmission();
-        this.props.updateSubmissionsForUser();
+        if (this.props.submissionSucceeded) {
+            this.props.updateSubmissionsForUser();
+        }
     };
 
     handleUpdateSubmission = (submissionId: string) => {

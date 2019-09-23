@@ -148,7 +148,7 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                                         {row.filetype}
                                     </TableCell>
                                     <TableCell>
-                                        {row.creationdate}
+                                        {row.creationdate ? row.creationdate.substr(0, 10) : ""}
                                     </TableCell>
                                     <TableCell>
                                         <Chip

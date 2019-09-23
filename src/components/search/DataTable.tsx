@@ -31,9 +31,6 @@ import { geoJSON, LatLng, LatLngBounds } from "leaflet";
 import { TermsDialog } from "./TermsDialog";
 
 
-const path = require('path');
-
-
 const actionsStyles = (theme: Theme) => createStyles({
     root: {
         flexShrink: 0,
@@ -395,8 +392,8 @@ class DataTable extends React.Component<DataTableProps> {
                     </TableHead>
                     <TableBody>
                         {datasets.map(row => {
-                            const fileName = path.basename(row.path);
-                            const dirName = path.dirname(row.path);
+                            const fileName = row.filename;
+                            const dirName = row.path;
 
                             return (
                                 <TableRow
