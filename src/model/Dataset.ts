@@ -8,7 +8,7 @@ export interface Dataset {
     metadata: DatasetMetaData;
     records: number[][];
     longitudes: number[];
-    latiudes: number[];
+    latitudes: number[];
     attributes: string[];
     times: string[];
 }

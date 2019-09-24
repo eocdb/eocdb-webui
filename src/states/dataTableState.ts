@@ -50,10 +50,11 @@ export function newDataTableState() {
         dataset: {
             id: "",
             path: '',
+            filename: '',
             metadata: new Map(),
             records: [],
             longitudes: [],
-            latiudes: [],
+            latitudes: [],
             attributes: [],
             times: [],
         },
