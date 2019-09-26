@@ -184,7 +184,9 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
 
     handleSendSubmission = () => {
         this.props.sendSubmission();
-        this.props.updateSubmissionsForUser();
+        if (this.props.submissionSucceeded) {
+            this.props.updateSubmissionsForUser();
+        }
     };
 
     handleUpdateSubmission = (submissionId: string) => {
@@ -232,6 +234,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
     };
 
     handleUploadSubmissionFileClick = (submissionFile: SubmissionFile) => {
+        console.log(submissionFile);
         this.props.updateSelectedSubmissionFile(submissionFile);
         this.props.openUploadSubmissionFileDialog();
     };
@@ -348,7 +351,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     onClose={this.props.closeSubmissionFilesTable}
                     open={this.props.submissionFilesTableOpen}
 
-                    submissionFilesValue={this.props.selectedSubmission.files}
+                    submissionValue={this.props.selectedSubmission}
 
                     onSubmissionFileDeleteClick={this.handleDeleteSubmissionFileClick}
                     onSubmissionFileSelectClick={this.handleSubmissionFileSelect}

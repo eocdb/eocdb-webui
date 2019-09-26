@@ -48,12 +48,13 @@ export function newDataTableState() {
         downloadDocs: false,
 
         dataset: {
-            id: "",
+            id: '',
             path: '',
+            filename: '',
             metadata: new Map(),
             records: [],
             longitudes: [],
-            latiudes: [],
+            latitudes: [],
             attributes: [],
             times: [],
         },

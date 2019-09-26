@@ -175,7 +175,7 @@ export function downloadDatasets() {
                 dispatch(stopDownloading());
             })
             .catch((error: string) => {
-                dispatch(postMessage('error', error + ''));
+                dispatch(postMessage('error', error + ' report file(s) to eumetsat'));
             });
     };
 }

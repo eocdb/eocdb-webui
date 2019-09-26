@@ -15,6 +15,7 @@ import { SubmissionFile } from "../../model";
 import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
 import { blue, green, orange, red } from "@material-ui/core/colors";
+import { Submission } from "../../model/Submission";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -41,7 +42,7 @@ export interface SubmissionFilesTableProps extends WithStyles<typeof styles> {
     open: boolean;
     onClose: () => void;
 
-    submissionFilesValue: SubmissionFile[];
+    submissionValue: Submission;
 
     onSubmissionFileSelectClick: (submissionFile: SubmissionFile) => void;
     onSubmissionFileDeleteClick: (submissionFile: SubmissionFile) => void;
@@ -69,6 +70,23 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
         return "yellow"
     };
 
+    handleUploadNewSubmissionClick = (fileType: string) => {
+        const submissionFile = {
+            index: -1,
+            submission_id: this.props.submissionValue.submission_id,
+            filename: "",
+            status: "",
+            filetype: fileType,
+            creationdate: "",
+            result: {
+                status: "",
+                issues: []
+            }
+        };
+
+        this.props.onSubmissionFileUploadClick(submissionFile);
+    };
+
     render() {
         if (!this.props.open) {
             return null;
@@ -84,19 +102,38 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                     >
                         Close
                     </Button>
+                    <Tooltip title="Add measurement file to submission" aria-label="NewMeasurementUpload">
+                        <Button
+                            color={"primary"}
+                            onClick={() => this.handleUploadNewSubmissionClick("MEASUREMENT")}
+                        >
+                            Add Measurement
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title="Add document file to submission" aria-label="NewDocumentUpload">
+                        <Button
+                            color={"primary"}
+                            onClick={() => this.handleUploadNewSubmissionClick("DOCUMENT")}
+                        >
+                            Add Document
+                        </Button>
+                    </Tooltip>
                 </Grid>
                 <Table>
                     <TableHead>
                         <TableRow>
+                        </TableRow>
+                        <TableRow>
                             <TableCell>FileName</TableCell>
                             <TableCell>Index</TableCell>
                             <TableCell>File Type</TableCell>
+                            <TableCell>Creation Date</TableCell>
                             <TableCell>Status</TableCell>
                             <TableCell>Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {this.props.submissionFilesValue.map((row: SubmissionFile) => {
+                        {this.props.submissionValue.files.map((row: SubmissionFile) => {
                             const colour = this.getColoutForStatus(row.status);
                             return (
                                 <TableRow key={row.filename}>
@@ -109,6 +146,9 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                                     </TableCell>
                                     <TableCell>
                                         {row.filetype}
+                                    </TableCell>
+                                    <TableCell>
+                                        {row.creationdate ? row.creationdate.substr(0, 10) : ""}
                                     </TableCell>
                                     <TableCell>
                                         <Chip
