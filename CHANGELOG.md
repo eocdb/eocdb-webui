@@ -1,5 +1,10 @@
 # Changes for Version 0.1.21
 
+- A user can now add submission files to a submission
+- The user gets now a creation date for a submission file
+
+# Changes for Version 0.1.21
+
 - Changed the search group label not to stand on top of everything 
 - Allows now adding a file to a submission
 - Fixed confusing messages when the system rejects a submission

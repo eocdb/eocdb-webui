@@ -1,4 +1,4 @@
-export const API_SERVER_VERSION='v0.1.6';
+export const API_SERVER_VERSION='v0.1.7';
 
 let baseUrl = 'http://localhost:4000';
 
