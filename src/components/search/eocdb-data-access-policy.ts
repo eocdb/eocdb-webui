@@ -1,36 +1,13 @@
 const TERMS_EUMETSAT_SB_DATA = `
+The in-situ data you are about to download are made available by the Copernicus Database of Ocean Colour In Situ Fiducial Reference Measurements. This Copernicus OCDB provides stewardship and welcomes submissions of fiducial-reference in situ data from various providers (hereafter the Principle Investigators (PIs)).
+The following conditions must be observed when using the Copernicus OCDB data:
 
-The in-situ data you are about to download are made available by the Copernicus 
-Database of Ocean Colour In Situ Fiducial Reference Measurements. The data are contributed, 
-on a voluntary basis, by different Principal Investigators (PIs) responsible for data collection and processing. 
-The Database is maintained by EUMETSAT.
+* When using the Copernicus OCDB data, you are required to contact the PI about your data usage.
+* When publishing or presenting the data, you must acknowledge the PI(s) for the provision of data as well as Copernicus and EUMETSAT for establishing and maintaining the OCDB. For example, the acknowledgment may read: “We thank (name of PI(s)) for their effort in collecting the data used in this investigation and for making them available for publication. We also thank the EC Copernicus Programme and EUMETSAT for establishing and maintaining the OCDB”.
+* When publishing, you must offer a co-authorship to the PI(s) if their in-situ data is central to your publication. For publications drawing on numerous sources of in-situ data, the co-authorship may be considered for one or many of the PI(s), to be determined based on the significance of the respective in-situ data to the overall results of the publication.
 
-## Using data
-
-Please consult with the PIs via e-mail on the use of the data. PIs’ names, 
-affiliations, projects, and contacts are provided together with the data. 
-
-## Guidelines for data use and publication
-
-It is requested that every practical attempt is made to honour the following guidelines:
-
-- __Always acknowledge the data providers!__ 
-  The acknowledgement may read:
-  _We thank the PI(s) for their effort in collecting the data used in this investigation and for making them available._
-
-
-- __Publishing data from a 'few’ selected projects, sites or cruises__:
-  Please consider co-authorship for the PI(s). 
-
-- __If the in-situ data are a principal component of the publication__:
-  Offer co-authorship to the PI(s).
-  
-If you accept the above conditions, please click the "Accept" button below to proceed downloading. 
-If you do not agree with the above conditions, click "Do Not Accept" to return to the website.
- 
-EUMETSAT will not be held responsible for any data errors or misuse.
-
-
+If you accept the above conditions, please click the "__Accept__" button below to proceed downloading. If you do not agree with the above conditions, click "__Decline__" to return to the website.
+Effort is undertaken to ensure good quality of the Copernicus OC-DB data records. Nevertheless, neither EUMETSAT nor any other entity involved in the creation of the OCDB can guarantee the accuracy and completeness of the published data or their suitability for any specific purposes and, thus, shall not be held liable for any damage derived from the use.
 `;
 
 

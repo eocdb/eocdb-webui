@@ -308,6 +308,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
     handleSearchDatasets = () => {
         this.props.startLoading();
+        this.props.updateDataPage(0);
         this.props.searchDatasets();
     };
 
