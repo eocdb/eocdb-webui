@@ -241,6 +241,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                         <TableBody>
                             {stableSort(submissionsValue, getSorting(order, orderBy)).map((row: Submission) => {
                                 const colour = this.getColourForStatus(row.status);
+                                console.log(row);
 
                                 return (
                                     <TableRow
@@ -257,7 +258,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                 new Date(Date.parse(row.date)).toDateString() : ""}
                                         </TableCell>
                                         <TableCell>
-                                            {row.publication_date && row.publication_date !== "" ?
+                                            {row.publication_date ?
                                                 new Date(Date.parse(row.publication_date)).toDateString() : ""}
                                         </TableCell>
                                         <TableCell>
