@@ -1,12 +1,14 @@
+# Changes for Version 0.1.23
+
+- Uses now the api version tag 'latest'
+- Handles empty submission publication dates correctly
+- Uses now ocdb server version 0.1.8
+
 # Changes for Version 0.1.22
 
 - A user can now add submission files to a submission
 - The user gets now a creation date for a submission file
 - A user can now remove the publication date from a submission
-- Uses now the api version tag 'latest'
-- Handles empty submission publication dates correctly
-- Uses now ocdb server version 0.1.8
-
 
 # Changes for Version 0.1.21
 
