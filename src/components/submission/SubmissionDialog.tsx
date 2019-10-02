@@ -205,7 +205,7 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                                 onChange={this.handlePublicationDateChange}
                             />
                             }
-                            label={'Enabling "Publish" you agree that your data will be published on https://ocdb.eumetsat.int/. Data Policy Terms are under review. You will be soon contacted to agree or disagree with the updated terms. In the meanwhile, no data will be published'}
+                            label={'(By agreeing to the publication of the submitted in-situ data, you accept the general public being able to access these data. If you do not agree to the publication of your data then the data will be only visible to you and the OCDB administrators. Please refer to the Data Policy section of the User Manual for more information)'}
                         />
                     </Grid>
                     <Grid item>

@@ -35,25 +35,19 @@ export default function LegalAgreementDialog({open, settings, updateSettings}: L
             onClose={handleConfirm}
             scroll='body'
         >
-            <DialogTitle>{'Legal Agreement'}</DialogTitle>
+            <DialogTitle>{''}</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    {'We use "HTML5 local storage" to save queries and cookies to save' +
-                    'whether you are logged in. 3rd parties will never see your ' +
-                    'data.'}
-                </DialogContentText>
-                <DialogContentText>
-                    {'Find out more about local storage'}{' '}
-                    <Link href={"https://en.wikipedia.org/wiki/Web_storage"} target='_blank'>{'here'}</Link>.
-                </DialogContentText>
-                <DialogContentText>
-                    {'Find out more about cookies'}{' '}
-                    <Link
-                        href={"https://www.eumetsat.int/website/home/AboutUs/TermsofUse/index.html"}
-                        target='_blank'
-                    >
-                        {'here'}
-                    </Link>.
+                    {'By using this site you agree to '}
+                    <Link href={"https://en.wikipedia.org/wiki/Web_storage"}
+                          target='_blank'>
+                        {'HTML5 local storage'}
+                    </Link>
+                    {' as well as the use of cookies.' +
+                    ' To learn more about what information EUMETSAT collects and how it is used, please view '}
+                    <Link href={"https://www.eumetsat.int/website/home/AboutUs/TermsofUse/index.html"}>
+                        {'our Terms of Use'}
+                    </Link>
                 </DialogContentText>
             </DialogContent>
 
