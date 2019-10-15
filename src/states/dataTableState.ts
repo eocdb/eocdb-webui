@@ -3,9 +3,9 @@ import { LatLngBounds } from "leaflet";
 
 
 export interface PlotRecord {
-    x: number;
-    y: number;
-    z?: number;
+    x: number | null;
+    y: number | null;
+    z?: number | null;
 }
 
 export interface PlotState{
