@@ -500,7 +500,6 @@ export function getSubmissionsForUser() {
 
         return api.getSubmissionsForUser(apiServerUrl, userid)
             .then((submissions: Submission[]) => {
-                console.log(submissions);
                 dispatch(updateSubmissionsForUser(submissions));
             })
             .then(() => {
@@ -508,6 +507,7 @@ export function getSubmissionsForUser() {
             })
             .catch((error: string) => {
                 dispatch(postMessage('error', error + ''));
+                dispatch(updateSubmissionsForUser([]));
             });
     };
 }

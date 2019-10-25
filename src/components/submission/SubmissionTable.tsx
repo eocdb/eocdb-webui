@@ -55,6 +55,7 @@ interface EnhancedTableHeadProps {
 
 const cols = [
     {id: 'submission_id', numeric: false, disablePadding: true, label: 'Submission ID'},
+    {id: 'user_id', numeric: true, disablePadding: false, label: 'Submitter'},
     {id: 'submission_date', numeric: true, disablePadding: false, label: 'Submission Date'},
     {id: 'publication_date', numeric: true, disablePadding: false, label: 'Publication Date'},
     {id: 'allow_publication', numeric: true, disablePadding: false, label: 'Allow Publication'},
@@ -221,7 +222,8 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
 
         const user = this.props.user === null ? undefined : this.props.user;
 
-        const adminAllowed = user && (user.roles.indexOf('admin') === -1);
+        const isAdmin = user && (user.roles.indexOf('admin') > -1);
+        const isSubmitter = user && (user.roles.indexOf('submit') > -1);
 
         return (
             <div>
@@ -254,6 +256,9 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                             {row.submission_id}
                                         </TableCell>
                                         <TableCell>
+                                            {row.user_id ? row.user_id: ""}
+                                        </TableCell>
+                                        <TableCell>
                                             {row.date ?
                                                 new Date(Date.parse(row.date)).toDateString() : ""}
                                         </TableCell>
@@ -281,7 +286,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                     onClick={() => this.props.onSubmissionDialogMetaOpen(
                                                         row.submission_id
                                                     )}
-                                                    disabled={adminAllowed}
+                                                    disabled={!isAdmin && !isSubmitter}
                                                 >
                                                     <Icon className={classes.rightIcon}>edit</Icon>
                                                 </Button>
@@ -332,7 +337,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                     onClick={() => this.props.onSubmissionDelete(
                                                         row.submission_id
                                                     )}
-                                                    disabled={adminAllowed}
+                                                    disabled={!isAdmin && !isSubmitter}
                                                 >
                                                     <Icon className={classes.rightIcon}>delete</Icon>
                                                 </Button>
@@ -342,7 +347,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                     onClick={() => this.props.onSubmissionProcess(
                                                         row.submission_id
                                                     )}
-                                                    disabled={adminAllowed}
+                                                    disabled={!isAdmin}
                                                 >
                                                     <Icon className={classes.rightIcon}>input</Icon>
                                                 </Button>
@@ -353,7 +358,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                     onClick={() => this.props.onSubmissionPublish(
                                                         row.submission_id
                                                     )}
-                                                    disabled={adminAllowed}
+                                                    disabled={!isAdmin}
                                                 >
                                                     <Icon className={classes.rightIcon}>publish</Icon>
                                                 </Button>

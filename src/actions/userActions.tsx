@@ -5,6 +5,14 @@ import { User } from '../model';
 import { MessageLogAction, postMessage } from "./messageLogActions";
 import { ChangeDrawer, changeDrawer } from "./dashboardActions";
 import { SessionState } from "../states/sessionState";
+import {
+    ClearSubmissionForm,
+    clearSubmissionForm,
+    CloseSubmitSteps,
+    closeSubmitSteps,
+    UpdateSubmissionsForUser,
+    updateSubmissionsForUser
+} from "./submissionActions";
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,7 +32,9 @@ function _logoutUser(): LogoutUser {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export function logoutUser() {
-    return (dispatch: Dispatch<LogoutUser | ChangeDrawer | MessageLogAction>, getState: () => AppState) => {
+    return (dispatch: Dispatch<LogoutUser | ChangeDrawer | UpdateSubmissionsForUser |
+        CloseSubmitSteps | ClearSubmissionForm | MessageLogAction>, getState: () =>
+        AppState) => {
         dispatch(changeDrawer("Search"));
         api.logoutUser(getState().configState.apiServerUrl)
             .then(() => {
@@ -32,6 +42,9 @@ export function logoutUser() {
             })
             .then(() => {
                 dispatch(postMessage('success', 'Logout successful'));
+                dispatch(updateSubmissionsForUser([]));
+                dispatch(clearSubmissionForm());
+                dispatch(closeSubmitSteps());
             })
             .catch((error: string) => {
                 dispatch(postMessage('error', error + ''));
