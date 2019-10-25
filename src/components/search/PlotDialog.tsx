@@ -177,6 +177,24 @@ class PlotDialog extends React.Component<PlotDialogProps> {
         this.props.onClose();
     };
 
+    getY2Plot = (selectedZField: string, plotData: PlotRecord[]) => {
+        if(selectedZField == ''){
+            return null;
+        }
+        else{
+            return (
+                <Scatter yAxisId="right" name={selectedZField} data={plotData} fill={'#82ca9d'}>
+                    {
+                        plotData.map((entry, index) => {
+                            // fill={colors[index % colors.length]}
+                            return <Cell key={`cell-${index}`}/>
+                        })
+                    }
+                </Scatter>
+            );
+        }
+    };
+
     render() {
         const {plotData, classes} = this.props;
 
@@ -187,7 +205,6 @@ class PlotDialog extends React.Component<PlotDialogProps> {
         });
 
         const {selectedXField, selectedYField, selectedZField} = this.props.plotState;
-
 
         return (
             <div className={classes.root}>
@@ -245,14 +262,8 @@ class PlotDialog extends React.Component<PlotDialogProps> {
                                 <CartesianGrid/>
                                 <Tooltip cursor={{strokeDasharray: '3 3'}}/>
                                 <Scatter yAxisId="left" name={selectedYField} data={plotData} fill={'#8884d8'}/>
-                                <Scatter yAxisId="right" name={selectedZField} data={plotData} fill="#82ca9d">
-                                    {
-                                        plotData.map((entry, index) => {
-                                            // fill={colors[index % colors.length]}
-                                            return <Cell key={`cell-${index}`}/>
-                                        })
-                                    }
-                                </Scatter>
+
+                                {this.getY2Plot(selectedZField, plotData)}
                                 {this.props.plotData.length > 0 ?
                                     (<Legend verticalAlign={"top"} height={36}/>) :
                                     ''

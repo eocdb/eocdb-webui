@@ -1,3 +1,7 @@
+# Changes for Version 0.1.24
+
+- Plots are now ignoring fill (missing) values
+
 # Changes for Version 0.1.23
 
 - Uses now the api version tag 'latest'
