@@ -16,6 +16,7 @@ import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
 import { blue, green, orange, red } from "@material-ui/core/colors";
 import { Submission } from "../../model/Submission";
+import { User } from "../../model/User";
 
 
 const styles = (theme: Theme) => createStyles({
@@ -48,6 +49,8 @@ export interface SubmissionFilesTableProps extends WithStyles<typeof styles> {
     onSubmissionFileDeleteClick: (submissionFile: SubmissionFile) => void;
     onSubmissionFileUploadClick: (submissionFile: SubmissionFile) => void;
     onSubmissionFileDownloadClick: (submissionFile: SubmissionFile) => void;
+
+    user: User | null;
 }
 
 
@@ -92,7 +95,10 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
             return null;
         }
 
-        const {classes} = this.props;
+        const {classes, user} = this.props;
+
+        const isAdmin = user && (user.roles.indexOf('admin') > -1);
+
         return (
             <Paper className={classes.root}>
                 <Grid container justify={"flex-end"}>
@@ -172,6 +178,7 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                                                 onClick={() => this.props.onSubmissionFileDeleteClick(
                                                     row
                                                 )}
+                                                disabled={!isAdmin}
                                             >
                                                 <Icon className={classes.rightIcon}>delete</Icon>
                                             </Button>

@@ -357,6 +357,8 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     onSubmissionFileSelectClick={this.handleSubmissionFileSelect}
                     onSubmissionFileUploadClick={this.handleUploadSubmissionFileClick}
                     onSubmissionFileDownloadClick={this.handleDownloadSubmissionFile}
+
+                    user={this.props.user}
                 />
                 <SubmissionIssueDialog
                     onClose={this.props.closeSubmissionFileIssueDialog}
