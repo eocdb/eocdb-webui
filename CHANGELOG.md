@@ -1,7 +1,8 @@
 # Changes for Version 0.1.24
 
 - Plots are now ignoring fill (missing) values
-- Logout clears now submission table and dialog 
+- Logout clears now submission table and dialog
+- Submitters cannot delete submission files anymore 
 
 # Changes for Version 0.1.23
 
