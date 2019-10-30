@@ -59,8 +59,7 @@ const round = (value: number, precision: number) => {
 
 //const colors = ['red', 'green', 'pink', 'yellow'];
 
-function isNumber(value: string | number): boolean
-{
+function isNumber(value: string | number): boolean {
     return ((value != null) && !isNaN(Number(value.toString())));
 }
 
@@ -76,20 +75,34 @@ class PlotDialog extends React.Component<PlotDialogProps> {
 
         if (z) {
             return records.map((record: number[]) => {
-                console.log(record);
+                let xv: number | null = isNumber(record[x]) ? round(+record[x], precision) : record[x];
+                let yv: number | null = isNumber(record[y]) ? round(+record[y], precision) : record[y];
+                let zv: number | null = isNumber(record[z]) ? round(+record[z], precision) : record[z];
+
+                if (this.props.dataset.metadata['missing']) {
+                    xv = xv == this.props.dataset.metadata['missing'] ? null : xv;
+                    yv = yv == this.props.dataset.metadata['missing'] ? null : yv;
+                    zv = yv == this.props.dataset.metadata['missing'] ? null : zv;
+                }
+
                 return {
-                    x: isNumber(record[x])?round(+record[x], precision):record[x],
-                    y: isNumber(record[y])?round(+record[y], precision):record[y],
-                    z: isNumber(record[z])?round(+record[z], precision):record[z],
+                    x: xv,
+                    y: yv,
+                    z: zv,
                 };
             });
             //return Simplify3D(points, 0.5, false);
         } else {
             let i = 1;
             return records.map((record: number[]) => {
-                const xv = isNumber(record[x])?round(+record[x], precision):i;
-                const yv = isNumber(record[y])?round(+record[y], precision):i;
+                let xv: number | null = isNumber(record[x]) ? round(+record[x], precision) : i;
+                let yv: number | null = isNumber(record[y]) ? round(+record[y], precision) : i;
                 i++;
+
+                if (this.props.dataset.metadata['missing']) {
+                    xv = xv == this.props.dataset.metadata['missing'] ? null : xv;
+                    yv = yv == this.props.dataset.metadata['missing'] ? null : yv;
+                }
                 return {x: xv, y: yv};
             });
         }
@@ -164,10 +177,26 @@ class PlotDialog extends React.Component<PlotDialogProps> {
         this.props.onClose();
     };
 
+    getY2Plot = (selectedZField: string, plotData: PlotRecord[]) => {
+        if(selectedZField == ''){
+            return null;
+        }
+        else{
+            return (
+                <Scatter yAxisId="right" name={selectedZField} data={plotData} fill={'#82ca9d'}>
+                    {
+                        plotData.map((entry, index) => {
+                            // fill={colors[index % colors.length]}
+                            return <Cell key={`cell-${index}`}/>
+                        })
+                    }
+                </Scatter>
+            );
+        }
+    };
+
     render() {
         const {plotData, classes} = this.props;
-
-        console.log(plotData);
 
         const {attributes} = this.props.dataset;
 
@@ -176,7 +205,6 @@ class PlotDialog extends React.Component<PlotDialogProps> {
         });
 
         const {selectedXField, selectedYField, selectedZField} = this.props.plotState;
-
 
         return (
             <div className={classes.root}>
@@ -234,14 +262,8 @@ class PlotDialog extends React.Component<PlotDialogProps> {
                                 <CartesianGrid/>
                                 <Tooltip cursor={{strokeDasharray: '3 3'}}/>
                                 <Scatter yAxisId="left" name={selectedYField} data={plotData} fill={'#8884d8'}/>
-                                <Scatter yAxisId="right" name={selectedZField} data={plotData} fill="#82ca9d">
-                                    {
-                                        plotData.map((entry, index) => {
-                                            // fill={colors[index % colors.length]}
-                                            return <Cell key={`cell-${index}`}  />
-                                        })
-                                    }
-                                </Scatter>
+
+                                {this.getY2Plot(selectedZField, plotData)}
                                 {this.props.plotData.length > 0 ?
                                     (<Legend verticalAlign={"top"} height={36}/>) :
                                     ''
