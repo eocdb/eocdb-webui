@@ -1,17 +1,12 @@
 export const API_SERVER_VERSION='0.1.9';
 export const API_SERVER_VERSION_TAG='latest';
 
-let baseUrl = 'http://localhost/ocdb-server';
+let baseUrl = process.env.REACT_APP_API_SERVER_URL;
 
-if (process.env.NODE_ENV === 'production') {
-    baseUrl = "https://ocdb.eumetsat.int";
-}
-else if(process.env.NODE_ENV == 'staging'){
-    baseUrl = "https://ocdb.eumetsat.int/stage";
-}
 
 console.log(baseUrl);
-console.log(process.env.NODE_ENV);
+console.log(process.env.REACT_APP_MODE);
+console.log(process.env.REACT_APP_API_SERVER_URL);
 
 export const SERVER_CONFIG = baseUrl + "/ocdb/api/" + API_SERVER_VERSION_TAG;
 
