@@ -1,4 +1,4 @@
-export const API_SERVER_VERSION='0.1.8';
+export const API_SERVER_VERSION='0.1.9';
 export const API_SERVER_VERSION_TAG='latest';
 
 let baseUrl = 'http://localhost/ocdb-server';
@@ -13,5 +13,3 @@ else if(process.env.NODE_ENV == 'staging'){
 export const SERVER_CONFIG = baseUrl + "/ocdb/api/" + API_SERVER_VERSION_TAG;
 
 export const DEBUG = true;
-
-//"proxy": "https://localhost:4000/",
