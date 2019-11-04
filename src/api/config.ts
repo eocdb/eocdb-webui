@@ -10,6 +10,9 @@ else if(process.env.NODE_ENV == 'staging'){
     baseUrl = "https://ocdb.eumetsat.int/stage";
 }
 
+console.log(baseUrl);
+console.log(process.env.NODE_ENV);
+
 export const SERVER_CONFIG = baseUrl + "/ocdb/api/" + API_SERVER_VERSION_TAG;
 
 export const DEBUG = true;
