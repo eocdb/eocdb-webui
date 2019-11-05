@@ -12,7 +12,7 @@ COPY package.json yarn.lock ./
 RUN yarn --version
 RUN yarn install --network-concurrency 1 --network-timeout 1000000
 COPY . ./
-RUN yarn build
+RUN yarn build:stage
 
 # Stage 2 - the production environment
 FROM nginx:1.12-alpine
