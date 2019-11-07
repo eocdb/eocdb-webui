@@ -1,3 +1,8 @@
+# Changes for Version 0.1.25
+
+- Fixed submission date issue
+- Submitters won't be able to delete a hole submission anymore
+
 # Changes for Version 0.1.24
 
 - Plots are now ignoring fill (missing) values
