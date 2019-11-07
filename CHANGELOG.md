@@ -2,6 +2,7 @@
 
 - Fixed submission date issue
 - Submitters won't be able to delete a hole submission anymore
+- Fixed minor issues regarding tooltips on disabled buttons
 
 # Changes for Version 0.1.24
 
