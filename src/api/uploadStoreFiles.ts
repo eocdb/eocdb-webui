@@ -17,7 +17,9 @@ export function uploadStoreFiles(apiServerUrl: string, uploadData: UploadData)
     formData.append('path', uploadData.path);
     formData.append('username', uploadData.username);
     formData.append('userid', `${uploadData.userId}`);
-    formData.append('publicationdate', `${uploadData.publicationDate}`);
+
+    const publicationDate = uploadData.publicationDate ? uploadData.publicationDate.toString() : null;
+    formData.append('publicationdate', `${publicationDate}`);
 
     formData.append('allowpublication', `${uploadData.allowPublication}`);
 

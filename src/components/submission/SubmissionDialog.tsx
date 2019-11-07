@@ -189,7 +189,7 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                             clearable
                             variant={"outlined"}
                             label={'Publication Date'}
-                            format="dd/MM/yyyy"
+                            format={"dd/MM/yyyy"}
                             animateYearScrolling={false}
                             value={this.props.publicationDate}
                             onChange={this.props.onPublicationDateChange}

@@ -15,6 +15,7 @@ import { SearchHistoryItem } from "./types/dataset";
 import { updateSearchHistory } from "./actions/findActions";
 import { getLinks } from "./actions/adminActions";
 
+
 const logger = createLogger({collapsed: true});
 const store = createStore(appReducer, applyMiddleware(thunk, logger));
 
@@ -26,7 +27,13 @@ for (let i = 0; i < localStorage.length; i++) {
     if (key && !key.includes('ocdb')) {
         const query = localStorage.getItem(key);
         if (query) {
-            history.push({key: key, query: JSON.parse(query)})
+            try {
+                const res = JSON.parse(query);
+                history.push({key: key, query: res})
+            }
+            catch (e) {
+                console.error(e);
+            }
         }
     }
 }

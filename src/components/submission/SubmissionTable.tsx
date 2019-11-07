@@ -337,7 +337,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                     onClick={() => this.props.onSubmissionDelete(
                                                         row.submission_id
                                                     )}
-                                                    disabled={!isAdmin && !isSubmitter}
+                                                    disabled={!isAdmin}
                                                 >
                                                     <Icon className={classes.rightIcon}>delete</Icon>
                                                 </Button>
