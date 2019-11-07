@@ -256,7 +256,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                             {row.submission_id}
                                         </TableCell>
                                         <TableCell>
-                                            {row.user_id ? row.user_id: ""}
+                                            {row.user_id ? row.user_id : ""}
                                         </TableCell>
                                         <TableCell>
                                             {row.date ?
@@ -282,14 +282,16 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                         </TableCell>
                                         <TableCell>
                                             <Tooltip title="Update Submission" aria-label="updateSubmission">
-                                                <Button
-                                                    onClick={() => this.props.onSubmissionDialogMetaOpen(
-                                                        row.submission_id
-                                                    )}
-                                                    disabled={!isAdmin && !isSubmitter}
-                                                >
-                                                    <Icon className={classes.rightIcon}>edit</Icon>
-                                                </Button>
+                                                <span>
+                                                    <Button
+                                                        onClick={() => this.props.onSubmissionDialogMetaOpen(
+                                                            row.submission_id
+                                                        )}
+                                                        disabled={!isAdmin && !isSubmitter}
+                                                    >
+                                                        <Icon className={classes.rightIcon}>edit</Icon>
+                                                    </Button>
+                                                </span>
                                             </Tooltip>
                                             <Tooltip title="List Files" aria-label="ListFiles">
                                                 <Button
@@ -323,45 +325,53 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                 </Tooltip>
                                             }
                                             <Tooltip title="Cancel Submission" aria-label="CancelSubmission">
-                                                <Button
-                                                    onClick={() => this.props.onSubmissionReject(
-                                                        row.submission_id
-                                                    )}
-                                                    disabled={user && user.roles.indexOf('admin') === -1}
-                                                >
-                                                    <Icon className={classes.rightIcon}>power_settings_new</Icon>
-                                                </Button>
+                                                <span>
+                                                    <Button
+                                                        onClick={() => this.props.onSubmissionReject(
+                                                            row.submission_id
+                                                        )}
+                                                        disabled={!isAdmin}
+                                                    >
+                                                        <Icon className={classes.rightIcon}>power_settings_new</Icon>
+                                                    </Button>
+                                                </span>
                                             </Tooltip>
                                             <Tooltip title="Delete Entire Submission" aria-label="deleteSubmission">
-                                                <Button
-                                                    onClick={() => this.props.onSubmissionDelete(
-                                                        row.submission_id
-                                                    )}
-                                                    disabled={!isAdmin}
-                                                >
-                                                    <Icon className={classes.rightIcon}>delete</Icon>
-                                                </Button>
+                                                <span>
+                                                    <Button
+                                                        onClick={() => this.props.onSubmissionDelete(
+                                                            row.submission_id
+                                                        )}
+                                                        disabled={!isAdmin}
+                                                    >
+                                                        <Icon className={classes.rightIcon}>delete</Icon>
+                                                    </Button>
+                                                </span>
                                             </Tooltip>
                                             <Tooltip title="Process Submission into DB" aria-label="ProcessSubmission">
-                                                <Button
-                                                    onClick={() => this.props.onSubmissionProcess(
-                                                        row.submission_id
-                                                    )}
-                                                    disabled={!isAdmin}
-                                                >
-                                                    <Icon className={classes.rightIcon}>input</Icon>
-                                                </Button>
+                                                <span>
+                                                    <Button
+                                                        onClick={() => this.props.onSubmissionProcess(
+                                                            row.submission_id
+                                                        )}
+                                                        disabled={!isAdmin}
+                                                    >
+                                                        <Icon className={classes.rightIcon}>input</Icon>
+                                                    </Button>
+                                                </span>
                                             </Tooltip>
                                             <Tooltip title="Process into DB and Publish Submission"
                                                      aria-label="PublishSubmission">
-                                                <Button
-                                                    onClick={() => this.props.onSubmissionPublish(
-                                                        row.submission_id
-                                                    )}
-                                                    disabled={!isAdmin}
-                                                >
-                                                    <Icon className={classes.rightIcon}>publish</Icon>
-                                                </Button>
+                                                <span>
+                                                    <Button
+                                                        onClick={() => this.props.onSubmissionPublish(
+                                                            row.submission_id
+                                                        )}
+                                                        disabled={!isAdmin}
+                                                    >
+                                                        <Icon className={classes.rightIcon}>publish</Icon>
+                                                    </Button>
+                                                </span>
                                             </Tooltip>
                                         </TableCell>
                                     </TableRow>
