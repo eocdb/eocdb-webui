@@ -1,4 +1,4 @@
-# Changes for Version 0.1.25
+# Changes for Version 0.1.26
 
 - Fixed submission date issue
 - Submitters won't be able to delete a hole submission anymore
