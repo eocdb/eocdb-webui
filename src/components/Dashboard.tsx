@@ -270,6 +270,18 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             Ocean Colour In-Situ Database
                         </Typography>
 
+                        <Typography
+                            component="h1"
+                            variant="h5"
+                            color="error"
+                            noWrap
+                            className={classes.title}
+                        >
+                            {process.env.REACT_APP_MODE == 'dev' || process.env.REACT_APP_MODE == 'stage'
+                                ? process.env.REACT_APP_MODE
+                                : ''}
+                        </Typography>
+
                         <img alt={'OCDB Logo'} src={partnerLogos} width={300} className={classes.logo}/>
 
                         <IconButton color="inherit"
