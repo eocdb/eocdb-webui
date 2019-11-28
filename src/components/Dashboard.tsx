@@ -277,7 +277,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             noWrap
                             className={classes.title}
                         >
-                            {process.env.REACT_APP_MODE == 'dev' || process.env.REACT_APP_MODE == 'stage'
+                            {process.env.REACT_APP_MODE == 'dev' || process.env.REACT_APP_MODE == 'staging'
                                 ? process.env.REACT_APP_MODE
                                 : ''}
                         </Typography>
