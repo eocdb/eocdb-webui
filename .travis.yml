@@ -12,13 +12,3 @@ script:
   #- yarn run test
 after_success:
   - codecov
-
-deploy:
-  - provider: pages
-    skip_cleanup: true
-    github_token: $github_token
-    local_dir: build
-    on:
-      all_branches: true
-      condition: $TRAVIS_BRANCH =~ ^(staging_v)[0-9\.]*$
-
