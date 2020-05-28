@@ -7,6 +7,10 @@
 
 # Copernicus Ocean Colour Database / WebUI
 
+>Copyright (C) 2019 Copernicus/EUMETSAT  
+>
+>License: MIT
+
 The [Copernicus](https://www.copernicus.eu) Ocean Colour Database stores in-situ data collected on ocean ship cruises. The aim is to 
 provide an environment that follows FAIR principles (findable, accessible, interoperable, reusable).  
 
