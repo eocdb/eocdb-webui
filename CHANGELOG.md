@@ -1,3 +1,7 @@
+# Changes for Version 0.2.0
+
+- Improved password encryption for better protection against brute force 
+
 # Changes for Version 0.1.26
 
 - Fixed submission date issue
