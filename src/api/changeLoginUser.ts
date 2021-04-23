@@ -1,10 +1,14 @@
 import { callJsonApi } from './callApi';
 import { User } from '../model';
+import {encrypt} from "../tools/encrypt";
 
 
 export function changeLoginUser(apiServerUrl: string, username: string, password: string,
                                 newPassword1: string, newPassword2: string): Promise<User> {
     console.log(username);
+    password = encrypt(password)
+    newPassword1 = encrypt(newPassword1)
+    newPassword2 = encrypt(newPassword2)
     return callJsonApi<User>(apiServerUrl + '/users/login', undefined, {
         method: 'put',
         credentials: "same-origin",
