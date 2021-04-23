@@ -12,7 +12,7 @@
 
 - Plots are now ignoring fill (missing) values
 - Logout clears now submission table and dialog
-- Submitters cannot delete submission files anymore 
+- Submitters cannot delete submission on files anymore 
 
 # Changes for Version 0.1.23
 
