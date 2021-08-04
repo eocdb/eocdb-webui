@@ -21,14 +21,14 @@ import { LatLng, LatLngBounds } from "leaflet";
 const styles = (theme: Theme) => createStyles({
     searchField: {
         width: 200,
-        marginRight: theme.spacing.unit / 2,
-        marginTop: theme.spacing.unit / 2,
+        marginRight: theme.spacing() / 2,
+        marginTop: theme.spacing() / 2,
     },
     dialogContent: {
-        marginLeft: theme.spacing.unit * 4,
-        marginRight: theme.spacing.unit * 4,
-        marginTop: theme.spacing.unit * 4,
-        marginBottom: theme.spacing.unit * 4,
+        marginLeft: theme.spacing() * 4,
+        marginRight: theme.spacing() * 4,
+        marginTop: theme.spacing() * 4,
+        marginBottom: theme.spacing() * 4,
     },
     textField: {},
     button: {},
@@ -102,7 +102,7 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
                 <div className={classes.dialogContent}>
                     <DialogTitle id="form-dialog-title">Coordinates</DialogTitle>
 
-                    <Grid spacing={32} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
+                    <Grid spacing={10} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
                         <Grid item xs={12}>
                             <TextField
                                 id={'bbox_bottom'}
@@ -110,7 +110,7 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
                                 variant={'outlined'}
                                 type={"number"}
                                 className={classes.searchField}
-                                onBlur={this.handleSouthChange}
+                                // onBlur={this.handleSouthChange}
                                 defaultValue={this.props.south}
                             />
                         </Grid>

@@ -7,7 +7,7 @@ import * as classNames from "classnames";
 import { CloudUpload } from "@material-ui/icons";
 import Button from "@material-ui/core/Button/Button";
 import Grid from "@material-ui/core/Grid";
-import { DatePicker } from "material-ui-pickers";
+// import { DatePicker } from "material-ui-pickers";
 import HelpDialog from "../messages/HelpDialog";
 import SubmissionHelpText from "../messages/Help/submission";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -20,25 +20,25 @@ const styles = (theme: Theme) => createStyles({
         width: '100%',
     },
     button: {
-        marginRight: theme.spacing.unit,
+        marginRight: theme.spacing(),
     },
     textField: {
         width: 200,
-        marginTop: theme.spacing.unit / 2,
-        marginRight: theme.spacing.unit / 2,
+        marginTop: theme.spacing() / 2,
+        marginRight: theme.spacing() / 2,
     },
     dense: {
         marginTop: 16,
     },
     instructions: {
-        marginTop: theme.spacing.unit,
-        marginBottom: theme.spacing.unit,
+        marginTop: theme.spacing(),
+        marginBottom: theme.spacing(),
     },
     dialogContent: {
-        marginLeft: theme.spacing.unit * 4,
-        marginRight: theme.spacing.unit * 4,
-        marginTop: theme.spacing.unit * 4,
-        marginBottom: theme.spacing.unit * 4,
+        marginLeft: theme.spacing() * 4,
+        marginRight: theme.spacing() * 4,
+        marginTop: theme.spacing() * 4,
+        marginBottom: theme.spacing() * 4,
     },
     appBar: {
         position: 'relative',
@@ -132,7 +132,7 @@ class SubmissionMetaDialog extends React.Component<SubmissionMetaDialogProps> {
                             {SubmissionHelpText}
                         </HelpDialog>
                     </Grid>
-                    <Grid container justify={"flex-start"} spacing={16} direction={"column"}>
+                    <Grid container justify={"flex-start"} spacing={10} direction={"column"}>
                         <Grid item>
                             <TextField
                                 required
@@ -158,18 +158,18 @@ class SubmissionMetaDialog extends React.Component<SubmissionMetaDialogProps> {
                             />
                         </Grid>
                         <Grid item>
-                            <DatePicker
-                                keyboard
-                                clearable
-                                variant={"outlined"}
-                                label={'Publication Date'}
-                                format="dd/MM/yyyy"
-                                animateYearScrolling={false}
-                                value={this.props.publicationDate}
-                                onChange={this.props.onPublicationDateChange}
+                            {/*<DatePicker*/}
+                            {/*    keyboard*/}
+                            {/*    clearable*/}
+                            {/*    variant={"outlined"}*/}
+                            {/*    label={'Publication Date'}*/}
+                            {/*    format="dd/MM/yyyy"*/}
+                            {/*    animateYearScrolling={false}*/}
+                            {/*    value={this.props.publicationDate}*/}
+                            {/*    onChange={this.props.onPublicationDateChange}*/}
 
-                                className={classes.textField}
-                            />
+                            {/*    className={classes.textField}*/}
+                            {/*/>*/}
                         </Grid>
                         <Grid item>
                             <FormControlLabel

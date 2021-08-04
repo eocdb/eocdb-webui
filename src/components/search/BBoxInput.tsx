@@ -13,8 +13,8 @@ export type BBoxValue = [number|string, number|string, number|string, number|str
 const styles = (theme: Theme) =>  createStyles({
     searchField: {
         width: 200,
-        marginRight: theme.spacing.unit / 2,
-        marginTop: theme.spacing.unit / 2,
+        marginRight: theme.spacing() / 2,
+        marginTop: theme.spacing() / 2,
     },
     textField: {},
     button: {},

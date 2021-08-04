@@ -26,10 +26,10 @@ const styles = (theme: Theme) => createStyles(
             flexWrap: 'wrap',
         },
         margin: {
-            margin: theme.spacing.unit,
+            margin: theme.spacing(),
         },
         withoutLabel: {
-            marginTop: theme.spacing.unit * 3,
+            marginTop: theme.spacing() * 3,
         },
         textField: {
             flexBasis: 200,

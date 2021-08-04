@@ -15,7 +15,7 @@ import Icon from '@material-ui/core/Icon/Icon';
 import Chip from "@material-ui/core/Chip";
 
 import { Submission } from "../../model";
-import { User } from "../../model/User";
+import { User } from "../../model";
 import { blue, green, orange, red } from "@material-ui/core/colors";
 
 
@@ -126,10 +126,10 @@ const styles = (theme: Theme) => createStyles(
         },
         rightIcon: {},
         fab: {
-            margin: theme.spacing.unit * 2,
+            margin: theme.spacing() * 2,
         },
         button: {
-            margin: theme.spacing.unit / 2,
+            margin: theme.spacing() / 2,
         },
         link: {
             fontcolor: "black"

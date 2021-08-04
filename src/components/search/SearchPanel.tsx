@@ -14,7 +14,6 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
 
 import SearchMap from './SearchMap';
-import { DatasetQuery } from '../../api';
 import { ProductGroup, StoreInfo } from '../../model';
 import DataTable from "./DataTable";
 import AdvancedSearchDialog from "./AdvancedSearchDialog";
@@ -23,26 +22,28 @@ import MultipleSelectTextField, { Suggestion } from "./MultipleSelectTextField";
 import HelpDialog from "../messages/HelpDialog";
 import { FindHelpText } from "../messages/Help/find";
 
-import { DatePicker } from 'material-ui-pickers';
+// import { DatePicker } from 'material-ui-pickers';
 import { SliderRange } from "../../types/advancedSearchDialog";
 import { SearchHistoryItem } from "../../types/dataset";
-import { User } from "../../model/User";
+import { User, Dataset, QueryResult } from "../../model";
 import InputDialog from "./InputDialog";
 import { ProductGroupsInfo } from "../messages/Help/productgroups";
 import { GeoJsonObject } from "geojson";
 import { LatLng, LatLngBounds } from "leaflet";
 import { BBoxValue } from "./BBoxInput";
-import { QueryResult } from "../../model/QueryResult";
 import { PlotRecord, PlotState } from "../../states/dataTableState";
-import { Dataset } from "../../model/Dataset";
-
+import { DatasetQuery } from "../../api/findDatasets";
+// import DateFnsUtils from "@date-io/date-fns";
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
+import LuxonUtils from '@date-io/luxon';
 
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({
     searchField: {
         width: 200,
-        marginRight: theme.spacing.unit / 2,
-        //marginTop: theme.spacing.unit / 2,
+        marginRight: theme.spacing() / 2,
+        //marginTop: theme.spacing() / 2,
     },
     textField: {},
     button: {},
@@ -289,13 +290,13 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         this.props.updateDatasetQuery({...this.props.datasetQuery, searchExpr});
     };
 
-    handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const startDate = event ? event.toString() : null;
-        this.props.updateDatasetQuery({...this.props.datasetQuery, startDate});
+    handleStartDateChange = (date: MaterialUiPickersDate) => {
+        const startDate = (date) ? date.toString() : null;
+        this.props.updateDatasetQuery ({...this.props.datasetQuery, startDate});
     };
 
-    handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const endDate = event ? event.toString() : null;
+    handleEndDateChange = (date: MaterialUiPickersDate) => {
+        const endDate = (date) ? date.toString() : null;
         this.props.updateDatasetQuery({...this.props.datasetQuery, endDate});
     };
 
@@ -334,92 +335,98 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
         return (
             <div>
-                <Grid spacing={24} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
-                    <Grid item container spacing={8} xs={12} sm={10}>
-                        <DatePicker
-                            keyboard
-                            clearable
-                            variant={"outlined"}
-                            label="Start Date"
-                            format="dd/MM/yyyy"
-                            animateYearScrolling={false}
-                            value={this.props.datasetQuery.startDate}
-                            onChange={this.handleStartDateChange}
+                <Grid spacing={10} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
+                    <MuiPickersUtilsProvider utils={LuxonUtils}>
+                        <Grid item container spacing={8} xs={12} sm={10}>
+                            <KeyboardDatePicker
+                                // disableToolbar
+                                // variant="inline"
+                                inputVariant="outlined"
+                                format="MM/dd/yyyy"
+                                // margin="normal"
+                                id="date-picker-inline"
+                                label="Start Date"
+                                value={this.props.datasetQuery.startDate}
+                                onChange={this.handleStartDateChange}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                            />
+                            <KeyboardDatePicker
+                                // disableToolbar
+                                // variant="inline"
+                                inputVariant="outlined"
+                                format="MM/dd/yyyy"
+                                // margin="normal"
+                                id="date-picker-inline"
+                                label="End Date"
+                                value={this.props.datasetQuery.endDate}
+                                onChange={this.handleEndDateChange}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                            />
+                            <MultipleSelectTextField
+                                suggestions={this.getProductGroups()}
+                                onChange={this.handleProductGroupsChange}
+                                selectedItems={this.getSelectedProducts()}
+                                isMulti={true}
+                                closeMenuOnSelect={true}
+                                placeholder={'Product Groups...'}
+                                className={classes.searchField}
+                            />
+                            <TextField
+                                id={'lucene-search'}
+                                key={'lucene-search'}
+                                label={'Search...'}
+                                variant={"outlined"}
+                                // className={classes.searchField}
+                                value={this.props.datasetQuery.searchExpr}
+                                onChange={this.handleSearchExprChange}
+                                // onBlur={this.handleSearchExprBlur}
+                                onKeyPress={this.handleSearchExpKeyPressed}
+                            />
+                            <IconButton
+                                onClick={this.props.openHelpDialog}
+                            >
+                                <Icon color={"secondary"}>
+                                    help
+                                </Icon>
+                            </IconButton>
+                            <HelpDialog
+                                open={this.props.productGroupsHelpDialogOpen}
+                                onClose={this.props.closeProductGroupsHelpDialog}
+                                title={'Product Groups'}
+                            >
+                                {ProductGroupsInfo}
+                            </HelpDialog>
+                            <HelpDialog
+                                open={this.props.helpDialogOpen}
+                                onClose={this.props.closeHelpDialog}
+                                title={'Search Help'}
+                            >
+                                {FindHelpText}
+                            </HelpDialog>
+                            <Button className={classes.button}
+                                    onClick={this.handleClear}>
+                                Clear
+                            </Button>
+                            <InputDialog
+                                open={this.props.saveSearchDialogOpen}
+                                onClose={this.props.closeSaveSearchDialog}
+                                label={'Title'}
+                                title={'Title of Saved Search'}
+                                value={this.props.saveSearchTitle}
+                                onSave={this.handleSaveFilter}
+                                onChange={this.handleUpdateSaveSearchTitle}
+                            />
+                            <Button className={classes.button}
+                                    onClick={this.props.openSaveSearchDialog}>
+                                Save Search
+                            </Button>
 
-                            className={classes.searchField}
-                        />
-                        <DatePicker
-                            keyboard
-                            clearable
-                            variant={"outlined"}
-                            label="End Date"
-                            format="dd/MM/yyyy"
-                            animateYearScrolling={false}
-                            value={this.props.datasetQuery.endDate}
-                            onChange={this.handleEndDateChange}
-
-                            className={classes.searchField}
-                        />
-                        <MultipleSelectTextField
-                            suggestions={this.getProductGroups()}
-                            onChange={this.handleProductGroupsChange}
-                            selectedItems={this.getSelectedProducts()}
-                            isMulti={true}
-                            closeMenuOnSelect={true}
-                            placeholder={'Product Groups...'}
-                            className={classes.searchField}
-                        />
-                        <TextField
-                            id={'lucene-search'}
-                            key={'lucene-search'}
-                            label={'Search...'}
-                            variant={"outlined"}
-                            className={classes.searchField}
-                            value={this.props.datasetQuery.searchExpr}
-                            onChange={this.handleSearchExprChange}
-                            onBlur={this.handleSearchExprBlur}
-                            onKeyPress={this.handleSearchExpKeyPressed}
-                        />
-                        <IconButton
-                            onClick={this.props.openHelpDialog}
-                        >
-                            <Icon color={"secondary"}>
-                                help
-                            </Icon>
-                        </IconButton>
-                        <HelpDialog
-                            open={this.props.productGroupsHelpDialogOpen}
-                            onClose={this.props.closeProductGroupsHelpDialog}
-                            title={'Product Groups'}
-                        >
-                            {ProductGroupsInfo}
-                        </HelpDialog>
-                        <HelpDialog
-                            open={this.props.helpDialogOpen}
-                            onClose={this.props.closeHelpDialog}
-                            title={'Search Help'}
-                        >
-                            {FindHelpText}
-                        </HelpDialog>
-                        <Button className={classes.button}
-                                onClick={this.handleClear}>
-                            Clear
-                        </Button>
-                        <InputDialog
-                            open={this.props.saveSearchDialogOpen}
-                            onClose={this.props.closeSaveSearchDialog}
-                            label={'Title'}
-                            title={'Title of Saved Search'}
-                            value={this.props.saveSearchTitle}
-                            onSave={this.handleSaveFilter}
-                            onChange={this.handleUpdateSaveSearchTitle}
-                        />
-                        <Button className={classes.button}
-                                onClick={this.props.openSaveSearchDialog}>
-                            Save Search
-                        </Button>
-
-                    </Grid>
+                        </Grid>
+                    </MuiPickersUtilsProvider>
                     <Grid item container justify={"flex-end"} xs={12} sm>
                         <Button className={classes.buttonAdvanced}
                                 onClick={this.props.openAdvancedSearchDialog}>

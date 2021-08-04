@@ -24,7 +24,7 @@ const styles = (theme: Theme) => createStyles(
             }
         },
         chip: {
-            margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
+            margin: `${theme.spacing() / 2}px ${theme.spacing() / 4}px`,
         },
         formControl: {
             minWidth: 200,

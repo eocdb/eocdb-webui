@@ -24,7 +24,7 @@ import {
 
 const styles = (theme: Theme) => createStyles({
     root: {
-        marginLeft: theme.spacing.unit * 2.5,
+        marginLeft: theme.spacing() * 2.5,
         zIndex: 99999,
     },
     select: {},

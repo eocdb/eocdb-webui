@@ -13,10 +13,10 @@ export interface ChipEntry {
 
 const styles = (theme: Theme) => createStyles({
     root: {
-        marginBottom: theme.spacing.unit,
+        marginBottom: theme.spacing(),
     },
     chip: {
-        margin: theme.spacing.unit / 2,
+        margin: theme.spacing() / 2,
     },
 });
 

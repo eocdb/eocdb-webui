@@ -15,13 +15,13 @@ import { SubmissionFile } from "../../model";
 import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
 import { blue, green, orange, red } from "@material-ui/core/colors";
-import { Submission } from "../../model/Submission";
-import { User } from "../../model/User";
+import { Submission } from "../../model";
+import { User } from "../../model";
 
 
 const styles = (theme: Theme) => createStyles({
     root: {
-        marginTop: theme.spacing.unit * 2,
+        marginTop: theme.spacing() * 2,
     },
     appBar: {
         position: 'relative',

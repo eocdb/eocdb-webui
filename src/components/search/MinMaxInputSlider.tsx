@@ -13,13 +13,13 @@ const styles = (theme: Theme) => createStyles({
     root: {},
     slider: {
         padding: '22px 0px',
-        margin: theme.spacing.unit,
+        margin: theme.spacing(),
         size: '100pt',
     },
     textField: {
         width: 200,
-        marginTop: theme.spacing.unit / 2,
-        marginRight: theme.spacing.unit / 2,
+        marginTop: theme.spacing() / 2,
+        marginRight: theme.spacing() / 2,
     },
 });
 

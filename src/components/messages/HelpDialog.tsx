@@ -11,7 +11,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = (theme: Theme) => createStyles({
     root: {
-        marginLeft: theme.spacing.unit * 2.5,
+        marginLeft: theme.spacing() * 2.5,
     },
     select: {},
     dialogPaper: {

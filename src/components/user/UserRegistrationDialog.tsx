@@ -15,10 +15,10 @@ import Button from "@material-ui/core/Button";
 // noinspection JSUnusedLocalSymbols
 const styles = (theme: Theme) => createStyles({
     dialogContent: {
-        marginLeft: theme.spacing.unit * 4,
-        marginRight: theme.spacing.unit * 4,
-        marginTop: theme.spacing.unit * 4,
-        marginBottom: theme.spacing.unit * 4,
+        marginLeft: theme.spacing() * 4,
+        marginRight: theme.spacing() * 4,
+        marginTop: theme.spacing() * 4,
+        marginBottom: theme.spacing() * 4,
     },
     appBar: {
         position: 'relative',

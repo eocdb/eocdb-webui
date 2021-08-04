@@ -10,7 +10,7 @@ const styles = (theme: Theme) => createStyles(
     {
         title: {},
         listItem: {
-            marginTop: theme.spacing.unit,
+            marginTop: theme.spacing(),
         },
     });
 
