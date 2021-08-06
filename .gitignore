@@ -4,3 +4,4 @@ node_modules
 *.log
 .idea
 .xcf
+.env.local

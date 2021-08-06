@@ -1,3 +1,11 @@
+# Changes for Version 0.3.0 (in development)
+
+- Upgraded outdated package dependencies (#72). We are now using
+  * `leaflet 1.7.1` 
+  * `react-leaflet 2.8.0`. Note we could not upgrade to `react-leaflet 3.x` 
+     due to a compilation error in `@react-leaflet/core 1.1.0` using CRA.   
+
+
 # Changes for Version 0.2.0
 
 - Improved password encryption for better protection against brute force 
