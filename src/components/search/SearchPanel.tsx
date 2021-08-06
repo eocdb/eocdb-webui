@@ -335,9 +335,9 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
         return (
             <div>
-                <Grid spacing={8} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
+                <Grid spacing={2} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
                     <MuiPickersUtilsProvider utils={LuxonUtils}>
-                        <Grid item container spacing={2} xs={12} sm={10}>
+                        <Grid item container xs={2}>
                             <KeyboardDatePicker
                                 // disableToolbar
                                 // variant="inline"
@@ -352,6 +352,8 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                                     'aria-label': 'change date',
                                 }}
                             />
+                        </Grid>
+                        <Grid item container xs={2}>
                             <KeyboardDatePicker
                                 // disableToolbar
                                 // variant="inline"
@@ -366,6 +368,8 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                                     'aria-label': 'change date',
                                 }}
                             />
+                        </Grid>
+                        <Grid item container xs={2}>
                             <MultipleSelectTextField
                                 suggestions={this.getProductGroups()}
                                 onChange={this.handleProductGroupsChange}
@@ -375,6 +379,8 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                                 placeholder={'Product Groups...'}
                                 className={classes.searchField}
                             />
+                        </Grid>
+                        <Grid item container xs={2}>
                             <TextField
                                 id={'lucene-search'}
                                 key={'lucene-search'}
@@ -407,6 +413,8 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             >
                                 {FindHelpText}
                             </HelpDialog>
+                        </Grid>
+                        <Grid item container xs={4}>
                             <Button className={classes.button}
                                     onClick={this.handleClear}>
                                 Clear
@@ -424,39 +432,34 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                                     onClick={this.props.openSaveSearchDialog}>
                                 Save Search
                             </Button>
-
+                            <Button className={classes.buttonAdvanced}
+                                    onClick={this.props.openAdvancedSearchDialog}>
+                                Advanced Options
+                            </Button>
+                            <AdvancedSearchDialog
+                                open={this.props.advancedSearchDialogOpen}
+                                onClose={this.props.closeAdvancedSearchDialog}
+                                productItems={this.props.serverInfo['products']}
+                                onWavelengthChange={this.props.updateWavelength}
+                                wavelengthValue={this.props.selectedWavelength}
+                                onWaterDepthChange={this.props.updateWaterDepth}
+                                waterDepthValue={this.props.selectedWaterDepth}
+                                onOptShallowChange={this.props.updateOptShallow}
+                                optShallowValue={this.props.selectedOptShallow}
+                                onProductsChange={this.props.updateProducts}
+                                productsValue={this.props.selectedProducts}
+                            />
+                            <Button variant="contained"
+                                    color="secondary"
+                                    className={classes.button}
+                                    onClick={this.handleSearchDatasets}>
+                                Search
+                                {this.props.loading && <CircularProgress size={24} className={classes.buttonProgress}/>}
+                                <Icon className={classes.rightIcon}>search</Icon>
+                            </Button>
                         </Grid>
                     </MuiPickersUtilsProvider>
-                    <Grid item container justify={"flex-end"} xs={12} sm>
-                        <Button className={classes.buttonAdvanced}
-                                onClick={this.props.openAdvancedSearchDialog}>
-                            Advanced Options
-                        </Button>
-
-                        <Button variant="contained"
-                                color="secondary"
-                                className={classes.button}
-                                onClick={this.handleSearchDatasets}>
-                            Search
-                            {this.props.loading && <CircularProgress size={24} className={classes.buttonProgress}/>}
-                            <Icon className={classes.rightIcon}>search</Icon>
-                        </Button>
-                        <AdvancedSearchDialog
-                            open={this.props.advancedSearchDialogOpen}
-                            onClose={this.props.closeAdvancedSearchDialog}
-                            productItems={this.props.serverInfo['products']}
-                            onWavelengthChange={this.props.updateWavelength}
-                            wavelengthValue={this.props.selectedWavelength}
-                            onWaterDepthChange={this.props.updateWaterDepth}
-                            waterDepthValue={this.props.selectedWaterDepth}
-                            onOptShallowChange={this.props.updateOptShallow}
-                            optShallowValue={this.props.selectedOptShallow}
-                            onProductsChange={this.props.updateProducts}
-                            productsValue={this.props.selectedProducts}
-                        />
-
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={6}>
                         <AdvancedSearchLog
                             onWavelengthChange={this.props.updateWavelength}
                             wavelengthValue={this.props.selectedWavelength}
@@ -521,7 +524,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             startLoading={this.props.startLoading}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={6}>
                         <SearchMap
                             position={this.props.position}
                             zoom={this.props.zoom}
