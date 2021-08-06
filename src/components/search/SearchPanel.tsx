@@ -335,9 +335,9 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
         return (
             <div>
-                <Grid spacing={10} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
+                <Grid spacing={8} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
                     <MuiPickersUtilsProvider utils={LuxonUtils}>
-                        <Grid item container spacing={8} xs={12} sm={10}>
+                        <Grid item container spacing={2} xs={12} sm={10}>
                             <KeyboardDatePicker
                                 // disableToolbar
                                 // variant="inline"

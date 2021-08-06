@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+// import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -25,6 +25,7 @@ import { DatasetQuery } from "../api/findDatasets";
 import Help from "@material-ui/icons/Help";
 import UserRegistrationDialog from "./user/UserRegistrationDialog";
 import ChangeLoginUserDialog from "./user/changeLoginUserDialog";
+import { Container } from "@material-ui/core";
 
 
 const drawerWidth = 240;
@@ -216,7 +217,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 
         return (
             <div className={classes.root}>
-                <CssBaseline/>
+                {/*<CssBaseline/>*/}
                 <LoginDialog
                     open={this.props.loginDialogOpen}
                     userName={this.props.userName}
@@ -320,12 +321,12 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         onSearchHistoryItemDelete={this.handleDeleteHistoryItem}
                     />
                 </Drawer>
-                <main className={classes.content}>
+                <Container maxWidth={"xl"}>
                     <div className={classes.appBarSpacer}/>
                     <DashPanels user={this.props.user}
                                 searchHistory={this.props.searchHistory}
                                 currentDrawer={this.props.currentDrawer}/>
-                </main>
+                </Container>
             </div>
         );
     }

@@ -1,9 +1,9 @@
 import { callJsonApi } from './callApi';
 import { User } from '../model';
-import { encrypt } from "../tools/encrypt";
+// import { encrypt } from "../tools/encrypt";
 
 export function loginUser(apiServerUrl: string, name: string, password: string): Promise<User> {
-    password = encrypt(password)
+    // password = encrypt(password)
     return callJsonApi<User>(apiServerUrl + '/users/login', undefined, {
         method: 'post',
         credentials: "same-origin",
