@@ -2,23 +2,17 @@ import * as React from 'react'
 import { Button, Theme, WithStyles } from '@material-ui/core';
 import createStyles from '@material-ui/core/styles/createStyles';
 import { withStyles } from '@material-ui/core/styles';
-import {
-    FeatureGroup,
-    MapContainer,
-    Marker,
-    Popup,
-    Rectangle,
-    TileLayer
-} from 'react-leaflet';
+import { FeatureGroup, Map, Marker, Popup, Rectangle, TileLayer, LeafletConsumer, LeafletContext } from 'react-leaflet'
 import { geoJSON, Icon, LatLng, LatLngBounds } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 import MarkerClusterGroup from "react-leaflet-markercluster";
-import 'react-leaflet-markercluster/dist/styles.min.css';
-
+import 'react-leaflet-markercluster/dist/styles.css';
 import { DatasetRef, QueryResult } from "../../model";
+
 import markerInv from './marker_inv.png';
 import marker from './marker.png';
 import { BBoxValue } from "./BBoxInput";
+import { createRef } from "react";
 import BBoxInput from "./BBoxInputDialog";
 import Control from "./Control";
 
@@ -80,15 +74,14 @@ const DRAW_OPTIONS = {
     circlemarker: false
 };
 
-const MARKER_ICON = new Icon({iconUrl: marker});
-const MARKER_ICON_INV = new Icon({iconUrl: markerInv});
-
 //const average = (arr: number[]) => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
 
 //let MARKERS: React.ReactNode[] | null = null;
 
 class SearchMap extends React.PureComponent<SearchMapProps> {
     private editableFeatureGroupRef: any = null;
+    //private myEditControl: any = null;
+    private mapRef = createRef<Map>();
     private layers: any = [];
 
     constructor(props: SearchMapProps) {
@@ -97,18 +90,17 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
 
     createMarker(lat: number, lon: number, key: string, dsId: string) {
-        const isFirstDs = this.props.selectedDatasets.indexOf(dsId) === 0;
-        return (
-            <Marker
-                key={key}
-                icon={isFirstDs ? MARKER_ICON : MARKER_ICON_INV}
-                eventHandlers={{}}
-                // click={() => this.handleMarkerClick(dsId)}
-                position={new LatLng(lat, lon)}
-            >
-                <Popup>Path: {key}</Popup>
-            </Marker>
-        );
+        if (this.props.selectedDatasets.indexOf(dsId) >= 0) {
+            const icon = new Icon({iconUrl: markerInv});
+            return <Marker onclick={() => this.handleMarkerClick(dsId)} key={key}
+                           icon={icon}
+                           position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
+        } else {
+            const icon = new Icon({iconUrl: marker});
+            return <Marker onclick={() => this.handleMarkerClick(dsId)} key={key}
+                           icon={icon}
+                           position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
+        }
     }
 
     handleMarkerClick(id: string) {
@@ -177,7 +169,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     };
 
     componentDidUpdate(prevProps: Readonly<SearchMapProps>, prevState: Readonly<{}>, snapshot?: any): void {
-        if (!this.props.selectedBounds) {
+        if(!this.props.selectedBounds){
             this.handleClearLayers();
         }
     }
@@ -242,18 +234,20 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     onEastChange={this.props.updateManualBBoxEast}
                 />
 
-                <MapContainer
-                    style={{zIndex: 1}}
-                    bounds={bounds}
-                    center={this.props.position}
-                    zoom={this.props.zoom}
-                    maxZoom={24}
-                >
+                <Map style={{zIndex: 1}} ref={this.mapRef} bounds={bounds} center={this.props.position}
+                     zoom={this.props.zoom} maxZoom={24}>
                     <Control position="topright">
-                        <Button style={{backgroundColor: 'rgba(200, 200, 200, 0.5)'}}
-                                onClick={this.handleManualBBoxInputOpen}>
-                            Manually enter coordinates
-                        </Button>
+                        <LeafletConsumer>
+                            {(leaflet: LeafletContext) => {
+                                console.log("leaflet.map:", leaflet.map);
+                                return (
+                                    <Button style={{backgroundColor: 'rgba(200, 200, 200, 0.5)'}}
+                                            onClick={this.handleManualBBoxInputOpen}>
+                                        Manually enter coordinates
+                                    </Button>
+                                );
+                            }}
+                        </LeafletConsumer>
                     </Control>
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -272,38 +266,37 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
                     {markerClusterGroup}
                     {this.props.selectedBounds && this.props.drawBounds ?
-                     <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
-                         <EditControl
-                             position='topright'
-                             draw={DRAW_OPTIONS}
-                             onEdited={this.handleGeometryEdited}
-                             onCreated={this.handleGeometryCreated}
-                             onDeleted={this.handleGeometryDeleted}
-                             onMounted={this.handleDrawControlMounted}
-                             onEditStart={this.handleGeometryEditStart}
-                             onEditStop={this.handleGeometryEditStop}
-                             onDeleteStart={this.handleGeometryDeleteStart}
-                             onDeleteStop={this.handleGeometryDeleteStop}
-                         />
-                         <Rectangle bounds={this.props.selectedBounds}/>
-                     </FeatureGroup>
-                                                                        :
-                     <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
-                         <EditControl
-                             position='topright'
-                             draw={DRAW_OPTIONS}
-                             onEdited={this.handleGeometryEdited}
-                             onCreated={this.handleGeometryCreated}
-                             onDeleted={this.handleGeometryDeleted}
-                             onMounted={this.handleDrawControlMounted}
-                             onEditStart={this.handleGeometryEditStart}
-                             onEditStop={this.handleGeometryEditStop}
-                             onDeleteStart={this.handleGeometryDeleteStart}
-                             onDeleteStop={this.handleGeometryDeleteStop}
-                         />
-                     </FeatureGroup>
+                        <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
+                            <EditControl
+                                position='topright'
+                                draw={DRAW_OPTIONS}
+                                onEdited={this.handleGeometryEdited}
+                                onCreated={this.handleGeometryCreated}
+                                onDeleted={this.handleGeometryDeleted}
+                                onMounted={this.handleDrawControlMounted}
+                                onEditStart={this.handleGeometryEditStart}
+                                onEditStop={this.handleGeometryEditStop}
+                                onDeleteStart={this.handleGeometryDeleteStart}
+                                onDeleteStop={this.handleGeometryDeleteStop}
+                            />
+                            <Rectangle bounds={this.props.selectedBounds}/>
+                        </FeatureGroup>
+                        : <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
+                            <EditControl
+                                position='topright'
+                                draw={DRAW_OPTIONS}
+                                onEdited={this.handleGeometryEdited}
+                                onCreated={this.handleGeometryCreated}
+                                onDeleted={this.handleGeometryDeleted}
+                                onMounted={this.handleDrawControlMounted}
+                                onEditStart={this.handleGeometryEditStart}
+                                onEditStop={this.handleGeometryEditStop}
+                                onDeleteStart={this.handleGeometryDeleteStart}
+                                onDeleteStop={this.handleGeometryDeleteStop}
+                            />
+                        </FeatureGroup>
                     }
-                </MapContainer>
+                </Map>
             </div>
         );
     }

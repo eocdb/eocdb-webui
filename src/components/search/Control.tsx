@@ -1,6 +1,6 @@
 import * as ReactDOM from 'react-dom';
 import * as L from "leaflet";
-import { createControlComponent } from 'react-leaflet/types';
+import { MapControl, withLeaflet } from 'react-leaflet';
 
 // noinspection JSUnusedLocalSymbols
 /**
@@ -25,7 +25,7 @@ type ControlProps = L.ControlOptions;
 /**
  * _Control is a custom Leaflet-React map control that renders its children into the DivControl.
  */
-class _Control extends Control {
+class _Control extends MapControl {
 
     createLeafletElement(props: ControlProps): any {
         return new (DivControl as { new(...args: any[]): any })(props);
