@@ -21,7 +21,7 @@ const EUMETSAT_LAT_LNG = new LatLng(49.858996564, 8.622830842);
 export function newSearchMapState() {
     return {
         position: EUMETSAT_LAT_LNG,
-        zoom: 2,
+        zoom: 4,
         drawBounds: false,
         manualBBoxInputOpen: false,
         selectedBBoxSouth: '',
