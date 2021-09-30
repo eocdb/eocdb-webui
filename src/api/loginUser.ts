@@ -7,7 +7,7 @@ export function loginUser(apiServerUrl: string, name: string, password: string):
     return callJsonApi<User>(apiServerUrl + '/users/login', undefined, {
         method: 'post',
         credentials: "same-origin",
-        body: JSON.stringify({username: name, password: password})
+        body: JSON.stringify({username: name, password: password, client_version: "0.2.1", client: "webui"})
     })
         .then((obj: any) => ({
             id: obj.id,

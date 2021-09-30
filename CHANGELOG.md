@@ -2,6 +2,7 @@
 
 - Set a better default zoom for the search map avoiding the gray strip at the top when entering the site. Closing #31.
 - Reintroduced mapbox map
+- Send now info that the client is a webui when logging in
 
 # Changes for Version 0.2.0
 
