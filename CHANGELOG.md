@@ -1,11 +1,11 @@
-# Changes for Version 0.2.1 (in development)
+# Changes for Version 0.2.1
 
-- Set a better default zoom for the search map avoiding the gray strip at the top when entering the site
+- Set a better default zoom for the search map avoiding the gray strip at the top when entering the site. Closing #31.
 - Reintroduced mapbox map
 
 # Changes for Version 0.2.0
 
-- Improved password encryption for better protection against brute force 
+- Improved password encryption forUPda better protection against brute force 
 
 # Changes for Version 0.1.26
 
