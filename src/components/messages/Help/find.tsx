@@ -78,7 +78,7 @@ export const FindHelpText = (
         <List dense={true}>
             {listItem('received', 'Date Received')}
             {listItem('identifier_product_doi', 'Product DOI. ')}
-            {listItem('investigators', 'Investigators reponsible for the Measurements.')}
+            {listItem('investigators', 'Investigators responsible for the Measurements.')}
             {listItem('affiliations', 'The Affiliations of the Investigators.')}
             {listItem('contact', 'Contact (Email Address) of the Investigators.')}
             {listItem('experiment', 'Identifier of the Experiment')}
