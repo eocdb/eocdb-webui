@@ -6,7 +6,7 @@
 
 # Changes for Version 0.2.0
 
-- Improved password encryption forUPda better protection against brute force 
+- Improved password encryption for a better protection against brute force 
 
 # Changes for Version 0.1.26
 
