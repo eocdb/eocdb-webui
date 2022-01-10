@@ -1,11 +1,11 @@
 {
   "name": "ocdb-webui",
-  "version": "0.2.1.dev.1",
+  "version": "0.2.2",
   "homepage": ".",
   "private": true,
   "scripts": {
     "start": "react-scripts-ts start",
-    "startssl": "SET HTTPS=true&&react-scripts-ts start",
+    "startssl": "HTTPS=true  react-scripts-ts start",
     "build": "react-scripts-ts build",
     "build:stage": "env-cmd -f .env.staging react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
