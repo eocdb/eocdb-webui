@@ -1,52 +1,54 @@
-import { Checkbox, FormControlLabel, Icon, IconButton, Theme, WithStyles } from "@material-ui/core";
-import createStyles from "@material-ui/core/styles/createStyles";
 import * as React from "react";
-import withStyles from "@material-ui/core/styles/withStyles";
-import TextField from "@material-ui/core/TextField";
-import * as classNames from "classnames";
-import { CloudUpload } from "@material-ui/icons";
-import Button from "@material-ui/core/Button/Button";
-import Grid from "@material-ui/core/Grid";
-import { DatePicker } from "material-ui-pickers";
 import HelpDialog from "../messages/HelpDialog";
 import SubmissionHelpText from "../messages/Help/submission";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
+import {
+    Dialog,
+    DialogTitle,
+    Grid,
+    IconButton,
+    Icon,
+    TextField,
+    FormControlLabel,
+    Checkbox,
+    DialogActions,
+    Button
+} from "@mui/material";
+import { CloudUpload } from "@mui/icons-material";
+import { DatePicker } from "@mui/lab";
 
 
-const styles = (theme: Theme) => createStyles({
-    root: {
-        width: '100%',
-    },
-    button: {
-        marginRight: theme.spacing.unit,
-    },
-    textField: {
-        width: 200,
-        marginTop: theme.spacing.unit / 2,
-        marginRight: theme.spacing.unit / 2,
-    },
-    dense: {
-        marginTop: 16,
-    },
-    instructions: {
-        marginTop: theme.spacing.unit,
-        marginBottom: theme.spacing.unit,
-    },
-    dialogContent: {
-        marginLeft: theme.spacing.unit * 4,
-        marginRight: theme.spacing.unit * 4,
-        marginTop: theme.spacing.unit * 4,
-        marginBottom: theme.spacing.unit * 4,
-    },
-    appBar: {
-        position: 'relative',
-    },
-});
+// const styles = (theme: Theme) => createStyles({
+//     root: {
+//         width: '100%',
+//     },
+//     button: {
+//         marginRight: theme.spacing.unit,
+//     },
+//     textField: {
+//         width: 200,
+//         marginTop: theme.spacing.unit / 2,
+//         marginRight: theme.spacing.unit / 2,
+//     },
+//     dense: {
+//         marginTop: 16,
+//     },
+//     instructions: {
+//         marginTop: theme.spacing.unit,
+//         marginBottom: theme.spacing.unit,
+//     },
+//     dialogContent: {
+//         marginLeft: theme.spacing.unit * 4,
+//         marginRight: theme.spacing.unit * 4,
+//         marginTop: theme.spacing.unit * 4,
+//         marginBottom: theme.spacing.unit * 4,
+//     },
+//     appBar: {
+//         position: 'relative',
+//     },
+// });
+//
 
-
-interface SubmissionMetaDialogProps extends WithStyles<typeof styles> {
+interface SubmissionMetaDialogProps {
     show: boolean;
     submissionId: string;
 
@@ -106,17 +108,15 @@ class SubmissionMetaDialog extends React.Component<SubmissionMetaDialogProps> {
     };
 
     render() {
-        const {classes} = this.props;
-
         return (
             <Dialog
                 open={this.props.show}
                 onClose={this.props.onClose}
             >
-                <div className={classes.dialogContent}>
+                <div>
                     <DialogTitle id="form-dialog-title">Update Submission Meta Data</DialogTitle>
 
-                    <Grid container justify={"flex-end"}>
+                    <Grid container>
                         <IconButton
                             onClick={this.props.openHelpDialog}
                         >
@@ -132,13 +132,13 @@ class SubmissionMetaDialog extends React.Component<SubmissionMetaDialogProps> {
                             {SubmissionHelpText}
                         </HelpDialog>
                     </Grid>
-                    <Grid container justify={"flex-start"} spacing={16} direction={"column"}>
+                    <Grid container spacing={16}>
                         <Grid item>
                             <TextField
                                 required
                                 id="outlined-dense"
                                 label="Submission Label"
-                                className={classNames(classes.textField)}
+                                // className={classNames(classes.textField)}
                                 margin="dense"
                                 variant="outlined"
                                 onChange={this.handleSubmissionIdChange}
@@ -150,7 +150,7 @@ class SubmissionMetaDialog extends React.Component<SubmissionMetaDialogProps> {
                                 required
                                 id="submission-path"
                                 label="Submission Path"
-                                className={classNames(classes.textField)}
+                                // className={classNames(classes.textField)}
                                 margin="dense"
                                 variant="outlined"
                                 onChange={this.handleOnPathChange}
@@ -159,16 +159,9 @@ class SubmissionMetaDialog extends React.Component<SubmissionMetaDialogProps> {
                         </Grid>
                         <Grid item>
                             <DatePicker
-                                keyboard
-                                clearable
-                                variant={"outlined"}
-                                label={'Publication Date'}
-                                format="dd/MM/yyyy"
-                                animateYearScrolling={false}
                                 value={this.props.publicationDate}
                                 onChange={this.props.onPublicationDateChange}
-
-                                className={classes.textField}
+                                renderInput={(params) => <TextField {...params} helperText={null} />}
                             />
                         </Grid>
                         <Grid item>
@@ -183,10 +176,10 @@ class SubmissionMetaDialog extends React.Component<SubmissionMetaDialogProps> {
                             />
                         </Grid>
                     </Grid>
-                    <DialogActions className={classes.appBar}>
+                    <DialogActions>
                         <Button variant="contained"
                                 color="secondary"
-                                className={classes.button}
+                                // className={classes.button}
                                 onClick={this.handleSubmit}
                         >
                             Submit
@@ -194,7 +187,7 @@ class SubmissionMetaDialog extends React.Component<SubmissionMetaDialogProps> {
                         </Button>
                         <Button variant="contained"
                                 color="secondary"
-                                className={classes.button}
+                                // className={classes.button}
                                 onClick={this.props.onClearForm}
                         >
                             Clear
@@ -213,4 +206,4 @@ class SubmissionMetaDialog extends React.Component<SubmissionMetaDialogProps> {
     }
 }
 
-export default withStyles(styles)(SubmissionMetaDialog);
+export default SubmissionMetaDialog;

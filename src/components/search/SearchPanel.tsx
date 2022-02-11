@@ -1,21 +1,7 @@
 import * as React from 'react';
-
-import {
-    IconButton,
-    CircularProgress,
-    TextField,
-    Icon,
-    Button,
-    Grid,
-    Theme,
-    WithStyles
-} from '@material-ui/core';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { withStyles } from '@material-ui/core/styles';
-
+import Grid from '@mui/material/Grid';
 import SearchMap from './SearchMap';
-import { DatasetQuery } from '../../api';
-import { ProductGroup, StoreInfo } from '../../model';
+import { DatasetQuery } from '../../api/findDatasets';
 import DataTable from "./DataTable";
 import AdvancedSearchDialog from "./AdvancedSearchDialog";
 import AdvancedSearchLog from "./AdvancedSearchLog";
@@ -23,45 +9,44 @@ import MultipleSelectTextField, { Suggestion } from "./MultipleSelectTextField";
 import HelpDialog from "../messages/HelpDialog";
 import { FindHelpText } from "../messages/Help/find";
 
-import { DatePicker } from 'material-ui-pickers';
 import { SliderRange } from "../../types/advancedSearchDialog";
 import { SearchHistoryItem } from "../../types/dataset";
-import { User } from "../../model/User";
+import { ProductGroup, StoreInfo, User, QueryResult, Dataset } from "../../model";
 import InputDialog from "./InputDialog";
 import { ProductGroupsInfo } from "../messages/Help/productgroups";
 import { GeoJsonObject } from "geojson";
 import { LatLng, LatLngBounds } from "leaflet";
 import { BBoxValue } from "./BBoxInput";
-import { QueryResult } from "../../model/QueryResult";
 import { PlotRecord, PlotState } from "../../states/dataTableState";
-import { Dataset } from "../../model/Dataset";
+import { Button, CircularProgress, Icon, IconButton, TextField } from "@mui/material";
+import { DatePicker } from "@mui/lab";
 
 
 // noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles({
-    searchField: {
-        width: 200,
-        marginRight: theme.spacing.unit / 2,
-        //marginTop: theme.spacing.unit / 2,
-    },
-    textField: {},
-    button: {},
-    buttonAdvanced: {fontSize: 'small'},
-    filterButton: {},
-    rightIcon: {},
-    tableContainer: {},
-    buttonProgress: {
-        color: theme.palette.primary.light,
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        marginTop: -12,
-        marginLeft: -12,
-    },
-});
+// const styles = (theme: Theme) => createStyles({
+//     searchField: {
+//         width: 200,
+//         marginRight: theme.spacing.unit / 2,
+//         //marginTop: theme.spacing.unit / 2,
+//     },
+//     textField: {},
+//     button: {},
+//     buttonAdvanced: {fontSize: 'small'},
+//     filterButton: {},
+//     rightIcon: {},
+//     tableContainer: {},
+//     buttonProgress: {
+//         color: theme.palette.primary.light,
+//         position: 'absolute',
+//         top: '50%',
+//         left: '50%',
+//         marginTop: -12,
+//         marginLeft: -12,
+//     },
+// });
 
 
-interface SearchPanelProps extends WithStyles<typeof styles> {
+interface SearchPanelProps {
     show: boolean;
 
     datasetQuery: DatasetQuery;
@@ -330,35 +315,19 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
             return null;
         }
 
-        const {classes} = this.props;
-
         return (
             <div>
-                <Grid spacing={24} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
+                <Grid spacing={24} container>
                     <Grid item container spacing={8} xs={12} sm={10}>
                         <DatePicker
-                            keyboard
-                            clearable
-                            variant={"outlined"}
-                            label="Start Date"
-                            format="dd/MM/yyyy"
-                            animateYearScrolling={false}
                             value={this.props.datasetQuery.startDate}
                             onChange={this.handleStartDateChange}
-
-                            className={classes.searchField}
+                            renderInput={(params) => <TextField {...params} helperText={null} />}
                         />
                         <DatePicker
-                            keyboard
-                            clearable
-                            variant={"outlined"}
-                            label="End Date"
-                            format="dd/MM/yyyy"
-                            animateYearScrolling={false}
                             value={this.props.datasetQuery.endDate}
                             onChange={this.handleEndDateChange}
-
-                            className={classes.searchField}
+                            renderInput={(params) => <TextField {...params} helperText={null} />}
                         />
                         <MultipleSelectTextField
                             suggestions={this.getProductGroups()}
@@ -367,17 +336,17 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             isMulti={true}
                             closeMenuOnSelect={true}
                             placeholder={'Product Groups...'}
-                            className={classes.searchField}
+                            // className={classes.searchField}
                         />
                         <TextField
                             id={'lucene-search'}
                             key={'lucene-search'}
                             label={'Search...'}
                             variant={"outlined"}
-                            className={classes.searchField}
+                            // className={classes.searchField}
                             value={this.props.datasetQuery.searchExpr}
                             onChange={this.handleSearchExprChange}
-                            onBlur={this.handleSearchExprBlur}
+                            // onBlur={this.handleSearchExprBlur}
                             onKeyPress={this.handleSearchExpKeyPressed}
                         />
                         <IconButton
@@ -401,8 +370,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         >
                             {FindHelpText}
                         </HelpDialog>
-                        <Button className={classes.button}
-                                onClick={this.handleClear}>
+                        <Button onClick={this.handleClear}>
                             Clear
                         </Button>
                         <InputDialog
@@ -414,25 +382,23 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             onSave={this.handleSaveFilter}
                             onChange={this.handleUpdateSaveSearchTitle}
                         />
-                        <Button className={classes.button}
-                                onClick={this.props.openSaveSearchDialog}>
+                        <Button onClick={this.props.openSaveSearchDialog}>
                             Save Search
                         </Button>
 
                     </Grid>
-                    <Grid item container justify={"flex-end"} xs={12} sm>
-                        <Button className={classes.buttonAdvanced}
-                                onClick={this.props.openAdvancedSearchDialog}>
+                    <Grid item container xs={12} sm>
+                        <Button onClick={this.props.openAdvancedSearchDialog}>
                             Advanced Options
                         </Button>
 
                         <Button variant="contained"
                                 color="secondary"
-                                className={classes.button}
+                                // className={classes.button}
                                 onClick={this.handleSearchDatasets}>
                             Search
-                            {this.props.loading && <CircularProgress size={24} className={classes.buttonProgress}/>}
-                            <Icon className={classes.rightIcon}>search</Icon>
+                            {this.props.loading && <CircularProgress size={24}/>}
+                            <Icon>search</Icon>
                         </Button>
                         <AdvancedSearchDialog
                             open={this.props.advancedSearchDialogOpen}
@@ -559,4 +525,4 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
     }
 }
 
-export default withStyles(styles)(SearchPanel);
+export default SearchPanel;

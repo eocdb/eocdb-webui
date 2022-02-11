@@ -1,41 +1,34 @@
 import * as React from 'react';
-import { Theme, WithStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
-import Input from '@material-ui/core/Input/Input';
-import InputLabel from '@material-ui/core/InputLabel/InputLabel';
-import FormControl from '@material-ui/core/FormControl/FormControl';
-import InputAdornment from '@material-ui/core/InputAdornment/InputAdornment';
-import IconButton from '@material-ui/core/IconButton/IconButton';
-import classNames from 'classnames';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import {
+    Typography,
+    DialogTitle,
+    Dialog,
+    DialogContentText,
+    DialogContent,
+    FormControl,
+    InputLabel, InputAdornment, IconButton, Input, DialogActions, Button
+} from '@mui/material';
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const styles = (theme: Theme) => createStyles(
-    {
-        root: {
-            display: 'flex',
-            flexWrap: 'wrap',
-        },
-        margin: {
-            margin: theme.spacing.unit,
-        },
-        withoutLabel: {
-            marginTop: theme.spacing.unit * 3,
-        },
-        textField: {
-            flexBasis: 200,
-        },
-    });
+// const styles = (theme: Theme) => createStyles(
+//     {
+//         root: {
+//             display: 'flex',
+//             flexWrap: 'wrap',
+//         },
+//         margin: {
+//             margin: theme.spacing.unit,
+//         },
+//         withoutLabel: {
+//             marginTop: theme.spacing.unit * 3,
+//         },
+//         textField: {
+//             flexBasis: 200,
+//         },
+//     });
 
 
-interface ChangeLoginUserDialogProps extends WithStyles<typeof styles> {
+interface ChangeLoginUserDialogProps {
     open: boolean;
     userName: string;
     userLoginError: string | null;
@@ -105,7 +98,7 @@ class ChangeLoginUserDialog extends React.Component<ChangeLoginUserDialogProps, 
     };
 
     render() {
-        const {classes, open, userLoginError } = this.props;
+        const {open, userLoginError } = this.props;
         const {oldPassword, newPassword1, newPassword2, showPassword} = this.state;
 
         let error = null;
@@ -127,7 +120,7 @@ class ChangeLoginUserDialog extends React.Component<ChangeLoginUserDialogProps, 
                         Dear {this.props.userName?this.props.userName:'unknown'},
                         please enter your new password information.
                     </DialogContentText>
-                    <FormControl className={classNames(classes.margin, classes.textField)} fullWidth>
+                    <FormControl fullWidth>
                         <InputLabel htmlFor="adornment-password">Old Password</InputLabel>
                         <Input
                             id="adornment-password"
@@ -146,7 +139,7 @@ class ChangeLoginUserDialog extends React.Component<ChangeLoginUserDialogProps, 
                             }
                         />
                     </FormControl>
-                    <FormControl className={classNames(classes.margin, classes.textField)} fullWidth>
+                    <FormControl fullWidth>
                         <InputLabel htmlFor="adornment-password1">New Password</InputLabel>
                         <Input
                             id="adornment-password1"
@@ -165,7 +158,7 @@ class ChangeLoginUserDialog extends React.Component<ChangeLoginUserDialogProps, 
                             }
                         />
                     </FormControl>
-                    <FormControl className={classNames(classes.margin, classes.textField)} fullWidth>
+                    <FormControl fullWidth>
                         <InputLabel htmlFor="adornment-password2">Repeat New Password</InputLabel>
                         <Input
                             id="adornment-password2"
@@ -200,4 +193,4 @@ class ChangeLoginUserDialog extends React.Component<ChangeLoginUserDialogProps, 
     }
 }
 
-export default withStyles(styles)(ChangeLoginUserDialog);
+export default ChangeLoginUserDialog;

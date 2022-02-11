@@ -1,24 +1,21 @@
 import * as React from 'react';
-import {Button, Theme, WithStyles} from '@material-ui/core';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { withStyles } from '@material-ui/core/styles';
 import EditContentDialog from "./EditContentDialog";
-import Link from "@material-ui/icons/Link";
-import Settings from "@material-ui/icons/Settings";
 import ConfigDialog from "./ConfigDialog";
 import EditJSON from "./JSONEdit";
+import { Button } from "@mui/material";
+import { Link, Settings } from "@mui/icons-material";
 
+//
+// // noinspection JSUnusedLocalSymbols
+// const styles = (theme: Theme) => createStyles(
+//     {
+//         root: {},
+//         title: {
+//             flexGrow: 1,
+//         },
+//     });
 
-// noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles(
-    {
-        root: {},
-        title: {
-            flexGrow: 1,
-        },
-    });
-
-interface AdminPanelProps extends WithStyles<typeof styles> {
+interface AdminPanelProps {
     show: boolean;
     linksContentDialogOpen: boolean;
     openLinksContentDialog: () => void;
@@ -98,4 +95,4 @@ class AdminPanel extends React.PureComponent<AdminPanelProps> {
     }
 }
 
-export default withStyles(styles)(AdminPanel);
+export default AdminPanel;

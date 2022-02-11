@@ -1,17 +1,17 @@
 import * as React from "react";
-import {
-    Button,
-    Dialog,
-
-    DialogActions, DialogContent,
-    DialogTitle,
-    Slide,
-    Typography,
-} from "@material-ui/core";
-import { SlideProps } from "@material-ui/core/Slide";
 import ReactMarkdown from "markdown-to-jsx";
 
 import TERMS from './eocdb-data-access-policy';
+import {
+    SlideProps,
+    Slide,
+    Typography,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    Button,
+    DialogActions
+} from "@mui/material";
 
 
 /*
@@ -38,7 +38,7 @@ const styles = (theme: Theme) => createStyles({
 
 
 function Transition(props: SlideProps) {
-    return <Slide direction="up" {...props} />;
+    return <Slide direction="up" {...props} >..</Slide>;
 }
 
 

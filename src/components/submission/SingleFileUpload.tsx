@@ -1,39 +1,39 @@
 import * as React from "react";
-import {
-    Button,
-    createStyles,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle, Icon, List, ListItem, ListItemIcon, Typography,
-    withStyles,
-    WithStyles
-} from "@material-ui/core";
-
-import FolderIcon from '@material-ui/icons/Folder';
 
 import Dropzone, { DropzoneState } from "react-dropzone";
+import {
+    Button,
+    Icon,
+    ListItem,
+    ListItemIcon,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    Typography,
+    List, DialogActions
+} from "@mui/material";
+import { Folder } from "@mui/icons-material";
 
 
-const styles = createStyles({
-    root: {},
-    appBar: {
-        position: 'relative',
-    },
-    dropzone: {
-        textAlign: 'center',
-        //borderRadius: '25px',
-        border: '4px solid #C8C8C8',
-        borderStyle: 'dashed',
-        padding: '2em',
-        width: '100%',
-        height: '10%',
-        backgroundColor: "#F0F0F0",
-    }
-});
+// const styles = createStyles({
+//     root: {},
+//     appBar: {
+//         position: 'relative',
+//     },
+//     dropzone: {
+//         textAlign: 'center',
+//         //borderRadius: '25px',
+//         border: '4px solid #C8C8C8',
+//         borderStyle: 'dashed',
+//         padding: '2em',
+//         width: '100%',
+//         height: '10%',
+//         backgroundColor: "#F0F0F0",
+//     }
+// });
 
 
-interface SingleFileUploadProps<T> extends WithStyles<typeof styles> {
+interface SingleFileUploadProps<T> {
     label: string;
     open: boolean;
     onCancel: () => void;
@@ -87,12 +87,10 @@ class SingleFileUpload<T> extends React.Component<SingleFileUploadProps<T>, Sing
     };
 
     render() {
-        const {classes} = this.props;
-
         const files = this.state.files.map((file: File) => (
             <ListItem key={'item_' + file.name}>
                 <ListItemIcon key={'item_icon_' + file.name}>
-                    <FolderIcon key={'item_icon_folder' + file.name}/>
+                    <Folder key={'item_icon_folder' + file.name}/>
                 </ListItemIcon>
                 {file.name} - {file.size} bytes
                 <Button
@@ -118,10 +116,10 @@ class SingleFileUpload<T> extends React.Component<SingleFileUploadProps<T>, Sing
                         onDragEnter={this.handleDragOver}
                         accept={this.props.accept}
                     >
-                        {({getRootProps, getInputProps, isDragActive, isDragReject}: DropzoneState) => (
+                        {({getRootProps, getInputProps, isDragReject}: DropzoneState) => (
                             <section>
                                 <div style={{backgroundColor: isDragReject ? 'red' : '#F0F0F0"'}}
-                                     className={classes.dropzone} {...getRootProps()}>
+                                      {...getRootProps()}>
                                     <input {...getInputProps()} />
                                     <Typography component={'p'}>
                                         Drag 'n' drop your file here, or click to select
@@ -135,7 +133,7 @@ class SingleFileUpload<T> extends React.Component<SingleFileUploadProps<T>, Sing
                         )}
                     </Dropzone>
                 </DialogContent>
-                <DialogActions className={classes.appBar}>
+                <DialogActions>
                     <Button key={'Cancel'} onClick={this.props.onCancel} color="primary">
                         Cancel
                     </Button>
@@ -148,4 +146,4 @@ class SingleFileUpload<T> extends React.Component<SingleFileUploadProps<T>, Sing
     }
 }
 
-export default withStyles(styles)(SingleFileUpload)
+export default SingleFileUpload;

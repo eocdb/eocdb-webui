@@ -1,43 +1,35 @@
 import * as React from 'react';
-import { Theme, WithStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
-import Input from '@material-ui/core/Input/Input';
-import InputLabel from '@material-ui/core/InputLabel/InputLabel';
-import FormControl from '@material-ui/core/FormControl/FormControl';
-import InputAdornment from '@material-ui/core/InputAdornment/InputAdornment';
-import IconButton from '@material-ui/core/IconButton/IconButton';
-import classNames from 'classnames';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Typography from '@material-ui/core/Typography';
+import {
+    CircularProgress,
+    Typography,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    TextField,
+    FormControl, InputLabel, Input, InputAdornment, IconButton, Button, DialogActions
+} from '@mui/material';
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const styles = (theme: Theme) => createStyles(
-    {
-        root: {
-            display: 'flex',
-            flexWrap: 'wrap',
-        },
-        margin: {
-            margin: theme.spacing.unit,
-        },
-        withoutLabel: {
-            marginTop: theme.spacing.unit * 3,
-        },
-        textField: {
-            flexBasis: 200,
-        },
-    });
+// const styles = (theme: Theme) => createStyles(
+//     {
+//         root: {
+//             display: 'flex',
+//             flexWrap: 'wrap',
+//         },
+//         margin: {
+//             margin: theme.spacing.unit,
+//         },
+//         withoutLabel: {
+//             marginTop: theme.spacing.unit * 3,
+//         },
+//         textField: {
+//             flexBasis: 200,
+//         },
+//     });
+//
 
-
-interface LoginDialogProps extends WithStyles<typeof styles> {
+interface LoginDialogProps {
     open: boolean;
     userName: string;
     userLoginError: string | null;
@@ -124,7 +116,7 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
     };
 
     render() {
-        const {classes, open, userLoginError, userLoginInProgress,} = this.props;
+        const {open, userLoginError, userLoginInProgress,} = this.props;
         const {userName, password, showPassword} = this.state;
 
         let progress = null;
@@ -153,7 +145,7 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
 
                     </DialogContentText>
                     <TextField
-                        className={classNames(classes.margin, classes.textField)}
+                        // className={classNames(classes.margin, classes.textField)}
                         autoFocus
                         id="name"
                         label="User Name or E-mail Address"
@@ -163,7 +155,7 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
                         disabled={this.props.userName !== ''}
                         onChange={this.handleUserNameChange}
                     />
-                    <FormControl className={classNames(classes.margin, classes.textField)} fullWidth>
+                    <FormControl fullWidth>
                         <InputLabel htmlFor="adornment-password">Password</InputLabel>
                         <Input
                             id="adornment-password"
@@ -209,4 +201,4 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
     }
 }
 
-export default withStyles(styles)(LoginDialog);
+export default LoginDialog;

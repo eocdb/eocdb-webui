@@ -1,17 +1,9 @@
 import * as React from "react";
 import ChipsArray from "../../components/search/ChipsArray";
-import { Theme, WithStyles } from "@material-ui/core";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles from "@material-ui/core/styles/withStyles";
 import { SliderRange } from "../../types/advancedSearchDialog";
 
 
-// noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles({
-    root: {}
-});
-
-interface AdvancedSearchLogProps extends WithStyles<typeof styles> {
+interface AdvancedSearchLogProps {
     onWavelengthChange: (item: string) => void;
     wavelengthValue: string;
 
@@ -80,4 +72,4 @@ class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
     }
 }
 
-export default withStyles(styles)(AdvancedSearchLog);
+export default AdvancedSearchLog;

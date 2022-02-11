@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { Typography } from "@mui/material";
 const ReactMarkdown = require('markdown-to-jsx');
-import Typography from '@material-ui/core/Typography';
+
 
 /*
 const styles = (theme: Theme) => ({

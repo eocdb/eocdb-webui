@@ -1,19 +1,16 @@
 import * as React from "react";
 import {
     Button,
-    createStyles,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle, withStyles,
-    WithStyles
-} from "@material-ui/core";
+    DialogTitle
+} from "@mui/material";
 
 
-const styles = createStyles({root: {}});
 
-interface YesNoAlertProperties<T> extends WithStyles<typeof styles>{
+interface YesNoAlertProperties<T>{
     open: boolean;
     onClose: () => void;
     onAgree: (value: T) => void;
@@ -57,4 +54,4 @@ class YesNoAlert<T> extends React.Component<YesNoAlertProperties<T>> {
     }
 }
 
-export default withStyles(styles)(YesNoAlert);
+export default YesNoAlert;

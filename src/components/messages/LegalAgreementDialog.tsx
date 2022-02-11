@@ -1,13 +1,7 @@
 import React from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import CheckIcon from '@material-ui/icons/Check';
-import Link from '@material-ui/core/Link';
 import { SessionState } from "../../states/sessionState";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Link } from '@mui/material';
+import { Check } from "@mui/icons-material";
 
 
 interface LegalAgreementDialogProps {
@@ -31,7 +25,7 @@ export default function LegalAgreementDialog({open, settings, updateSettings}: L
         <Dialog
             open={open}
             disableEscapeKeyDown={true}
-            disableBackdropClick={true}
+            // disableBackdropClick={true}
             onClose={handleConfirm}
             scroll='body'
         >
@@ -53,7 +47,7 @@ export default function LegalAgreementDialog({open, settings, updateSettings}: L
 
             <DialogActions>
                 <Button onClick={handleConfirm} color="primary">
-                    <CheckIcon/>
+                    <Check/>
                     {'Accept and continue'}
                 </Button>
             </DialogActions>

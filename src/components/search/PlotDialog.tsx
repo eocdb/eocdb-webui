@@ -2,43 +2,30 @@ import * as React from "react";
 
 import { XAxis, YAxis, CartesianGrid, Tooltip, ScatterChart, Scatter, Label, Legend, Cell } from 'recharts';
 import { Dataset } from "../../model";
-import { DialogTitle, Theme, WithStyles } from "@material-ui/core";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles from "@material-ui/core/styles/withStyles";
 import { PlotRecord, PlotState } from "../../states/dataTableState";
 import InputSelect from "./InputSelect";
 import { Suggestion } from "./MultipleSelectTextField";
-import Grid from "@material-ui/core/Grid";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from "@mui/material";
 
 
-/*
-import {
-    Simplify,
-} from 'simplify-ts';
-*/
+
+// const styles = (theme: Theme) => createStyles({
+//     root: {
+//         marginLeft: theme.spacing.unit * 2.5,
+//         zIndex: 99999,
+//     },
+//     select: {},
+//     dialogPaper: {
+//         zIndex: 99999,
+//         minHeight: '80%',
+//         maxHeight: '100%',
+//         minWidth: '60%',
+//         maxWidth: '100%',
+//     },
+// });
 
 
-const styles = (theme: Theme) => createStyles({
-    root: {
-        marginLeft: theme.spacing.unit * 2.5,
-        zIndex: 99999,
-    },
-    select: {},
-    dialogPaper: {
-        zIndex: 99999,
-        minHeight: '80%',
-        maxHeight: '100%',
-        minWidth: '60%',
-        maxWidth: '100%',
-    },
-});
-
-
-interface PlotDialogProps extends WithStyles<typeof styles> {
+interface PlotDialogProps {
     open: boolean;
     onClose: () => void;
     dataset: Dataset;
@@ -196,7 +183,7 @@ class PlotDialog extends React.Component<PlotDialogProps> {
     };
 
     render() {
-        const {plotData, classes} = this.props;
+        const {plotData} = this.props;
 
         const {attributes} = this.props.dataset;
 
@@ -207,12 +194,12 @@ class PlotDialog extends React.Component<PlotDialogProps> {
         const {selectedXField, selectedYField, selectedZField} = this.props.plotState;
 
         return (
-            <div className={classes.root}>
+            <div>
                 <Dialog
                     open={this.props.open}
                     onClose={this.handleClose}
                     aria-labelledby="form-dialog-title"
-                    classes={{paper: classes.dialogPaper}}
+                    // classes={{paper: classes.dialogPaper}}
                 >
                     <DialogTitle id="form-dialog-title">Plot</DialogTitle>
                     <DialogContent>
@@ -283,4 +270,4 @@ class PlotDialog extends React.Component<PlotDialogProps> {
 }
 
 
-export default withStyles(styles)(PlotDialog);
+export default PlotDialog;

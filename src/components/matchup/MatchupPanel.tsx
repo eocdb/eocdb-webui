@@ -1,29 +1,24 @@
 import * as React from 'react';
-import { Theme, WithStyles } from '@material-ui/core';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { withStyles } from '@material-ui/core/styles';
 
 import MUIDataTable from "mui-datatables";
 import { MatchupFiles } from "../../model/MatchupFiles";
 import TermsDialog from "../search/TermsDialog";
-// import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-// import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 
 
-// noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles(
-    {
-        root: {},
-        title: {
-            flexGrow: 1,
-        },
-    });
+// // noinspection JSUnusedLocalSymbols
+// const styles = (theme: Theme) => createStyles(
+//     {
+//         root: {},
+//         title: {
+//             flexGrow: 1,
+//         },
+//     });
 
 
 const columns = ["FileName", "Directory"];
 
 
-interface MatchupPanelProps extends WithStyles<typeof styles> {
+interface MatchupPanelProps {
     show: boolean;
     matchupFiles: MatchupFiles[];
 
@@ -107,4 +102,4 @@ class MatchupPanel extends React.PureComponent<MatchupPanelProps> {
     }
 }
 
-export default withStyles(styles)(MatchupPanel);
+export default MatchupPanel;

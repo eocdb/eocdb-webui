@@ -1,29 +1,23 @@
 import * as React from "react";
-import { Theme, WithStyles } from "@material-ui/core";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles from "@material-ui/core/styles/withStyles";
-
-const Slider = require('material-ui-slider').Slider;
-
-import TextField from "@material-ui/core/TextField";
 import { SliderRange } from "../../types/advancedSearchDialog";
+import { TextField, Slider } from "@mui/material";
 
 
-const styles = (theme: Theme) => createStyles({
-    root: {},
-    slider: {
-        padding: '22px 0px',
-        margin: theme.spacing.unit,
-        size: '100pt',
-    },
-    textField: {
-        width: 200,
-        marginTop: theme.spacing.unit / 2,
-        marginRight: theme.spacing.unit / 2,
-    },
-});
+// const styles = (theme: Theme) => createStyles({
+//     root: {},
+//     slider: {
+//         padding: '22px 0px',
+//         margin: theme.spacing.unit,
+//         size: '100pt',
+//     },
+//     textField: {
+//         width: 200,
+//         marginTop: theme.spacing.unit / 2,
+//         marginRight: theme.spacing.unit / 2,
+//     },
+// });
 
-interface MinMaxInputSliderProps extends WithStyles<typeof styles> {
+interface MinMaxInputSliderProps {
     value: SliderRange;
     onChange: (value: SliderRange) => void;
 
@@ -51,24 +45,22 @@ class MinMaxInputSlider extends React.Component<MinMaxInputSliderProps> {
     };
 
     render() {
-        const {classes, value} = this.props;
+        const {value} = this.props;
 
         return (
 
-            <div className={classes.root}>
+            <div>
                 <Slider
-                    range
-                    //disabled={!dataTimeRangeValid}
                     min={0}
                     max={1000}
                     value={value}
-                    onChangeComplete={this.handleSliderChange}
+                    // onChangeComplete={this.handleSliderChange}
                     //onChangeComplete={this.handleChangeComplete}
                 />
                 <TextField
                     type={"number"}
                     label={this.props.label + ' Min'}
-                    className={classes.textField}
+                    // className={classes.textField}
                     variant="outlined"
                     value={value[0]}
                     onChange={this.handleMinInputChange}
@@ -76,7 +68,7 @@ class MinMaxInputSlider extends React.Component<MinMaxInputSliderProps> {
                 <TextField
                     //type={"number"}
                     label={this.props.label + ' Max'}
-                    className={classes.textField}
+                    // className={classes.textField}
                     variant="outlined"
                     value={value[1]}
                     onChange={this.handleMaxInputChange}
@@ -86,4 +78,4 @@ class MinMaxInputSlider extends React.Component<MinMaxInputSliderProps> {
     }
 }
 
-export default withStyles(styles)(MinMaxInputSlider);
+export default MinMaxInputSlider;

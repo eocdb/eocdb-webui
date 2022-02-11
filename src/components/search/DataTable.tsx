@@ -1,46 +1,35 @@
 import * as React from 'react';
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { withStyles, WithTheme } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button/Button';
-import Icon from '@material-ui/core/Icon/Icon';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { Theme, WithStyles } from '@material-ui/core';
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import TableFooter from "@material-ui/core/TableFooter/TableFooter";
-import TablePagination from "@material-ui/core/TablePagination/TablePagination";
 import { Dataset, DatasetRef, QueryResult } from "../../model";
 import MetaInfoDialog from "./MetaInfoDialog";
-import Checkbox from "@material-ui/core/Checkbox/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
-import Typography from "@material-ui/core/Typography/Typography";
-import Grid from "@material-ui/core/Grid/Grid";
-import green from "@material-ui/core/colors/green";
 import { PlotRecord, PlotState } from "../../states/dataTableState";
 import PlotDialog from "./PlotDialog";
 import { geoJSON, LatLng, LatLngBounds } from "leaflet";
 import { TermsDialog } from "./TermsDialog";
+import {
+    Button,
+    Checkbox,
+    CircularProgress,
+    FormControlLabel,
+    Icon,
+    IconButton,
+    Paper,
+    Table,
+    TableCell,
+    TableRow,
+    Grid, TableBody, Typography, TableFooter, TableHead
+} from '@mui/material';
 
 
-const actionsStyles = (theme: Theme) => createStyles({
-    root: {
-        flexShrink: 0,
-        color: theme.palette.text.secondary,
-        marginLeft: theme.spacing.unit * 2.5,
-    }
-});
+// const actionsStyles = (theme: Theme) => createStyles({
+//     root: {
+//         flexShrink: 0,
+//         color: theme.palette.text.secondary,
+//         marginLeft: theme.spacing.unit * 2.5,
+//     }
+// });
 
 
-interface TablePaginationActionsProps extends WithStyles<typeof actionsStyles>, WithTheme {
+interface TablePaginationActionsProps {
     count: number;
     onChangePage: (event: React.MouseEvent<HTMLButtonElement>, page: number) => void;
     page: number;
@@ -71,37 +60,38 @@ class TablePaginationActions extends React.Component<TablePaginationActionsProps
     };
 
     render() {
-        const {classes, count, page, rowsPerPage, theme} = this.props;
+        const {count, page, rowsPerPage} = this.props;
 
         return (
-            <div className={classes.root}>
+            // <div className={classes.root}>
+            <div>
                 <IconButton
                     onClick={this.handleFirstPageButtonClick}
                     disabled={page === 0}
                     aria-label="First Page"
                 >
-                    {theme.direction === 'rtl' ? <LastPageIcon/> : <FirstPageIcon/>}
+                    {/*{theme.direction === 'rtl' ? <LastPageIcon/> : <FirstPageIcon/>}*/}
                 </IconButton>
                 <IconButton
                     onClick={this.handleBackButtonClick}
                     disabled={page === 0}
                     aria-label="Previous Page"
                 >
-                    {theme.direction === 'rtl' ? <KeyboardArrowRight/> : <KeyboardArrowLeft/>}
+                    {/*{theme.direction === 'rtl' ? <KeyboardArrowRight/> : <KeyboardArrowLeft/>}*/}
                 </IconButton>
                 <IconButton
                     onClick={this.handleNextButtonClick}
                     disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                     aria-label="Next Page"
                 >
-                    {theme.direction === 'rtl' ? <KeyboardArrowLeft/> : <KeyboardArrowRight/>}
+                    {/*{theme.direction === 'rtl' ? <KeyboardArrowLeft/> : <KeyboardArrowRight/>}*/}
                 </IconButton>
                 <IconButton
                     onClick={this.handleLastPageButtonClick}
                     disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                     aria-label="Last Page"
                 >
-                    {theme.direction === 'rtl' ? <FirstPageIcon/> : <LastPageIcon/>}
+                    {/*{theme.direction === 'rtl' ? <FirstPageIcon/> : <LastPageIcon/>}*/}
                 </IconButton>
             </div>
         );
@@ -109,44 +99,45 @@ class TablePaginationActions extends React.Component<TablePaginationActionsProps
 }
 
 
-const TablePaginationActionsWrapped = withStyles(actionsStyles, {withTheme: true})(
-    TablePaginationActions,
-);
+// const TablePaginationActionsWrapped = withStyles(actionsStyles, {withTheme: true})(
+//     TablePaginationActions,
+// );
+
 
 
 // noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles(
-    {
-        root: {
-            width: '100%',
-            overflowX: 'auto',
-        },
-        table: {
-            minWidth: 100,
-        },
-        rightIcon: {},
-        button: {
-            margin: theme.spacing.unit / 2,
-        },
-        link: {
-            fontcolor: 'black'
-        },
-        downloadContainer: {
-            width: '100%',
-            border: '1px solid red',
-        },
-        buttonProgress: {
-            color: green[500],
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            marginTop: -12,
-            marginLeft: -12,
-        },
-    });
+// const styles = (theme: Theme) => createStyles(
+//     {
+//         root: {
+//             width: '100%',
+//             overflowX: 'auto',
+//         },
+//         table: {
+//             minWidth: 100,
+//         },
+//         rightIcon: {},
+//         button: {
+//             margin: theme.spacing.unit / 2,
+//         },
+//         link: {
+//             fontcolor: 'black'
+//         },
+//         downloadContainer: {
+//             width: '100%',
+//             border: '1px solid red',
+//         },
+//         buttonProgress: {
+//             color: green[500],
+//             position: 'absolute',
+//             top: '50%',
+//             left: '50%',
+//             marginTop: -12,
+//             marginLeft: -12,
+//         },
+//     });
 
 
-export interface DataTableProps extends WithStyles<typeof styles> {
+export interface DataTableProps {
     data: QueryResult;
     page: number;
     rowsPerPage: number;
@@ -315,12 +306,13 @@ class DataTable extends React.Component<DataTableProps> {
     };
 
     render() {
-        const {classes, data, rowsPerPage, page, selectedDatasets} = this.props;
-        const {datasets, total_count} = data;
+        const {data, rowsPerPage, selectedDatasets} = this.props;
+        const {datasets} = data;
         const numSelected = selectedDatasets.length;
 
         return (
-            <Paper className={classes.root}>
+            // <Paper className={classes.root}>
+            <Paper>
                 <MetaInfoDialog
                     open={this.props.metaInfoDialogOpen}
                     handleClose={this.handleMetaInfoClose}
@@ -352,20 +344,20 @@ class DataTable extends React.Component<DataTableProps> {
                     onDisagree={this.props.closeTermsSingleDialog}
                     onAgree={this.handleTermsDialogAgreeClick}
                 />
-                <Grid container justify={"flex-end"}>
+                <Grid container>
                     <Button variant={"contained"}
                             color={"primary"}
                             key={"btn_download33"}
-                            className={classes.button}
+                            // className={classes.button}
                             disabled={numSelected == 0}
                             onClick={() => this.props.openTermsDialog()}
                     >
                         Download
-                        <Icon className={classes.rightIcon}>archive</Icon>
-                        {this.props.downloading && <CircularProgress size={24} className={classes.buttonProgress}/>}
+                        <Icon>archive</Icon>
+                        {this.props.downloading && <CircularProgress size={24}/>}
                     </Button>
                     <FormControlLabel
-                        className={classes.button}
+                        // className={classes.button}
                         control={
                             <Checkbox
                                 value={'docs'}
@@ -376,7 +368,7 @@ class DataTable extends React.Component<DataTableProps> {
                         onChange={this.handleUpdateDownloadDocs}
                     />
                 </Grid>
-                <Table className={classes.table}>
+                <Table>
                     <TableHead>
                         <TableRow>
                             <TableCell padding="checkbox">
@@ -427,13 +419,13 @@ class DataTable extends React.Component<DataTableProps> {
                                             color="inherit"
                                             onClick={() => this.handleMetaInfoOpen(row.id)}
                                         >
-                                            <Icon className={classes.rightIcon}>list</Icon>
+                                            <Icon>list</Icon>
                                         </IconButton>
                                         <Button
                                             color={"inherit"}
                                             onClick={() => this.handlePlotOpen(row.id)}
                                         >
-                                            <Icon className={classes.rightIcon}>bar_chart</Icon>
+                                            <Icon>bar_chart</Icon>
                                         </Button>
                                     </TableCell>
                                 </TableRow>
@@ -442,22 +434,22 @@ class DataTable extends React.Component<DataTableProps> {
                     </TableBody>
                     <TableFooter>
                         <TableRow>
-                            {datasets.length > 0 ? (
-                                    <TablePagination
-                                        rowsPerPageOptions={[5, 10, 25]}
-                                        colSpan={3}
-                                        count={total_count}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        onChangePage={this.handleChangePage}
-                                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                        ActionsComponent={TablePaginationActionsWrapped}
-                                    />
-                                ) :
-                                <TableCell>
-                                    No Files
-                                </TableCell>
-                            }
+                            {/*{datasets.length > 0 ? (*/}
+                            {/*        <TablePagination*/}
+                            {/*            rowsPerPageOptions={[5, 10, 25]}*/}
+                            {/*            colSpan={3}*/}
+                            {/*            count={total_count}*/}
+                            {/*            rowsPerPage={rowsPerPage}*/}
+                            {/*            page={page}*/}
+                            {/*            onChangePage={this.handleChangePage}*/}
+                            {/*            onChangeRowsPerPage={this.handleChangeRowsPerPage}*/}
+                            {/*            ActionsComponent={TablePaginationActionsWrapped}*/}
+                            {/*        />*/}
+                            {/*    ) :*/}
+                            {/*    <TableCell>*/}
+                            {/*        No Files*/}
+                            {/*    </TableCell>*/}
+                            {/*}*/}
                         </TableRow>
                     </TableFooter>
                 </Table>
@@ -466,4 +458,4 @@ class DataTable extends React.Component<DataTableProps> {
     }
 }
 
-export default withStyles(styles)(DataTable);
+export default DataTable;

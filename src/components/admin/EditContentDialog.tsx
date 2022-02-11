@@ -1,21 +1,10 @@
 import * as React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { Theme, WithStyles } from '@material-ui/core';
-import withStyles from '@material-ui/core/styles/withStyles';
-
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import "react-mde/lib/styles/css/react-mde-all.css";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
-// noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles({});
-
-interface EditMarkdownContentDialogProps extends WithStyles<typeof styles> {
+interface EditMarkdownContentDialogProps {
     open: boolean;
     onClose: () => void;
     onSave: (content: string) => void;
@@ -97,4 +86,4 @@ class EditMarkdownContentDialog extends React.Component<EditMarkdownContentDialo
     }
 }
 
-export default withStyles(styles)(EditMarkdownContentDialog);
+export default EditMarkdownContentDialog;

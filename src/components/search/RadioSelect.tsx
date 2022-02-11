@@ -1,20 +1,13 @@
-import { WithStyles } from "@material-ui/core";
-import createStyles from "@material-ui/core/styles/createStyles";
-import Radio from "@material-ui/core/Radio/Radio";
 import * as React from "react";
-import withStyles from "@material-ui/core/styles/withStyles";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { FormControlLabel, Radio } from "@mui/material";
 
-const styles = createStyles({
-    root: {}
-});
 
 export interface RadioItem {
     value: string;
     label: string;
 }
 
-interface RadioSelectProps extends WithStyles<typeof styles> {
+interface RadioSelectProps {
     items: RadioItem[];
 
     onChange: (selectedValue: string) => void;
@@ -58,4 +51,4 @@ class RadioSelect extends React.Component<RadioSelectProps> {
     }
 }
 
-export default withStyles(styles)(RadioSelect)
+export default RadioSelect;

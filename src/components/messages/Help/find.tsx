@@ -1,7 +1,7 @@
-import { Link, List, ListItem, ListItemText, Typography } from "@material-ui/core";
 import * as React from "react";
 
 import SyntaxHighlighter from 'react-syntax-highlighter';
+import { ListItemText, ListItem, Typography, List, Link } from "@mui/material";
 
 function listItem(item: string, descr: string): any {
     return (

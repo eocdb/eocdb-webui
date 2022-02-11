@@ -1,37 +1,28 @@
 import * as React from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { Theme, WithStyles } from '@material-ui/core';
-import withStyles from '@material-ui/core/styles/withStyles';
-
 import 'jsoneditor-react/es/editor.min.css';
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
 
 
-// noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles({
-    dialogContent: {
-        marginLeft: theme.spacing.unit * 4,
-        marginRight: theme.spacing.unit * 4,
-        marginTop: theme.spacing.unit * 4,
-        marginBottom: theme.spacing.unit * 4,
-    },
-    appBar: {
-        position: 'relative',
-    },
-    flex: {
-        flex: 1,
-    },
-    textField: {},
-    button: {},
-    rightIcon: {},
-});
+// // noinspection JSUnusedLocalSymbols
+// const styles = (theme: Theme) => createStyles({
+//     dialogContent: {
+//         marginLeft: theme.spacing.unit * 4,
+//         marginRight: theme.spacing.unit * 4,
+//         marginTop: theme.spacing.unit * 4,
+//         marginBottom: theme.spacing.unit * 4,
+//     },
+//     appBar: {
+//         position: 'relative',
+//     },
+//     flex: {
+//         flex: 1,
+//     },
+//     textField: {},
+//     button: {},
+//     rightIcon: {},
+// });
 
-interface UserRegistrationDialogProps extends WithStyles<typeof styles> {
+interface UserRegistrationDialogProps {
     open: boolean;
 
     onClose?: () => void;
@@ -79,4 +70,4 @@ class UserRegistrationDialog extends React.Component<UserRegistrationDialogProps
     }
 }
 
-export default withStyles(styles)(UserRegistrationDialog);
+export default UserRegistrationDialog;

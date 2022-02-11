@@ -1,15 +1,7 @@
 import * as React from 'react';
-import Typography from '@material-ui/core/Typography/Typography';
-import { Theme, WithStyles } from '@material-ui/core';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { withStyles } from '@material-ui/core/styles';
+import { Typography } from "@mui/material";
 
-// noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles({
-    root: {},
-});
-
-interface HomePanelProps extends WithStyles<typeof styles> {
+interface HomePanelProps {
     show: boolean;
 }
 
@@ -38,4 +30,4 @@ class HomePanel extends React.PureComponent<HomePanelProps> {
 }
 
 
-export default withStyles(styles)(HomePanel);
+export default HomePanel;

@@ -1,29 +1,23 @@
 import * as React from "react";
-
-import { DialogTitle, Theme, WithStyles } from "@material-ui/core";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles from "@material-ui/core/styles/withStyles";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
 
-const styles = (theme: Theme) => createStyles({
-    root: {
-        marginLeft: theme.spacing.unit * 2.5,
-    },
-    select: {},
-    dialogPaper: {
-        minHeight: '30%',
-        maxHeight: '100%',
-        minWidth: '30%',
-        maxWidth: '50%',
-    },
-});
+
+// const styles = (theme: Theme) => createStyles({
+//     root: {
+//         marginLeft: theme.spacing.unit * 2.5,
+//     },
+//     select: {},
+//     dialogPaper: {
+//         minHeight: '30%',
+//         maxHeight: '100%',
+//         minWidth: '30%',
+//         maxWidth: '50%',
+//     },
+// });
 
 
-interface HelpDialogProps extends WithStyles<typeof styles> {
+interface HelpDialogProps {
     open: boolean;
     onClose: () => void;
 
@@ -41,15 +35,15 @@ class HelpDialog extends React.Component<HelpDialogProps> {
     };
 
     render() {
-        const {classes} = this.props;
+        // const {classes} = this.props;
 
         return (
-            <div className={classes.root}>
+            <div>
                 <Dialog
                     open={this.props.open}
                     onClose={this.handleClose}
                     aria-labelledby="form-dialog-title"
-                    classes={{paper: classes.dialogPaper}}
+                    // classes={{paper: classes.dialogPaper}}
                 >
                     <DialogTitle id="form-dialog-title">{this.props.title}</DialogTitle>
                     <DialogContent>
@@ -67,4 +61,4 @@ class HelpDialog extends React.Component<HelpDialogProps> {
 }
 
 
-export default withStyles(styles)(HelpDialog);
+export default HelpDialog;

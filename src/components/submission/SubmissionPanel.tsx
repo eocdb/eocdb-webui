@@ -1,15 +1,11 @@
 import * as React from 'react';
-import { Theme, WithStyles } from '@material-ui/core';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { withStyles } from '@material-ui/core/styles';
 import SubmissionTable from "./SubmissionTable";
 import { Submission } from 'src/model';
-import { SubmissionFile } from "../../model/SubmissionFile";
+import { SubmissionFile, User } from "../../model";
 import SubmissionFilesTable from "./SubmissionFilesTable";
 import SubmissionDialog from "./SubmissionDialog";
 import SubmissionIssueDialog from "./SubmissionIssueDialog";
 import YesNoAlert from "./YesNoAlert";
-import { User } from "../../model/User";
 import SingleFileUpload from "./SingleFileUpload";
 import { SingleUpload } from "../../model/UploadData";
 import { MessageLogEntry, MessageType } from "../../states/messageLogState";
@@ -17,12 +13,12 @@ import SubmissionMetaDialog from "./SubmissionMetaDialog";
 
 
 // noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles({
-    root: {},
-});
+// const styles = (theme: Theme) => createStyles({
+//     root: {},
+// });
 
 
-interface SubmissionPanelProps extends WithStyles<typeof styles> {
+interface SubmissionPanelProps {
     show: boolean;
 
     submissionDialogOpen: boolean;
@@ -287,7 +283,8 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
             return null;
         }
         return (
-            <div className={this.props.classes.root}>
+            // <div className={this.props.classes.root}>
+            <div>
                 <SubmissionDialog
                     show={this.props.submissionDialogOpen}
                     onClose={this.props.closeSubmissionDialog}
@@ -375,15 +372,15 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                 >
                     Do you really want to delete the Submission File: {this.props.selectedSubmissionFile.filename}?
                 </YesNoAlert>
-                <YesNoAlert
-                    open={this.props.deleteSubmissionAlertOpen}
-                    onClose={this.handleDeleteSubmissionAlertCancel}
-                    onAgree={this.handleDeleteSubmissionAlertAgree}
+                {/*<YesNoAlert*/}
+                {/*    open={this.props.deleteSubmissionAlertOpen}*/}
+                {/*    onClose={this.handleDeleteSubmissionAlertCancel}*/}
+                {/*    onAgree={this.handleDeleteSubmissionAlertAgree}*/}
 
-                    value={this.props.selectedSubmission}
-                >
-                    Do you really want to delete the Submission: {this.props.selectedSubmission.submission_id}?
-                </YesNoAlert>
+                {/*    value={this.props.selectedSubmission}*/}
+                {/*>*/}
+                {/*    Do you really want to delete the Submission: {this.props.selectedSubmission.submission_id}?*/}
+                {/*</YesNoAlert>*/}
                 <SingleFileUpload
                     label={'Upload'}
                     onCancel={this.handleOploadSubmissionFileDialogOnCancel}
@@ -425,4 +422,4 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
     }
 }
 
-export default withStyles(styles)(SubmissionPanel);
+export default SubmissionPanel;

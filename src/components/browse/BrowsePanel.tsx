@@ -1,16 +1,9 @@
 import * as React from 'react';
-import Typography from '@material-ui/core/Typography/Typography';
-import { Theme, WithStyles } from '@material-ui/core';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { withStyles } from '@material-ui/core/styles';
+import { Typography } from "@mui/material";
 
 // noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles(
-    {
-        title: {},
-    });
 
-interface BrowsePanelProps extends WithStyles<typeof styles> {
+interface BrowsePanelProps {
     classes: any;
     show: boolean;
 }
@@ -25,7 +18,6 @@ class BrowsePanel extends React.PureComponent<BrowsePanelProps> {
             return null;
         }
 
-        const {classes} = this.props;
         return (
             <div>
                 <Typography
@@ -33,7 +25,7 @@ class BrowsePanel extends React.PureComponent<BrowsePanelProps> {
                     variant="h5"
                     color="inherit"
                     noWrap
-                    className={classes.title}
+                    // className={classes.title}
                 >
                     BROWSE
                 </Typography>
@@ -42,4 +34,4 @@ class BrowsePanel extends React.PureComponent<BrowsePanelProps> {
     }
 }
 
-export default withStyles(styles)(BrowsePanel);
+export default BrowsePanel;

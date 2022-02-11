@@ -1,54 +1,45 @@
 import * as React from "react";
-import { Theme, withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import Slide, { SlideProps } from '@material-ui/core/Slide';
 
-import createStyles from "@material-ui/core/styles/createStyles";
-import { WithStyles } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid/Grid";
-import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import { wavelengthItems } from "./SelectItems";
 import MinMaxInputSlider from "./MinMaxInputSlider";
 import RadioSelect, { RadioItem } from "./RadioSelect";
 import MultipleSelectTextField, { Suggestion } from "./MultipleSelectTextField";
-import Typography from "@material-ui/core/Typography";
 import { SliderRange } from "../../types/advancedSearchDialog";
 import { Product } from "../../model";
+import { Button, Dialog, DialogActions, DialogTitle, Grid, Slide, SlideProps, Typography } from "@mui/material";
 
 
-const styles = (theme: Theme) => createStyles({
-    dialogContent: {
-        marginLeft: theme.spacing.unit * 4,
-        marginRight: theme.spacing.unit * 4,
-        marginTop: theme.spacing.unit * 4,
-        marginBottom: theme.spacing.unit * 4,
-    },
-    appBar: {
-        position: 'relative',
-    },
-    flex: {
-        flex: 1,
-    },
-    searchField: {
-        width: 200,
-        marginRight: theme.spacing.unit / 2,
-    },
-    textField: {},
-    button: {},
-    rightIcon: {},
-    tableContainer: {},
-});
+// const styles = (theme: Theme) => createStyles({
+//     dialogContent: {
+//         marginLeft: theme.spacing.unit * 4,
+//         marginRight: theme.spacing.unit * 4,
+//         marginTop: theme.spacing.unit * 4,
+//         marginBottom: theme.spacing.unit * 4,
+//     },
+//     appBar: {
+//         position: 'relative',
+//     },
+//     flex: {
+//         flex: 1,
+//     },
+//     searchField: {
+//         width: 200,
+//         marginRight: theme.spacing.unit / 2,
+//     },
+//     textField: {},
+//     button: {},
+//     rightIcon: {},
+//     tableContainer: {},
+// });
 
 
 
 function Transition(props: SlideProps) {
-    return <Slide direction="up" {...props} />;
+    return <Slide direction="up" {...props} >..</Slide>;
 }
 
 
-export interface AdvancedSearchDialogProps extends WithStyles<typeof styles> {
+export interface AdvancedSearchDialogProps {
     open: boolean;
     onClose: () => void;
 
@@ -123,7 +114,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
     };
 
     render() {
-        const {classes, wavelengthValue} = this.props;
+        const {wavelengthValue} = this.props;
 
         return (
             <Dialog
@@ -131,9 +122,10 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                 onClose={this.props.onClose}
                 TransitionComponent={Transition}
             >
-                <div className={classes.dialogContent}>
+                {/*<div className={classes.dialogContent}>*/}
+                <div>
                     <DialogTitle id="form-dialog-title">Advanced Search</DialogTitle>
-                    <Grid spacing={32} container direction={'row'} justify={'flex-start'} alignItems={"flex-start"}>
+                    <Grid spacing={32} container>
                         <Grid item xs={12}>
                             <Typography component={'h2'}>Wavelength options</Typography>
                             <RadioSelect items={wavelengthItems}
@@ -169,7 +161,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                         </Grid>
                     </Grid>
 
-                    <DialogActions className={classes.appBar}>
+                    <DialogActions>
                         <Button onClick={this.props.onClose}
                                 aria-label="Close"
                                 variant="contained"
@@ -192,5 +184,5 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
 }
 
 
-export default withStyles(styles)(AdvancedSearchDialog);
+export default AdvancedSearchDialog;
 

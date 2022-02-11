@@ -1,17 +1,5 @@
 import * as React from 'react';
-import classNames from 'classnames';
-import { Theme, withStyles, WithStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import createStyles from '@material-ui/core/styles/createStyles';
+// import classNames from 'classnames';
 
 import DrawerItems from './DrawerItems';
 import DashPanels from './DashPanels';
@@ -22,98 +10,108 @@ import { User } from "../model";
 import partnerLogos from "../resources/logos.png"
 import { SearchHistoryItem } from "../types/dataset";
 import { DatasetQuery } from "../api/findDatasets";
-import Help from "@material-ui/icons/Help";
 import UserRegistrationDialog from "./user/UserRegistrationDialog";
 import ChangeLoginUserDialog from "./user/changeLoginUserDialog";
+import {
+    AppBar,
+    CssBaseline, Divider,
+    Drawer,
+    IconButton,
+    Toolbar,
+    Typography
+} from "@mui/material";
+
+import { Menu, AccountCircle, Help, ChevronLeft } from "@mui/icons-material";
 
 
-const drawerWidth = 240;
+// const drawerWidth = 240;
 
-const styles = (theme: Theme) => createStyles(
-    {
-        root: {
-            display: 'flex',
-        },
-        toolbar: {
-            paddingRight: 24, // keep right padding when drawer closed
-        },
-        toolbarIcon: {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            padding: '0 8px',
-            ...theme.mixins.toolbar,
-        },
-        appBar: {
-            zIndex: theme.zIndex.drawer + 1,
-            transition: theme.transitions.create(['width', 'margin'], {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen,
-            }),
-        },
-        appBarShift: {
-            marginLeft: drawerWidth,
-            width: `calc(100% - ${drawerWidth}px)`,
-            transition: theme.transitions.create(['width', 'margin'], {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-        },
-        menuButton: {
-            marginLeft: 12,
-            marginRight: 36,
-        },
-        hidden: {
-            display: 'none',
-        },
-        title: {
-            flexGrow: 1,
-        },
-        drawerPaper: {
-            position: 'relative',
-            whiteSpace: 'nowrap',
-            width: drawerWidth,
-            transition: theme.transitions.create('width', {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-        },
-        drawerPaperClose: {
-            overflowX: 'hidden',
-            transition: theme.transitions.create('width', {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen,
-            }),
-            width: theme.spacing.unit * 7,
-            [theme.breakpoints.up('sm')]: {
-                width: theme.spacing.unit * 9,
-            },
-        },
-        appBarSpacer: theme.mixins.toolbar,
-        content: {
-            flexGrow: 1,
-            padding: theme.spacing.unit * 3,
-            height: '100vh',
-            overflow: 'auto',
-        },
-        chartContainer: {
-            marginLeft: -22,
-        },
-        tableContainer: {
-            height: 320,
-        },
-        h5: {
-            marginBottom: theme.spacing.unit * 2,
-        },
-        searchField: {
-            width: '50%',
-        },
-        logo: {
-            marginRight: theme.spacing.unit * 2,
-        }
-    });
 
-interface DashboardProps extends WithStyles<typeof styles> {
+// const styles = (theme: Theme) => createStyles(
+//     {
+//         root: {
+//             display: 'flex',
+//         },
+//         toolbar: {
+//             paddingRight: 24, // keep right padding when drawer closed
+//         },
+//         toolbarIcon: {
+//             display: 'flex',
+//             alignItems: 'center',
+//             justifyContent: 'flex-end',
+//             padding: '0 8px',
+//             ...theme.mixins.toolbar,
+//         },
+//         appBar: {
+//             zIndex: theme.zIndex.drawer + 1,
+//             transition: theme.transitions.create(['width', 'margin'], {
+//                 easing: theme.transitions.easing.sharp,
+//                 duration: theme.transitions.duration.leavingScreen,
+//             }),
+//         },
+//         appBarShift: {
+//             marginLeft: drawerWidth,
+//             width: `calc(100% - ${drawerWidth}px)`,
+//             transition: theme.transitions.create(['width', 'margin'], {
+//                 easing: theme.transitions.easing.sharp,
+//                 duration: theme.transitions.duration.enteringScreen,
+//             }),
+//         },
+//         menuButton: {
+//             marginLeft: 12,
+//             marginRight: 36,
+//         },
+//         hidden: {
+//             display: 'none',
+//         },
+//         title: {
+//             flexGrow: 1,
+//         },
+//         drawerPaper: {
+//             position: 'relative',
+//             whiteSpace: 'nowrap',
+//             width: drawerWidth,
+//             transition: theme.transitions.create('width', {
+//                 easing: theme.transitions.easing.sharp,
+//                 duration: theme.transitions.duration.enteringScreen,
+//             }),
+//         },
+//         drawerPaperClose: {
+//             overflowX: 'hidden',
+//             transition: theme.transitions.create('width', {
+//                 easing: theme.transitions.easing.sharp,
+//                 duration: theme.transitions.duration.leavingScreen,
+//             }),
+//             width: theme.spacing.unit * 7,
+//             [theme.breakpoints.up('sm')]: {
+//                 width: theme.spacing.unit * 9,
+//             },
+//         },
+//         appBarSpacer: theme.mixins.toolbar,
+//         content: {
+//             flexGrow: 1,
+//             padding: theme.spacing.unit * 3,
+//             height: '100vh',
+//             overflow: 'auto',
+//         },
+//         chartContainer: {
+//             marginLeft: -22,
+//         },
+//         tableContainer: {
+//             height: 320,
+//         },
+//         h5: {
+//             marginBottom: theme.spacing.unit * 2,
+//         },
+//         searchField: {
+//             width: '50%',
+//         },
+//         logo: {
+//             marginRight: theme.spacing.unit * 2,
+//         }
+//     });
+
+interface DashboardProps {
     currentDrawer: string;
     changeDrawer: (currentDrawer: string) => void;
 
@@ -212,10 +210,9 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     };
 
     render() {
-        const {classes} = this.props;
-
         return (
-            <div className={classes.root}>
+            // <div className={classes.root}>
+            <div>
                 <CssBaseline/>
                 <LoginDialog
                     open={this.props.loginDialogOpen}
@@ -246,26 +243,28 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                 />
                 <AppBar
                     position="absolute"
-                    className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
+                    // className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
                 >
-                    <Toolbar disableGutters={!this.state.open} className={classes.toolbar}>
+                    <Toolbar disableGutters={!this.state.open}>
+                        {/*className={classes.toolbar}>*/}
+
                         <IconButton
                             color="inherit"
                             aria-label="Open drawer"
                             onClick={this.handleDrawerOpen}
-                            className={classNames(
-                                classes.menuButton,
-                                this.state.open && classes.hidden,
-                            )}
+                            // className={classNames(
+                            //     classes.menuButton,
+                            //     this.state.open && classes.hidden,
+                            // )}
                         >
-                            <MenuIcon/>
+                            <Menu/>
                         </IconButton>
                         <Typography
                             component="h1"
                             variant="h5"
                             color="inherit"
                             noWrap
-                            className={classes.title}
+                            // className={classes.title}
                         >
                             Ocean Colour In-Situ Database
                         </Typography>
@@ -275,44 +274,46 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             variant="h5"
                             color="error"
                             noWrap
-                            className={classes.title}
+                            // className={classes.title}
                         >
                             {process.env.REACT_APP_MODE == 'dev' || process.env.REACT_APP_MODE == 'stage'
                                 ? process.env.REACT_APP_MODE
                                 : ''}
                         </Typography>
 
-                        <img alt={'OCDB Logo'} src={partnerLogos} width={300} className={classes.logo}/>
+                        {/*<img alt={'OCDB Logo'} src={partnerLogos} width={300} className={classes.logo}/>*/}
+                        <img alt={'OCDB Logo'} src={partnerLogos} width={300} />
 
                         <IconButton color="inherit"
                                     target={'_blank'}
                                     href={'https://ocdb.readthedocs.io'}
                         >
-                            <Help/>
+                            <Help />
                         </IconButton>
                         <IconButton color="inherit" onClick={this.props.openLoginDialog}>
-                            <AccountCircle/>
+                            <AccountCircle />
                         </IconButton>
                     </Toolbar>
                 </AppBar>
                 <Drawer
                     variant="permanent"
-                    classes={{
-                        paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
-                    }}
+                    // classes={{
+                    //     paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
+                    // }}
                     open={this.state.open}
                 >
-                    <div className={classes.toolbarIcon}>
+                    {/*<div className={classes.toolbarIcon}>*/}
+                    <div>
                         <IconButton onClick={this.handleDrawerClose}>
-                            <ChevronLeftIcon/>
+                            <ChevronLeft />
                         </IconButton>
                     </div>
-                    <Divider/>
+                    <Divider />
                     <DrawerItems updateSubmissions={this.props.updateSubmissions}
                                  getMatchupFiles={this.props.getMatchupFiles}
                                  user={this.props.user}
                                  handleClick={this.handleDrawerChanged}/>
-                    <Divider/>
+                    <Divider />
 
                     <SearchHistory
                         searchHistory={this.props.searchHistory}
@@ -320,8 +321,9 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         onSearchHistoryItemDelete={this.handleDeleteHistoryItem}
                     />
                 </Drawer>
-                <main className={classes.content}>
-                    <div className={classes.appBarSpacer}/>
+                {/*<main className={classes.content}>*/}
+                <main>
+                    {/*<div className={classes.appBarSpacer}/>*/}
                     <DashPanels user={this.props.user}
                                 searchHistory={this.props.searchHistory}
                                 currentDrawer={this.props.currentDrawer}/>
@@ -331,4 +333,4 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     }
 }
 
-export default withStyles(styles)(Dashboard);
+export default Dashboard;

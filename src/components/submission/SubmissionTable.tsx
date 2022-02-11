@@ -1,22 +1,20 @@
 import * as React from "react";
-import { TableSortLabel, Theme, Tooltip, WithStyles } from "@material-ui/core";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles from "@material-ui/core/styles/withStyles";
-import TableHead from "@material-ui/core/TableHead/TableHead";
-import Table from "@material-ui/core/Table/Table";
-import TableCell from "@material-ui/core/TableCell/TableCell";
-import TableRow from "@material-ui/core/TableRow/TableRow";
-import Paper from "@material-ui/core/Paper/Paper";
-import Button from "@material-ui/core/Button/Button";
-import { CloudUpload } from "@material-ui/icons";
-import Grid from "@material-ui/core/Grid";
-import TableBody from "@material-ui/core/TableBody";
-import Icon from '@material-ui/core/Icon/Icon';
-import Chip from "@material-ui/core/Chip";
-
-import { Submission } from "../../model";
-import { User } from "../../model/User";
-import { blue, green, orange, red } from "@material-ui/core/colors";
+import { User, Submission } from "../../model";
+import {
+    TableHead,
+    TableCell,
+    Tooltip,
+    TableSortLabel,
+    Paper,
+    Grid,
+    Button,
+    Table,
+    TableBody,
+    TableRow,
+    Icon, Chip
+} from "@mui/material";
+import { blue, green, orange, red } from "@mui/material/colors";
+import { CloudUpload } from "@mui/icons-material";
 
 
 function desc(a: any, b: any, orderBy: any) {
@@ -115,29 +113,29 @@ class EnhancedTableHead extends React.Component<EnhancedTableHeadProps> {
 }
 
 
-const styles = (theme: Theme) => createStyles(
-    {
-        root: {
-            width: '100%',
-            overflowX: 'auto',
-        },
-        table: {
-            minWidth: 700,
-        },
-        rightIcon: {},
-        fab: {
-            margin: theme.spacing.unit * 2,
-        },
-        button: {
-            margin: theme.spacing.unit / 2,
-        },
-        link: {
-            fontcolor: "black"
-        },
-    });
+// const styles = (theme: Theme) => createStyles(
+//     {
+//         root: {
+//             width: '100%',
+//             overflowX: 'auto',
+//         },
+//         table: {
+//             minWidth: 700,
+//         },
+//         rightIcon: {},
+//         fab: {
+//             margin: theme.spacing.unit * 2,
+//         },
+//         button: {
+//             margin: theme.spacing.unit / 2,
+//         },
+//         link: {
+//             fontcolor: "black"
+//         },
+//     });
 
 
-interface SubmissionTableProps extends WithStyles<typeof styles> {
+interface SubmissionTableProps {
     show: boolean;
 
     onSubmissionDialogOpen: () => void;
@@ -218,7 +216,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
         }
 
         const {order, orderBy} = this.state;
-        const {classes, submissionsValue} = this.props;
+        const {submissionsValue} = this.props;
 
         const user = this.props.user === null ? undefined : this.props.user;
 
@@ -227,18 +225,18 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
 
         return (
             <div>
-                <Paper className={classes.root}>
-                    <Grid container justify={"flex-end"}>
+                <Paper>
+                    <Grid container>
                         <Button variant="contained"
                                 color="secondary"
-                                className={classes.button}
+                                // className={classes.button}
                                 onClick={this.props.onSubmissionDialogOpen}
                         >
                             New Submission
                             <CloudUpload/>
                         </Button>
                     </Grid>
-                    <Table className={classes.table}>
+                    <Table>
                         <EnhancedTableHead onRequestSort={this.handleRequestSort} order={order} orderBy={orderBy}/>
                         <TableBody>
                             {stableSort(submissionsValue, getSorting(order, orderBy)).map((row: Submission) => {
@@ -268,10 +266,8 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                         </TableCell>
                                         <TableCell>
                                             {row.allow_publication ?
-                                                <Icon style={{color: green.A400}}
-                                                      className={classes.rightIcon}>done</Icon> :
-                                                <Icon style={{color: red.A400}}
-                                                      className={classes.rightIcon}>pan_tool</Icon>
+                                                <Icon style={{color: green.A400}}>done</Icon> :
+                                                <Icon style={{color: red.A400}}>pan_tool</Icon>
                                             }
                                         </TableCell>
                                         <TableCell>
@@ -289,7 +285,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                         )}
                                                         disabled={!isAdmin && !isSubmitter}
                                                     >
-                                                        <Icon className={classes.rightIcon}>edit</Icon>
+                                                        <Icon>edit</Icon>
                                                     </Button>
                                                 </span>
                                             </Tooltip>
@@ -299,7 +295,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                         row.submission_id
                                                     )}
                                                 >
-                                                    <Icon className={classes.rightIcon}>list</Icon>
+                                                    <Icon>list</Icon>
                                                 </Button>
                                             </Tooltip>
                                             {row.status === 'PAUSED' || row.status === 'CANCELED' ?
@@ -309,7 +305,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                             row
                                                         )}
                                                     >
-                                                        <Icon className={classes.rightIcon}>play_arrow</Icon>
+                                                        <Icon>play_arrow</Icon>
 
                                                     </Button>
                                                 </Tooltip>
@@ -320,7 +316,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                             row.submission_id
                                                         )}
                                                     >
-                                                        <Icon className={classes.rightIcon}>pause</Icon>
+                                                        <Icon>pause</Icon>
                                                     </Button>
                                                 </Tooltip>
                                             }
@@ -332,7 +328,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                         )}
                                                         disabled={!isAdmin}
                                                     >
-                                                        <Icon className={classes.rightIcon}>power_settings_new</Icon>
+                                                        <Icon>power_settings_new</Icon>
                                                     </Button>
                                                 </span>
                                             </Tooltip>
@@ -344,7 +340,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                         )}
                                                         disabled={!isAdmin}
                                                     >
-                                                        <Icon className={classes.rightIcon}>delete</Icon>
+                                                        <Icon>delete</Icon>
                                                     </Button>
                                                 </span>
                                             </Tooltip>
@@ -356,7 +352,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                         )}
                                                         disabled={!isAdmin}
                                                     >
-                                                        <Icon className={classes.rightIcon}>input</Icon>
+                                                        <Icon>input</Icon>
                                                     </Button>
                                                 </span>
                                             </Tooltip>
@@ -369,7 +365,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                         )}
                                                         disabled={!isAdmin}
                                                     >
-                                                        <Icon className={classes.rightIcon}>publish</Icon>
+                                                        <Icon>publish</Icon>
                                                     </Button>
                                                 </span>
                                             </Tooltip>
@@ -386,4 +382,4 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
 }
 
 
-export default withStyles(styles)(SubmissionTable);
+export default SubmissionTable;

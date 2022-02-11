@@ -1,17 +1,8 @@
 import * as React from 'react';
 import { DropzoneArea } from 'material-ui-dropzone';
-import { Theme, WithStyles } from "@material-ui/core";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles from "@material-ui/core/styles/withStyles";
 
 
-// noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles({
-    root: {}
-});
-
-
-interface FileUploadProps extends WithStyles<typeof styles> {
+interface FileUploadProps {
     label: string;
     onChange: (acceptedFiles: File[]) => void;
     files: File[];
@@ -49,4 +40,4 @@ class FileUpload extends React.Component<FileUploadProps> {
     }
 }
 
-export default withStyles(styles)(FileUpload)
+export default FileUpload;

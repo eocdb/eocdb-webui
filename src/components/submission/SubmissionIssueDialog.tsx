@@ -1,42 +1,42 @@
 import * as React from "react";
-import { Theme, withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import Slide, { SlideProps } from '@material-ui/core/Slide';
 
-import createStyles from "@material-ui/core/styles/createStyles";
-import { WithStyles } from "@material-ui/core";
-import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import { DatasetIssue, SubmissionFile } from "../../model";
-import DialogContent from "@material-ui/core/DialogContent";
-import Typography from "@material-ui/core/Typography/Typography";
+import {
+    SlideProps,
+    Slide,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    Typography,
+    DialogActions,
+    Button
+} from "@mui/material";
 
 
 // noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles({
-    appBar: {
-        position: 'relative',
-    },
-    flex: {
-        flex: 1,
-    },
-    searchField: {
-        width: 300,
-    },
-    textField: {},
-    button: {},
-    rightIcon: {},
-    tableContainer: {},
-});
+// const styles = (theme: Theme) => createStyles({
+//     appBar: {
+//         position: 'relative',
+//     },
+//     flex: {
+//         flex: 1,
+//     },
+//     searchField: {
+//         width: 300,
+//     },
+//     textField: {},
+//     button: {},
+//     rightIcon: {},
+//     tableContainer: {},
+// });
 
 
 function Transition(props: SlideProps) {
-    return <Slide direction="up" {...props} />;
+    return <Slide direction="up" {...props} ></Slide>;
 }
 
 
-export interface SubmissionIssueDialogProps extends WithStyles<typeof styles> {
+export interface SubmissionIssueDialogProps {
     open: boolean;
     onClose: () => void;
 
@@ -50,7 +50,7 @@ class SubmissionIssueDialog extends React.Component<SubmissionIssueDialogProps> 
     }
 
     render() {
-        const {classes, submissionFileValue} = this.props;
+        const {submissionFileValue} = this.props;
 
         let issues:DatasetIssue[] = [];
         let fileName = 'unknown';
@@ -80,7 +80,7 @@ class SubmissionIssueDialog extends React.Component<SubmissionIssueDialogProps> 
                             })
                         }
                     </DialogContent>
-                    <DialogActions className={classes.appBar}>
+                    <DialogActions>
                         <Button onClick={this.props.onClose} color="primary">
                             Close
                         </Button>
@@ -91,5 +91,5 @@ class SubmissionIssueDialog extends React.Component<SubmissionIssueDialogProps> 
     }
 }
 
-export default withStyles(styles)(SubmissionIssueDialog);
+export default SubmissionIssueDialog;
 

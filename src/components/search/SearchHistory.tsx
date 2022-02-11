@@ -1,27 +1,21 @@
 import * as React from "react";
-import { Button, Theme, Tooltip, withStyles, WithStyles } from "@material-ui/core";
-import createStyles from "@material-ui/core/styles/createStyles";
-//import ListSubheader from "@material-ui/core/ListSubheader/ListSubheader";
-import ListItem from "@material-ui/core/ListItem/ListItem";
-import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import { SearchHistoryItem } from "../../types/dataset";
-import List from "@material-ui/core/List/List";
-import Delete from "@material-ui/icons/Delete";
-import Code from "@material-ui/icons/Code";
 import APICodeDialog from "./ApiCodeDialog";
 import { collectComponents, DatasetQuery } from "../../api/findDatasets";
 import { QueryComponent } from "../../api/callApi";
+import { Button, List, ListItem, ListItemText, Tooltip } from "@mui/material";
+import { Code, Delete } from "@mui/icons-material";
 
 
 // noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles({
-    root: {
-        display: 'flex',
-    },
-    rightIcon: {
-        width: "10pt"
-    }
-});
+// const styles = (theme: Theme) => createStyles({
+//     root: {
+//         display: 'flex',
+//     },
+//     rightIcon: {
+//         width: "10pt"
+//     }
+// });
 
 
 export function makeFunctionCall(url: string, queryComponents?: QueryComponent[]) {
@@ -35,7 +29,7 @@ export function makeFunctionCall(url: string, queryComponents?: QueryComponent[]
     return '';
 }
 
-interface SearchHistoryProps extends WithStyles<typeof styles> {
+interface SearchHistoryProps {
     searchHistory: SearchHistoryItem[];
 
     onSearchHistoryItemClick: (selectedSearchHistory: SearchHistoryItem) => void;
@@ -84,7 +78,7 @@ class SearchHistory extends React.PureComponent<SearchHistoryProps, SearchHistor
                             <ListItem button key={item.key}>
                                 <Button
                                     onClick={() => this.handleApiCodeOpen(item.query)}
-                                    className={this.props.classes.rightIcon}
+                                    // className={this.props.classes.rightIcon}
                                     style={{marginLeft: '1pt', paddingLeft: '1pt', paddingRight: '1pt'}}
                                 >
                                     <Code/>
@@ -96,7 +90,7 @@ class SearchHistory extends React.PureComponent<SearchHistoryProps, SearchHistor
                                 <Tooltip title="Delete History Item" aria-label="DeleteHistoryItem">
                                     <Button
                                         onClick={() => this.props.onSearchHistoryItemDelete(item)}
-                                        className={this.props.classes.rightIcon}
+                                        // className={this.props.classes.rightIcon}
                                     >
                                         <Delete/>
                                     </Button>
@@ -111,5 +105,5 @@ class SearchHistory extends React.PureComponent<SearchHistoryProps, SearchHistor
     }
 }
 
-export default withStyles(styles)(SearchHistory);
+export default SearchHistory;
 

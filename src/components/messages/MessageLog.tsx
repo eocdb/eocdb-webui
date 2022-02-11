@@ -1,14 +1,10 @@
 import * as React from 'react';
-import Snackbar from '@material-ui/core/Snackbar';
-import { Theme, WithStyles, withStyles } from '@material-ui/core/styles';
 import { MessageLogEntry } from '../../states/messageLogState';
-import createStyles from '@material-ui/core/styles/createStyles';
 import MessageLogContent from './MessageLogContent';
+import { Snackbar } from "@mui/material";
 
-// noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles({});
 
-interface MessageLogProps extends WithStyles<typeof styles> {
+interface MessageLogProps {
     messages: MessageLogEntry[];
     hideMessage: (messageId: number) => void;
 }
@@ -41,4 +37,4 @@ class MessageLog extends React.Component<MessageLogProps> {
     }
 }
 
-export default withStyles(styles)(MessageLog);
+export default MessageLog;

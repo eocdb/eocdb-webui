@@ -1,29 +1,23 @@
 import * as React from "react";
-import { Theme, WithStyles } from "@material-ui/core";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles from "@material-ui/core/styles/withStyles";
-import MenuItem from "@material-ui/core/MenuItem/MenuItem";
-import Select from "@material-ui/core/Select/Select";
-import FormControl from "@material-ui/core/FormControl/FormControl";
 import { SelectItem } from "./SelectItems";
-import InputLabel from "@material-ui/core/InputLabel";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 
-const styles = (theme: Theme) => createStyles({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    formControl: {
-        margin: theme.spacing.unit,
-        minWidth: 120,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing.unit * 2,
-    },
-});
+// const styles = (theme: Theme) => createStyles({
+//     root: {
+//         display: 'flex',
+//         flexWrap: 'wrap',
+//     },
+//     formControl: {
+//         margin: theme.spacing.unit,
+//         minWidth: 120,
+//     },
+//     selectEmpty: {
+//         marginTop: theme.spacing.unit * 2,
+//     },
+// });
 
-interface SimpleSelectProps extends WithStyles<typeof styles> {
+interface SimpleSelectProps {
     name: string;
     selectedItem: string;
     items: SelectItem[];
@@ -40,14 +34,13 @@ class SimpleSelect extends React.Component<SimpleSelectProps> {
     };
 
     render() {
-        const { classes } = this.props;
         return (
-            <FormControl className={classes.formControl}>
+            <FormControl>
                 <InputLabel htmlFor={this.props.name.toLocaleLowerCase()}>{this.props.name.toLocaleLowerCase()}</InputLabel>
                 <Select
                     value={this.props.selectedItem}
                     name={this.props.name}
-                    onChange={this.handleOnChange}
+                    // onChange={this.handleOnChange}
                     inputProps={{
                         name: this.props.name,
                         id: this.props.name.toLocaleLowerCase(),
@@ -68,4 +61,4 @@ class SimpleSelect extends React.Component<SimpleSelectProps> {
 
 
 
-export default withStyles(styles)(SimpleSelect)
+export default SimpleSelect;

@@ -1,22 +1,11 @@
 import * as React from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Search from '@material-ui/icons/Search';
-import SettingsApplications from '@material-ui/icons/SettingsApplications';
-import CloudUpload from '@material-ui/icons/CloudUpload';
-import Link from '@material-ui/icons/Link';
-import List from '@material-ui/core/List/List';
-import { Theme, WithStyles } from '@material-ui/core';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { withStyles } from '@material-ui/core/styles';
 import { User } from "../model";
-import AttachFile from "@material-ui/icons/AttachFile";
+import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { AttachFile, CloudUpload, Link, Search, SettingsApplications } from "@mui/icons-material";
 
 // noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles({});
 
-interface DrawerItemsProps extends WithStyles<typeof styles> {
+interface DrawerItemsProps {
     handleClick: (currentDrawer: string) => void;
     updateSubmissions: () => void;
     getMatchupFiles: () => void;
@@ -108,4 +97,4 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
 
 }
 
-export default withStyles(styles)(DrawerItems);
+export default DrawerItems;

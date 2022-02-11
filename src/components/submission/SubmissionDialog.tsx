@@ -1,43 +1,37 @@
-import { Checkbox, FormControlLabel, Icon, IconButton, Theme, WithStyles } from "@material-ui/core";
-import createStyles from "@material-ui/core/styles/createStyles";
+import { Checkbox, FormControlLabel, TextField, Icon, IconButton, Button, Grid } from "@mui/material";
 import * as React from "react";
-import withStyles from "@material-ui/core/styles/withStyles";
 import FileUpload from "./FileUpload";
-import TextField from "@material-ui/core/TextField";
-import * as classNames from "classnames";
-import { CloudUpload } from "@material-ui/icons";
-import Button from "@material-ui/core/Button/Button";
-import Grid from "@material-ui/core/Grid";
-import { DatePicker } from "material-ui-pickers";
+import { CloudUpload } from "@mui/icons-material";
+import { DatePicker } from "@mui/lab";
 import HelpDialog from "../messages/HelpDialog";
 import SubmissionHelpText from "../messages/Help/submission";
 import { MessageLogEntry } from "../../states/messageLogState";
 import MessageLog from "../messages/MessageLog";
 
 
-const styles = (theme: Theme) => createStyles({
-    root: {
-        width: '100%',
-    },
-    button: {
-        marginRight: theme.spacing.unit,
-    },
-    textField: {
-        width: 200,
-        marginTop: theme.spacing.unit / 2,
-        marginRight: theme.spacing.unit / 2,
-    },
-    dense: {
-        marginTop: 16,
-    },
-    instructions: {
-        marginTop: theme.spacing.unit,
-        marginBottom: theme.spacing.unit,
-    },
-});
+// const styles = (theme: Theme) => createStyles({
+//     root: {
+//         width: '100%',
+//     },
+//     button: {
+//         marginRight: theme.spacing.unit,
+//     },
+//     textField: {
+//         width: 200,
+//         marginTop: theme.spacing.unit / 2,
+//         marginRight: theme.spacing.unit / 2,
+//     },
+//     dense: {
+//         marginTop: 16,
+//     },
+//     instructions: {
+//         marginTop: theme.spacing.unit,
+//         marginBottom: theme.spacing.unit,
+//     },
+// });
 
 
-interface SubmissionDialogProps extends WithStyles<typeof styles> {
+interface SubmissionDialogProps {
     show: boolean;
     onClose: () => void;
 
@@ -116,11 +110,9 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
             return null;
         }
 
-        const {classes} = this.props;
-
         return (
-            <div className={classes.root}>
-                <Grid container justify={"flex-end"}>
+            <div>
+                <Grid container>
                     <IconButton
                         onClick={this.props.openHelpDialog}
                     >
@@ -130,7 +122,7 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                     </IconButton>
                     <Button variant="contained"
                             color="secondary"
-                            className={classes.button}
+                            // className={classes.button}
                             onClick={this.handleFileSubmit}
                     >
                         Submit
@@ -138,7 +130,7 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                     </Button>
                     <Button variant="contained"
                             color="secondary"
-                            className={classes.button}
+                            // className={classes.button}
                             onClick={this.props.onClearForm}
                     >
                         Clear
@@ -158,13 +150,13 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                         {SubmissionHelpText}
                     </HelpDialog>
                 </Grid>
-                <Grid container justify={"flex-start"} spacing={16} direction={"column"}>
+                <Grid container spacing={16}>
                     <Grid item>
                         <TextField
                             required
                             id="outlined-dense"
                             label="Submission Label"
-                            className={classNames(classes.textField)}
+                            // className={classNames(classes.textField)}
                             margin="dense"
                             variant="outlined"
                             onChange={this.handleSubmissionIdChange}
@@ -176,7 +168,7 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                             required
                             id="submission-path"
                             label="Submission Path"
-                            className={classNames(classes.textField)}
+                            // className={classNames(classes.textField)}
                             margin="dense"
                             variant="outlined"
                             onChange={this.handleOnPathChange}
@@ -185,16 +177,9 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                     </Grid>
                     <Grid item>
                         <DatePicker
-                            keyboard
-                            clearable
-                            variant={"outlined"}
-                            label={'Publication Date'}
-                            format={"dd/MM/yyyy"}
-                            animateYearScrolling={false}
                             value={this.props.publicationDate}
                             onChange={this.props.onPublicationDateChange}
-
-                            className={classes.textField}
+                            renderInput={(params) => <TextField {...params} helperText={null} />}
                         />
                     </Grid>
                     <Grid item>
@@ -241,4 +226,4 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
 }
 
 
-export default withStyles(styles)(SubmissionDialog);
+export default SubmissionDialog;

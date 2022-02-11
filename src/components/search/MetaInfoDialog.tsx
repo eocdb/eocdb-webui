@@ -1,29 +1,9 @@
 import * as React from "react";
-import { WithStyles } from "@material-ui/core";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles from "@material-ui/core/styles/withStyles";
-
-import Dialog from "@material-ui/core/Dialog/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import Button from "@material-ui/core/Button/Button";
-import ListItem from "@material-ui/core/ListItem/ListItem";
-import ListItemText from "@material-ui/core/ListItemText/ListItemText";
-import List from "@material-ui/core/List/List";
-
 import { Dataset } from "../../model";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem, ListItemText } from "@mui/material";
 
 
-const styles = () => createStyles({
-    root: {},
-    helpDialog: {
-        minHeight: '4em'
-    }
-});
-
-
-interface MetaInfoDialogProps extends WithStyles<typeof styles> {
+interface MetaInfoDialogProps {
     open: boolean;
     dataset: Dataset;
 
@@ -97,4 +77,4 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
     }
 }
 
-export default withStyles(styles)(MetaInfoDialog);
+export default MetaInfoDialog;

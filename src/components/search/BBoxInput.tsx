@@ -1,28 +1,24 @@
 import { PureComponent } from "react";
-import TextField from "@material-ui/core/TextField/TextField";
 import * as React from "react";
-import { Theme, withStyles, WithStyles } from "@material-ui/core";
+import { TextField } from "@mui/material";
 
-
-import createStyles from "@material-ui/core/styles/createStyles";
-
-export type BBoxValue = [number|string, number|string, number|string, number|string];
+export type BBoxValue = [number | string, number | string, number | string, number | string];
 
 
 // noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) =>  createStyles({
-    searchField: {
-        width: 200,
-        marginRight: theme.spacing.unit / 2,
-        marginTop: theme.spacing.unit / 2,
-    },
-    textField: {},
-    button: {},
-    rightIcon: {},
-    tableContainer: {},
-});
+// const styles = (theme: Theme) =>  createStyles({
+//     searchField: {
+//         width: 200,
+//         marginRight: theme.spacing.unit / 2,
+//         marginTop: theme.spacing.unit / 2,
+//     },
+//     textField: {},
+//     button: {},
+//     rightIcon: {},
+//     tableContainer: {},
+// });
 
-interface BBoxInputProps extends WithStyles<typeof styles>{
+interface BBoxInputProps {
     onBBoxChange: (selectedBBox: BBoxValue) => void;
     selectedBBox: BBoxValue;
 }
@@ -30,14 +26,14 @@ interface BBoxInputProps extends WithStyles<typeof styles>{
 
 const BBoxInput = class extends PureComponent<BBoxInputProps> {
     constructor(props: BBoxInputProps) {
-        super(props);
+        super (props);
     }
 
 
     handleSouthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let south = event.target.valueAsNumber;
 
-        if(south) {
+        if (south) {
             const {selectedBBox} = this.props;
 
             const newBBox: BBoxValue = [
@@ -47,7 +43,7 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
                 selectedBBox[3],
             ];
 
-            this.props.onBBoxChange(newBBox);
+            this.props.onBBoxChange (newBBox);
         }
     };
 
@@ -63,14 +59,14 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
                 selectedBBox[2],
                 selectedBBox[3],
             ];
-            this.props.onBBoxChange(newBBox);
+            this.props.onBBoxChange (newBBox);
         }
     };
 
     handleNorthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const north = event.target.valueAsNumber;
 
-        if(north) {
+        if (north) {
             const {selectedBBox} = this.props;
 
             const newBBox: BBoxValue = [
@@ -80,14 +76,14 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
                 selectedBBox[3],
             ];
 
-            this.props.onBBoxChange(newBBox);
+            this.props.onBBoxChange (newBBox);
         }
     };
 
     handleEastChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const east = event.target.valueAsNumber;
 
-        if(east) {
+        if (east) {
             const {selectedBBox} = this.props;
 
             const newBBox: BBoxValue = [
@@ -97,12 +93,12 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
                 east,
             ];
 
-            this.props.onBBoxChange(newBBox);
+            this.props.onBBoxChange (newBBox);
         }
     };
 
     render() {
-        const { classes, selectedBBox } = this.props;
+        const {selectedBBox} = this.props;
         return (
             <div>
                 <TextField
@@ -110,7 +106,7 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
                     label={'South'}
                     variant={'outlined'}
                     type={"number"}
-                    className={classes.searchField}
+                    // className={classes.searchField}
                     onChange={this.handleSouthChange}
                     value={selectedBBox[0]}
                 />
@@ -119,7 +115,7 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
                     label={'West'}
                     variant={'outlined'}
                     type={"number"}
-                    className={classes.searchField}
+                    // className={classes.searchField}
                     onChange={this.handleWestChange}
                     defaultValue={selectedBBox[1]}
                 />
@@ -128,7 +124,7 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
                     label={'North'}
                     variant={'outlined'}
                     type={"number"}
-                    className={classes.searchField}
+                    // className={classes.searchField}
                     onChange={this.handleNorthChange}
                     defaultValue={selectedBBox[2]}
                 />
@@ -137,7 +133,7 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
                     label={'East'}
                     variant={'outlined'}
                     type={"number"}
-                    className={classes.searchField}
+                    // className={classes.searchField}
                     onChange={this.handleEastChange}
                     defaultValue={selectedBBox[3]}
                 />
@@ -146,4 +142,4 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
     }
 };
 
-export default withStyles(styles)(BBoxInput);
+export default BBoxInput;

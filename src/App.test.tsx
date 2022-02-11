@@ -1,8 +1,8 @@
 import * as React from 'react';
 import App from './App';
 import Dashboard from "./containers/Dashboard";
-import { CssBaseline } from "@material-ui/core";
 import { shallow } from "enzyme";
+import { CssBaseline } from "@mui/material";
 
 describe("App", () => {
     it('renders DashBoard', () => {

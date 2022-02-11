@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 
 // function listItem(item: string, descr: string): any {
 //     return (

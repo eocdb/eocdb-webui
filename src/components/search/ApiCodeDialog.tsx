@@ -1,25 +1,10 @@
 import * as React from "react";
-import { WithStyles } from "@material-ui/core";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles from "@material-ui/core/styles/withStyles";
 
-import Dialog from "@material-ui/core/Dialog/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import Button from "@material-ui/core/Button/Button";
 import SyntaxHighlighter from 'react-syntax-highlighter';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
 
-const styles = () => createStyles({
-    root: {},
-    helpDialog: {
-        minHeight: '4em'
-    }
-});
-
-
-interface APICodeDialogProps extends WithStyles<typeof styles> {
+interface APICodeDialogProps {
     open: boolean;
     query: string;
 
@@ -55,4 +40,4 @@ class APICodeDialog extends React.Component<APICodeDialogProps> {
     }
 }
 
-export default withStyles(styles)(APICodeDialog);
+export default APICodeDialog;

@@ -1,50 +1,41 @@
 import * as React from 'react';
-import { Theme, WithStyles } from '@material-ui/core';
-import createStyles from '@material-ui/core/styles/createStyles';
-import InputLabel from '@material-ui/core/InputLabel/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem/MenuItem';
-import Select from '@material-ui/core/Select/Select';
-import Chip from '@material-ui/core/Chip/Chip';
-import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
-import FormControl from "@material-ui/core/FormControl/FormControl";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
+import { Chip, FormControl, InputLabel, MenuItem, OutlinedInput, Select } from "@mui/material";
 
 
-const styles = (theme: Theme) => createStyles(
-    {
-        root: {
-            display: 'flex',
-            flexWrap: 'wrap',
-            position: "relative",
-            flexGrow: 1,
-            height: 250,
-            '& div':{
-                zIndex:1
-            }
-        },
-        chip: {
-            margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
-        },
-        formControl: {
-            minWidth: 200,
-            position: 'relative',
-            zIndex: 999,
-        },
-        select: {
-            minHeight: 20,
-            zIndex: 999,
-        },
-        fontRegular: {
-            fontWeight: theme.typography.fontWeightRegular,
-        },
-        fontMedium: {
-            fontWeight: theme.typography.fontWeightMedium,
-        },
-    });
+// const styles = (theme: Theme) => createStyles(
+//     {
+//         root: {
+//             display: 'flex',
+//             flexWrap: 'wrap',
+//             position: "relative",
+//             flexGrow: 1,
+//             height: 250,
+//             '& div':{
+//                 zIndex:1
+//             }
+//         },
+//         chip: {
+//             margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
+//         },
+//         formControl: {
+//             minWidth: 200,
+//             position: 'relative',
+//             zIndex: 999,
+//         },
+//         select: {
+//             minHeight: 20,
+//             zIndex: 999,
+//         },
+//         fontRegular: {
+//             fontWeight: theme.typography.fontWeightRegular,
+//         },
+//         fontMedium: {
+//             fontWeight: theme.typography.fontWeightMedium,
+//         },
+//     });
+//
 
-
-interface MultipleSelectProps extends WithStyles<typeof styles> {
+interface MultipleSelectProps {
     open: boolean;
     onClose: () => void;
     items: string[];
@@ -112,12 +103,12 @@ class MultipleSelect extends React.Component<MultipleSelectProps, TestState> {
         this.props.onChange(items);
     }
 
-    getStyles = (name: string) => {
-        return (this.props.selectedItems.indexOf(name) === -1
-            ? this.props.classes.fontRegular
-            : this.props.classes.fontMedium)
-    };
-
+    // getStyles = (name: string) => {
+    //     return (this.props.selectedItems.indexOf(name) === -1
+    //         ? this.props.classes.fontRegular
+    //         : this.props.classes.fontMedium)
+    // };
+    //
     renderItems = () => {
         const pgs = this.props.items;
 
@@ -127,7 +118,7 @@ class MultipleSelect extends React.Component<MultipleSelectProps, TestState> {
                 <MenuItem
                     key={pg}
                     value={pg}
-                    className={classNames(this.getStyles(pg))}
+                    // className={classNames(this.getStyles(pg))}
                 >
                     {/*<Checkbox checked={this.props.selectedItems.indexOf(pg) > -1}/>*/}
                     {pg}
@@ -155,13 +146,13 @@ class MultipleSelect extends React.Component<MultipleSelectProps, TestState> {
     };
 
     renderSelectedValues = (selected: string[]) => {
-        const {classes} = this.props;
+        // const {classes} = this.props;
         return (
             <div>
                 {selected.map(value => (
                     <Chip
                         //style={{height: '13pt'}}
-                        className={classes.chip}
+                        // className={classes.chip}
                         key={value}
                         label={value}
                         onDelete={() => this.handleDelete(value)}
@@ -172,10 +163,10 @@ class MultipleSelect extends React.Component<MultipleSelectProps, TestState> {
     };
 
     render() {
-        const {classes} = this.props;
+        // const {classes} = this.props;
         return (
-            <div className={classes.root}>
-                <FormControl variant="outlined" className={classes.formControl}>
+            <div>
+                <FormControl variant="outlined">
                     <InputLabel
                         htmlFor="select-multiple"
                         shrink
@@ -184,12 +175,12 @@ class MultipleSelect extends React.Component<MultipleSelectProps, TestState> {
                         Product Groups
                     </InputLabel>
                     <Select
-                        className={classes.select}
+                        // className={classes.select}
                         multiple
                         value={this.props.selectedItems}
-                        onChange={this.handleChange}
+                        // onChange={this.handleChange}
                         MenuProps={MenuProps}
-                        input={<OutlinedInput name={'test'} id={"select-multiple"} labelWidth={130} />}
+                        input={<OutlinedInput name={'test'} id={"select-multiple"} />}
                         renderValue={this.renderSelectedValues}
                     >
                         {this.renderItems()}
@@ -200,4 +191,4 @@ class MultipleSelect extends React.Component<MultipleSelectProps, TestState> {
     }
 }
 
-export default withStyles(styles)(MultipleSelect);
+export default MultipleSelect;

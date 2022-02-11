@@ -1,20 +1,17 @@
 import * as React from 'react';
-import Typography from '@material-ui/core/Typography/Typography';
-import { Theme, WithStyles } from '@material-ui/core';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { withStyles } from '@material-ui/core/styles';
 import ReactMarkdown from "markdown-to-jsx";
+import { Typography } from "@mui/material";
 
 // noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles(
-    {
-        title: {},
-        listItem: {
-            marginTop: theme.spacing.unit,
-        },
-    });
+// const styles = (theme: Theme) => createStyles(
+//     {
+//         title: {},
+//         listItem: {
+//             marginTop: theme.spacing.unit,
+//         },
+//     });
 
-interface LinksPanelProps extends WithStyles<typeof styles> {
+interface LinksPanelProps {
     show: boolean;
     content: string;
 }
@@ -31,13 +28,13 @@ class LinksPanel extends React.PureComponent<LinksPanelProps> {
             h3: { component: (props: any) => <Typography gutterBottom variant="subtitle1" {...props} /> },
             h4: { component: (props: any) => <Typography gutterBottom variant="caption" paragraph {...props} /> },
             p: { component: (props: any) => <Typography paragraph {...props} /> },
-            li: {
-                component: withStyles(styles)(({ classes, ...props }: any) => (
-                    <li className={this.props.classes.listItem}>
-                        <Typography component="span" {...props} />
-                    </li>
-                )),
-            },
+            // li: {
+            //     component: withStyles(styles)(({ classes, ...props }: any) => (
+            //         <li className={this.props.classes.listItem}>
+            //             <Typography component="span" {...props} />
+            //         </li>
+            //     )),
+            // },
         },
     };
 
@@ -56,4 +53,4 @@ class LinksPanel extends React.PureComponent<LinksPanelProps> {
     }
 }
 
-export default withStyles(styles)(LinksPanel);
+export default LinksPanel;

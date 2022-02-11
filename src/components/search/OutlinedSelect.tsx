@@ -1,30 +1,23 @@
 import * as React from "react";
-import { Theme, WithStyles } from "@material-ui/core";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles from "@material-ui/core/styles/withStyles";
-import MenuItem from "@material-ui/core/MenuItem/MenuItem";
-import Select from "@material-ui/core/Select/Select";
-import FormControl from "@material-ui/core/FormControl/FormControl";
 import { SelectItem } from "./SelectItems";
-import InputLabel from "@material-ui/core/InputLabel";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
+import { FormControl, InputLabel, MenuItem, OutlinedInput, Select } from "@mui/material";
 
 
-const styles = (theme: Theme) => createStyles({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    formControl: {
-        margin: theme.spacing.unit,
-        minWidth: 120,
-    },
-    selectEmpty: {
-        marginTop: theme.spacing.unit * 2,
-    },
-});
+// const styles = (theme: Theme) => createStyles({
+//     root: {
+//         display: 'flex',
+//         flexWrap: 'wrap',
+//     },
+//     formControl: {
+//         margin: theme.spacing.unit,
+//         minWidth: 120,
+//     },
+//     selectEmpty: {
+//         marginTop: theme.spacing.unit * 2,
+//     },
+// });
 
-interface OutlinedSelectProps extends WithStyles<typeof styles> {
+interface OutlinedSelectProps {
     name: string;
     selectedItem: string;
     items: SelectItem[];
@@ -45,9 +38,8 @@ export class OutlinedSelect extends React.Component<OutlinedSelectProps> {
     };
 
     render() {
-        const { classes } = this.props;
         return (
-            <FormControl variant="outlined" className={classes.formControl}>
+            <FormControl variant="outlined">
                 <InputLabel
                     htmlFor="outlined-age-simple"
                 >
@@ -55,10 +47,9 @@ export class OutlinedSelect extends React.Component<OutlinedSelectProps> {
                 </InputLabel>
                 <Select
                     value={this.props.selectedItem}
-                    onChange={this.handleOnChange}
+                    // onChange={this.handleOnChange}
                     input={
                         <OutlinedInput
-                            labelWidth={this.props.labelWidth}
                             name="age"
                             id="outlined-age-simple"
                         />
@@ -76,4 +67,4 @@ export class OutlinedSelect extends React.Component<OutlinedSelectProps> {
     }
 }
 
-export default withStyles(styles)(OutlinedSelect)
+export default OutlinedSelect;

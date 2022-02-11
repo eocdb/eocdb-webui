@@ -1,45 +1,30 @@
 import * as React from "react";
-import { Theme, withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-
-import createStyles from "@material-ui/core/styles/createStyles";
-import { Tooltip, WithStyles } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper/Paper";
-import Table from "@material-ui/core/Table/Table";
-import TableHead from "@material-ui/core/TableHead/TableHead";
-import TableCell from "@material-ui/core/TableCell/TableCell";
-import TableRow from "@material-ui/core/TableRow/TableRow";
-import TableBody from "@material-ui/core/TableBody/TableBody";
-import Icon from "@material-ui/core/Icon/Icon";
-import { SubmissionFile } from "../../model";
-import Chip from "@material-ui/core/Chip";
-import Grid from "@material-ui/core/Grid";
-import { blue, green, orange, red } from "@material-ui/core/colors";
-import { Submission } from "../../model/Submission";
-import { User } from "../../model/User";
+import { Submission, SubmissionFile, User } from "../../model";
+import { green, orange, red, blue } from "@mui/material/colors";
+import { Button, Paper, Grid, Table, TableHead, TableRow, TableCell, Chip, Icon, Tooltip, TableBody } from "@mui/material";
 
 
-const styles = (theme: Theme) => createStyles({
-    root: {
-        marginTop: theme.spacing.unit * 2,
-    },
-    appBar: {
-        position: 'relative',
-    },
-    flex: {
-        flex: 1,
-    },
-    searchField: {
-        width: 300,
-    },
-    textField: {},
-    button: {},
-    rightIcon: {},
-    tableContainer: {},
-});
+// const styles = (theme: Theme) => createStyles({
+//     root: {
+//         marginTop: theme.spacing.unit * 2,
+//     },
+//     appBar: {
+//         position: 'relative',
+//     },
+//     flex: {
+//         flex: 1,
+//     },
+//     searchField: {
+//         width: 300,
+//     },
+//     textField: {},
+//     button: {},
+//     rightIcon: {},
+//     tableContainer: {},
+// });
 
 
-export interface SubmissionFilesTableProps extends WithStyles<typeof styles> {
+export interface SubmissionFilesTableProps {
     open: boolean;
     onClose: () => void;
 
@@ -95,13 +80,13 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
             return null;
         }
 
-        const {classes, user} = this.props;
+        const {user} = this.props;
 
         const isAdmin = user && (user.roles.indexOf('admin') > -1);
 
         return (
-            <Paper className={classes.root}>
-                <Grid container justify={"flex-end"}>
+            <Paper>
+                <Grid container>
                     <Button
                         color={"primary"}
                         onClick={this.props.onClose}
@@ -170,7 +155,7 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                                                 )}
                                                 disabled={row.filetype === 'DOCUMENT'}
                                             >
-                                                <Icon className={classes.rightIcon}>list</Icon>
+                                                <Icon>list</Icon>
                                             </Button>
                                         </Tooltip>
                                         <Tooltip title="Delete File" aria-label="DeleteFile">
@@ -180,7 +165,7 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                                                 )}
                                                 disabled={!isAdmin}
                                             >
-                                                <Icon className={classes.rightIcon}>delete</Icon>
+                                                <Icon>delete</Icon>
                                             </Button>
                                         </Tooltip>
                                         <Tooltip title="Re-Upload File" aria-label="ReUpload">
@@ -189,7 +174,7 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                                                     row
                                                 )}
                                             >
-                                                <Icon className={classes.rightIcon}>cloud_upload</Icon>
+                                                <Icon>cloud_upload</Icon>
                                             </Button>
                                         </Tooltip>
                                         <Tooltip title="Download File" aria-label="Down load">
@@ -198,7 +183,7 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                                                     row
                                                 )}
                                             >
-                                                <Icon className={classes.rightIcon}>cloud_download</Icon>
+                                                <Icon>cloud_download</Icon>
                                             </Button>
                                         </Tooltip>
                                     </TableCell>
@@ -213,5 +198,5 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
 }
 
 
-export default withStyles(styles)(SubmissionFilesTable);
+export default SubmissionFilesTable;
 

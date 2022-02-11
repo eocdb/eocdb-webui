@@ -1,9 +1,5 @@
 import * as React from "react";
-import { Theme, WithStyles } from "@material-ui/core";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Chip from "@material-ui/core/Chip/Chip";
-import Paper from "@material-ui/core/Paper/Paper";
+import { Chip, Paper } from "@mui/material";
 
 
 export interface ChipEntry {
@@ -11,17 +7,17 @@ export interface ChipEntry {
     label: string;
 }
 
-const styles = (theme: Theme) => createStyles({
-    root: {
-        marginBottom: theme.spacing.unit,
-    },
-    chip: {
-        margin: theme.spacing.unit / 2,
-    },
-});
+// const styles = (theme: Theme) => createStyles({
+//     root: {
+//         marginBottom: theme.spacing.unit,
+//     },
+//     chip: {
+//         margin: theme.spacing.unit / 2,
+//     },
+// });
 
 
-interface ChipsArrayProps extends WithStyles<typeof styles> {
+interface ChipsArrayProps {
     chipData: ChipEntry[];
     onDelete: (key: string) => void;
 }
@@ -39,12 +35,8 @@ class ChipsArray extends React.PureComponent<ChipsArrayProps> {
         if(this.props.chipData.length == 0){
             return null;
         }
-        const {classes} = this.props;
-
         return (
-            <Paper
-                className={classes.root}
-            >
+            <Paper>
                 {
                     this.props.chipData.map(
                         (chip: ChipEntry) => {
@@ -53,7 +45,7 @@ class ChipsArray extends React.PureComponent<ChipsArrayProps> {
                                     key={chip.key}
                                     label={chip.label}
                                     onDelete={() => this.handleDelete(chip.key)}
-                                    className={classes.chip}
+                                    // className={classes.chip}
                                 />
                             );
                         }
@@ -66,4 +58,4 @@ class ChipsArray extends React.PureComponent<ChipsArrayProps> {
 
 }
 
-export default withStyles(styles)(ChipsArray);
+export default ChipsArray;

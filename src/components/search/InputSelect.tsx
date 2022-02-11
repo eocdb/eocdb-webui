@@ -1,52 +1,49 @@
 import * as React from "react";
-import { Theme, WithStyles } from "@material-ui/core";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles from "@material-ui/core/styles/withStyles";
 import Select from "react-select";
 import { Suggestion } from "./MultipleSelectTextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { FormControlLabel } from "@mui/material";
 
 
 
-const styles = (theme: Theme) => createStyles({
-    root: {
-        flexGrow: 1,
-        height: 250,
-    },
-    container: {
-        flexGrow: 1,
-        position: 'relative',
-    },
-    paper: {
-        position: 'absolute',
-        zIndex: 1,
-        marginTop: theme.spacing.unit,
-        left: 0,
-        right: 0,
-    },
-    chip: {
-        margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
-    },
-    inputRoot: {
-        flexWrap: 'wrap',
-    },
-    inputInput: {
-        width: 'auto',
-        flexGrow: 1,
-    },
-    divider: {
-        height: theme.spacing.unit * 2,
-    },
-    basicmultiselect: {
-        width: 150,
-        marginTop: theme.spacing.unit,
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-    }
-});
+// const styles = (theme: Theme) => createStyles({
+//     root: {
+//         flexGrow: 1,
+//         height: 250,
+//     },
+//     container: {
+//         flexGrow: 1,
+//         position: 'relative',
+//     },
+//     paper: {
+//         position: 'absolute',
+//         zIndex: 1,
+//         marginTop: theme.spacing.unit,
+//         left: 0,
+//         right: 0,
+//     },
+//     chip: {
+//         margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
+//     },
+//     inputRoot: {
+//         flexWrap: 'wrap',
+//     },
+//     inputInput: {
+//         width: 'auto',
+//         flexGrow: 1,
+//     },
+//     divider: {
+//         height: theme.spacing.unit * 2,
+//     },
+//     basicmultiselect: {
+//         width: 150,
+//         marginTop: theme.spacing.unit,
+//         marginLeft: theme.spacing.unit,
+//         marginRight: theme.spacing.unit,
+//     }
+// });
 
 
-interface MultipleSelectTextFieldProps extends WithStyles<typeof styles> {
+interface MultipleSelectTextFieldProps {
     items: Suggestion[];
     selectedItem: Suggestion;
 
@@ -67,7 +64,7 @@ class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldPro
     };
 
     render() {
-        const {classes, placeholder} = this.props;
+        const {placeholder} = this.props;
 
         return (
             <FormControlLabel
@@ -75,7 +72,7 @@ class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldPro
                 control={<Select
                     value={this.props.selectedItem}
                     options={this.props.items}
-                    className={classes.basicmultiselect}
+                    // className={classes.basicmultiselect}
                     onChange={this.onChange}
                     placeholder={placeholder}
                 />}
@@ -84,4 +81,4 @@ class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldPro
     }
 }
 
-export default withStyles(styles)(MultipleSelectTextField);
+export default MultipleSelectTextField;
