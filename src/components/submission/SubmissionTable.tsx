@@ -87,7 +87,6 @@ class EnhancedTableHead extends React.Component<EnhancedTableHeadProps> {
                                 <Tooltip
                                     title="Sort"
                                     placement={row.numeric ? 'bottom-end' : 'bottom-start'}
-                                    enterDelay={300}
                                 >
                                     <TableSortLabel
                                         active={orderBy === row.id}
@@ -277,7 +276,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                             />
                                         </TableCell>
                                         <TableCell>
-                                            <Tooltip title="Update Submission" aria-label="updateSubmission">
+                                            <Tooltip title="Update Submission" placement={"top"}>
                                                 <span>
                                                     <Button
                                                         onClick={() => this.props.onSubmissionDialogMetaOpen(
@@ -289,7 +288,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                     </Button>
                                                 </span>
                                             </Tooltip>
-                                            <Tooltip title="List Files" aria-label="ListFiles">
+                                            <Tooltip title="List Files" placement={"top"}>
                                                 <Button
                                                     onClick={() => this.props.onSubmissionSelect(
                                                         row.submission_id
@@ -299,7 +298,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                 </Button>
                                             </Tooltip>
                                             {row.status === 'PAUSED' || row.status === 'CANCELED' ?
-                                                <Tooltip title="Restart Submission" aria-label="RestartSubmission">
+                                                <Tooltip title="Restart Submission" placement={"top"}>
                                                     <Button
                                                         onClick={() => this.props.onSubmissionRestart(
                                                             row
@@ -310,7 +309,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                     </Button>
                                                 </Tooltip>
                                                 :
-                                                <Tooltip title="Pause Submission" aria-label="PauseSubmission">
+                                                <Tooltip title="Pause Submission" placement={"top"}>
                                                     <Button
                                                         onClick={() => this.props.onSubmissionHalt(
                                                             row.submission_id
@@ -320,7 +319,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                     </Button>
                                                 </Tooltip>
                                             }
-                                            <Tooltip title="Cancel Submission" aria-label="CancelSubmission">
+                                            <Tooltip title="Cancel Submission" placement={"top"}>
                                                 <span>
                                                     <Button
                                                         onClick={() => this.props.onSubmissionReject(
@@ -332,7 +331,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                     </Button>
                                                 </span>
                                             </Tooltip>
-                                            <Tooltip title="Delete Entire Submission" aria-label="deleteSubmission">
+                                            <Tooltip title="Delete Entire Submission" placement={"top"}>
                                                 <span>
                                                     <Button
                                                         onClick={() => this.props.onSubmissionDelete(
@@ -357,7 +356,7 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
                                                 </span>
                                             </Tooltip>
                                             <Tooltip title="Process into DB and Publish Submission"
-                                                     aria-label="PublishSubmission">
+                                                     placement={"top"}>
                                                 <span>
                                                     <Button
                                                         onClick={() => this.props.onSubmissionPublish(

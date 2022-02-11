@@ -1,7 +1,19 @@
 import * as React from "react";
-import Select, { components } from "react-select";
-import { CSSProperties } from "react";
-import { FormControl, InputLabel } from "@mui/material";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
+import { FormControl, InputLabel, MenuItem, OutlinedInput, Theme, useTheme } from "@mui/material";
+
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
+    },
+};
 
 
 export interface Suggestion {
@@ -10,72 +22,20 @@ export interface Suggestion {
 }
 
 
-// const styles = (theme: Theme) => createStyles({
-//     root: {
-//         flexGrow: 1,
-//         height: 250,
-//     },
-//     container: {
-//         flexGrow: 1,
-//         position: 'relative',
-//     },
-//     paper: {
-//         position: 'absolute',
-//         zIndex: 1,
-//         marginTop: theme.spacing.unit,
-//         left: 0,
-//         right: 0,
-//     },
-//     chip: {
-//         margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit / 4}px`,
-//     },
-//     inputRoot: {
-//         flexWrap: 'wrap',
-//     },
-//     inputInput: {
-//         width: 'auto',
-//         flexGrow: 1,
-//     },
-//     divider: {
-//         height: theme.spacing.unit * 2,
-//     },
-//     basicmultiselect: {
-//         width: 400,
-//         marginLeft: theme.spacing.unit,
-//         marginRight: theme.spacing.unit,
-//         height: 100,
-//     }
-// });
-
-const customStyles = {
-    control: (base: CSSProperties) => ({
-        ...base,
-        width: 200,
-        'min-height': '56px',
-        'background-color': '#FAFAFA',
-        label: 'red',
-        //zIndex: 999,
-    }),
-    container: (base: CSSProperties) => ({
-        ...base,
-        zIndex: 999, // get select item list on top of everything.
-    })
-};
-
-const customTheme = (theme: any) => ({
-    ...theme,
-    colors: {
-        ...theme.colors,
-        primary: '#3F51B5',
-    }
-});
-
+function getStyles(name: string, personName: string[], theme: Theme) {
+    return {
+        fontWeight:
+            personName.indexOf(name) === -1
+                ? theme.typography.fontWeightRegular
+                : theme.typography.fontWeightMedium,
+    };
+}
 
 interface MultipleSelectTextFieldProps {
-    suggestions: Suggestion[];
-    selectedItems: Suggestion[];
+    suggestions: string[];
+    selectedItems: string[];
 
-    onChange: (selectedItems: Suggestion[]) => void;
+    onChange: (selectedItems: string[]) => void;
 
     isMulti: boolean;
     closeMenuOnSelect: boolean;
@@ -87,87 +47,43 @@ interface MultipleSelectTextFieldProps {
     className?: string;
 }
 
-const ControlComponent = (props: any) => (
-    <div style={{zIndex: 1}}>
-        {/*<h1 style={
-            {
-                textAlign: 'left',
-                'margin-top': '-20px',
-                height: '20px',
-                'line-height': '20px',
-                'font-size': '15px',
-                fontWeight: 'bold',
-            }
-        }>
-            <span style={{backgroundColor: 'white'}}>kljnd</span>
-        </h1>*/}
-        <components.Input style={{zIndex: 1}} id={'testin'} {...props} />
-    </div>
-);
 
+export default function MultipleSelectTextField(props: MultipleSelectTextFieldProps) {
+    const theme = useTheme();
+    const [listItem, setListItem] = React.useState<string[]>([]);
 
-const orderOptions = (values: any) => {
-    return values.filter((v: any) => v.isFixed).concat(values.filter((v: any) => !v.isFixed));
-};
-
-
-class MultipleSelectTextField extends React.Component<MultipleSelectTextFieldProps> {
-    constructor(props: MultipleSelectTextFieldProps) {
-        super(props);
-    }
-
-    onChange = (value: Suggestion[], {action, removedValue}: any) => {
-        switch (action) {
-            case 'remove-value':
-            case 'pop-value':
-                if (removedValue.isFixed) {
-                    return;
-                }
-                break;
-            case 'clear':
-                value = this.props.selectedItems.filter((v: any) => v.isFixed);
-                break;
-        }
-
-        value = orderOptions(value);
-        this.props.onChange(value);
+    const handleChange = (event: SelectChangeEvent<typeof listItem>) => {
+        const {
+            target: { value },
+        } = event;
+        setListItem(
+            // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
     };
 
-    render() {
-        // const {placeholder} = this.props;
-
-        //const plh = placeholder? placeholder : 'Select...';
-        //const reactSelectStyles = base => ({ ...base, zIndex: 999 })
-
-        return (
-            <FormControl>
-                <InputLabel
-                    style={{zIndex: 1000, backgroundColor: '#FAFAFA', width: this.props.inputLabelWidth, paddingLeft: 8}}
-                    shrink
-                    variant={"outlined"}
-                    htmlFor='testing'
-                >
-                    {this.props.inputLabel}
-                </InputLabel>
-                <Select
-                    id='async-select'
-                    closeMenuOnSelect={this.props.closeMenuOnSelect}
-                    value={this.props.selectedItems}
-                    isMulti={this.props.isMulti}
-                    name="colors"
-                    options={this.props.suggestions}
-                    onChange={this.onChange}
-                    styles={customStyles}
-                    placeholder={this.props.placeholder}
-                    theme={customTheme}
-                    components={{Input: ControlComponent}}
-
-                    className={this.props.className}
-                />
-            </FormControl>
-        );
-    }
+    return (
+        <FormControl sx={{ width: "100%" }}>
+            <InputLabel id="multiple-select-label">{props.placeholder}</InputLabel>
+            <Select
+                labelId="multiple-select-label"
+                id="multiple-seclect"
+                multiple
+                value={listItem}
+                onChange={handleChange}
+                input={<OutlinedInput label={props.placeholder} />}
+                MenuProps={MenuProps}
+            >
+                {props.suggestions.map((suggestion) => (
+                    <MenuItem
+                        key={suggestion}
+                        value={suggestion}
+                        style={getStyles(suggestion, listItem, theme)}
+                    >
+                        {suggestion}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
+    );
 }
-
-
-export default MultipleSelectTextField;

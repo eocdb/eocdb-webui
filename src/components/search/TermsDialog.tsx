@@ -1,10 +1,7 @@
 import * as React from "react";
-import ReactMarkdown from "markdown-to-jsx";
 
 import TERMS from './eocdb-data-access-policy';
 import {
-    SlideProps,
-    Slide,
     Typography,
     Dialog,
     DialogTitle,
@@ -14,32 +11,10 @@ import {
 } from "@mui/material";
 
 
-/*
-const styles = (theme: Theme) => createStyles({
-    dialogContent: {
-        marginLeft: theme.spacing.unit * 4,
-        marginRight: theme.spacing.unit * 4,
-        marginTop: theme.spacing.unit * 4,
-        marginBottom: theme.spacing.unit * 4,
-    },
-    appBar: {
-        position: 'relative',
-    },
-    flex: {
-        flex: 1,
-    },
-    listItem: {
-        marginTop: theme.spacing.unit,
-    },
-    button: {},
-    rightIcon: {},
-});
-*/
 
-
-function Transition(props: SlideProps) {
-    return <Slide direction="up" {...props} >..</Slide>;
-}
+// function Transition(props: SlideProps) {
+//     return <Slide direction="up" {...props} />;
+// }
 
 
 export type DownloadTerms = 'SB' | 'OA' | 'OM'
@@ -65,32 +40,24 @@ export class TermsDialog<T> extends React.Component<TermsDialogProps<T> > {
             h3: {component: (props: any) => <Typography gutterBottom variant="subtitle1" {...props} />},
             h4: {component: (props: any) => <Typography gutterBottom variant="caption" paragraph {...props} />},
             p: {component: (props: any) => <Typography paragraph {...props} />},
-            /*li: {
-                component: withStyles(styles)(({ classes, ...props }: any) => (
-                    <li className={this.props.classes.listItem}>
-                        <Typography component="span" {...props} />
-                    </li>
-                )),
-            },*/
         },
     };
 
     render() {
         const downloadTerms = this.props.downloadTerms;
 
-        const terms = downloadTerms ? TERMS[downloadTerms] : TERMS['SB'];
+        // const terms = downloadTerms ? TERMS[downloadTerms] : TERMS['SB'];
 
         return (
             <Dialog
                 open={this.props.open}
                 onClose={this.props.onDisagree}
-                TransitionComponent={Transition}
             >
                 <DialogTitle id="form-dialog-title">{this.props.title}</DialogTitle>
                 <DialogContent>
-                    <ReactMarkdown options={this.options}>
-                        {terms}
-                    </ReactMarkdown>
+                    {/*<ReactMarkdown options={this.options}>*/}
+                    {/*    {terms}*/}
+                    {/*</ReactMarkdown>*/}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.props.onAgree}

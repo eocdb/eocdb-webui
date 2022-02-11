@@ -4,26 +4,6 @@ import { green, orange, red, blue } from "@mui/material/colors";
 import { Button, Paper, Grid, Table, TableHead, TableRow, TableCell, Chip, Icon, Tooltip, TableBody } from "@mui/material";
 
 
-// const styles = (theme: Theme) => createStyles({
-//     root: {
-//         marginTop: theme.spacing.unit * 2,
-//     },
-//     appBar: {
-//         position: 'relative',
-//     },
-//     flex: {
-//         flex: 1,
-//     },
-//     searchField: {
-//         width: 300,
-//     },
-//     textField: {},
-//     button: {},
-//     rightIcon: {},
-//     tableContainer: {},
-// });
-
-
 export interface SubmissionFilesTableProps {
     open: boolean;
     onClose: () => void;
@@ -93,7 +73,7 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                     >
                         Close
                     </Button>
-                    <Tooltip title="Add measurement file to submission" aria-label="NewMeasurementUpload">
+                    <Tooltip title="Add measurement file to submission" placement={"top"}>
                         <Button
                             color={"primary"}
                             onClick={() => this.handleUploadNewSubmissionClick("MEASUREMENT")}
@@ -101,7 +81,7 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                             Add Measurement
                         </Button>
                     </Tooltip>
-                    <Tooltip title="Add document file to submission" aria-label="NewDocumentUpload">
+                    <Tooltip title="Add document file to submission" placement={"top"}>
                         <Button
                             color={"primary"}
                             onClick={() => this.handleUploadNewSubmissionClick("DOCUMENT")}
@@ -148,7 +128,7 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Tooltip title="List Import Issues" aria-label="ImportIssues">
+                                        <Tooltip title="List Import Issues" placement={"top"}>
                                             <Button
                                                 onClick={() => this.props.onSubmissionFileSelectClick(
                                                     row
@@ -158,7 +138,7 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                                                 <Icon>list</Icon>
                                             </Button>
                                         </Tooltip>
-                                        <Tooltip title="Delete File" aria-label="DeleteFile">
+                                        <Tooltip title="Delete File" placement={"top"}>
                                             <Button
                                                 onClick={() => this.props.onSubmissionFileDeleteClick(
                                                     row
@@ -168,7 +148,7 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                                                 <Icon>delete</Icon>
                                             </Button>
                                         </Tooltip>
-                                        <Tooltip title="Re-Upload File" aria-label="ReUpload">
+                                        <Tooltip title="Re-Upload File" placement={"top"}>
                                             <Button
                                                 onClick={() => this.props.onSubmissionFileUploadClick(
                                                     row
@@ -177,7 +157,7 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
                                                 <Icon>cloud_upload</Icon>
                                             </Button>
                                         </Tooltip>
-                                        <Tooltip title="Download File" aria-label="Down load">
+                                        <Tooltip title="Download File" placement={"top"}>
                                             <Button
                                                 onClick={() => this.props.onSubmissionFileDownloadClick(
                                                     row

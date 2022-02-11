@@ -32,7 +32,7 @@ for (let i = 0; i < localStorage.length; i++) {
                 history.push({key: key, query: res})
             }
             catch (e) {
-                console.error(e);
+                // console.error(e);
             }
         }
     }

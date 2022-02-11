@@ -33,10 +33,10 @@ import { Button, Dialog, DialogActions, DialogTitle, Grid, Slide, SlideProps, Ty
 // });
 
 
-
-function Transition(props: SlideProps) {
-    return <Slide direction="up" {...props} >..</Slide>;
-}
+//
+// function Transition(props: SlideProps) {
+//     return <Slide direction="up" {...props} />;
+// }
 
 
 export interface AdvancedSearchDialogProps {
@@ -87,9 +87,9 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
         this.props.onWaterDepthChange(waterDepth);
     };
 
-    handleUpdateProducts = (products: Suggestion[]) => {
-        const items = products.map((item: Suggestion) => {
-            return item.value;
+    handleUpdateProducts = (products: string[]) => {
+        const items = products.map((item: string) => {
+            return item;
         });
 
         this.props.onProductsChange(items);
@@ -97,19 +97,13 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
 
     makeProductSuggestions = () => {
         return this.props.productItems.map((item: Product) => {
-            return {
-                value: item.name,
-                label: item.name,
-            };
+            return item.name;
         })
     };
 
     makeSelectedProducts = () => {
         return this.props.productsValue.map((item: string) => {
-            return {
-                value: item,
-                label: item,
-            };
+            return item;
         });
     };
 
@@ -120,12 +114,12 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
             <Dialog
                 open={this.props.open}
                 onClose={this.props.onClose}
-                TransitionComponent={Transition}
+                // TransitionComponent={Transition}
             >
                 {/*<div className={classes.dialogContent}>*/}
                 <div>
                     <DialogTitle id="form-dialog-title">Advanced Search</DialogTitle>
-                    <Grid spacing={32} container>
+                    <Grid container>
                         <Grid item xs={12}>
                             <Typography component={'h2'}>Wavelength options</Typography>
                             <RadioSelect items={wavelengthItems}

@@ -1,18 +1,8 @@
 import * as React from 'react';
 
-import MUIDataTable from "mui-datatables";
 import { MatchupFiles } from "../../model/MatchupFiles";
 import TermsDialog from "../search/TermsDialog";
-
-
-// // noinspection JSUnusedLocalSymbols
-// const styles = (theme: Theme) => createStyles(
-//     {
-//         root: {},
-//         title: {
-//             flexGrow: 1,
-//         },
-//     });
+// import MUIDataTable from "mui-datatables";
 
 
 const columns = ["FileName", "Directory"];
@@ -30,29 +20,25 @@ interface MatchupPanelProps {
     selectedRowData: string[];
 }
 
-class MatchupPanel extends React.PureComponent<MatchupPanelProps> {
-    constructor(props: MatchupPanelProps) {
-        super(props);
-    }
-
+export default function MatchupPanel(props: MatchupPanelProps) {
     // noinspection JSUnusedLocalSymbols
-    handleDownload = (rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => {
+    const handleDownload = (rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => {
         window.open('ftp://ftp.eumetsat.int' + rowData[1] + '/' + rowData[0]);
     };
 
     // noinspection JSUnusedLocalSymbols
-    handleRowClick = (rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => {
-        this.props.updateSelectedRowData(rowData);
-        this.props.openTermsDialog();
+    const handleRowClick = (rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => {
+        props.updateSelectedRowData(rowData);
+        props.openTermsDialog();
     };
 
-    handleTermsDialogAgreeClick = () => {
-        this.handleDownload(this.props.selectedRowData, {dataIndex: 0, rowIndex: 0});
-        this.props.closeTermsDialog();
+    const handleTermsDialogAgreeClick = () => {
+        handleDownload(this.props.selectedRowData, {dataIndex: 0, rowIndex: 0});
+        props.closeTermsDialog();
     };
 
-    handleTermsDialogDisAgreeClick = () => {
-        this.props.closeTermsDialog();
+    const handleTermsDialogDisAgreeClick = () => {
+        props.closeTermsDialog();
     };
 
 
@@ -66,23 +52,22 @@ class MatchupPanel extends React.PureComponent<MatchupPanelProps> {
     //         }
     //     }
     // });
+    if (!props.show) {
+        return null;
+    }
 
-    render() {
-        if (!this.props.show) {
-            return null;
-        }
+    const options = {
+        filterType: 'textField' as any,
+        onRowClick: handleRowClick,
+        selectableRows: 'none' as any,
+    };
 
-        const options = {
-            filterType: 'textField' as any,
-            onRowClick: this.handleRowClick,
-            selectableRows: 'none' as any,
-        };
+    const data = this.props.matchupFiles.map((item: MatchupFiles) => {
+        return [item.filename, item.dirname]
+    });
 
-        const data = this.props.matchupFiles.map((item: MatchupFiles) => {
-            return [item.filename, item.dirname]
-        });
 
-        return (
+    return (
             <div>
                 <TermsDialog
                     title={'OLCI in-situ Matchup Database Download Terms and Conditions'}
@@ -91,15 +76,13 @@ class MatchupPanel extends React.PureComponent<MatchupPanelProps> {
                     onAgree={this.handleTermsDialogAgreeClick}
                     downloadTerms={'OM'}
                 />
-                <MUIDataTable
-                    title={"Matchup Files"}
-                    data={data}
-                    columns={columns}
-                    options={options}
-                />
+                {/*<MUIDataTable*/}
+                {/*    title={"Matchup Files"}*/}
+                {/*    data={data}*/}
+                {/*    columns={columns}*/}
+                {/*    options={options}*/}
+                {/*/>*/}
             </div>
         );
-    }
 }
 
-export default MatchupPanel;

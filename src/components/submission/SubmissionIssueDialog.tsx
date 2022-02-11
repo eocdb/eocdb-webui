@@ -31,9 +31,9 @@ import {
 // });
 
 
-function Transition(props: SlideProps) {
-    return <Slide direction="up" {...props} ></Slide>;
-}
+// function Transition(props: SlideProps) {
+//     return <Slide direction="up" {...props} />;
+// }
 
 
 export interface SubmissionIssueDialogProps {
@@ -65,7 +65,7 @@ class SubmissionIssueDialog extends React.Component<SubmissionIssueDialogProps> 
                 <Dialog
                     open={this.props.open}
                     onClose={this.props.onClose}
-                    TransitionComponent={Transition}
+                    // TransitionComponent={Transition}
                 >
                     <DialogTitle id="form-dialog-title">Submission Issues for {fileName}</DialogTitle>
                     <DialogContent>

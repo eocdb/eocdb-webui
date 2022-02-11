@@ -18,32 +18,8 @@ import { GeoJsonObject } from "geojson";
 import { LatLng, LatLngBounds } from "leaflet";
 import { BBoxValue } from "./BBoxInput";
 import { PlotRecord, PlotState } from "../../states/dataTableState";
-import { Button, CircularProgress, Icon, IconButton, TextField } from "@mui/material";
+import { Button, CircularProgress, FormControl, Icon, IconButton, TextField } from "@mui/material";
 import { DatePicker } from "@mui/lab";
-
-
-// noinspection JSUnusedLocalSymbols
-// const styles = (theme: Theme) => createStyles({
-//     searchField: {
-//         width: 200,
-//         marginRight: theme.spacing.unit / 2,
-//         //marginTop: theme.spacing.unit / 2,
-//     },
-//     textField: {},
-//     button: {},
-//     buttonAdvanced: {fontSize: 'small'},
-//     filterButton: {},
-//     rightIcon: {},
-//     tableContainer: {},
-//     buttonProgress: {
-//         color: theme.palette.primary.light,
-//         position: 'absolute',
-//         top: '50%',
-//         left: '50%',
-//         marginTop: -12,
-//         marginLeft: -12,
-//     },
-// });
 
 
 interface SearchPanelProps {
@@ -284,9 +260,9 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         this.props.updateDatasetQuery({...this.props.datasetQuery, endDate});
     };
 
-    handleProductGroupsChange = (productGroups: Suggestion[]) => {
-        const productGroupNames = productGroups.map((item: Suggestion) => {
-            return item.value;
+    handleProductGroupsChange = (productGroups: string[]) => {
+        const productGroupNames = productGroups.map((item: string) => {
+            return item;
         });
         this.props.updateDatasetQuery({...this.props.datasetQuery, productGroupNames})
     };
@@ -300,13 +276,13 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
     getProductGroups = () => {
         return this.props.serverInfo['productGroups'].map(
             (pg: ProductGroup) => {
-                return {value: pg.name, label: pg.name};
+                return pg.name;
             })
     };
 
     getSelectedProducts = () => {
         return this.props.datasetQuery.productGroupNames.map((pg: string) => {
-            return {label: pg, value: pg};
+            return pg;
         });
     };
 
@@ -316,211 +292,215 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         }
 
         return (
-            <div>
-                <Grid spacing={24} container>
-                    <Grid item container spacing={8} xs={12} sm={10}>
-                        <DatePicker
-                            value={this.props.datasetQuery.startDate}
-                            onChange={this.handleStartDateChange}
-                            renderInput={(params) => <TextField {...params} helperText={null} />}
-                        />
-                        <DatePicker
-                            value={this.props.datasetQuery.endDate}
-                            onChange={this.handleEndDateChange}
-                            renderInput={(params) => <TextField {...params} helperText={null} />}
-                        />
-                        <MultipleSelectTextField
-                            suggestions={this.getProductGroups()}
-                            onChange={this.handleProductGroupsChange}
-                            selectedItems={this.getSelectedProducts()}
-                            isMulti={true}
-                            closeMenuOnSelect={true}
-                            placeholder={'Product Groups...'}
-                            // className={classes.searchField}
-                        />
-                        <TextField
-                            id={'lucene-search'}
-                            key={'lucene-search'}
-                            label={'Search...'}
-                            variant={"outlined"}
-                            // className={classes.searchField}
-                            value={this.props.datasetQuery.searchExpr}
-                            onChange={this.handleSearchExprChange}
-                            // onBlur={this.handleSearchExprBlur}
-                            onKeyPress={this.handleSearchExpKeyPressed}
-                        />
-                        <IconButton
-                            onClick={this.props.openHelpDialog}
-                        >
-                            <Icon color={"secondary"}>
-                                help
-                            </Icon>
-                        </IconButton>
-                        <HelpDialog
-                            open={this.props.productGroupsHelpDialogOpen}
-                            onClose={this.props.closeProductGroupsHelpDialog}
-                            title={'Product Groups'}
-                        >
-                            {ProductGroupsInfo}
-                        </HelpDialog>
-                        <HelpDialog
-                            open={this.props.helpDialogOpen}
-                            onClose={this.props.closeHelpDialog}
-                            title={'Search Help'}
-                        >
-                            {FindHelpText}
-                        </HelpDialog>
-                        <Button onClick={this.handleClear}>
-                            Clear
-                        </Button>
-                        <InputDialog
-                            open={this.props.saveSearchDialogOpen}
-                            onClose={this.props.closeSaveSearchDialog}
-                            label={'Title'}
-                            title={'Title of Saved Search'}
-                            value={this.props.saveSearchTitle}
-                            onSave={this.handleSaveFilter}
-                            onChange={this.handleUpdateSaveSearchTitle}
-                        />
-                        <Button onClick={this.props.openSaveSearchDialog}>
-                            Save Search
-                        </Button>
-
-                    </Grid>
-                    <Grid item container xs={12} sm>
-                        <Button onClick={this.props.openAdvancedSearchDialog}>
-                            Advanced Options
-                        </Button>
-
-                        <Button variant="contained"
-                                color="secondary"
-                                // className={classes.button}
-                                onClick={this.handleSearchDatasets}>
-                            Search
-                            {this.props.loading && <CircularProgress size={24}/>}
-                            <Icon>search</Icon>
-                        </Button>
-                        <AdvancedSearchDialog
-                            open={this.props.advancedSearchDialogOpen}
-                            onClose={this.props.closeAdvancedSearchDialog}
-                            productItems={this.props.serverInfo['products']}
-                            onWavelengthChange={this.props.updateWavelength}
-                            wavelengthValue={this.props.selectedWavelength}
-                            onWaterDepthChange={this.props.updateWaterDepth}
-                            waterDepthValue={this.props.selectedWaterDepth}
-                            onOptShallowChange={this.props.updateOptShallow}
-                            optShallowValue={this.props.selectedOptShallow}
-                            onProductsChange={this.props.updateProducts}
-                            productsValue={this.props.selectedProducts}
-                        />
-
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <AdvancedSearchLog
-                            onWavelengthChange={this.props.updateWavelength}
-                            wavelengthValue={this.props.selectedWavelength}
-                            onWaterDepthChange={this.props.updateWaterDepth}
-                            waterDepthValue={this.props.selectedWaterDepth}
-                            onOptShallowChange={this.props.updateOptShallow}
-                            optShallowValue={this.props.selectedOptShallow}
-                            onProductsChange={this.props.updateProducts}
-                            productsValue={this.props.selectedProducts}
-                        />
-                        <DataTable
-                            data={this.props.data}
-                            page={this.props.page}
-                            rowsPerPage={this.props.rowsPerPage}
-
-                            updateDataPage={this.props.updateDataPage}
-                            updateDataRowsPerPage={this.props.updateDataRowsPerPage}
-
-                            metaInfoDialogOpen={this.props.metaInfoDialogOpen}
-                            openMetaInfoDialog={this.props.openMetaInfoDialog}
-                            closeMetaInfoDialog={this.props.closeMetaInfoDialog}
-
-                            helpMetaInfoDialogOpen={this.props.helpMetaInfoDialogOpen}
-                            openHelpMetaInfoDialog={this.props.openHelpMetaInfoDialog}
-                            closeHelpMetaInfoDialog={this.props.closeHelpMetaInfoDialog}
-                            helpMetaInfoKey={this.props.helpMetaInfoKey}
-
-                            plotDialogOpen={this.props.plotDialogOpen}
-                            openPlotDialog={this.props.openPlotDialog}
-                            closePlotDialog={this.props.closePlotDialog}
-
-                            termsDialogOpen={this.props.termsDialogOpen}
-                            openTermsDialog={this.props.openTermsDialog}
-                            closeTermsDialog={this.props.closeTermsDialog}
-
-                            termsSingleDialogOpen={this.props.termsSingleDialogOpen}
-                            openTermsSingleDialog={this.props.openTermsSingleDialog}
-                            closeTermsSingleDialog={this.props.closeTermsSingleDialog}
-
-                            updateDataset={this.props.updateDataset}
-                            dataset={this.props.dataset}
-
-                            apiServerUrl={this.props.apiServerUrl}
-                            downloadDocs={this.props.downloadDocs}
-                            updateDownloadDocs={this.props.updateDownloadDocs}
-
-                            startDownloading={this.props.startDownloading}
-
-                            downloadDatasets={this.props.downloadDatasets}
-                            downloadDataset={this.props.downloadDataset}
-                            downloading={this.props.downloading}
-
-                            updatePlotState={this.props.updatePlotState}
-                            plotState={this.props.plotState}
-
-                            updatePlotData={this.props.updatePlotData}
-                            plotData={this.props.plotData}
-
-                            searchDatasets={this.props.searchDatasets}
-                            selectedDatasets={this.props.selectedDatasets}
-                            updateSelectedDatasets={this.props.updateSelectedDatasets}
-                            startLoading={this.props.startLoading}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <SearchMap
-                            position={this.props.position}
-                            zoom={this.props.zoom}
-
-                            updateSelectedRegions={this.props.updateSelectedRegions}
-                            testMarkerCluster={this.props.testMarkerCluster}
-
-                            drawMeasurementPoints={this.props.drawMeasurementPoints}
-                            foundDatasets={this.props.foundDatasets}
-
-                            updateSelectedDatasets={this.props.updateSelectedDatasets}
-                            selectedDatasets={this.props.selectedDatasets}
-
-                            selectedBounds={this.props.selectedBounds}
-                            mapBounds={this.props.mapBounds}
-                            drawBounds={this.props.drawBounds}
-
-                            selectedManualBBox={this.props.selectedManualBBox}
-                            updateManualBBox={this.props.updateManualBBox}
-                            openManualBBoxDialog={this.props.openManualBBoxDialog}
-                            closeManualBBoxDialog={this.props.closeManualBBoxDialog}
-                            manualBBoxInputOpen={this.props.manualBBoxInputOpen}
-
-                            updateManualBBoxSouth={this.props.updateManualBBoxSouth}
-                            selectedBBoxSouth={this.props.selectedBBoxSouth}
-
-                            updateManualBBoxWest={this.props.updateManualBBoxWest}
-                            selectedBBoxWest={this.props.selectedBBoxWest}
-
-                            updateManualBBoxNorth={this.props.updateManualBBoxNorth}
-                            selectedBBoxNorth={this.props.selectedBBoxNorth}
-
-                            updateManualBBoxEast={this.props.updateManualBBoxEast}
-                            selectedBBoxEast={this.props.selectedBBoxEast}
-
-                            selectedRectangleFromAdvancedDialog={this.props.selectedRectangleFromAdvancedDialog}
-                        />
-                    </Grid>
+            <Grid container spacing={2}>
+                <Grid item xs={2}>
+                    <DatePicker
+                        label="From Date"
+                        value={this.props.datasetQuery.startDate}
+                        onChange={this.handleStartDateChange}
+                        renderInput={(params) => <TextField {...params} helperText={null} />}
+                    />
                 </Grid>
-            </div>
+                <Grid item xs={2}>
+                    <DatePicker
+                        label="To Date"
+                        value={this.props.datasetQuery.endDate}
+                        onChange={this.handleEndDateChange}
+                        renderInput={(params) => <TextField {...params} helperText={null} />}
+                    />
+                </Grid>
+                <Grid item xs={2}>
+                    <MultipleSelectTextField
+                        suggestions={this.getProductGroups()}
+                        onChange={this.handleProductGroupsChange}
+                        selectedItems={this.getSelectedProducts()}
+                        isMulti={true}
+                        closeMenuOnSelect={true}
+                        placeholder={'Product Groups'}
+                    />
+                </Grid>
+                <Grid item xs={2}>
+                    <TextField
+                        id={'lucene-search'}
+                        key={'lucene-search'}
+                        label={'Search...'}
+                        variant={"outlined"}
+                        value={this.props.datasetQuery.searchExpr}
+                        onChange={this.handleSearchExprChange}
+                        onKeyPress={this.handleSearchExpKeyPressed}
+                    />
+                </Grid>
+                <Grid item xs={2}>
+                    <Button variant="contained"
+                            color="secondary"
+                            onClick={this.handleSearchDatasets}>
+                        Search
+                        {this.props.loading && <CircularProgress size={24}/>}
+                        <Icon>search</Icon>
+                    </Button>
+                    <IconButton
+                        onClick={this.props.openHelpDialog}
+                    >
+                        <Icon color={"secondary"}>
+                            help
+                        </Icon>
+                    </IconButton>
+                </Grid>
+                <Grid item xs={2}>
+                    <Button onClick={this.handleClear} size={'small'}>
+                        Clear
+                    </Button>
+                    <Button onClick={this.props.openSaveSearchDialog} size={'small'}>
+                        Save Search
+                    </Button>
+
+                    <Button onClick={this.props.openAdvancedSearchDialog} size={'small'}>
+                        Advanced Options
+                    </Button>
+
+                    <HelpDialog
+                        open={this.props.productGroupsHelpDialogOpen}
+                        onClose={this.props.closeProductGroupsHelpDialog}
+                        title={'Product Groups'}
+                    >
+                        {ProductGroupsInfo}
+                    </HelpDialog>
+                    <HelpDialog
+                        open={this.props.helpDialogOpen}
+                        onClose={this.props.closeHelpDialog}
+                        title={'Search Help'}
+                    >
+                        {FindHelpText}
+                    </HelpDialog>
+                    <InputDialog
+                        open={this.props.saveSearchDialogOpen}
+                        onClose={this.props.closeSaveSearchDialog}
+                        label={'Title'}
+                        title={'Title of Saved Search'}
+                        value={this.props.saveSearchTitle}
+                        onSave={this.handleSaveFilter}
+                        onChange={this.handleUpdateSaveSearchTitle}
+                    />
+                    <AdvancedSearchDialog
+                        open={this.props.advancedSearchDialogOpen}
+                        onClose={this.props.closeAdvancedSearchDialog}
+                        productItems={this.props.serverInfo['products']}
+                        onWavelengthChange={this.props.updateWavelength}
+                        wavelengthValue={this.props.selectedWavelength}
+                        onWaterDepthChange={this.props.updateWaterDepth}
+                        waterDepthValue={this.props.selectedWaterDepth}
+                        onOptShallowChange={this.props.updateOptShallow}
+                        optShallowValue={this.props.selectedOptShallow}
+                        onProductsChange={this.props.updateProducts}
+                        productsValue={this.props.selectedProducts}
+                    />
+
+                    <AdvancedSearchLog
+                        onWavelengthChange={this.props.updateWavelength}
+                        wavelengthValue={this.props.selectedWavelength}
+                        onWaterDepthChange={this.props.updateWaterDepth}
+                        waterDepthValue={this.props.selectedWaterDepth}
+                        onOptShallowChange={this.props.updateOptShallow}
+                        optShallowValue={this.props.selectedOptShallow}
+                        onProductsChange={this.props.updateProducts}
+                        productsValue={this.props.selectedProducts}
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <DataTable
+                        data={this.props.data}
+                        page={this.props.page}
+                        rowsPerPage={this.props.rowsPerPage}
+
+                        updateDataPage={this.props.updateDataPage}
+                        updateDataRowsPerPage={this.props.updateDataRowsPerPage}
+
+                        metaInfoDialogOpen={this.props.metaInfoDialogOpen}
+                        openMetaInfoDialog={this.props.openMetaInfoDialog}
+                        closeMetaInfoDialog={this.props.closeMetaInfoDialog}
+
+                        helpMetaInfoDialogOpen={this.props.helpMetaInfoDialogOpen}
+                        openHelpMetaInfoDialog={this.props.openHelpMetaInfoDialog}
+                        closeHelpMetaInfoDialog={this.props.closeHelpMetaInfoDialog}
+                        helpMetaInfoKey={this.props.helpMetaInfoKey}
+
+                        plotDialogOpen={this.props.plotDialogOpen}
+                        openPlotDialog={this.props.openPlotDialog}
+                        closePlotDialog={this.props.closePlotDialog}
+
+                        termsDialogOpen={this.props.termsDialogOpen}
+                        openTermsDialog={this.props.openTermsDialog}
+                        closeTermsDialog={this.props.closeTermsDialog}
+
+                        termsSingleDialogOpen={this.props.termsSingleDialogOpen}
+                        openTermsSingleDialog={this.props.openTermsSingleDialog}
+                        closeTermsSingleDialog={this.props.closeTermsSingleDialog}
+
+                        updateDataset={this.props.updateDataset}
+                        dataset={this.props.dataset}
+
+                        apiServerUrl={this.props.apiServerUrl}
+                        downloadDocs={this.props.downloadDocs}
+                        updateDownloadDocs={this.props.updateDownloadDocs}
+
+                        startDownloading={this.props.startDownloading}
+
+                        downloadDatasets={this.props.downloadDatasets}
+                        downloadDataset={this.props.downloadDataset}
+                        downloading={this.props.downloading}
+
+                        updatePlotState={this.props.updatePlotState}
+                        plotState={this.props.plotState}
+
+                        updatePlotData={this.props.updatePlotData}
+                        plotData={this.props.plotData}
+
+                        searchDatasets={this.props.searchDatasets}
+                        selectedDatasets={this.props.selectedDatasets}
+                        updateSelectedDatasets={this.props.updateSelectedDatasets}
+                        startLoading={this.props.startLoading}
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <SearchMap
+                        position={this.props.position}
+                        zoom={this.props.zoom}
+
+                        updateSelectedRegions={this.props.updateSelectedRegions}
+                        testMarkerCluster={this.props.testMarkerCluster}
+
+                        drawMeasurementPoints={this.props.drawMeasurementPoints}
+                        foundDatasets={this.props.foundDatasets}
+
+                        updateSelectedDatasets={this.props.updateSelectedDatasets}
+                        selectedDatasets={this.props.selectedDatasets}
+
+                        selectedBounds={this.props.selectedBounds}
+                        mapBounds={this.props.mapBounds}
+                        drawBounds={this.props.drawBounds}
+
+                        selectedManualBBox={this.props.selectedManualBBox}
+                        updateManualBBox={this.props.updateManualBBox}
+                        openManualBBoxDialog={this.props.openManualBBoxDialog}
+                        closeManualBBoxDialog={this.props.closeManualBBoxDialog}
+                        manualBBoxInputOpen={this.props.manualBBoxInputOpen}
+
+                        updateManualBBoxSouth={this.props.updateManualBBoxSouth}
+                        selectedBBoxSouth={this.props.selectedBBoxSouth}
+
+                        updateManualBBoxWest={this.props.updateManualBBoxWest}
+                        selectedBBoxWest={this.props.selectedBBoxWest}
+
+                        updateManualBBoxNorth={this.props.updateManualBBoxNorth}
+                        selectedBBoxNorth={this.props.selectedBBoxNorth}
+
+                        updateManualBBoxEast={this.props.updateManualBBoxEast}
+                        selectedBBoxEast={this.props.selectedBBoxEast}
+
+                        selectedRectangleFromAdvancedDialog={this.props.selectedRectangleFromAdvancedDialog}
+                    />
+                </Grid>
+            </Grid>
         );
     }
 }

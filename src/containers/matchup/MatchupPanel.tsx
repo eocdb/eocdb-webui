@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 
 import { AppState } from "../../states/appState";
 
-import MatchUpPanel from "../../components/matchup/MatchupPanel";
+import MatchupPanel from "../../components/matchup/MatchupPanel";
 import { closeTermsDialog, openTermsDialog, updateSelectedRowData } from "../../actions/matchupActions";
 
 
@@ -22,5 +22,5 @@ const mapDispatchToProps = {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(MatchUpPanel)
+export default connect(mapStateToProps, mapDispatchToProps)(MatchupPanel)
 

@@ -1,28 +1,22 @@
 import * as React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Dashboard from './containers/Dashboard';
 import MessageLog from "./containers/MessageLog";
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 
-import { MuiPickersUtilsProvider } from 'material-ui-pickers';
-import LuxonUtils from '@date-io/luxon';
 import LegalAgreementDialog from "./containers/LegalAgreementDialog";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
+import { LocalizationProvider  } from "@mui/lab";
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 
-const theme = createMuiTheme(
+const theme = createTheme(
     {
         palette: {
-            type: 'light',
             primary: {
                 light: '#4e5ac5',
                 main: '#003194',
                 dark: '#000e65',
             },
-        },
-        // see https://material-ui.com/style/typography/#migration-to-typography-v2
-        typography: {
-            useNextVariants: true,
         },
     });
 
@@ -30,16 +24,16 @@ const theme = createMuiTheme(
 class App extends React.Component {
     public render() {
         return (
-            <MuiThemeProvider theme={theme}>
-                <MuiPickersUtilsProvider utils={LuxonUtils}>
+            <ThemeProvider theme={theme}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <div className="App">
                         <CssBaseline/>
                         <Dashboard/>
                         <MessageLog/>
                         <LegalAgreementDialog/>
                     </div>
-                </MuiPickersUtilsProvider>
-            </MuiThemeProvider>
+                </LocalizationProvider>
+            </ThemeProvider>
         );
     }
 }

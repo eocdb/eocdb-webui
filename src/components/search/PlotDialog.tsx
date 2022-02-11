@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import { XAxis, YAxis, CartesianGrid, Tooltip, ScatterChart, Scatter, Label, Legend, Cell } from 'recharts';
+// import { XAxis, YAxis, CartesianGrid, Tooltip, ScatterChart, Scatter, Label, Legend, Cell } from 'recharts';
 import { Dataset } from "../../model";
 import { PlotRecord, PlotState } from "../../states/dataTableState";
-import InputSelect from "./InputSelect";
+// import InputSelect from "./InputSelect";
 import { Suggestion } from "./MultipleSelectTextField";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from "@mui/material";
 
@@ -170,14 +170,15 @@ class PlotDialog extends React.Component<PlotDialogProps> {
         }
         else{
             return (
-                <Scatter yAxisId="right" name={selectedZField} data={plotData} fill={'#82ca9d'}>
-                    {
-                        plotData.map((entry, index) => {
-                            // fill={colors[index % colors.length]}
-                            return <Cell key={`cell-${index}`}/>
-                        })
-                    }
-                </Scatter>
+                <div></div>
+                // <Scatter yAxisId="right" name={selectedZField} data={plotData} fill={'#82ca9d'}>
+                //     {
+                //         plotData.map((entry, index) => {
+                //             // fill={colors[index % colors.length]}
+                //             return <Cell key={`cell-${index}`}/>
+                //         })
+                //     }
+                // </Scatter>
             );
         }
     };
@@ -194,77 +195,75 @@ class PlotDialog extends React.Component<PlotDialogProps> {
         const {selectedXField, selectedYField, selectedZField} = this.props.plotState;
 
         return (
-            <div>
-                <Dialog
-                    open={this.props.open}
-                    onClose={this.handleClose}
-                    aria-labelledby="form-dialog-title"
-                    // classes={{paper: classes.dialogPaper}}
-                >
-                    <DialogTitle id="form-dialog-title">Plot</DialogTitle>
-                    <DialogContent>
-                        <Grid container spacing={8} direction={"row"}>
-                            <InputSelect
-                                items={selectItems}
-                                selectedItem={{label: selectedXField, value: selectedXField}}
-                                onChange={this.handleUpdateXField}
-                                placeholder={'X...'}
-                                label={'X'}
-                            />
-                            <InputSelect
-                                items={selectItems}
-                                selectedItem={{label: selectedYField, value: selectedYField}}
-                                onChange={this.handleUpdateYField}
-                                placeholder={'Y...'}
-                                label={'Y1'}
-                            />
-                            <InputSelect
-                                items={selectItems}
-                                selectedItem={{label: selectedZField, value: selectedZField}}
-                                onChange={this.handleUpdateZField}
-                                placeholder={'Z...'}
-                                label={'Y2'}
-                            />
+            <Dialog
+                open={this.props.open}
+                onClose={this.handleClose}
+                aria-labelledby="form-dialog-title"
+            >
+                <DialogTitle id="form-dialog-title">Plot</DialogTitle>
+                <DialogContent>
+                    bla
+                    {/*<Grid container spacing={8} direction={"row"}>*/}
+                    {/*    <InputSelect*/}
+                    {/*        items={selectItems}*/}
+                    {/*        selectedItem={{label: selectedXField, value: selectedXField}}*/}
+                    {/*        onChange={this.handleUpdateXField}*/}
+                    {/*        placeholder={'X...'}*/}
+                    {/*        label={'X'}*/}
+                    {/*    />*/}
+                    {/*    <InputSelect*/}
+                    {/*        items={selectItems}*/}
+                    {/*        selectedItem={{label: selectedYField, value: selectedYField}}*/}
+                    {/*        onChange={this.handleUpdateYField}*/}
+                    {/*        placeholder={'Y...'}*/}
+                    {/*        label={'Y1'}*/}
+                    {/*    />*/}
+                    {/*    <InputSelect*/}
+                    {/*        items={selectItems}*/}
+                    {/*        selectedItem={{label: selectedZField, value: selectedZField}}*/}
+                    {/*        onChange={this.handleUpdateZField}*/}
+                    {/*        placeholder={'Z...'}*/}
+                    {/*        label={'Y2'}*/}
+                    {/*    />*/}
 
-                            <Button onClick={this.handleUpdatePlot} color="secondary">
-                                Plot
-                            </Button>
-                        </Grid>
-                        <Grid container spacing={8} direction={"row"}>
-                            <ScatterChart width={700} height={500}
-                                          margin={{top: 50, right: 50, bottom: 50, left: 50}}
-                                          data={plotData}
-                            >
-                                <XAxis scale={"auto"} dataKey={"x"} type={"number"} domain={['dataMin', 'dataMax']}>
-                                    <Label value={selectedXField} dy={20} position={"right"}/>
-                                </XAxis>
-                                <YAxis yAxisId="left" dataKey={"y"} type={"number"} domain={['dataMin', 'dataMax']}/>
-                                <YAxis yAxisId="right"
-                                       type="number"
-                                       dataKey={"z"}
-                                       name={selectedZField}
-                                       domain={['dataMin', 'dataMax']}
-                                       orientation="right"
-                                       stroke="#82ca9d"/>
-                                <CartesianGrid/>
-                                <Tooltip cursor={{strokeDasharray: '3 3'}}/>
-                                <Scatter yAxisId="left" name={selectedYField} data={plotData} fill={'#8884d8'}/>
+                    {/*    <Button onClick={this.handleUpdatePlot} color="secondary">*/}
+                    {/*        Plot*/}
+                    {/*    </Button>*/}
+                    {/*</Grid>*/}
+                    {/*<Grid container spacing={8} direction={"row"}>*/}
+                    {/*    <ScatterChart width={700} height={500}*/}
+                    {/*                  margin={{top: 50, right: 50, bottom: 50, left: 50}}*/}
+                    {/*                  data={plotData}*/}
+                    {/*    >*/}
+                    {/*        <XAxis scale={"auto"} dataKey={"x"} type={"number"} domain={['dataMin', 'dataMax']}>*/}
+                    {/*            <Label value={selectedXField} dy={20} position={"right"}/>*/}
+                    {/*        </XAxis>*/}
+                    {/*        <YAxis yAxisId="left" dataKey={"y"} type={"number"} domain={['dataMin', 'dataMax']}/>*/}
+                    {/*        <YAxis yAxisId="right"*/}
+                    {/*               type="number"*/}
+                    {/*               dataKey={"z"}*/}
+                    {/*               name={selectedZField}*/}
+                    {/*               domain={['dataMin', 'dataMax']}*/}
+                    {/*               orientation="right"*/}
+                    {/*               stroke="#82ca9d"/>*/}
+                    {/*        <CartesianGrid/>*/}
+                    {/*        /!*<Tooltip cursor={{strokeDasharray: '3 3'}}/>*!/*/}
+                    {/*        <Scatter yAxisId="left" name={selectedYField} data={plotData} fill={'#8884d8'}/>*/}
 
-                                {this.getY2Plot(selectedZField, plotData)}
-                                {this.props.plotData.length > 0 ?
-                                    (<Legend verticalAlign={"top"} height={36}/>) :
-                                    ''
-                                }
-                            </ScatterChart>
-                        </Grid>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
-                            Close
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
+                    {/*        {this.getY2Plot(selectedZField, plotData)}*/}
+                    {/*        {this.props.plotData.length > 0 ?*/}
+                    {/*            (<Legend verticalAlign={"top"} height={36}/>) :*/}
+                    {/*            ''*/}
+                    {/*        }*/}
+                    {/*    </ScatterChart>*/}
+                    {/*</Grid>*/}
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={this.handleClose} color="primary">
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>
         );
     }
 }
