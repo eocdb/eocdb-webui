@@ -190,7 +190,8 @@ export default function SubmissionTable(props: SubmissionTableProps) {
         {
             field: 'id',
             headerName: 'Submission ID',
-            width: 160 },
+            width: 160
+        },
         {
             field: 'user_id',
             headerName: 'Submitter',

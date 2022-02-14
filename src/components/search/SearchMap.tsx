@@ -1,7 +1,4 @@
 import * as React from 'react'
-import { Button, Theme, WithStyles } from '@material-ui/core';
-import createStyles from '@material-ui/core/styles/createStyles';
-import { withStyles } from '@material-ui/core/styles';
 import { FeatureGroup, Map, Marker, Popup, Rectangle, TileLayer, LeafletConsumer, LeafletContext } from 'react-leaflet'
 import { geoJSON, Icon, LatLng, LatLngBounds } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
@@ -15,6 +12,7 @@ import { BBoxValue } from "./BBoxInput";
 import { createRef } from "react";
 import BBoxInput from "./BBoxInputDialog";
 import Control from "./Control";
+import { Button } from "@mui/material";
 
 
 // FIXME: forman did not find any typedefs for 'react-leaflet-draw', 2018.11.xx
@@ -23,10 +21,7 @@ const reactLeafletDraw = require('react-leaflet-draw');
 const EditControl = reactLeafletDraw.EditControl;
 
 
-// noinspection JSUnusedLocalSymbols
-const styles = (theme: Theme) => createStyles({});
-
-interface SearchMapProps extends WithStyles<typeof styles> {
+interface SearchMapProps {
     position: LatLng;
     zoom: number;
 
@@ -386,6 +381,6 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
 }
 
-export default withStyles(styles)(SearchMap);
+export default SearchMap;
 
 

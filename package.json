@@ -50,7 +50,7 @@
     "react-json-editor-ajrm": "^2.5.9",
     "react-leaflet": "^2.5.0",
     "react-leaflet-control": "^2.1.1",
-    "react-leaflet-draw": "^0.19.0",
+    "react-leaflet-draw": "^0.19.8",
     "react-leaflet-markercluster": "^2.0.0-rc3",
     "react-markdown": "^4.2.2",
     "react-mde": "^7.6.2",
