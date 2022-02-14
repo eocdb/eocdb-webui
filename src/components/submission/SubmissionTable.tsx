@@ -6,8 +6,7 @@ import {
     Icon, Chip
 } from "@mui/material";
 import { blue, green, orange, red } from "@mui/material/colors";
-import { CloudUpload } from "@mui/icons-material";
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
 
 
 
@@ -196,13 +195,13 @@ export default function SubmissionTable(props: SubmissionTableProps) {
             field: 'user_id',
             headerName: 'Submitter',
             width: 150,
-            sortable: false
+            editable: true
         },
         {
             field: 'submission_date',
             headerName: 'Submission Date',
             width: 150,
-            sortable: false
+            editable: true
         },
         {
             field: 'publication_date',
@@ -216,13 +215,13 @@ export default function SubmissionTable(props: SubmissionTableProps) {
             headerName: 'Publication Allowed',
             type: 'boolean',
             width: 160,
-            sortable: false
+            editable: true
         },
         {
             field: 'status',
             headerName: 'Status',
             width: 160,
-            sortable: false,
+            editable: true,
             renderCell: (params => {
                 const colour = getColourForStatus(params.row.status);
                 return (<Chip
@@ -244,7 +243,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     const rows = makeRows(submissionsValue);
 
     return (
-        <div style={{ height: 800, width: '100%' }}>
+        <div style={{ height: 600, width: '100%' }}>
             <DataGrid
                 rows={rows}
                 columns={columns}
@@ -253,6 +252,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                 rowsPerPageOptions={[5, 10]}
                 pagination
                 disableSelectionOnClick
+                components={{ Toolbar: GridToolbar }}
             />
         </div>
     );
