@@ -91,12 +91,12 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
     createMarker(lat: number, lon: number, key: string, dsId: string) {
         if (this.props.selectedDatasets.indexOf(dsId) >= 0) {
-            const icon = new Icon({iconUrl: markerInv});
+            const icon = new Icon({iconUrl: markerInv, iconSize: [25, 41], iconAnchor: [13, 39]});
             return <Marker onclick={() => this.handleMarkerClick(dsId)} key={key}
                            icon={icon}
                            position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
         } else {
-            const icon = new Icon({iconUrl: marker});
+            const icon = new Icon({iconUrl: marker, iconSize: [25, 41], iconAnchor: [13, 39]});
             return <Marker onclick={() => this.handleMarkerClick(dsId)} key={key}
                            icon={icon}
                            position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
