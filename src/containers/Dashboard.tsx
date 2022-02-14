@@ -1,5 +1,5 @@
-import {connect} from 'react-redux';
-import {AppState} from '../states/appState';
+import { connect } from 'react-redux';
+import { AppState } from '../states/appState';
 
 import {
     changeDrawer,
@@ -13,7 +13,7 @@ import {
 import { configServer, getMatchupFiles } from '../actions/configActions'
 import Dashboard from '../components/Dashboard';
 import { changeLoginUser, loginUser, logoutUser } from '../actions/userActions';
-import {getSubmissionsForUser} from "../actions/submissionActions";
+import { getSubmissionsForUser } from "../actions/submissionActions";
 import { searchDatasets, updateDatasetQuery, updateSearchHistory } from "../actions/findActions";
 
 
@@ -64,4 +64,4 @@ const mapDispatchToProps = {
     apiServerUrlChange: configServer, // TODO: rename apiServerUrlChange --> configServer
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect (mapStateToProps, mapDispatchToProps) (Dashboard);

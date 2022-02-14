@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { DropzoneArea } from 'material-ui-dropzone';
+import Dropzone, { FileRejection } from 'react-dropzone';
+import styled from "styled-components";
 
 
 interface FileUploadProps {
@@ -11,33 +12,87 @@ interface FileUploadProps {
 }
 
 
-class FileUpload extends React.Component<FileUploadProps> {
-    constructor(props: FileUploadProps) {
-        super(props);
+const getColor = (props) => {
+    if (props.isDragAccept) {
+        return '#00e676';
     }
-
-    handleOnchange = (files: File[]) => {
-        this.props.onChange(files);
-    };
-
-    handleOnDropRejected = (files: File[]) => {
-       this.props.onDropRejected(files);
-    };
-
-    render() {
-        return (
-            <DropzoneArea
-                onDropRejected={this.handleOnDropRejected}
-                onChange={this.handleOnchange}
-                filesLimit={500}
-                maxFileSize={1000000000}
-                showFileNamesInPreview={true}
-                acceptedFiles={this.props.acceptedFiles}
-                clearOnUnmount={true}
-                dropzoneText={this.props.label}
-            />
-        );
+    if (props.isDragReject) {
+        return '#ff1744';
     }
+    if (props.isFocused) {
+        return '#2196f3';
+    }
+    return '#eeeeee';
 }
 
-export default FileUpload;
+
+const Container = styled.div`
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      border-width: 2px;
+      border-radius: 2px;
+      border-color: ${props => getColor(props)};
+      border-style: dashed;
+      background-color: #fafafa;
+      color: #bdbdbd;
+      outline: none;
+      transition: border .24s ease-in-out;
+    `;
+
+
+export default function FileUpload(props: FileUploadProps) {
+
+    const handleOnchange = (files: File[]) => {
+        props.onChange (files);
+    };
+
+    const handleOnDropRejected = (fileRejections: FileRejection[]) => {
+        const files = fileRejections.map((fileRejection: FileRejection) => {
+            return fileRejection.file;
+        });
+        props.onDropRejected (files);
+    };
+
+    return (
+        <Dropzone onDrop={handleOnchange} onDropRejected={handleOnDropRejected} accept={props.acceptedFiles}>
+            {({acceptedFiles, fileRejections, getRootProps, getInputProps, isDragActive, isFocused, isDragAccept, isDragReject}) => (
+                <section>
+                    <Container {...getRootProps({isFocused, isDragAccept, isDragReject})}>
+                        <input {...getInputProps()} />
+                        {
+                           isDragActive ? <p>Drop files here...</p> :
+                               <p>Drag 'n' drop some files here, or click to select files</p>
+                        }
+                        accepted:
+                        {
+                            props.files.map((file: File) => {
+                                return file.name;
+                            })
+                        }
+                        Rejected:
+                        {
+                            fileRejections.map(
+                                (file: FileRejection) => {
+                                    return file.file.name;
+                                }
+                            )
+
+                        }
+                    </Container>
+                </section>
+            )}
+        </Dropzone>        // <DropzoneArea
+        //     onDropRejected={this.handleOnDropRejected}
+        //     onChange={this.handleOnchange}
+        //     filesLimit={500}
+        //     maxFileSize={1000000000}
+        //     showFileNamesInPreview={true}
+        //     acceptedFiles={this.props.acceptedFiles}
+        //     clearOnUnmount={true}
+        //     dropzoneText={this.props.label}
+        // />
+    );
+}

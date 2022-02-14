@@ -8,7 +8,6 @@ import { CssBaseline } from "@mui/material";
 import { LocalizationProvider  } from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
-
 const theme = createTheme(
     {
         palette: {
@@ -24,16 +23,18 @@ const theme = createTheme(
 class App extends React.Component {
     public render() {
         return (
-            <ThemeProvider theme={theme}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <div className="App">
-                        <CssBaseline/>
-                        <Dashboard/>
-                        <MessageLog/>
-                        <LegalAgreementDialog/>
-                    </div>
-                </LocalizationProvider>
-            </ThemeProvider>
+            // <ReactKeycloakProvider authClient={keycloak}>
+                <ThemeProvider theme={theme}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <div className="App">
+                            <CssBaseline/>
+                            <Dashboard/>
+                            <MessageLog/>
+                            <LegalAgreementDialog/>
+                        </div>
+                    </LocalizationProvider>
+                </ThemeProvider>
+            // </ReactKeycloakProvider>
         );
     }
 }

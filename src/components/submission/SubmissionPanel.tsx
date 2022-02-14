@@ -10,6 +10,7 @@ import SingleFileUpload from "./SingleFileUpload";
 import { SingleUpload } from "../../model/UploadData";
 import { MessageLogEntry, MessageType } from "../../states/messageLogState";
 import SubmissionMetaDialog from "./SubmissionMetaDialog";
+import { useKeycloak } from '@react-keycloak/web';
 
 
 // noinspection JSUnusedLocalSymbols
@@ -279,6 +280,13 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
     };
 
     render() {
+        // const { keycloak } = useKeycloak();
+        // const isLoggedIn = keycloak.authenticated;
+        //
+        // if (!isLoggedIn) {
+        //     return 'Please Login';
+        // }
+
         if (!this.props.show) {
             return null;
         }
@@ -381,16 +389,16 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                 {/*>*/}
                 {/*    Do you really want to delete the Submission: {this.props.selectedSubmission.submission_id}?*/}
                 {/*</YesNoAlert>*/}
-                <SingleFileUpload
-                    label={'Upload'}
-                    onCancel={this.handleOploadSubmissionFileDialogOnCancel}
-                    onSave={this.handleUploadSubmissionFileDialogOnSave}
-                    open={this.props.uploadSubmissionFileDialogOpen}
+                {/*<SingleFileUpload*/}
+                {/*    label={'Upload'}*/}
+                {/*    onCancel={this.handleOploadSubmissionFileDialogOnCancel}*/}
+                {/*    onSave={this.handleUploadSubmissionFileDialogOnSave}*/}
+                {/*    open={this.props.uploadSubmissionFileDialogOpen}*/}
 
-                    value={this.props.selectedSubmissionFile}
-                    accept={this.props.selectedSubmissionFile.filetype === 'MEASUREMENT' ? '.sb, .dat, .txt, .csv' : undefined}
+                {/*    value={this.props.selectedSubmissionFile}*/}
+                {/*    accept={this.props.selectedSubmissionFile.filetype === 'MEASUREMENT' ? '.sb, .dat, .txt, .csv' : undefined}*/}
 
-                />
+                {/*/>*/}
                 <SubmissionMetaDialog
                     submissionId={this.props.selectedSubmission.submission_id}
                     show={this.props.submissionMetaDialogOpen}

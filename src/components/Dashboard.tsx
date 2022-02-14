@@ -22,6 +22,7 @@ import {
 } from "@mui/material";
 
 import { Menu, AccountCircle, Help, ChevronLeft, ChevronRight, Inbox, Mail, Search } from "@mui/icons-material";
+import keycloak from "../tools/Keycloak";
 
 
 const drawerWidth = 240;
@@ -174,6 +175,7 @@ export default function Dashboard(props: DashboardProps) {
                         <Help />
                     </IconButton>
                     <IconButton color="inherit" onClick={props.openLoginDialog}>
+                    {/*<IconButton color="inherit" onClick={() => keycloak.login()}>*/}
                         <AccountCircle />
                     </IconButton>
                 </Toolbar>

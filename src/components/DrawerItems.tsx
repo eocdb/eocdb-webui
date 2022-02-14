@@ -66,11 +66,12 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
                     <ListItemText primary="Matchup"/>
                 </ListItem>
                 {/*<ListItem disabled={!submitAllowed} key={'Submit'} onClick={this.handleSubmissionClick} button>*/}
-                {/*    <ListItemIcon>*/}
-                {/*        <CloudUpload/>*/}
-                {/*    </ListItemIcon>*/}
-                {/*    <ListItemText primary="Submit"/>*/}
-                {/*</ListItem>*/}
+                <ListItem key={'Submit'} onClick={this.handleSubmissionClick} button>
+                    <ListItemIcon>
+                        <CloudUpload/>
+                    </ListItemIcon>
+                    <ListItemText primary="Submit"/>
+                </ListItem>
                 {/*<ListItem disabled={!adminAllowed}  key={'Admin'} onClick={() => this.props.handleClick('Admin')} button>*/}
                 {/*    <ListItemIcon>*/}
                 {/*        <SettingsApplications/>*/}

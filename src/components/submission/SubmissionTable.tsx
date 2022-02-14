@@ -1,137 +1,14 @@
 import * as React from "react";
 import { User, Submission } from "../../model";
 import {
-    TableHead,
-    TableCell,
     Tooltip,
-    TableSortLabel,
-    Paper,
-    Grid,
     Button,
-    Table,
-    TableBody,
-    TableRow,
     Icon, Chip
 } from "@mui/material";
 import { blue, green, orange, red } from "@mui/material/colors";
 import { CloudUpload } from "@mui/icons-material";
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
-
-function desc(a: any, b: any, orderBy: any) {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
-    }
-    return 0;
-}
-
-
-function stableSort(array: any, cmp: any) {
-    const stabilizedThis = array.map((el: any, index: any) => [el, index]);
-    stabilizedThis.sort((a: any, b: any) => {
-        const order = cmp(a[0], b[0]);
-        if (order !== 0) return order;
-        return a[1] - b[1];
-    });
-    return stabilizedThis.map((el: any) => el[0]);
-}
-
-
-function getSorting(order: any, orderBy: any) {
-    return order === 'desc' ? (a: any, b: any) => desc(a, b, orderBy) : (a: any, b: any) => -desc(a, b, orderBy);
-}
-
-
-interface EnhancedTableHeadProps {
-    onRequestSort: (event: any, property: any) => void;
-    order: 'asc' | 'desc';
-    orderBy: string;
-}
-
-
-const cols = [
-    {id: 'submission_id', numeric: false, disablePadding: true, label: 'Submission ID'},
-    {id: 'user_id', numeric: true, disablePadding: false, label: 'Submitter'},
-    {id: 'submission_date', numeric: true, disablePadding: false, label: 'Submission Date'},
-    {id: 'publication_date', numeric: true, disablePadding: false, label: 'Publication Date'},
-    {id: 'allow_publication', numeric: true, disablePadding: false, label: 'Allow Publication'},
-    {id: 'status', numeric: true, disablePadding: false, label: 'Status'},
-];
-
-
-class EnhancedTableHead extends React.Component<EnhancedTableHeadProps> {
-    constructor(props: EnhancedTableHeadProps) {
-        super(props);
-
-    }
-
-
-    createSortHandler = (property: any) => (event: any) => {
-        this.props.onRequestSort(event, property);
-    };
-
-    render() {
-        const {order, orderBy} = this.props;
-
-        return (
-            <TableHead>
-                <TableRow>
-                    {cols.map(
-                        row => (
-                            <TableCell
-                                key={row.id}
-                                sortDirection={orderBy === row.id ? order : false}
-                            >
-                                <Tooltip
-                                    title="Sort"
-                                    placement={row.numeric ? 'bottom-end' : 'bottom-start'}
-                                >
-                                    <TableSortLabel
-                                        active={orderBy === row.id}
-                                        direction={order}
-                                        onClick={this.createSortHandler(row.id)}
-                                    >
-                                        {row.label}
-                                    </TableSortLabel>
-                                </Tooltip>
-                            </TableCell>
-                        ),
-                        this,
-                    )}
-                    <TableCell
-                        key={'action'}
-                    >
-                        Action
-                    </TableCell>
-                </TableRow>
-            </TableHead>
-        );
-    }
-}
-
-
-// const styles = (theme: Theme) => createStyles(
-//     {
-//         root: {
-//             width: '100%',
-//             overflowX: 'auto',
-//         },
-//         table: {
-//             minWidth: 700,
-//         },
-//         rightIcon: {},
-//         fab: {
-//             margin: theme.spacing.unit * 2,
-//         },
-//         button: {
-//             margin: theme.spacing.unit / 2,
-//         },
-//         link: {
-//             fontcolor: "black"
-//         },
-//     });
 
 
 interface SubmissionTableProps {
@@ -160,23 +37,107 @@ interface SubmissionTableProps {
 }
 
 
-interface SubmissionTableState {
-    order: 'asc' | 'desc';
-    orderBy: string;
-}
+export default function SubmissionTable(props: SubmissionTableProps) {
+    const makeActionRow = (params, isAdmin, isSubmitter) => {
+        return (
+            <div>
+                <Tooltip title="Update Submission" placement={"top"}>
+                    <span>
+                        <Button
+                            onClick={() => props.onSubmissionDialogMetaOpen(
+                                params.row.id
+                            )}
+                            disabled={!isAdmin && !isSubmitter}
+                        >
+                            <Icon>edit</Icon>
+                        </Button>
+                    </span>
+                </Tooltip>
+                <Tooltip title="List Files" placement={"top"}>
+                    <Button
+                        onClick={() => props.onSubmissionSelect(
+                            params.row.id
+                        )}
+                    >
+                        <Icon>list</Icon>
+                    </Button>
+                </Tooltip>
+                {params.row.status === 'PAUSED' || params.row.status === 'CANCELED' ?
+                    <Tooltip title="Restart Submission" placement={"top"}>
+                        <Button
+                            onClick={() => props.onSubmissionRestart(
+                                params.row.id
+                            )}
+                        >
+                            <Icon>play_arrow</Icon>
 
-
-class SubmissionTable extends React.PureComponent<SubmissionTableProps, SubmissionTableState> {
-    constructor(props: SubmissionTableProps) {
-        super(props);
-
-        this.state = {
-            order: 'asc',
-            orderBy: 'submission_id',
-        };
+                        </Button>
+                    </Tooltip>
+                :
+                    <Tooltip title="Pause Submission" placement={"top"}>
+                        <Button
+                            onClick={() => props.onSubmissionHalt(
+                                params.row.id
+                            )}
+                        >
+                            <Icon>pause</Icon>
+                        </Button>
+                    </Tooltip>
+                }
+                <Tooltip title="Cancel Submission" placement={"top"}>
+                    <span>
+                        <Button
+                            onClick={() => props.onSubmissionReject(
+                                params.row.id
+                            )}
+                            disabled={!isAdmin}
+                        >
+                            <Icon>power_settings_new</Icon>
+                        </Button>
+                    </span>
+                </Tooltip>
+                <Tooltip title="Delete Entire Submission" placement={"top"}>
+                    <span>
+                        <Button
+                            onClick={() => props.onSubmissionDelete(
+                                params.row.id
+                            )}
+                            disabled={!isAdmin}
+                        >
+                            <Icon>delete</Icon>
+                        </Button>
+                    </span>
+                </Tooltip>
+                <Tooltip title="Process Submission into DB" aria-label="ProcessSubmission">
+                    <span>
+                        <Button
+                            onClick={() => props.onSubmissionProcess(
+                                params.row.id
+                            )}
+                            disabled={!isAdmin}
+                        >
+                            <Icon>input</Icon>
+                        </Button>
+                    </span>
+                </Tooltip>
+                <Tooltip title="Process into DB and Publish Submission"
+                         placement={"top"}>
+                    <span>
+                        <Button
+                            onClick={() => props.onSubmissionPublish(
+                                params.row.id
+                            )}
+                            disabled={!isAdmin}
+                        >
+                            <Icon>publish</Icon>
+                        </Button>
+                    </span>
+                </Tooltip>
+            </div>
+        );
     }
 
-    getColourForStatus = (status: string) => {
+    const getColourForStatus = (status: string) => {
         switch (status) {
             case 'SUBMITTED':
                 return blue.A100;
@@ -198,187 +159,100 @@ class SubmissionTable extends React.PureComponent<SubmissionTableProps, Submissi
         return "yellow"
     };
 
-    handleRequestSort = (event: any, property: any) => {
-        const orderBy = property;
-        let order: 'asc' | 'desc' = 'desc';
-
-        if (this.state.orderBy === property && this.state.order === 'desc') {
-            order = 'asc';
-        }
-
-        this.setState({order, orderBy});
+    const makeRows = (submissions: Submission[]) => {
+        return submissions.map((submission: Submission) => {
+            return {
+                id: submission.submission_id,
+                submission_date: submission.date,
+                user_id: submission.user_id,
+                publication_date: submission.publication_date,
+                allow_publication: submission.allow_publication,
+                status: submission.status,
+                actions: '.'
+            }
+        });
     };
 
-    render() {
-        if (!this.props.show) {
-            return null;
-        }
-
-        const {order, orderBy} = this.state;
-        const {submissionsValue} = this.props;
-
-        const user = this.props.user === null ? undefined : this.props.user;
-
-        const isAdmin = user && (user.roles.indexOf('admin') > -1);
-        const isSubmitter = user && (user.roles.indexOf('submit') > -1);
-
-        return (
-            <div>
-                <Paper>
-                    <Grid container>
-                        <Button variant="contained"
-                                color="secondary"
-                                // className={classes.button}
-                                onClick={this.props.onSubmissionDialogOpen}
-                        >
-                            New Submission
-                            <CloudUpload/>
-                        </Button>
-                    </Grid>
-                    <Table>
-                        <EnhancedTableHead onRequestSort={this.handleRequestSort} order={order} orderBy={orderBy}/>
-                        <TableBody>
-                            {stableSort(submissionsValue, getSorting(order, orderBy)).map((row: Submission) => {
-                                const colour = this.getColourForStatus(row.status);
-                                console.log(row);
-
-                                return (
-                                    <TableRow
-                                        hover
-                                        role="checkbox"
-                                        key={row.submission_id}
-                                        tabIndex={-1}
-                                    >
-                                        <TableCell component="th" scope="row" padding="none">
-                                            {row.submission_id}
-                                        </TableCell>
-                                        <TableCell>
-                                            {row.user_id ? row.user_id : ""}
-                                        </TableCell>
-                                        <TableCell>
-                                            {row.date ?
-                                                new Date(Date.parse(row.date)).toDateString() : ""}
-                                        </TableCell>
-                                        <TableCell>
-                                            {row.publication_date ?
-                                                new Date(Date.parse(row.publication_date)).toDateString() : ""}
-                                        </TableCell>
-                                        <TableCell>
-                                            {row.allow_publication ?
-                                                <Icon style={{color: green.A400}}>done</Icon> :
-                                                <Icon style={{color: red.A400}}>pan_tool</Icon>
-                                            }
-                                        </TableCell>
-                                        <TableCell>
-                                            <Chip
-                                                label={row.status}
-                                                style={{background: colour, color: "white"}}
-                                            />
-                                        </TableCell>
-                                        <TableCell>
-                                            <Tooltip title="Update Submission" placement={"top"}>
-                                                <span>
-                                                    <Button
-                                                        onClick={() => this.props.onSubmissionDialogMetaOpen(
-                                                            row.submission_id
-                                                        )}
-                                                        disabled={!isAdmin && !isSubmitter}
-                                                    >
-                                                        <Icon>edit</Icon>
-                                                    </Button>
-                                                </span>
-                                            </Tooltip>
-                                            <Tooltip title="List Files" placement={"top"}>
-                                                <Button
-                                                    onClick={() => this.props.onSubmissionSelect(
-                                                        row.submission_id
-                                                    )}
-                                                >
-                                                    <Icon>list</Icon>
-                                                </Button>
-                                            </Tooltip>
-                                            {row.status === 'PAUSED' || row.status === 'CANCELED' ?
-                                                <Tooltip title="Restart Submission" placement={"top"}>
-                                                    <Button
-                                                        onClick={() => this.props.onSubmissionRestart(
-                                                            row
-                                                        )}
-                                                    >
-                                                        <Icon>play_arrow</Icon>
-
-                                                    </Button>
-                                                </Tooltip>
-                                                :
-                                                <Tooltip title="Pause Submission" placement={"top"}>
-                                                    <Button
-                                                        onClick={() => this.props.onSubmissionHalt(
-                                                            row.submission_id
-                                                        )}
-                                                    >
-                                                        <Icon>pause</Icon>
-                                                    </Button>
-                                                </Tooltip>
-                                            }
-                                            <Tooltip title="Cancel Submission" placement={"top"}>
-                                                <span>
-                                                    <Button
-                                                        onClick={() => this.props.onSubmissionReject(
-                                                            row.submission_id
-                                                        )}
-                                                        disabled={!isAdmin}
-                                                    >
-                                                        <Icon>power_settings_new</Icon>
-                                                    </Button>
-                                                </span>
-                                            </Tooltip>
-                                            <Tooltip title="Delete Entire Submission" placement={"top"}>
-                                                <span>
-                                                    <Button
-                                                        onClick={() => this.props.onSubmissionDelete(
-                                                            row.submission_id
-                                                        )}
-                                                        disabled={!isAdmin}
-                                                    >
-                                                        <Icon>delete</Icon>
-                                                    </Button>
-                                                </span>
-                                            </Tooltip>
-                                            <Tooltip title="Process Submission into DB" aria-label="ProcessSubmission">
-                                                <span>
-                                                    <Button
-                                                        onClick={() => this.props.onSubmissionProcess(
-                                                            row.submission_id
-                                                        )}
-                                                        disabled={!isAdmin}
-                                                    >
-                                                        <Icon>input</Icon>
-                                                    </Button>
-                                                </span>
-                                            </Tooltip>
-                                            <Tooltip title="Process into DB and Publish Submission"
-                                                     placement={"top"}>
-                                                <span>
-                                                    <Button
-                                                        onClick={() => this.props.onSubmissionPublish(
-                                                            row.submission_id
-                                                        )}
-                                                        disabled={!isAdmin}
-                                                    >
-                                                        <Icon>publish</Icon>
-                                                    </Button>
-                                                </span>
-                                            </Tooltip>
-                                        </TableCell>
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
-                </Paper>
-            </div>
-        );
+    if (!props.show) {
+        return null;
     }
+
+    const [pageSize, setPageSize] = React.useState<number>(5);
+
+    const {submissionsValue} = props;
+
+    const user = props.user === null ? undefined : props.user;
+
+    const isAdmin = user && (user.roles.indexOf('admin') > -1);
+    const isSubmitter = user && (user.roles.indexOf('submit') > -1);
+
+    const columns: GridColDef[] = [
+        {
+            field: 'id',
+            headerName: 'Submission ID',
+            width: 160 },
+        {
+            field: 'user_id',
+            headerName: 'Submitter',
+            width: 150,
+            sortable: false
+        },
+        {
+            field: 'submission_date',
+            headerName: 'Submission Date',
+            width: 150,
+            sortable: false
+        },
+        {
+            field: 'publication_date',
+            headerName: 'Publication Date',
+            type: 'date',
+            width: 160,
+            sortable: false
+        },
+        {
+            field: 'allow_publication',
+            headerName: 'Publication Allowed',
+            type: 'boolean',
+            width: 160,
+            sortable: false
+        },
+        {
+            field: 'status',
+            headerName: 'Status',
+            width: 160,
+            sortable: false,
+            renderCell: (params => {
+                const colour = getColourForStatus(params.row.status);
+                return (<Chip
+                    label={params.row.status}
+                    style={{background: colour, color: "white"}}
+                />);
+            })
+        },
+        {
+            field: 'actions',
+            headerName: 'Actions',
+            width: 400,
+            renderCell: (params => {
+                return makeActionRow(params, isAdmin, isSubmitter);
+            })
+        }
+    ];
+
+    const rows = makeRows(submissionsValue);
+
+    return (
+        <div style={{ height: 800, width: '100%' }}>
+            <DataGrid
+                rows={rows}
+                columns={columns}
+                pageSize={pageSize}
+                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                rowsPerPageOptions={[5, 10]}
+                pagination
+                disableSelectionOnClick
+            />
+        </div>
+    );
 }
-
-
-export default SubmissionTable;
