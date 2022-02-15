@@ -9,6 +9,7 @@ import {
     Button,
     DialogActions
 } from "@mui/material";
+import ReactMarkdown from "markdown-to-jsx";
 
 
 
@@ -46,7 +47,7 @@ export class TermsDialog<T> extends React.Component<TermsDialogProps<T> > {
     render() {
         const downloadTerms = this.props.downloadTerms;
 
-        // const terms = downloadTerms ? TERMS[downloadTerms] : TERMS['SB'];
+        const terms = downloadTerms ? TERMS[downloadTerms] : TERMS['SB'];
 
         return (
             <Dialog
@@ -55,9 +56,9 @@ export class TermsDialog<T> extends React.Component<TermsDialogProps<T> > {
             >
                 <DialogTitle id="form-dialog-title">{this.props.title}</DialogTitle>
                 <DialogContent>
-                    {/*<ReactMarkdown options={this.options}>*/}
-                    {/*    {terms}*/}
-                    {/*</ReactMarkdown>*/}
+                    <ReactMarkdown options={this.options}>
+                        {terms}
+                    </ReactMarkdown>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.props.onAgree}

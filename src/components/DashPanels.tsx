@@ -31,7 +31,7 @@ class DashPanels extends React.PureComponent<DashPanelsProps> {
                 {/*<BrowsePanel show={this.props.currentDrawer == 'Browse'}/>*/}
                 {/*<LinksPanel show={this.props.currentDrawer == "Links"}/>*/}
 
-                <MatchupPanel show={this.props.currentDrawer == 'Home'}/>
+                <MatchupPanel show={this.props.currentDrawer == 'Matchup'}/>
 
                 <AdminPanel show={this.props.currentDrawer == 'Admin'}/>
             </div>

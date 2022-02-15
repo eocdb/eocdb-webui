@@ -2,10 +2,8 @@ import * as React from 'react';
 
 import { MatchupFiles } from "../../model/MatchupFiles";
 import TermsDialog from "../search/TermsDialog";
-// import MUIDataTable from "mui-datatables";
-
-
-const columns = ["FileName", "Directory"];
+import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import { Button } from "@mui/material";
 
 
 interface MatchupPanelProps {
@@ -20,6 +18,7 @@ interface MatchupPanelProps {
     selectedRowData: string[];
 }
 
+
 export default function MatchupPanel(props: MatchupPanelProps) {
     // noinspection JSUnusedLocalSymbols
     const handleDownload = (rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => {
@@ -27,13 +26,13 @@ export default function MatchupPanel(props: MatchupPanelProps) {
     };
 
     // noinspection JSUnusedLocalSymbols
-    const handleRowClick = (rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => {
-        props.updateSelectedRowData(rowData);
+    const handleRowClick = (params: any) => {
+        props.updateSelectedRowData([params.row.filename, params.row.dirname]);
         props.openTermsDialog();
     };
 
     const handleTermsDialogAgreeClick = () => {
-        handleDownload(this.props.selectedRowData, {dataIndex: 0, rowIndex: 0});
+        handleDownload(props.selectedRowData, {dataIndex: 0, rowIndex: 0});
         props.closeTermsDialog();
     };
 
@@ -42,47 +41,63 @@ export default function MatchupPanel(props: MatchupPanelProps) {
     };
 
 
-    // getMuiTheme = () => createMuiTheme({
-    //     overrides: {
-    //         MUIDataTableBodyCell: {
-    //             root: {
-    //                 backgroundColor: "#FF0000",
-    //                 cursor: 'pointer'
-    //             }
-    //         }
-    //     }
-    // });
     if (!props.show) {
         return null;
     }
 
-    const options = {
-        filterType: 'textField' as any,
-        onRowClick: handleRowClick,
-        selectableRows: 'none' as any,
-    };
-
-    const data = this.props.matchupFiles.map((item: MatchupFiles) => {
-        return [item.filename, item.dirname]
+    let ct = 0;
+    const rows = props.matchupFiles.map((item: MatchupFiles) => {
+        ct++;
+        return {
+            id: ct,
+            filename: item.filename,
+            dirname: item.dirname,
+            actions: ''}
     });
 
+    const columns: GridColDef[] = [
+        {
+           field: 'id',
+           headerName: 'ID',
+        },
+        {
+            field: 'filename',
+            headerName: 'Filename',
+            width: 300
+        },
+        {
+            field: 'dirname',
+            headerName: 'Dir',
+            width: 400
+        },
+        {
+            field: 'actions',
+            headerName: 'Actions',
+            width: 100,
+            renderCell: (params => {
+                return (<Button onClick={() => handleRowClick(params)}>
+                    Download
+                </Button>);
+            })
+        }]
 
     return (
-            <div>
-                <TermsDialog
-                    title={'OLCI in-situ Matchup Database Download Terms and Conditions'}
-                    open={this.props.termsDialogOpen}
-                    onDisagree={this.handleTermsDialogDisAgreeClick}
-                    onAgree={this.handleTermsDialogAgreeClick}
-                    downloadTerms={'OM'}
-                />
-                {/*<MUIDataTable*/}
-                {/*    title={"Matchup Files"}*/}
-                {/*    data={data}*/}
-                {/*    columns={columns}*/}
-                {/*    options={options}*/}
-                {/*/>*/}
-            </div>
-        );
+        <div style={{ height: 600, width: '100%' }}>
+            <TermsDialog
+                title={'OLCI in-situ Matchup Database Download Terms and Conditions'}
+                open={props.termsDialogOpen}
+                onDisagree={handleTermsDialogDisAgreeClick}
+                onAgree={handleTermsDialogAgreeClick}
+                downloadTerms={'OM'}
+            />
+            <DataGrid
+                rows={rows}
+                columns={columns}
+                pageSize={5}
+                pagination
+                components={{ Toolbar: GridToolbar }}
+            />
+        </div>
+    );
 }
 
