@@ -3,40 +3,29 @@ import * as React from "react";
 import { wavelengthItems } from "./SelectItems";
 import MinMaxInputSlider from "./MinMaxInputSlider";
 import RadioSelect, { RadioItem } from "./RadioSelect";
-import MultipleSelectTextField, { Suggestion } from "./MultipleSelectTextField";
+import MultipleSelectTextField from "./MultipleSelectTextField";
 import { SliderRange } from "../../types/advancedSearchDialog";
 import { Product } from "../../model";
-import { Button, Dialog, DialogActions, DialogTitle, Grid, Slide, SlideProps, Typography } from "@mui/material";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle, Divider,
+    Slide,
+    Typography
+} from "@mui/material";
+import { TransitionProps } from "@mui/material/transitions";
 
 
-// const styles = (theme: Theme) => createStyles({
-//     dialogContent: {
-//         marginLeft: theme.spacing.unit * 4,
-//         marginRight: theme.spacing.unit * 4,
-//         marginTop: theme.spacing.unit * 4,
-//         marginBottom: theme.spacing.unit * 4,
-//     },
-//     appBar: {
-//         position: 'relative',
-//     },
-//     flex: {
-//         flex: 1,
-//     },
-//     searchField: {
-//         width: 200,
-//         marginRight: theme.spacing.unit / 2,
-//     },
-//     textField: {},
-//     button: {},
-//     rightIcon: {},
-//     tableContainer: {},
-// });
-
-
-//
-// function Transition(props: SlideProps) {
-//     return <Slide direction="up" {...props} />;
-// }
+const Transition = React.forwardRef(function Transition(
+    props: TransitionProps & {
+        children: React.ReactElement<any, any>;
+    },
+    ref: React.Ref<unknown>,
+) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 
 export interface AdvancedSearchDialogProps {
@@ -114,64 +103,58 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
             <Dialog
                 open={this.props.open}
                 onClose={this.props.onClose}
-                // TransitionComponent={Transition}
+                keepMounted
+                TransitionComponent={Transition}
             >
-                {/*<div className={classes.dialogContent}>*/}
-                <div>
-                    <DialogTitle id="form-dialog-title">Advanced Search</DialogTitle>
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <Typography component={'h2'}>Wavelength options</Typography>
-                            <RadioSelect items={wavelengthItems}
-                                         selectedValue={wavelengthValue}
-                                         onChange={this.handleWaveLengthSelect}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography component={'h2'}>Water Depth</Typography>
-                            <MinMaxInputSlider
-                                value={this.props.waterDepthValue}
-                                onChange={this.handleWaterDepthChange}
+                <DialogTitle id="form-dialog-title">Advanced Search</DialogTitle>
+                <Divider/>
+                <DialogContent>
+                    <div style={{'margin': 10}}>
+                        <Typography gutterBottom={true} variant={'h6'}>Wavelength options</Typography>
+                        <RadioSelect items={wavelengthItems}
+                                     selectedValue={wavelengthValue}
+                                     onChange={this.handleWaveLengthSelect}
+                        />
+                    </div>
+                    <Divider/>
+                    <div style={{'margin': 10}}>
+                        <Typography gutterBottom={true} variant={'h6'}>Water Depth</Typography>
+                        <MinMaxInputSlider
+                            value={this.props.waterDepthValue}
+                            onChange={this.handleWaterDepthChange}
 
-                                label={'Water Depth'}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography component={'h2'}>Include optically shallow waters</Typography>
-                            <RadioSelect items={items}
-                                         selectedValue={this.props.optShallowValue}
-                                         onChange={this.props.onOptShallowChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography component={'h2'}>Select Products</Typography>
-                            <MultipleSelectTextField
-                                suggestions={this.makeProductSuggestions()}
-                                onChange={this.handleUpdateProducts}
-                                selectedItems={this.makeSelectedProducts()}
-                                isMulti={true}
-                                closeMenuOnSelect={false}
-                            />
-                        </Grid>
-                    </Grid>
-
-                    <DialogActions>
-                        <Button onClick={this.props.onClose}
-                                aria-label="Close"
-                                variant="contained"
-                                color="secondary"
-                        >
-                            Apply
-                        </Button>
-                        <Button onClick={this.props.onClose}
-                                aria-label="Close"
-                                variant="contained"
-                                color="secondary"
-                        >
-                            Cancel
-                        </Button>
-                    </DialogActions>
-                </div>
+                            label={'Water Depth'}
+                        />
+                    </div>
+                    <Divider/>
+                    <div style={{'margin': 10}}>
+                        <Typography gutterBottom={true} variant={'h6'}>Include optically shallow waters</Typography>
+                        <RadioSelect items={items}
+                                     selectedValue={this.props.optShallowValue}
+                                     onChange={this.props.onOptShallowChange}
+                        />
+                    </div>
+                    <Divider/>
+                    <div style={{'margin': 10}}>
+                        <Typography gutterBottom={true} variant={'h6'}>Select Products</Typography>
+                        <MultipleSelectTextField
+                            suggestions={this.makeProductSuggestions()}
+                            onChange={this.handleUpdateProducts}
+                            selectedItems={this.makeSelectedProducts()}
+                            isMulti={true}
+                            closeMenuOnSelect={false}
+                        />
+                    </div>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={this.props.onClose}
+                            aria-label="Close"
+                            variant="contained"
+                            color="secondary"
+                    >
+                        Close
+                    </Button>
+                </DialogActions>
             </Dialog>
         );
     }
