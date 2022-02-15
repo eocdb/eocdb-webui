@@ -3,7 +3,7 @@ import * as React from 'react';
 import { MatchupFiles } from "../../model/MatchupFiles";
 import TermsDialog from "../search/TermsDialog";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 
 
 interface MatchupPanelProps {
@@ -90,13 +90,15 @@ export default function MatchupPanel(props: MatchupPanelProps) {
                 onAgree={handleTermsDialogAgreeClick}
                 downloadTerms={'OM'}
             />
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={5}
-                pagination
-                components={{ Toolbar: GridToolbar }}
-            />
+            <Paper>
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    pageSize={5}
+                    pagination
+                    components={{ Toolbar: GridToolbar }}
+                />
+            </Paper>
         </div>
     );
 }

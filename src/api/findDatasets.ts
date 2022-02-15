@@ -26,9 +26,6 @@ export interface DatasetQuery {
     offset?: number;
     count?: number;
     geojson?: boolean;
-    //submissionId: string;
-    //userId: number;
-    //status: string;
 }
 
 type QueryComponent = [string, string];
@@ -59,8 +56,6 @@ export function collectComponents(datasetQuery: DatasetQuery) {
     collectTimeComponent(datasetQuery, queryComponents);
     collectRegionComponent(datasetQuery, queryComponents);
     collectSubmissionIdComponent(datasetQuery, queryComponents);
-    //collectStatusComponent(datasetQuery, queryComponents);
-    //collectUserIdComponent(datasetQuery, queryComponents);
     collectProductComponents(datasetQuery, queryComponents);
     collectMeasurementTypeComponent(datasetQuery, queryComponents);
     collectWavelengthsTypeComponent(datasetQuery, queryComponents);
