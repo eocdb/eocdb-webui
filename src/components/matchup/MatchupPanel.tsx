@@ -57,10 +57,6 @@ export default function MatchupPanel(props: MatchupPanelProps) {
 
     const columns: GridColDef[] = [
         {
-           field: 'id',
-           headerName: 'ID',
-        },
-        {
             field: 'filename',
             headerName: 'Filename',
             width: 300
@@ -73,7 +69,9 @@ export default function MatchupPanel(props: MatchupPanelProps) {
         {
             field: 'actions',
             headerName: 'Actions',
-            width: 100,
+            minWidth: 100,
+            sortable: false,
+            filterable: false,
             renderCell: (params => {
                 return (<Button onClick={() => handleRowClick(params)}>
                     Download
@@ -90,15 +88,13 @@ export default function MatchupPanel(props: MatchupPanelProps) {
                 onAgree={handleTermsDialogAgreeClick}
                 downloadTerms={'OM'}
             />
-            <Paper>
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    pageSize={5}
-                    pagination
-                    components={{ Toolbar: GridToolbar }}
-                />
-            </Paper>
+            <DataGrid
+                rows={rows}
+                columns={columns}
+                pageSize={5}
+                pagination
+                components={{ Toolbar: GridToolbar }}
+            />
         </div>
     );
 }

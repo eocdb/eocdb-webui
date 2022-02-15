@@ -250,13 +250,26 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         this.props.updateDatasetQuery({...this.props.datasetQuery, searchExpr});
     };
 
+    convertDate = (dateString?: string) => {
+        if (dateString) {
+            const dtt = Date.parse (dateString);
+            const newDate = new Date (dtt);
+            return newDate.toISOString ().split ('T')[0];
+        }
+        else {
+            return null;
+        }
+    };
+
     handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const startDate = event ? event.toString() : null;
+        const startDate = this.convertDate(event ? event.toString() : null);
+
         this.props.updateDatasetQuery({...this.props.datasetQuery, startDate});
     };
 
     handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const endDate = event ? event.toString() : null;
+        const endDate = this.convertDate(event ? event.toString() : null);
+
         this.props.updateDatasetQuery({...this.props.datasetQuery, endDate});
     };
 
