@@ -3,26 +3,21 @@ import * as React from 'react';
 import DrawerItems from './DrawerItems';
 import DashPanels from './DashPanels';
 import LoginDialog from './user/LoginDialog';
-import ConfigDialog from './admin/ConfigDialog';
-import SearchHistory from "./search/SearchHistory";
 import { User } from "../model";
 import partnerLogos from "../resources/logos.png"
 import { SearchHistoryItem } from "../types/dataset";
 import { DatasetQuery } from "../api/findDatasets";
-import UserRegistrationDialog from "./user/UserRegistrationDialog";
-import ChangeLoginUserDialog from "./user/changeLoginUserDialog";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import {
     Box,
     CssBaseline, Divider,
     Drawer,
-    IconButton, List, ListItem, ListItemIcon, ListItemText, styled,
+    IconButton, List, styled,
     Toolbar,
     Typography, useTheme
 } from "@mui/material";
 
-import { Menu, AccountCircle, Help, ChevronLeft, ChevronRight, Inbox, Mail, Search } from "@mui/icons-material";
-import keycloak from "../tools/Keycloak";
+import { Menu, AccountCircle, Help, ChevronLeft, ChevronRight } from "@mui/icons-material";
 
 
 const drawerWidth = 240;
@@ -209,7 +204,7 @@ export default function Dashboard(props: DashboardProps) {
                 </List>
                 <Divider />
             </Drawer>
-            <Main open={open}>
+            <Main open={open} sx={{'backgroundColor': '#fafafafa'}}>
                 <DrawerHeader />
                 <DashPanels user={props.user}
                             searchHistory={props.searchHistory}

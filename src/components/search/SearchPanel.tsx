@@ -5,7 +5,7 @@ import { DatasetQuery } from '../../api/findDatasets';
 import DataTable from "./DataTable";
 import AdvancedSearchDialog from "./AdvancedSearchDialog";
 import AdvancedSearchLog from "./AdvancedSearchLog";
-import MultipleSelectTextField, { Suggestion } from "./MultipleSelectTextField";
+import MultipleSelectTextField from "./MultipleSelectTextField";
 import HelpDialog from "../messages/HelpDialog";
 import { FindHelpText } from "../messages/Help/find";
 
@@ -18,7 +18,14 @@ import { GeoJsonObject } from "geojson";
 import { LatLng, LatLngBounds } from "leaflet";
 import { BBoxValue } from "./BBoxInput";
 import { PlotRecord, PlotState } from "../../states/dataTableState";
-import { Button, CircularProgress, FormControl, Icon, IconButton, TextField } from "@mui/material";
+import {
+    Button,
+    CircularProgress,
+    Icon,
+    IconButton,
+    Stack,
+    TextField
+} from "@mui/material";
 import { DatePicker } from "@mui/lab";
 
 
@@ -306,71 +313,70 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
         return (
             <Grid container spacing={2}>
-                <Grid item xs={2}>
-                    <DatePicker
-                        label="From Date"
-                        value={this.props.datasetQuery.startDate}
-                        onChange={this.handleStartDateChange}
-                        renderInput={(params) => <TextField {...params} helperText={null} />}
-                    />
+                <Grid item xs={6}>
+                    <Stack direction={'row'}>
+                        <DatePicker
+                            label="From Date"
+                            value={this.props.datasetQuery.startDate}
+                            onChange={this.handleStartDateChange}
+                            renderInput={(params) => <TextField sx={{'width': 400}} {...params} helperText={null} />}
+                        />
+                        <DatePicker
+                            label="To Date"
+                            value={this.props.datasetQuery.endDate}
+                            onChange={this.handleEndDateChange}
+                            renderInput={(params) => <TextField sx={{'width': 400}} {...params} helperText={null} />}
+                        />
+                        <MultipleSelectTextField
+                            suggestions={this.getProductGroups()}
+                            onChange={this.handleProductGroupsChange}
+                            selectedItems={this.getSelectedProducts()}
+                            isMulti={true}
+                            closeMenuOnSelect={true}
+                            placeholder={'Product Groups'}
+                        />
+                        <TextField
+                            id={'lucene-search'}
+                            key={'lucene-search'}
+                            label={'Search...'}
+                            variant={"outlined"}
+                            value={this.props.datasetQuery.searchExpr}
+                            onChange={this.handleSearchExprChange}
+                            onKeyPress={this.handleSearchExpKeyPressed}
+                            sx={{'width': 800}}
+                        />
+                    </Stack>
+                </Grid>
+                <Grid item xs={4}>
+                    <Stack direction={'row'} alignItems="center">
+                        <IconButton
+                            onClick={this.props.openHelpDialog}
+                        >
+                            <Icon color={"secondary"}>
+                                help
+                            </Icon>
+                        </IconButton>
+                        <Button onClick={this.handleClear} size={'small'}>
+                            Clear
+                        </Button>
+                        <Button onClick={this.props.openSaveSearchDialog} size={'small'}>
+                            Save Search
+                        </Button>
+                    </Stack>
                 </Grid>
                 <Grid item xs={2}>
-                    <DatePicker
-                        label="To Date"
-                        value={this.props.datasetQuery.endDate}
-                        onChange={this.handleEndDateChange}
-                        renderInput={(params) => <TextField {...params} helperText={null} />}
-                    />
-                </Grid>
-                <Grid item xs={2}>
-                    <MultipleSelectTextField
-                        suggestions={this.getProductGroups()}
-                        onChange={this.handleProductGroupsChange}
-                        selectedItems={this.getSelectedProducts()}
-                        isMulti={true}
-                        closeMenuOnSelect={true}
-                        placeholder={'Product Groups'}
-                    />
-                </Grid>
-                <Grid item xs={2}>
-                    <TextField
-                        id={'lucene-search'}
-                        key={'lucene-search'}
-                        label={'Search...'}
-                        variant={"outlined"}
-                        value={this.props.datasetQuery.searchExpr}
-                        onChange={this.handleSearchExprChange}
-                        onKeyPress={this.handleSearchExpKeyPressed}
-                    />
-                </Grid>
-                <Grid item xs={2}>
-                    <Button variant="contained"
-                            color="secondary"
-                            onClick={this.handleSearchDatasets}>
-                        Search
-                        {this.props.loading && <CircularProgress size={24}/>}
-                        <Icon>search</Icon>
-                    </Button>
-                    <IconButton
-                        onClick={this.props.openHelpDialog}
-                    >
-                        <Icon color={"secondary"}>
-                            help
-                        </Icon>
-                    </IconButton>
-                </Grid>
-                <Grid item xs={2}>
-                    <Button onClick={this.handleClear} size={'small'}>
-                        Clear
-                    </Button>
-                    <Button onClick={this.props.openSaveSearchDialog} size={'small'}>
-                        Save Search
-                    </Button>
-
-                    <Button onClick={this.props.openAdvancedSearchDialog} size={'small'}>
-                        Advanced Options
-                    </Button>
-
+                    <Stack direction={'row'} alignItems="center">
+                        <Button onClick={this.props.openAdvancedSearchDialog} size={'small'}>
+                            Advanced Options
+                        </Button>
+                        <Button variant="contained"
+                                color="secondary"
+                                onClick={this.handleSearchDatasets}>
+                            Search
+                            {this.props.loading && <CircularProgress size={24}/>}
+                            <Icon>search</Icon>
+                        </Button>
+                    </Stack>
                     <HelpDialog
                         open={this.props.productGroupsHelpDialogOpen}
                         onClose={this.props.closeProductGroupsHelpDialog}

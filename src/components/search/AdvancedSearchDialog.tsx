@@ -11,8 +11,8 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle, Divider,
-    Slide,
+    DialogTitle, Divider, Paper,
+    Slide, Stack, styled,
     Typography
 } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
@@ -46,6 +46,15 @@ export interface AdvancedSearchDialogProps {
 
     productItems: Product[];
 }
+
+
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}));
 
 
 const items: RadioItem[] = [
@@ -109,42 +118,41 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                 <DialogTitle id="form-dialog-title">Advanced Search</DialogTitle>
                 <Divider/>
                 <DialogContent>
-                    <div style={{'margin': 10}}>
-                        <Typography gutterBottom={true} variant={'h6'}>Wavelength options</Typography>
-                        <RadioSelect items={wavelengthItems}
-                                     selectedValue={wavelengthValue}
-                                     onChange={this.handleWaveLengthSelect}
-                        />
-                    </div>
-                    <Divider/>
-                    <div style={{'margin': 10}}>
-                        <Typography gutterBottom={true} variant={'h6'}>Water Depth</Typography>
-                        <MinMaxInputSlider
-                            value={this.props.waterDepthValue}
-                            onChange={this.handleWaterDepthChange}
+                    <Stack direction={'column'} spacing={5}>
+                        <Item>
+                            <Typography gutterBottom={true} variant={'h6'}>Wavelength options</Typography>
+                            <RadioSelect items={wavelengthItems}
+                                         selectedValue={wavelengthValue}
+                                         onChange={this.handleWaveLengthSelect}
+                            />
+                        </Item>
+                        <Item>
+                            <Typography gutterBottom={true} variant={'h6'}>Water Depth</Typography>
+                            <MinMaxInputSlider
+                                value={this.props.waterDepthValue}
+                                onChange={this.handleWaterDepthChange}
 
-                            label={'Water Depth'}
-                        />
-                    </div>
-                    <Divider/>
-                    <div style={{'margin': 10}}>
-                        <Typography gutterBottom={true} variant={'h6'}>Include optically shallow waters</Typography>
-                        <RadioSelect items={items}
-                                     selectedValue={this.props.optShallowValue}
-                                     onChange={this.props.onOptShallowChange}
-                        />
-                    </div>
-                    <Divider/>
-                    <div style={{'margin': 10}}>
-                        <Typography gutterBottom={true} variant={'h6'}>Select Products</Typography>
-                        <MultipleSelectTextField
-                            suggestions={this.makeProductSuggestions()}
-                            onChange={this.handleUpdateProducts}
-                            selectedItems={this.makeSelectedProducts()}
-                            isMulti={true}
-                            closeMenuOnSelect={false}
-                        />
-                    </div>
+                                label={'Water Depth'}
+                            />
+                        </Item>
+                        <Item>
+                            <Typography gutterBottom={true} variant={'h6'}>Include optically shallow waters</Typography>
+                            <RadioSelect items={items}
+                                         selectedValue={this.props.optShallowValue}
+                                         onChange={this.props.onOptShallowChange}
+                            />
+                        </Item>
+                        <Item>
+                            <Typography gutterBottom={true} variant={'h6'}>Select Products</Typography>
+                            <MultipleSelectTextField
+                                suggestions={this.makeProductSuggestions()}
+                                onChange={this.handleUpdateProducts}
+                                selectedItems={this.makeSelectedProducts()}
+                                isMulti={true}
+                                closeMenuOnSelect={false}
+                            />
+                        </Item>
+                    </Stack>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.props.onClose}
