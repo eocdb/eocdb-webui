@@ -18,6 +18,9 @@ const theme = createTheme(
             },
             secondary: {
                 main: '#c51162',
+            },
+            background: {
+                default: '#fafafafa'
             }
         },
     });
