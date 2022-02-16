@@ -179,8 +179,8 @@ class DataTable extends React.Component<DataTableProps> {
     };
 
     handlePlotOpen = (id: string) => {
-        this.props.openPlotDialog();
         this.props.updateDataset(id);
+        this.props.openPlotDialog();
     };
 
     handlePlotClose = () => {

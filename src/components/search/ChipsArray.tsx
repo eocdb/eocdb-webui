@@ -7,15 +7,6 @@ export interface ChipEntry {
     label: string;
 }
 
-// const styles = (theme: Theme) => createStyles({
-//     root: {
-//         marginBottom: theme.spacing.unit,
-//     },
-//     chip: {
-//         margin: theme.spacing.unit / 2,
-//     },
-// });
-
 
 interface ChipsArrayProps {
     chipData: ChipEntry[];
@@ -45,7 +36,6 @@ class ChipsArray extends React.PureComponent<ChipsArrayProps> {
                                     key={chip.key}
                                     label={chip.label}
                                     onDelete={() => this.handleDelete(chip.key)}
-                                    // className={classes.chip}
                                 />
                             );
                         }
