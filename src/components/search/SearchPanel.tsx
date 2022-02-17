@@ -26,6 +26,7 @@ import {
     TextField
 } from "@mui/material";
 import { DatePicker } from "@mui/lab";
+import { DefaultDatasetQuery } from "../../model/DatasetQuery";
 
 
 interface SearchPanelProps {
@@ -174,25 +175,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
     }
 
     handleClear = () => {
-        this.props.updateDatasetQuery({
-                ...this.props.datasetQuery,
-                searchExpr: '',
-                startDate: null,
-                endDate: null,
-                productGroupNames: [],
-                region: undefined,
-                productMode: undefined,
-                productNames: [],
-                measurementType: undefined,
-                wavelengthsMode: undefined,
-                wdepth: [null, null],
-                shallow: undefined,
-            }
-        );
-
-        this.props.updateWavelength('all');
-        this.props.updateOptShallow('');
-        this.props.updateProducts([]);
+        this.props.updateDatasetQuery(DefaultDatasetQuery);
         this.props.updateSelectedRegions({type: 'Polygon'});
     };
 

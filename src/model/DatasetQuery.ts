@@ -20,6 +20,7 @@ export interface DatasetQuery {
     mtype?: string,
     wavelengthsMode?: string;
     wdepth?: SliderRange;
+    hasWdepth: boolean;
     shallow?: string;
     datasetIds?: string[];
     offset?: number;
@@ -44,6 +45,7 @@ export const DefaultDatasetQuery: DatasetQuery = {
     mtype: null,
     wavelengthsMode: null,
     wdepth: [null, null],
+    hasWdepth: false,
     shallow: null,
     datasetIds: [],
     offset: 0,

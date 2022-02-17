@@ -21,9 +21,8 @@ class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
             const label = 'wavelength: ' + datasetQuery.wavelengthsMode;
             chips.push({key: 'wavelength', label: label});
         }
-
-        if (datasetQuery.wdepth[0] && datasetQuery.wdepth[1]) {
-
+        // Use !== null to distinguish between null and 0 as zero is a valid entry.
+        if (datasetQuery.wdepth[0] !== null && datasetQuery.wdepth[1] !== null) {
             const label = 'water depth: ' + datasetQuery.wdepth.join(' ');
             chips.push({key: 'waterdepth', label: label});
         }

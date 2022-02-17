@@ -7,11 +7,11 @@ import MultipleSelectTextField from "./MultipleSelectTextField";
 import { SliderRange } from "../../types/advancedSearchDialog";
 import { DatasetQuery, Product } from "../../model";
 import {
-    Button,
+    Button, Checkbox,
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle, Divider, Paper,
+    DialogTitle, Divider, FormControlLabel, Paper,
     Slide, Stack, styled,
     Typography
 } from "@mui/material";
@@ -86,6 +86,20 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
         this.props.updateDatasetQuery(datasetQuery);
     };
 
+    handleUpdateHasWdepth = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const hasWdepth = event.target.checked;
+        let wdepth: SliderRange = [null, null]
+        if (hasWdepth) {
+            wdepth = [0, 1000]
+        }
+
+        const datasetQuery = {...this.props.datasetQuery,
+            hasWdepth: event.target.checked,
+            wdepth: wdepth
+        }
+        this.props.updateDatasetQuery(datasetQuery);
+    }
+
     handleShallowChange = (optShallow: string) => {
         const datasetQuery = {...this.props.datasetQuery, shallow: optShallow}
         this.props.updateDatasetQuery(datasetQuery);
@@ -98,6 +112,8 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
     };
 
     render() {
+        const hasWdepthLabel = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
         return (
             <Dialog
                 open={this.props.open}
@@ -121,9 +137,18 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                             <MinMaxInputSlider
                                 value={this.props.datasetQuery.wdepth}
                                 onChange={this.handleWaterDepthChange}
-
+                                disabled={!this.props.datasetQuery.hasWdepth}
                                 label={'Water Depth'}
                             />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        onChange={this.handleUpdateHasWdepth}
+                                        checked={this.props.datasetQuery.hasWdepth}
+                                        {...hasWdepthLabel}
+                                    />
+                                }
+                                label={"Enable Water depth"}/>
                         </Item>
                         <Item>
                             <Typography gutterBottom={true} variant={'h6'}>Include optically shallow waters</Typography>

@@ -8,6 +8,8 @@ interface MinMaxInputSliderProps {
     onChange: (value: SliderRange) => void;
 
     label: string;
+
+    disabled: boolean;
 }
 
 
@@ -37,6 +39,15 @@ export default function MinMaxInputSlider(props: MinMaxInputSliderProps) {
         props.onChange([value[0], v]);
     };
 
+    const getNumberInputValue = (value?: number) => {
+        if (value === null) {
+            return '';
+        }
+        else {
+            return value;
+        }
+    }
+
     return (
         <div>
             <Box sx={{ width: 300 }}>
@@ -47,10 +58,12 @@ export default function MinMaxInputSlider(props: MinMaxInputSliderProps) {
                     valueLabelDisplay="auto"
                     getAriaValueText={valuetext}
                     max={1000}
+                    disabled={props.disabled}
                 />
                 <Input
-                    value={value[0]}
+                    value={getNumberInputValue(value[0])}
                     size="small"
+                    disabled={props.disabled}
                     onChange={handleMinInputChange}
                     inputProps={{
                         step: 10,
@@ -61,8 +74,9 @@ export default function MinMaxInputSlider(props: MinMaxInputSliderProps) {
                     }}
                 />
                 <Input
-                    value={value[1]}
+                    value={getNumberInputValue(value[1])}
                     size="small"
+                    disabled={props.disabled}
                     onChange={handleMaxInputChange}
                     inputProps={{
                         step: 10,
