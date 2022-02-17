@@ -19,7 +19,7 @@ export function newAdvancedSearchState(): AdvancedSearchState  {
     return {
         selectedBBox: SELECTED_BOUNDS_DEFAULT,
         selectedWavelength: 'all',
-        waterDepth: [0, 1000],
+        waterDepth: [null, null],
         selectedOptShallow: '',
         selectedProducts: [],
         productInputValue: '',

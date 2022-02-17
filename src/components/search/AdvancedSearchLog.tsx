@@ -54,7 +54,7 @@ class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
                 return this.props.onWavelengthChange("all");
             }
             case 'waterdepth': {
-                return this.props.onWaterDepthChange([0, 1000]);
+                return this.props.onWaterDepthChange([null, null]);
             }
             case 'products': {
                 return this.props.onProductsChange([]);

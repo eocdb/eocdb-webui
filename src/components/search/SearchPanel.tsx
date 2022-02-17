@@ -189,13 +189,12 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                 productNames: [],
                 measurementType: undefined,
                 wavelengthsMode: undefined,
-                wdepth: undefined,
+                wdepth: [null, null],
                 shallow: undefined,
             }
         );
 
         this.props.updateWavelength('all');
-        this.props.updateWaterDepth([0, 1000]);
         this.props.updateOptShallow('');
         this.props.updateProducts([]);
         this.props.updateSelectedRegions({type: 'Polygon'});
