@@ -174,5 +174,4 @@ const mapDispatchToProps = {
     updatePlotData,
 };
 
-
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPanel);

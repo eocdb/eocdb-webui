@@ -44,12 +44,12 @@ class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
         let datasetQuery = this.props.datasetQuery;
         switch (key) {
             case 'wavelength': {
-                datasetQuery = {...this.props.datasetQuery, wavelengthsMode: 'all'}
+                datasetQuery = {...this.props.datasetQuery, wavelengthsMode: null}
                 this.props.updateDatasetQuery(datasetQuery);
                 break;
             }
             case 'waterdepth': {
-                datasetQuery = {...this.props.datasetQuery, wdepth: [null, null]}
+                datasetQuery = {...this.props.datasetQuery, hasWdepth: false, wdepth: [null, null]}
                 this.props.updateDatasetQuery(datasetQuery);
                 break;
             }
