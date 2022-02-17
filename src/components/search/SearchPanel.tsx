@@ -318,7 +318,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             key={'lucene-search'}
                             label={'Search...'}
                             variant={"outlined"}
-                            value={this.props.datasetQuery.searchExpr}
+                            value={this.props.datasetQuery.searchExpr || ''}
                             onChange={this.handleSearchExprChange}
                             onKeyPress={this.handleSearchExpKeyPressed}
                             sx={{'width': 800}}
@@ -385,12 +385,12 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         datasetQuery={this.props.datasetQuery}
                         updateDatasetQuery={this.props.updateDatasetQuery}
                     />
+                </Grid>
+                <Grid item xs={6}>
                     <AdvancedSearchLog
                         datasetQuery={this.props.datasetQuery}
                         updateDatasetQuery={this.props.updateDatasetQuery}
                     />
-                </Grid>
-                <Grid item xs={6}>
                     <DataTable
                         data={this.props.data}
                         page={this.props.page}

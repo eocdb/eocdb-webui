@@ -394,7 +394,7 @@ class DataTable extends React.Component<DataTableProps> {
                             {datasets.length > 0 ? (
                                 <TableCell colSpan={3}>
                                     <TablePagination
-                                        rowsPerPageOptions={[10, 25, 100]}
+                                        rowsPerPageOptions={[5, 10, 25, 100]}
                                         component="div"
                                         count={total_count}
                                         rowsPerPage={rowsPerPage}
