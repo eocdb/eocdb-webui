@@ -97,9 +97,8 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
     const selectedBounds = state.searchMapState.selectedBounds;
 
     if (selectedBounds) {
-        datasetQuery = {...datasetQuery, region: selectedBounds.toBBoxString()};
-    }
-    else {
+        datasetQuery = {...datasetQuery, region: selectedBounds.toBBoxString ()};
+    } else {
         //datasetQuery = {...datasetQuery, region: ''};
     }
 
@@ -127,29 +126,29 @@ export function searchDatasets() {
     return (dispatch: Dispatch<UpdateFoundDatasets | MessageLogAction | UpdateSearchHistory | StopLoading
         | UpdateDatasetQuery>, getState: ()
         => AppState) => {
-        const state = getState();
+        const state = getState ();
         const apiServerUrl = state.configState.apiServerUrl;
         let datasetQuery = state.searchFormState.datasetQuery;
 
-        datasetQuery = collectDatasetQuery(state, datasetQuery);
+        datasetQuery = collectDatasetQuery (state, datasetQuery);
         const userId = state.sessionState.user ? state.sessionState.user.id : 0;
 
-        return api.findDatasets(apiServerUrl, datasetQuery, userId)
-            .then((foundDatasets: QueryResult) => {
-                dispatch(updateFoundDatasets(foundDatasets));
+        return api.findDatasets (apiServerUrl, datasetQuery, userId)
+            .then ((foundDatasets: QueryResult) => {
+                dispatch (updateFoundDatasets (foundDatasets));
                 if (foundDatasets.total_count == 0) {
-                    dispatch(postMessage('warning', 'Empty Result'));
+                    dispatch (postMessage ('warning', 'Empty Result'));
                 } else {
-                    dispatch(postMessage('success', foundDatasets.total_count + ' Datasets Found'));
+                    dispatch (postMessage ('success', foundDatasets.total_count + ' Datasets Found'));
                 }
             })
-            .then(() => {
-                dispatch(updateDatasetQuery(datasetQuery));
-                dispatch(stopLoading());
+            .then (() => {
+                dispatch (updateDatasetQuery (datasetQuery));
+                dispatch (stopLoading ());
                 return 0;
             })
-            .catch((error: string) => {
-                dispatch(postMessage('error', error + ''));
+            .catch ((error: string) => {
+                dispatch (postMessage ('error', error + ''));
             });
     };
 }
@@ -188,7 +187,7 @@ export function updateSaveSearchTitle(saveSearchTitle: string): UpdateSaveSearch
 }
 
 export const UPDATE_TERMS = 'UPDATE_TERMS';
-export type UPDATE_TERMS = typeof UPDATE_TERMS ;
+export type UPDATE_TERMS = typeof UPDATE_TERMS;
 
 
 export interface UpdateTerms {
@@ -196,16 +195,15 @@ export interface UpdateTerms {
     terms: string;
 }
 
-// noinspection JSUnusedGlobalSymbols
 export function updateTerms(terms: string): UpdateTerms {
-    return {type: UPDATE_TERMS, terms};
+    return {type: UPDATE_TERMS, terms: terms};
 }
-
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type SearchFormAction = UpdateDatasetQuery
+export type SearchFormAction =
+    UpdateDatasetQuery
     | UpdateFoundDatasets
     | UpdateSearchHistory
     | UpdateSelectedSearchHistory
