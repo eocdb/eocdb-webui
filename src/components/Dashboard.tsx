@@ -3,10 +3,9 @@ import * as React from 'react';
 import DrawerItems from './DrawerItems';
 import DashPanels from './DashPanels';
 import LoginDialog from './user/LoginDialog';
-import { User } from "../model";
+import { DatasetQuery, User } from "../model";
 import partnerLogos from "../resources/logos.png"
 import { SearchHistoryItem } from "../types/dataset";
-import { DatasetQuery } from "../api/findDatasets";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import {
     Box,

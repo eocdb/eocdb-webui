@@ -30,7 +30,8 @@ class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
             chips.push({key: 'wavelength', label: label});
         }
 
-        if (this.props.waterDepthValue[0] !== 0 && this.props.waterDepthValue[1] !== 1000) {
+        if (this.props.waterDepthValue[0] && this.props.waterDepthValue[1]) {
+
             const label = 'water depth: ' + this.props.waterDepthValue.join(' ');
             chips.push({key: 'waterdepth', label: label});
         }

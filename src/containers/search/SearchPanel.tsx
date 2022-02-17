@@ -16,7 +16,6 @@ import {
 import {
     updateOptShallow,
     updateProducts,
-    updateProductValue,
     updateWaterDepth,
     updateWavelength
 } from "../../actions/advancedFindActions";
@@ -63,11 +62,10 @@ const mapStateToProps = (state: AppState) => {
         saveSearchTitle: state.searchFormState.saveSearchTitle,
 
         // Advanced Find
-        selectedWavelength: state.advancedSearchState.selectedWavelength,
-        selectedWaterDepth: state.advancedSearchState.waterDepth,
-        selectedOptShallow: state.advancedSearchState.selectedOptShallow,
-        selectedProducts: state.advancedSearchState.selectedProducts,
-        productInputValue: state.advancedSearchState.productInputValue,
+        selectedWavelength: state.searchFormState.datasetQuery.wavelengthsMode,
+        selectedWaterDepth: state.searchFormState.datasetQuery.wdepth,
+        selectedOptShallow: state.searchFormState.datasetQuery.shallow,
+        selectedProducts: state.searchFormState.datasetQuery.productNames,
 
         // SearchMap
 
@@ -138,7 +136,6 @@ const mapDispatchToProps = {
     updateWaterDepth,
     updateOptShallow,
     updateProducts,
-    updateProductValue,
 
     updateSelectedRegions,
 

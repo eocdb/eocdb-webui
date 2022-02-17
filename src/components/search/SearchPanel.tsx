@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import SearchMap from './SearchMap';
-import { DatasetQuery } from '../../api/findDatasets';
 import DataTable from "./DataTable";
 import AdvancedSearchDialog from "./AdvancedSearchDialog";
 import AdvancedSearchLog from "./AdvancedSearchLog";
@@ -11,7 +10,7 @@ import { FindHelpText } from "../messages/Help/find";
 
 import { SliderRange } from "../../types/advancedSearchDialog";
 import { SearchHistoryItem } from "../../types/dataset";
-import { ProductGroup, StoreInfo, User, QueryResult, Dataset } from "../../model";
+import { ProductGroup, StoreInfo, User, QueryResult, Dataset, DatasetQuery } from "../../model";
 import InputDialog from "./InputDialog";
 import { ProductGroupsInfo } from "../messages/Help/productgroups";
 import { GeoJsonObject } from "geojson";
@@ -73,9 +72,6 @@ interface SearchPanelProps {
 
     updateProducts: (products: string[]) => void;
     selectedProducts: string[];
-
-    updateProductValue: (productInputValue: string) => void;
-    productInputValue: string;
 
     updateSearchHistory: (searchHistory: SearchHistoryItem[]) => void;
     searchHistory: SearchHistoryItem[];

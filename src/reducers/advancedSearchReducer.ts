@@ -1,31 +1,36 @@
-import { AdvancedSearchState } from "../states/advancedSearchState";
-
 import {
     AdvancedSearchAction,
-    UPDATE_BBOX, UPDATE_WAVELENGTH, UPDATE_WATERDEPTH, UPDATE_OPTSHALLOW, UPDATE_PRODUCTS, UPDATE_PRODUCT_VALUE
+    UPDATE_BBOX, UPDATE_WAVELENGTH, UPDATE_WATERDEPTH, UPDATE_OPTSHALLOW, UPDATE_PRODUCTS
 } from "../actions/advancedFindActions";
 
-import { newAdvancedSearchState } from "../states/advancedSearchState";
+import { newSearchFormState, SearchFormState } from "../states/searchFormState";
 
-const initialState = newAdvancedSearchState();
+const initialState = newSearchFormState();
 
-export function advancedSearchReducer(state: AdvancedSearchState = initialState, action: AdvancedSearchAction) {
+export function advancedSearchReducer(state: SearchFormState = initialState, action: AdvancedSearchAction): SearchFormState {
     switch (action.type) {
         case UPDATE_BBOX:
-            return {...state, selectedBBox: action.selectedBBox};
+            return {...state, datasetQuery:
+                    {...state.datasetQuery, selectedBBox: action.selectedBBox}
+            };
         case UPDATE_WAVELENGTH:
-            return {...state, selectedWavelength: action.selectedWavelength};
+            return {...state, datasetQuery: {
+                    ...state.datasetQuery, wavelengthsMode: action.selectedWavelength
+                }};
         case UPDATE_WATERDEPTH: {
-            return {...state, waterDepth: action.waterDepth};
+            return {...state, datasetQuery: {
+                    ...state.datasetQuery, wdepth: action.waterDepth
+                }};
         }
         case UPDATE_OPTSHALLOW: {
-            return {...state, selectedOptShallow: action.selectedOptShallow};
+            return {...state, datasetQuery: {
+                    ...state.datasetQuery, shallow: action.selectedOptShallow
+                }};
         }
         case UPDATE_PRODUCTS: {
-            return {...state, selectedProducts: action.selectedProducts};
-        }
-        case UPDATE_PRODUCT_VALUE: {
-            return {...state, productInputValue: action.productInputValue}
+            return {...state, datasetQuery: {
+                    ...state.datasetQuery, productNames: action.selectedProducts
+                }};
         }
         default:
             return state;

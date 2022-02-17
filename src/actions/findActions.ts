@@ -1,10 +1,9 @@
 import { Dispatch } from 'redux';
 
 import { MessageLogAction, postMessage } from './messageLogActions'
-import { QueryResult } from '../model';
+import { DatasetQuery, QueryResult } from '../model';
 import { AppState } from '../states/appState';
 import * as api from '../api'
-import { DatasetQuery } from '../api/findDatasets';
 import { SearchHistoryItem } from "../types/dataset";
 
 

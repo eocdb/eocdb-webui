@@ -16,6 +16,8 @@ import {
 } from "./findActions";
 import { SERVER_CONFIG } from "../api/config";
 import { LatLng } from "leaflet";
+import { DefaultDatasetQuery } from "../model/DatasetQuery";
+
 
 
 const middlewares = [thunk];
@@ -105,9 +107,9 @@ describe('searchFormActions', () => {
             locations: new Map(),
             datasets: [],
             query: {
+                ...DefaultDatasetQuery,
                 mtype: '',
-                shallow: '',
-                wdepth: '',
+                shallow: ''
             },
             total_count: 0,
         };
@@ -122,6 +124,7 @@ describe('searchFormActions', () => {
 
     it('should create a updateDatasetQuery action', () => {
         const datasetQuery = {
+            ...DefaultDatasetQuery,
             startDate: "1980-01-01",
             endDate: "2020-01-01",
             geojson: true,

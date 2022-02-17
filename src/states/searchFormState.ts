@@ -1,6 +1,6 @@
-import { QueryResult } from '../model';
+import { QueryResult, DatasetQuery } from '../model';
 import { SearchHistoryItem } from "../types/dataset";
-import { DatasetQuery } from 'src/api/findDatasets';
+import { DefaultDatasetQuery } from "../model/DatasetQuery";
 
 
 export interface SearchFormState {
@@ -11,36 +11,21 @@ export interface SearchFormState {
     loading: boolean;
 }
 
+
 export function newSearchFormState() {
     return {
-        datasetQuery: {
-            geojson: true,
-            productGroupNames: [],
-            startDate: null,
-            endDate: null,
-            searchExpr: '',
-        },
+        datasetQuery: DefaultDatasetQuery,
         searchHistory: [
             {
-                key: 'test',
-                query: {
-                    geojson: true,
-                    productGroupNames: [],
-                    startDate: null,
-                    endDate: null,
-                    searchExpr: '',
-                }
+                key: '',
+                query: DefaultDatasetQuery
             }
         ],
         saveSearchTitle: '',
         foundDatasets: {
             locations: new Map(),
             datasets: [],
-            query: {
-                mtype: '',
-                shallow: '',
-                wdepth: '',
-            },
+            query: DefaultDatasetQuery,
             total_count: 0,
         },
         loading: false,
