@@ -399,25 +399,12 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         open={this.props.advancedSearchDialogOpen}
                         onClose={this.props.closeAdvancedSearchDialog}
                         productItems={this.props.serverInfo['products']}
-                        onWavelengthChange={this.props.updateWavelength}
-                        wavelengthValue={this.props.selectedWavelength}
-                        onWaterDepthChange={this.props.updateWaterDepth}
-                        waterDepthValue={this.props.selectedWaterDepth}
-                        onOptShallowChange={this.props.updateOptShallow}
-                        optShallowValue={this.props.selectedOptShallow}
-                        onProductsChange={this.props.updateProducts}
-                        productsValue={this.props.selectedProducts}
+                        datasetQuery={this.props.datasetQuery}
+                        updateDatasetQuery={this.props.updateDatasetQuery}
                     />
-
                     <AdvancedSearchLog
-                        onWavelengthChange={this.props.updateWavelength}
-                        wavelengthValue={this.props.selectedWavelength}
-                        onWaterDepthChange={this.props.updateWaterDepth}
-                        waterDepthValue={this.props.selectedWaterDepth}
-                        onOptShallowChange={this.props.updateOptShallow}
-                        optShallowValue={this.props.selectedOptShallow}
-                        onProductsChange={this.props.updateProducts}
-                        productsValue={this.props.selectedProducts}
+                        datasetQuery={this.props.datasetQuery}
+                        updateDatasetQuery={this.props.updateDatasetQuery}
                     />
                 </Grid>
                 <Grid item xs={6}>

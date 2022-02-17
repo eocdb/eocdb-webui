@@ -5,7 +5,7 @@ import MinMaxInputSlider from "./MinMaxInputSlider";
 import RadioSelect, { RadioItem } from "./RadioSelect";
 import MultipleSelectTextField from "./MultipleSelectTextField";
 import { SliderRange } from "../../types/advancedSearchDialog";
-import { Product } from "../../model";
+import { DatasetQuery, Product } from "../../model";
 import {
     Button,
     Dialog,
@@ -32,19 +32,10 @@ export interface AdvancedSearchDialogProps {
     open: boolean;
     onClose: () => void;
 
-    onWavelengthChange: (item: string) => void;
-    wavelengthValue: string;
-
-    onWaterDepthChange: (waterDepth: SliderRange) => void;
-    waterDepthValue: SliderRange;
-
-    onOptShallowChange: (optShallow: string) => void;
-    optShallowValue: string;
-
-    onProductsChange: (products: string[]) => void;
-    productsValue: string[];
-
     productItems: Product[];
+
+    datasetQuery: DatasetQuery;
+    updateDatasetQuery: (datasetQuery: DatasetQuery) => void;
 }
 
 
@@ -78,19 +69,26 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
     }
 
     handleWaveLengthSelect = (item: string) => {
-         this.props.onWavelengthChange(item);
+        const datasetQuery = {...this.props.datasetQuery, wavelengthsMode: item}
+        this.props.updateDatasetQuery(datasetQuery);
     };
 
     handleWaterDepthChange = (waterDepth: SliderRange) => {
-        this.props.onWaterDepthChange(waterDepth);
+        const datasetQuery = {...this.props.datasetQuery, wdepth: waterDepth}
+        this.props.updateDatasetQuery(datasetQuery);
     };
 
     handleUpdateProducts = (products: string[]) => {
         const items = products.map((item: string) => {
             return item;
         });
+        const datasetQuery = {...this.props.datasetQuery, productNames: items}
+        this.props.updateDatasetQuery(datasetQuery);
+    };
 
-        this.props.onProductsChange(items);
+    handleShallowChange = (optShallow: string) => {
+        const datasetQuery = {...this.props.datasetQuery, shallow: optShallow}
+        this.props.updateDatasetQuery(datasetQuery);
     };
 
     makeProductSuggestions = () => {
@@ -99,15 +97,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
         })
     };
 
-    makeSelectedProducts = () => {
-        return this.props.productsValue.map((item: string) => {
-            return item;
-        });
-    };
-
     render() {
-        const {wavelengthValue} = this.props;
-
         return (
             <Dialog
                 open={this.props.open}
@@ -122,14 +112,14 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                         <Item>
                             <Typography gutterBottom={true} variant={'h6'}>Wavelength options</Typography>
                             <RadioSelect items={wavelengthItems}
-                                         selectedValue={wavelengthValue}
+                                         selectedValue={this.props.datasetQuery.wavelengthsMode}
                                          onChange={this.handleWaveLengthSelect}
                             />
                         </Item>
                         <Item>
                             <Typography gutterBottom={true} variant={'h6'}>Water Depth</Typography>
                             <MinMaxInputSlider
-                                value={this.props.waterDepthValue}
+                                value={this.props.datasetQuery.wdepth}
                                 onChange={this.handleWaterDepthChange}
 
                                 label={'Water Depth'}
@@ -138,8 +128,8 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                         <Item>
                             <Typography gutterBottom={true} variant={'h6'}>Include optically shallow waters</Typography>
                             <RadioSelect items={items}
-                                         selectedValue={this.props.optShallowValue}
-                                         onChange={this.props.onOptShallowChange}
+                                         selectedValue={this.props.datasetQuery.shallow}
+                                         onChange={this.handleShallowChange}
                             />
                         </Item>
                         <Item>
@@ -147,7 +137,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                             <MultipleSelectTextField
                                 suggestions={this.makeProductSuggestions()}
                                 onChange={this.handleUpdateProducts}
-                                selectedItems={this.makeSelectedProducts()}
+                                selectedItems={this.props.datasetQuery.productNames}
                                 isMulti={true}
                                 closeMenuOnSelect={false}
                             />
