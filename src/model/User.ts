@@ -2,7 +2,7 @@ import { UserRole } from "../types/user";
 
 export interface User {
     // Mandatory user info
-    id: number;
+    id: string;
     name: string;
     roles: UserRole[];
     // Optional user info

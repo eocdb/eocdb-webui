@@ -6,7 +6,7 @@ export interface UploadData {
     publicationDate: string|null;
     allowPublication: boolean;
     username: string;
-    userId: number;
+    userId: string;
 }
 
 
@@ -17,5 +17,5 @@ export interface SingleUpload {
     publicationDate: string|null;
     allowPublication: boolean;
     username: string;
-    userId: number;
+    userId: string;
 }

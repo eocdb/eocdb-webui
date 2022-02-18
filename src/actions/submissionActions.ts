@@ -437,7 +437,7 @@ export function sendSubmission() {
 
         const user = state.sessionState.user;
 
-        const userid = user ? user.id : 0;
+        const userid = user ? user.id : null;
 
         const username = user ? user.name : '';
 
@@ -496,9 +496,9 @@ export function getSubmissionsForUser() {
         const apiServerUrl = state.configState.apiServerUrl;
         const user = state.sessionState.user;
 
-        const userid = user ? user.id : 0;
+        const userid = user ? user.id : null;
 
-        return api.getSubmissionsForUser(apiServerUrl, userid)
+        return api.getSubmissionsForUser(apiServerUrl, userid, 10, 5)
             .then((submissions: Submission[]) => {
                 dispatch(updateSubmissionsForUser(submissions));
             })
@@ -584,7 +584,7 @@ export function updateSubmissionFile(submissionFile: SubmissionFile, uploadData:
 
         const user = state.sessionState.user;
 
-        const userid = user ? user.id : 0;
+        const userid = user ? user.id : null;
 
         return api.updateSubmissionFile(apiServerUrl, submissionFile, uploadData)
             .then(() => {
@@ -634,7 +634,7 @@ export function getSubmission(submissionId: string) {
 
         const user = state.sessionState.user;
 
-        let userid = 0;
+        let userid = null;
         if (user) {
             userid = user.id;
         }
@@ -669,7 +669,7 @@ export function deleteSubmission(submissionId: string) {
 
         const user = state.sessionState.user;
 
-        const userid = user ? user.id : 0;
+        const userid = user ? user.id : null;
 
         return api.deleteSubmission(apiServerUrl, submissionId)
             .then(() => {
@@ -717,7 +717,7 @@ export function setSubmissionStatus(submissionId: string, status: string, appDat
 
         const user = state.sessionState.user;
 
-        const userid = user ? user.id : 0;
+        const userid = user ? user.id : null;
 
         return api.setSubmissionStatus(apiServerUrl, submissionId, status, appDate)
             .then(() => {
@@ -744,7 +744,7 @@ export function updateSubmissionMeta() {
 
         const user = state.sessionState.user;
 
-        const userid = user ? user.id : 0;
+        const userid = user ? user.id : null;
 
         const submissionId = state.submissionState.selectedSubmission.submission_id;
 
@@ -892,7 +892,6 @@ export interface HideSubmissionMessages {
 export function hideSubmissionMessages(messageId: number): HideSubmissionMessages {
     return {type: HIDE_SUBMISSION_MESSAGES, messageId};
 }
-
 
 
 export type SubmitAction = OpenSubmitSteps

@@ -6,7 +6,6 @@ import { MessageLogState } from "./messageLogState";
 import { SessionState } from './sessionState';
 import { DataState } from "./dataState";
 import { DataTableState } from "./dataTableState";
-import { AdvancedSearchState } from "./advancedSearchState";
 import { SubmissionState } from "./submissionState";
 import {LinksPageState} from "./linksPageState";
 import {AdminState} from "./adminState";
@@ -22,7 +21,6 @@ export interface AppState {
     sessionState: SessionState;
     dataState: DataState;
     dataTableState: DataTableState;
-    advancedSearchState: AdvancedSearchState;
     submissionState: SubmissionState;
     linksPageState: LinksPageState;
     adminSate: AdminState;

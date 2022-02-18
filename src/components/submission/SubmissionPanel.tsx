@@ -316,8 +316,6 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                 <SubmissionTable
                     show={!this.props.submissionDialogOpen}
 
-                    submissionsValue={this.props.submissionsForUser}
-
                     onSubmissionSelect={this.handleUpdateSubmission}
 
                     onSubmissionApprove={this.handleApproveSubmission}

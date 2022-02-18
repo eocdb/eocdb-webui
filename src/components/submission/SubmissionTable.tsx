@@ -6,8 +6,10 @@ import {
     Icon, Chip
 } from "@mui/material";
 import { blue, green, orange, red } from "@mui/material/colors";
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridFilterModel, GridToolbar } from '@mui/x-data-grid';
 import { CloudUpload } from "@mui/icons-material";
+import { SERVER_CONFIG } from "../../api/config";
+import { getSubmissionsForUser } from "../../api";
 
 
 
@@ -30,8 +32,6 @@ interface SubmissionTableProps {
 
     onSubmissionReady: (selectedSubmissionId: string) => void;
     onSubmissionPublish: (selectedSubmissionId: string) => void;
-
-    submissionsValue: Submission[];
 
     user: User | null;
 }
@@ -176,10 +176,34 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     if (!props.show) {
         return null;
     }
+    // const rows = makeRows(submissionsValue);
+    const [page, setPage] = React.useState(0);
+    const [rows, setRows] = React.useState([]);
+    const [filterValue, setFilterValue] = React.useState<string | undefined>();
+    const [loading, setLoading] = React.useState(false);
 
-    const [pageSize, setPageSize] = React.useState<number>(5);
+    React.useEffect(() => {
+        let active = true;
 
-    const {submissionsValue} = props;
+        (async () => {
+            setLoading(true);
+            const offset = (page * 5) + 1;
+            const newSubmissions = await getSubmissionsForUser(SERVER_CONFIG, 'olaf', offset, 10);
+
+            const newRows = makeRows(newSubmissions);
+
+            if (!active) {
+                return;
+            }
+
+            setRows(newRows);
+            setLoading(false);
+        })();
+
+        return () => {
+            active = false;
+        };
+    }, [page]);
 
     const user = props.user === null ? undefined : props.user;
 
@@ -241,10 +265,13 @@ export default function SubmissionTable(props: SubmissionTableProps) {
         }
     ];
 
-    const rows = makeRows(submissionsValue);
+    const onFilterChange = React.useCallback((filterModel: GridFilterModel) => {
+        setFilterValue(filterModel.items[0].value);
+    }, []);
+
 
     return (
-        <div style={{ height: 600, width: '100%' }}>
+        <div style={{ height: 700, width: '100%' }}>
             <Button variant="contained"
                     color="secondary"
                     onClick={props.onSubmissionDialogOpen}
@@ -255,12 +282,19 @@ export default function SubmissionTable(props: SubmissionTableProps) {
             <DataGrid
                 rows={rows}
                 columns={columns}
-                pageSize={pageSize}
-                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                rowsPerPageOptions={[5, 10]}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
+                rowCount={450}
+                paginationMode={"server"}
+                // onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                // rowsPerPageOptions={[5, 10]}
                 pagination
-                disableSelectionOnClick
+                loading={loading}
+                onPageChange={(newPage) => setPage(newPage)}
+                // disableSelectionOnClick
                 components={{ Toolbar: GridToolbar }}
+                filterMode="server"
+                onFilterModelChange={onFilterChange}
             />
         </div>
     );

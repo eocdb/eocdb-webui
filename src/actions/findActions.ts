@@ -131,9 +131,9 @@ export function searchDatasets() {
         let datasetQuery = state.searchFormState.datasetQuery;
 
         datasetQuery = collectDatasetQuery (state, datasetQuery);
-        const userId = state.sessionState.user ? state.sessionState.user.id : 0;
+        const userId = state.sessionState.user ? state.sessionState.user.id : null;
 
-        return api.findDatasets (apiServerUrl, datasetQuery, userId)
+        return api.findDatasets(apiServerUrl, datasetQuery, userId)
             .then ((foundDatasets: QueryResult) => {
                 dispatch (updateFoundDatasets (foundDatasets));
                 if (foundDatasets.total_count == 0) {
@@ -149,6 +149,7 @@ export function searchDatasets() {
             })
             .catch ((error: string) => {
                 dispatch (postMessage ('error', error + ''));
+                dispatch (stopLoading ());
             });
     };
 }
