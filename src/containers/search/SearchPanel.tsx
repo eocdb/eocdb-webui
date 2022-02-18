@@ -87,6 +87,7 @@ const mapStateToProps = (state: AppState) => {
         // DataTable
 
         page: state.dataTableState.page,
+        prevPage: state.dataTableState.prevPage,
         rowsPerPage: state.dataTableState.rowsPerPage,
 
         metaInfoDialogOpen: state.dataTableState.metaInfoDialogOpen,

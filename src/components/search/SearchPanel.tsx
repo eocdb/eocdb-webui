@@ -119,6 +119,7 @@ interface SearchPanelProps {
 
     data: QueryResult;
     page: number;
+    prevPage: number;
     rowsPerPage: number;
 
     updateDataPage: (page: number) => void;
@@ -394,7 +395,11 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                     <DataTable
                         data={this.props.data}
                         page={this.props.page}
+                        prevPage={this.props.prevPage}
                         rowsPerPage={this.props.rowsPerPage}
+
+                        datasetQuery={this.props.datasetQuery}
+                        updateDatasetQuery={this.props.updateDatasetQuery}
 
                         updateDataPage={this.props.updateDataPage}
                         updateDataRowsPerPage={this.props.updateDataRowsPerPage}

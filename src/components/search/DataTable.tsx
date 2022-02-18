@@ -1,29 +1,33 @@
 import * as React from 'react';
-import { Dataset, DatasetRef, QueryResult } from "../../model";
+import { Dataset, DatasetQuery, DatasetRef, QueryResult } from "../../model";
 import MetaInfoDialog from "./MetaInfoDialog";
 import { PlotRecord, PlotState } from "../../states/dataTableState";
 import PlotDialog from "./PlotDialog";
 import { geoJSON, LatLng, LatLngBounds } from "leaflet";
 import { TermsDialog } from "./TermsDialog";
 import {
+    Box,
+    Button,
+    Checkbox,
+    CircularProgress,
+    FormControlLabel,
+    Grid,
+    Icon,
     IconButton,
     Paper,
-    Grid,
-    Button,
-    Icon,
-    CircularProgress,
-    Checkbox,
-    FormControlLabel,
     Table,
-    TableHead,
-    TableRow,
-    TableCell,
     TableBody,
-    Typography,
+    TableCell,
     TableFooter,
-    TablePagination, useTheme, Box
+    TableHead,
+    TablePagination,
+    TableRow,
+    Typography,
+    useTheme
 } from '@mui/material';
 import { FirstPage, KeyboardArrowLeft, KeyboardArrowRight, LastPage } from "@mui/icons-material";
+import { tot_page } from "../../tools/utils";
+import { PG_TYPE } from "../../model/DatasetQuery";
 
 
 interface TablePaginationActionsProps {
@@ -53,7 +57,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
     };
 
     const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        const last = Math.max(0, Math.ceil(props.count / props.rowsPerPage) - 1);
+        const last = tot_page(props.count, props.rowsPerPage);
         props.onPageChange(event, last);
     };
 
@@ -99,7 +103,11 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 export interface DataTableProps {
     data: QueryResult;
     page: number;
+    prevPage: number;
     rowsPerPage: number;
+
+    datasetQuery: DatasetQuery;
+    updateDatasetQuery: (datasetQuery: DatasetQuery) => void;
 
     searchDatasets: () => void;
     updateDataPage: (page: number) => void;
@@ -157,6 +165,41 @@ class DataTable extends React.Component<DataTableProps> {
     }
 
     handleChangePage = (event: React.MouseEvent<HTMLButtonElement>, page: number) => {
+        const last_page = tot_page (this.props.data.total_count, this.props.rowsPerPage);
+
+        if (page == 0) {
+            // First page
+            this.props.updateDatasetQuery ({
+                ...this.props.datasetQuery, last_id: null, pgType: PG_TYPE.first
+            });
+        }
+        else if (page == last_page) {
+            this.props.updateDatasetQuery ({
+                ...this.props.datasetQuery, last_id: null,  pgType:  PG_TYPE.last
+            });
+        }
+        else if (page > this.props.page) {
+            const last_entry = this.props.data.datasets.reduce(function(prev, current) {
+                return (prev.id > current.id) ? prev : current
+            })
+            this.props.updateDatasetQuery ({
+                ...this.props.datasetQuery, last_id: last_entry.id, pgType: PG_TYPE.next
+            });
+        }
+        else if (page < this.props.page) {
+            const last_entry = this.props.data.datasets.reduce(function(prev, current) {
+                return (prev.id < current.id) ? prev : current
+            })
+            this.props.updateDatasetQuery ({
+                ...this.props.datasetQuery, last_id: last_entry.id, pgType: PG_TYPE.previous
+            });
+        }
+        else {
+            this.props.updateDatasetQuery ({
+                ...this.props.datasetQuery, last_id: null, pgType: PG_TYPE.unknown
+            });
+        }
+
         this.props.updateDataPage(page);
         this.props.searchDatasets();
         this.props.startLoading();

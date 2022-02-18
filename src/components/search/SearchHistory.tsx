@@ -68,7 +68,6 @@ class SearchHistory extends React.PureComponent<SearchHistoryProps, SearchHistor
                             <ListItem button key={item.key}>
                                 <Button
                                     onClick={() => this.handleApiCodeOpen(item.query)}
-                                    // className={this.props.classes.rightIcon}
                                     style={{marginLeft: '1pt', paddingLeft: '1pt', paddingRight: '1pt'}}
                                 >
                                     <Code/>
@@ -80,7 +79,6 @@ class SearchHistory extends React.PureComponent<SearchHistoryProps, SearchHistor
                                 <Tooltip title="Delete History Item" aria-label="DeleteHistoryItem">
                                     <Button
                                         onClick={() => this.props.onSearchHistoryItemDelete(item)}
-                                        // className={this.props.classes.rightIcon}
                                     >
                                         <Delete/>
                                     </Button>

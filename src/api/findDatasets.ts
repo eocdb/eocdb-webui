@@ -42,6 +42,7 @@ export function collectComponents(datasetQuery: DatasetQuery) {
     collectGeoJsonComponent(datasetQuery, queryComponents);
     collectDatasetIds(datasetQuery, queryComponents);
     collectShallow(datasetQuery, queryComponents);
+    collectPgType(datasetQuery, queryComponents);
     return queryComponents;
 }
 
@@ -57,6 +58,14 @@ function collectShallow(queryParameters: DatasetQuery, queryComponents: QueryCom
     if (queryParameters.shallow) {
         queryComponents.push(['shallow', queryParameters.shallow]);
     }
+}
+
+
+function collectPgType(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
+    if (queryParameters.last_id) {
+        queryComponents.push(['last_id', queryParameters.last_id]);
+    }
+    queryComponents.push(['pg_type', `${queryParameters.pgType}`]);
 }
 
 

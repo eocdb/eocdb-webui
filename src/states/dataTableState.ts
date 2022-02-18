@@ -16,6 +16,7 @@ export interface PlotState{
 
 export interface DataTableState {
     page: number;
+    prevPage: number;
     rowsPerPage: number;
 
     metaInfoDialogOpen: boolean;
@@ -39,6 +40,7 @@ export interface DataTableState {
 export function newDataTableState() {
     return {
         page: 0,
+        prevPage: 0,
         rowsPerPage: 5,
 
         metaInfoDialogOpen: false,

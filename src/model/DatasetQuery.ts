@@ -4,6 +4,15 @@ import { BBoxValue } from "../components/search/BBoxInput";
 
 export const SELECTED_BOUNDS_DEFAULT: BBoxValue = ['', '', '', ''];
 
+export enum PG_TYPE {
+    first,
+    next,
+    previous,
+    last,
+    unknown
+}
+
+
 export interface DatasetQuery {
     selectedBBox: BBoxValue,
     searchExpr?: string;
@@ -23,6 +32,8 @@ export interface DatasetQuery {
     hasWdepth: boolean;
     shallow?: string;
     datasetIds?: string[];
+    last_id?: string;
+    pgType: PG_TYPE;
     offset?: number;
     count?: number;
     geojson?: boolean;
@@ -48,6 +59,8 @@ export const DefaultDatasetQuery: DatasetQuery = {
     hasWdepth: false,
     shallow: null,
     datasetIds: [],
+    last_id: null,
+    pgType: PG_TYPE.unknown,
     offset: 0,
     count: 0,
     geojson: true

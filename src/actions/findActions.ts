@@ -105,6 +105,9 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
     if (!state.sessionState.user) {
         datasetQuery = {...datasetQuery, status: 'PUBLISHED'};
     }
+    else {
+        datasetQuery = {...datasetQuery, status: null};
+    }
 
     datasetQuery = {...datasetQuery, count: state.dataTableState.rowsPerPage};
     datasetQuery = {...datasetQuery, offset: ((state.dataTableState.page * state.dataTableState.rowsPerPage) + 1)};

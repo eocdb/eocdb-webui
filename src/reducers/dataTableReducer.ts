@@ -27,7 +27,7 @@ export function dataTableReducer(state: DataTableState, action: DataTableAction)
     }
     switch (action.type) {
         case UPDATE_DATA_PAGE: {
-            return {...state, page: action.page};
+            return {...state, prevPage: state.page, page: action.page};
         }
         case UPDATE_DATA_ROWS_PER_PAGE: {
             return {...state, rowsPerPage: action.rowsPerPage};
