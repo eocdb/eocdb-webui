@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { Button } from '@mui/material';
-import { FeatureGroup, MapContainer, Marker, Popup, Rectangle, TileLayer, MapConsumer } from 'react-leaflet'
+// import { Button } from '@mui/material';
+import { FeatureGroup, MapContainer, Marker, Popup, Rectangle, TileLayer } from 'react-leaflet'
 import { geoJSON, Icon, LatLng, LatLngBounds } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 import MarkerClusterGroup from "react-leaflet-markercluster";
-import 'react-leaflet-markercluster/dist/styles.css';
+import 'react-leaflet-markercluster/dist/styles.min.css';
 import { DatasetRef, QueryResult } from "../../model";
 
 import markerInv from './marker_inv.png';
@@ -12,7 +12,7 @@ import marker from './marker.png';
 import { BBoxValue } from "./BBoxInput";
 import { createRef } from "react";
 import BBoxInput from "./BBoxInputDialog";
-import Control from "./Control";
+// import Control from "./Control";
 
 
 // FIXME: forman did not find any typedefs for 'react-leaflet-draw', 2018.11.xx
@@ -229,19 +229,19 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
                 <MapContainer style={{zIndex: 1}} ref={this.mapRef} bounds={bounds} center={this.props.position}
                      zoom={this.props.zoom} maxZoom={24}>
-                    <Control position="topright">
-                        <MapConsumer>
-                            {(map) => {
-                                console.log("leaflet.map:", map);
-                                return (
-                                    <Button style={{backgroundColor: 'rgba(200, 200, 200, 0.5)'}}
-                                            onClick={this.handleManualBBoxInputOpen}>
-                                        Manually enter coordinates
-                                    </Button>
-                                );
-                            }}
-                        </MapConsumer>
-                    </Control>
+                    {/*<Control position="topright">*/}
+                    {/*    <MapConsumer>*/}
+                    {/*        {(map) => {*/}
+                    {/*            console.log("leaflet.map:", map);*/}
+                    {/*            return (*/}
+                    {/*                <Button style={{backgroundColor: 'rgba(200, 200, 200, 0.5)'}}*/}
+                    {/*                        onClick={this.handleManualBBoxInputOpen}>*/}
+                    {/*                    Manually enter coordinates*/}
+                    {/*                </Button>*/}
+                    {/*            );*/}
+                    {/*        }}*/}
+                    {/*    </MapConsumer>*/}
+                    {/*</Control>*/}
 
                     <TileLayer
                         url="https://api.mapbox.com/styles/v1/dzelge/cku402gu215vz17nxgd3zakof/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHplbGdlIiwiYSI6ImNqb2lkbnhncjA4M3IzcW9qc3plMHh1cnEifQ.HnxI3KKlVliIX_J-YQvhTw"
