@@ -3,60 +3,49 @@ import * as React from "react";
 import { wavelengthItems } from "./SelectItems";
 import MinMaxInputSlider from "./MinMaxInputSlider";
 import RadioSelect, { RadioItem } from "./RadioSelect";
-import MultipleSelectTextField, { Suggestion } from "./MultipleSelectTextField";
+import MultipleSelectTextField from "./MultipleSelectTextField";
 import { SliderRange } from "../../types/advancedSearchDialog";
-import { Product } from "../../model";
-import { Button, Dialog, DialogActions, DialogTitle, Grid, Slide, SlideProps, Typography } from "@mui/material";
+import { DatasetQuery, Product } from "../../model";
+import {
+    Button, Checkbox,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle, Divider, FormControlLabel, Paper,
+    Slide, Stack, styled,
+    Typography
+} from "@mui/material";
+import { TransitionProps } from "@mui/material/transitions";
 
 
-// const styles = (theme: Theme) => createStyles({
-//     dialogContent: {
-//         marginLeft: theme.spacing.unit * 4,
-//         marginRight: theme.spacing.unit * 4,
-//         marginTop: theme.spacing.unit * 4,
-//         marginBottom: theme.spacing.unit * 4,
-//     },
-//     appBar: {
-//         position: 'relative',
-//     },
-//     flex: {
-//         flex: 1,
-//     },
-//     searchField: {
-//         width: 200,
-//         marginRight: theme.spacing.unit / 2,
-//     },
-//     textField: {},
-//     button: {},
-//     rightIcon: {},
-//     tableContainer: {},
-// });
-
-
-//
-// function Transition(props: SlideProps) {
-//     return <Slide direction="up" {...props} />;
-// }
+const Transition = React.forwardRef(function Transition(
+    props: TransitionProps & {
+        children: React.ReactElement<any, any>;
+    },
+    ref: React.Ref<unknown>,
+) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 
 export interface AdvancedSearchDialogProps {
     open: boolean;
     onClose: () => void;
 
-    onWavelengthChange: (item: string) => void;
-    wavelengthValue: string;
-
-    onWaterDepthChange: (waterDepth: SliderRange) => void;
-    waterDepthValue: SliderRange;
-
-    onOptShallowChange: (optShallow: string) => void;
-    optShallowValue: string;
-
-    onProductsChange: (products: string[]) => void;
-    productsValue: string[];
-
     productItems: Product[];
+
+    datasetQuery: DatasetQuery;
+    updateDatasetQuery: (datasetQuery: DatasetQuery) => void;
 }
+
+
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}));
 
 
 const items: RadioItem[] = [
@@ -80,19 +69,40 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
     }
 
     handleWaveLengthSelect = (item: string) => {
-         this.props.onWavelengthChange(item);
+        const datasetQuery = {...this.props.datasetQuery, wavelengthsMode: item}
+        this.props.updateDatasetQuery(datasetQuery);
     };
 
     handleWaterDepthChange = (waterDepth: SliderRange) => {
-        this.props.onWaterDepthChange(waterDepth);
+        const datasetQuery = {...this.props.datasetQuery, wdepth: waterDepth}
+        this.props.updateDatasetQuery(datasetQuery);
     };
 
     handleUpdateProducts = (products: string[]) => {
         const items = products.map((item: string) => {
             return item;
         });
+        const datasetQuery = {...this.props.datasetQuery, productNames: items}
+        this.props.updateDatasetQuery(datasetQuery);
+    };
 
-        this.props.onProductsChange(items);
+    handleUpdateHasWdepth = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const hasWdepth = event.target.checked;
+        let wdepth: SliderRange = [null, null]
+        if (hasWdepth) {
+            wdepth = [0, 1000]
+        }
+
+        const datasetQuery = {...this.props.datasetQuery,
+            hasWdepth: event.target.checked,
+            wdepth: wdepth
+        }
+        this.props.updateDatasetQuery(datasetQuery);
+    }
+
+    handleShallowChange = (optShallow: string) => {
+        const datasetQuery = {...this.props.datasetQuery, shallow: optShallow}
+        this.props.updateDatasetQuery(datasetQuery);
     };
 
     makeProductSuggestions = () => {
@@ -101,77 +111,73 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
         })
     };
 
-    makeSelectedProducts = () => {
-        return this.props.productsValue.map((item: string) => {
-            return item;
-        });
-    };
-
     render() {
-        const {wavelengthValue} = this.props;
+        const hasWdepthLabel = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
         return (
             <Dialog
                 open={this.props.open}
                 onClose={this.props.onClose}
-                // TransitionComponent={Transition}
+                keepMounted
+                TransitionComponent={Transition}
             >
-                {/*<div className={classes.dialogContent}>*/}
-                <div>
-                    <DialogTitle id="form-dialog-title">Advanced Search</DialogTitle>
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <Typography component={'h2'}>Wavelength options</Typography>
+                <DialogTitle id="form-dialog-title">Advanced Search</DialogTitle>
+                <Divider/>
+                <DialogContent>
+                    <Stack direction={'column'} spacing={5}>
+                        <Item>
+                            <Typography gutterBottom={true} variant={'h6'}>Wavelength options</Typography>
                             <RadioSelect items={wavelengthItems}
-                                         selectedValue={wavelengthValue}
+                                         selectedValue={this.props.datasetQuery.wavelengthsMode}
                                          onChange={this.handleWaveLengthSelect}
                             />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography component={'h2'}>Water Depth</Typography>
+                        </Item>
+                        <Item>
+                            <Typography gutterBottom={true} variant={'h6'}>Water Depth</Typography>
                             <MinMaxInputSlider
-                                value={this.props.waterDepthValue}
+                                value={this.props.datasetQuery.wdepth}
                                 onChange={this.handleWaterDepthChange}
-
+                                disabled={!this.props.datasetQuery.hasWdepth}
                                 label={'Water Depth'}
                             />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography component={'h2'}>Include optically shallow waters</Typography>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        onChange={this.handleUpdateHasWdepth}
+                                        checked={this.props.datasetQuery.hasWdepth}
+                                        {...hasWdepthLabel}
+                                    />
+                                }
+                                label={"Enable Water depth"}/>
+                        </Item>
+                        <Item>
+                            <Typography gutterBottom={true} variant={'h6'}>Include optically shallow waters</Typography>
                             <RadioSelect items={items}
-                                         selectedValue={this.props.optShallowValue}
-                                         onChange={this.props.onOptShallowChange}
+                                         selectedValue={this.props.datasetQuery.shallow}
+                                         onChange={this.handleShallowChange}
                             />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography component={'h2'}>Select Products</Typography>
+                        </Item>
+                        <Item>
+                            <Typography gutterBottom={true} variant={'h6'}>Select Products</Typography>
                             <MultipleSelectTextField
                                 suggestions={this.makeProductSuggestions()}
                                 onChange={this.handleUpdateProducts}
-                                selectedItems={this.makeSelectedProducts()}
+                                selectedItems={this.props.datasetQuery.productNames}
                                 isMulti={true}
                                 closeMenuOnSelect={false}
                             />
-                        </Grid>
-                    </Grid>
-
-                    <DialogActions>
-                        <Button onClick={this.props.onClose}
-                                aria-label="Close"
-                                variant="contained"
-                                color="secondary"
-                        >
-                            Apply
-                        </Button>
-                        <Button onClick={this.props.onClose}
-                                aria-label="Close"
-                                variant="contained"
-                                color="secondary"
-                        >
-                            Cancel
-                        </Button>
-                    </DialogActions>
-                </div>
+                        </Item>
+                    </Stack>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={this.props.onClose}
+                            aria-label="Close"
+                            variant="contained"
+                            color="secondary"
+                    >
+                        Close
+                    </Button>
+                </DialogActions>
             </Dialog>
         );
     }

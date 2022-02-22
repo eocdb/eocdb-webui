@@ -6,135 +6,94 @@ import PlotDialog from "./PlotDialog";
 import { geoJSON, LatLng, LatLngBounds } from "leaflet";
 import { TermsDialog } from "./TermsDialog";
 import {
-    Button,
-    Checkbox,
-    CircularProgress,
-    FormControlLabel,
-    Icon,
     IconButton,
     Paper,
+    Grid,
+    Button,
+    Icon,
+    CircularProgress,
+    Checkbox,
+    FormControlLabel,
     Table,
-    TableCell,
+    TableHead,
     TableRow,
-    Grid, TableBody, Typography, TableFooter, TableHead
+    TableCell,
+    TableBody,
+    Typography,
+    TableFooter,
+    TablePagination, useTheme, Box
 } from '@mui/material';
-
-
-// const actionsStyles = (theme: Theme) => createStyles({
-//     root: {
-//         flexShrink: 0,
-//         color: theme.palette.text.secondary,
-//         marginLeft: theme.spacing.unit * 2.5,
-//     }
-// });
+import { FirstPage, KeyboardArrowLeft, KeyboardArrowRight, LastPage } from "@mui/icons-material";
 
 
 interface TablePaginationActionsProps {
     count: number;
-    onChangePage: (event: React.MouseEvent<HTMLButtonElement>, page: number) => void;
     page: number;
     rowsPerPage: number;
+    onPageChange: (
+        event: React.MouseEvent<HTMLButtonElement>,
+        newPage: number,
+    ) => void;
 }
 
 
-class TablePaginationActions extends React.Component<TablePaginationActionsProps> {
-    constructor(props: TablePaginationActionsProps) {
-        super(props);
-    }
+function TablePaginationActions(props: TablePaginationActionsProps) {
+    const theme = useTheme();
 
-    handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        this.props.onChangePage(event, 0);
+    const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        props.onPageChange(event, 0);
     };
 
-    handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        this.props.onChangePage(event, this.props.page - 1);
+    const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        props.onPageChange(event, props.page - 1);
     };
 
-    handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        this.props.onChangePage(event, this.props.page + 1);
+    const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        props.onPageChange(event, props.page + 1);
     };
 
-    handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        const last = Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1);
-        this.props.onChangePage(event, last);
+    const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        const last = Math.max(0, Math.ceil(props.count / props.rowsPerPage) - 1);
+        props.onPageChange(event, last);
     };
 
-    render() {
-        const {count, page, rowsPerPage} = this.props;
+    const {count, page, rowsPerPage} = props;
 
-        return (
-            // <div className={classes.root}>
-            <div>
-                <IconButton
-                    onClick={this.handleFirstPageButtonClick}
-                    disabled={page === 0}
-                    aria-label="First Page"
-                >
-                    {/*{theme.direction === 'rtl' ? <LastPageIcon/> : <FirstPageIcon/>}*/}
-                </IconButton>
-                <IconButton
-                    onClick={this.handleBackButtonClick}
-                    disabled={page === 0}
-                    aria-label="Previous Page"
-                >
-                    {/*{theme.direction === 'rtl' ? <KeyboardArrowRight/> : <KeyboardArrowLeft/>}*/}
-                </IconButton>
-                <IconButton
-                    onClick={this.handleNextButtonClick}
-                    disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-                    aria-label="Next Page"
-                >
-                    {/*{theme.direction === 'rtl' ? <KeyboardArrowLeft/> : <KeyboardArrowRight/>}*/}
-                </IconButton>
-                <IconButton
-                    onClick={this.handleLastPageButtonClick}
-                    disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-                    aria-label="Last Page"
-                >
-                    {/*{theme.direction === 'rtl' ? <FirstPageIcon/> : <LastPageIcon/>}*/}
-                </IconButton>
-            </div>
-        );
-    }
+    return (
+        <Box sx={{ flexShrink: 0, ml: 2.5 }}>
+            <IconButton
+                onClick={handleFirstPageButtonClick}
+                disabled={page === 0}
+                aria-label="First Page"
+            >
+                {theme.direction === 'rtl' ? <LastPage/> : <FirstPage/>}
+            </IconButton>
+            <IconButton
+                onClick={handleBackButtonClick}
+                disabled={page === 0}
+                aria-label="Previous Page"
+            >
+                {theme.direction === 'rtl' ? <KeyboardArrowRight/> : <KeyboardArrowLeft/>}
+            </IconButton>
+            <IconButton
+                onClick={handleNextButtonClick}
+                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                aria-label="Next Page"
+            >
+                {theme.direction === 'rtl' ? <KeyboardArrowLeft/> : <KeyboardArrowRight/>}
+            </IconButton>
+            <IconButton
+                onClick={handleLastPageButtonClick}
+                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                aria-label="Last Page"
+            >
+                {theme.direction === 'rtl' ? <FirstPage/> : <LastPage/>}
+            </IconButton>
+        </Box>
+    );
 }
 
 
-// const TablePaginationActionsWrapped = withStyles(actionsStyles, {withTheme: true})(
-//     TablePaginationActions,
-// );
-
-
-
-// noinspection JSUnusedLocalSymbols
-// const styles = (theme: Theme) => createStyles(
-//     {
-//         root: {
-//             width: '100%',
-//             overflowX: 'auto',
-//         },
-//         table: {
-//             minWidth: 100,
-//         },
-//         rightIcon: {},
-//         button: {
-//             margin: theme.spacing.unit / 2,
-//         },
-//         link: {
-//             fontcolor: 'black'
-//         },
-//         downloadContainer: {
-//             width: '100%',
-//             border: '1px solid red',
-//         },
-//         buttonProgress: {
-//             color: green[500],
-//             position: 'absolute',
-//             top: '50%',
-//             left: '50%',
-//             marginTop: -12,
-//             marginLeft: -12,
-//         },
-//     });
 
 
 export interface DataTableProps {
@@ -220,8 +179,8 @@ class DataTable extends React.Component<DataTableProps> {
     };
 
     handlePlotOpen = (id: string) => {
-        this.props.openPlotDialog();
         this.props.updateDataset(id);
+        this.props.openPlotDialog();
     };
 
     handlePlotClose = () => {
@@ -306,12 +265,11 @@ class DataTable extends React.Component<DataTableProps> {
     };
 
     render() {
-        const {data, rowsPerPage, selectedDatasets} = this.props;
-        const {datasets} = data;
+        const {data, rowsPerPage, page, selectedDatasets} = this.props;
+        const {datasets, total_count} = data;
         const numSelected = selectedDatasets.length;
 
         return (
-            // <Paper className={classes.root}>
             <Paper>
                 <MetaInfoDialog
                     open={this.props.metaInfoDialogOpen}
@@ -348,7 +306,6 @@ class DataTable extends React.Component<DataTableProps> {
                     <Button variant={"contained"}
                             color={"primary"}
                             key={"btn_download33"}
-                            // className={classes.button}
                             disabled={numSelected == 0}
                             onClick={() => this.props.openTermsDialog()}
                     >
@@ -357,7 +314,6 @@ class DataTable extends React.Component<DataTableProps> {
                         {this.props.downloading && <CircularProgress size={24}/>}
                     </Button>
                     <FormControlLabel
-                        // className={classes.button}
                         control={
                             <Checkbox
                                 value={'docs'}
@@ -434,22 +390,26 @@ class DataTable extends React.Component<DataTableProps> {
                     </TableBody>
                     <TableFooter>
                         <TableRow>
-                            {/*{datasets.length > 0 ? (*/}
-                            {/*        <TablePagination*/}
-                            {/*            rowsPerPageOptions={[5, 10, 25]}*/}
-                            {/*            colSpan={3}*/}
-                            {/*            count={total_count}*/}
-                            {/*            rowsPerPage={rowsPerPage}*/}
-                            {/*            page={page}*/}
-                            {/*            onChangePage={this.handleChangePage}*/}
-                            {/*            onChangeRowsPerPage={this.handleChangeRowsPerPage}*/}
-                            {/*            ActionsComponent={TablePaginationActionsWrapped}*/}
-                            {/*        />*/}
-                            {/*    ) :*/}
-                            {/*    <TableCell>*/}
-                            {/*        No Files*/}
-                            {/*    </TableCell>*/}
-                            {/*}*/}
+
+                            {datasets.length > 0 ? (
+                                <TableCell colSpan={3}>
+                                    <TablePagination
+                                        rowsPerPageOptions={[10, 25, 100]}
+                                        component="div"
+                                        count={total_count}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        onPageChange={this.handleChangePage}
+                                        onRowsPerPageChange={this.handleChangeRowsPerPage}
+                                        sx={{'width': '100%'}}
+                                        ActionsComponent={TablePaginationActions}
+                                    />
+                                </TableCell>
+                                ) :
+                                <TableCell colSpan={3}>
+                                    No Files
+                                </TableCell>
+                            }
                         </TableRow>
                     </TableFooter>
                 </Table>

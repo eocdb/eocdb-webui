@@ -1,5 +1,6 @@
 import { callBlobApi } from "./callApi";
-import { collectComponents, DatasetQuery } from "./findDatasets";
+import { collectComponents } from "./findDatasets";
+import { DatasetQuery } from "../model";
 
 
 export function downloadStoreFiles(apiServerUrl: string, datasetQuery: DatasetQuery): Promise<Blob> {

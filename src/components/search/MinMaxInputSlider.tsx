@@ -1,81 +1,93 @@
 import * as React from "react";
 import { SliderRange } from "../../types/advancedSearchDialog";
-import { TextField, Slider } from "@mui/material";
+import { Slider, Box, Input } from "@mui/material";
 
-
-// const styles = (theme: Theme) => createStyles({
-//     root: {},
-//     slider: {
-//         padding: '22px 0px',
-//         margin: theme.spacing.unit,
-//         size: '100pt',
-//     },
-//     textField: {
-//         width: 200,
-//         marginTop: theme.spacing.unit / 2,
-//         marginRight: theme.spacing.unit / 2,
-//     },
-// });
 
 interface MinMaxInputSliderProps {
-    value: SliderRange;
+    value: number | number[];
     onChange: (value: SliderRange) => void;
 
     label: string;
+
+    disabled: boolean;
 }
 
 
-class MinMaxInputSlider extends React.Component<MinMaxInputSliderProps> {
-    constructor(props: MinMaxInputSliderProps) {
-        super(props);
+function valuetext(value: number) {
+    return `${value}m`;
+}
+
+
+export default function MinMaxInputSlider(props: MinMaxInputSliderProps) {
+    const {value} = props;
+
+    const handleChange = (event: Event, newValue: number | number[]) => {
+        newValue = newValue as number[];
+
+        props.onChange(newValue as SliderRange);
+    };
+
+    const handleMinInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        let v = event.target.value === '' ? 0 : Number(event.target.value);
+        v = Math.min(Math.max(v, 0), value[1]);
+        props.onChange([v, value[1]]);
+    };
+
+    const handleMaxInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        let v = event.target.value === '' ? 0 : Number(event.target.value);
+        v = Math.min(Math.max(v, value[0]), 1000);
+        props.onChange([value[0], v]);
+    };
+
+    const getNumberInputValue = (value?: number) => {
+        if (value === null) {
+            return '';
+        }
+        else {
+            return value;
+        }
     }
 
-    handleSliderChange = (value: SliderRange) => {
-        this.props.onChange(value);
-    };
-
-    handleMinInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value: SliderRange = [event.target.valueAsNumber, this.props.value[1]];
-        this.props.onChange(value);
-    };
-
-    handleMaxInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value: SliderRange = [this.props.value[0], event.target.valueAsNumber];
-        this.props.onChange(value);
-    };
-
-    render() {
-        const {value} = this.props;
-
-        return (
-
-            <div>
+    return (
+        <div>
+            <Box sx={{ width: 300 }}>
                 <Slider
-                    min={0}
-                    max={1000}
+                    getAriaLabel={() => 'Temperature range'}
                     value={value}
-                    // onChangeComplete={this.handleSliderChange}
-                    //onChangeComplete={this.handleChangeComplete}
+                    onChange={handleChange}
+                    valueLabelDisplay="auto"
+                    getAriaValueText={valuetext}
+                    max={1000}
+                    disabled={props.disabled}
                 />
-                <TextField
-                    type={"number"}
-                    label={this.props.label + ' Min'}
-                    // className={classes.textField}
-                    variant="outlined"
-                    value={value[0]}
-                    onChange={this.handleMinInputChange}
+                <Input
+                    value={getNumberInputValue(value[0])}
+                    size="small"
+                    disabled={props.disabled}
+                    onChange={handleMinInputChange}
+                    inputProps={{
+                        step: 10,
+                        min: 0,
+                        max: 1000,
+                        type: 'number',
+                        'aria-labelledby': 'input-slider',
+                    }}
                 />
-                <TextField
-                    //type={"number"}
-                    label={this.props.label + ' Max'}
-                    // className={classes.textField}
-                    variant="outlined"
-                    value={value[1]}
-                    onChange={this.handleMaxInputChange}
+                <Input
+                    value={getNumberInputValue(value[1])}
+                    size="small"
+                    disabled={props.disabled}
+                    onChange={handleMaxInputChange}
+                    inputProps={{
+                        step: 10,
+                        min: 0,
+                        max: 1000,
+                        type: 'number',
+                        'aria-labelledby': 'input-slider',
+                    }}
                 />
-            </div>
+            </Box>
+        </div>
         );
-    }
 }
 
-export default MinMaxInputSlider;

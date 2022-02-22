@@ -1,10 +1,9 @@
 import { Dispatch } from 'redux';
 
 import { MessageLogAction, postMessage } from './messageLogActions'
-import { QueryResult } from '../model';
+import { DatasetQuery, QueryResult } from '../model';
 import { AppState } from '../states/appState';
 import * as api from '../api'
-import { DatasetQuery } from '../api/findDatasets';
 import { SearchHistoryItem } from "../types/dataset";
 
 
@@ -140,21 +139,8 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
     datasetQuery = {...datasetQuery, geojson: true};
 
     const expression = datasetQuery.searchExpr;
-    //let newExpression = expression;
 
     if (expression) {
-        // if (expression.search(':') == -1) {
-        //     // const buffer = expression.split(' ');
-        //     //
-        //     // let elements = [];
-        //     // for (let element of buffer){
-        //     //     elements.push('path:*' + element + '*');
-        //     // }
-        //     // newExpression = elements.join(' OR ');
-        //
-        //     newExpression = 'path:*' + expression + '*';
-        // }
-
         datasetQuery = {...datasetQuery, searchExpr: expression};
     }
 

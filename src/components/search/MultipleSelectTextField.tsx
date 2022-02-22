@@ -50,16 +50,11 @@ interface MultipleSelectTextFieldProps {
 
 export default function MultipleSelectTextField(props: MultipleSelectTextFieldProps) {
     const theme = useTheme();
-    const [listItem, setListItem] = React.useState<string[]>([]);
 
-    const handleChange = (event: SelectChangeEvent<typeof listItem>) => {
-        const {
-            target: { value },
-        } = event;
-        setListItem(
-            // On autofill we get a stringified value.
-            typeof value === 'string' ? value.split(',') : value,
-        );
+    const handleChange = (event: SelectChangeEvent<typeof props.selectedItems>) => {
+        const {target: { value }, } = event;
+        let newValue = typeof value === 'string' ? value.split(',') : value;
+        props.onChange(newValue);
     };
 
     return (
@@ -69,7 +64,7 @@ export default function MultipleSelectTextField(props: MultipleSelectTextFieldPr
                 labelId="multiple-select-label"
                 id="multiple-seclect"
                 multiple
-                value={listItem}
+                value={props.selectedItems}
                 onChange={handleChange}
                 input={<OutlinedInput label={props.placeholder} />}
                 MenuProps={MenuProps}
@@ -78,7 +73,7 @@ export default function MultipleSelectTextField(props: MultipleSelectTextFieldPr
                     <MenuItem
                         key={suggestion}
                         value={suggestion}
-                        style={getStyles(suggestion, listItem, theme)}
+                        style={getStyles(suggestion, props.selectedItems, theme)}
                     >
                         {suggestion}
                     </MenuItem>

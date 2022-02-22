@@ -1,35 +1,10 @@
 import { callJsonApi } from './callApi';
-import { QueryResult } from '../model';
-import { SliderRange } from "../types/advancedSearchDialog";
+import { DatasetQuery, QueryResult } from '../model';
 
 export type ProductMode = 'contains' | 'same_cruise' | 'dont_apply';
 export type MeasurementType = 'all';
 //export type WavelengthsMode = 'all' | 'multispectral' | 'hyperspectral';
 
-
-export interface DatasetQuery {
-    searchExpr?: string;
-    startDate?: string | null;
-    endDate?: string | null;
-    region?: string;
-    submission_id?: string;
-    status?: string;
-    user_id?: number;
-    productMode?: ProductMode;
-    productNames?: string[];
-    productGroupNames: string[];
-    measurementType?: MeasurementType;
-    wavelengthsMode?: string;
-    wdepth?: SliderRange;
-    shallow?: string;
-    datasetIds?: string[];
-    offset?: number;
-    count?: number;
-    geojson?: boolean;
-    //submissionId: string;
-    //userId: number;
-    //status: string;
-}
 
 type QueryComponent = [string, string];
 
@@ -59,8 +34,6 @@ export function collectComponents(datasetQuery: DatasetQuery) {
     collectTimeComponent(datasetQuery, queryComponents);
     collectRegionComponent(datasetQuery, queryComponents);
     collectSubmissionIdComponent(datasetQuery, queryComponents);
-    //collectStatusComponent(datasetQuery, queryComponents);
-    //collectUserIdComponent(datasetQuery, queryComponents);
     collectProductComponents(datasetQuery, queryComponents);
     collectMeasurementTypeComponent(datasetQuery, queryComponents);
     collectWavelengthsTypeComponent(datasetQuery, queryComponents);

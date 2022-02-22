@@ -74,22 +74,9 @@ export function updateProducts(selectedProducts: string[]): UpdateProducts {
     return {type: UPDATE_PRODUCTS , selectedProducts};
 }
 
-export const UPDATE_PRODUCT_VALUE = 'UPDATE_PRODUCT_VALUE ';
-export type UPDATE_PRODUCT_VALUE  = typeof UPDATE_PRODUCT_VALUE ;
-
-export interface UpdateProductValue {
-    type: UPDATE_PRODUCT_VALUE ;
-    productInputValue: string;
-}
-
-export function updateProductValue(productInputValue: string): UpdateProductValue {
-    return {type: UPDATE_PRODUCT_VALUE , productInputValue};
-}
-
 
 export type AdvancedSearchAction = UpdateBBox
     | UpdateWavelength
     | UpdateWaterDepth
     | UpdateOptShallow
-    | UpdateProducts
-    | UpdateProductValue;
+    | UpdateProducts;

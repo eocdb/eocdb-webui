@@ -1,20 +1,11 @@
 import * as React from "react";
 import ChipsArray from "../../components/search/ChipsArray";
-import { SliderRange } from "../../types/advancedSearchDialog";
+import { DatasetQuery } from "src/model";
 
 
 interface AdvancedSearchLogProps {
-    onWavelengthChange: (item: string) => void;
-    wavelengthValue: string;
-
-    onWaterDepthChange: (waterDepth: SliderRange) => void;
-    waterDepthValue: SliderRange;
-
-    onOptShallowChange: (optShallow: string) => void;
-    optShallowValue: string;
-
-    onProductsChange: (products: string[]) => void;
-    productsValue: string[];
+    datasetQuery: DatasetQuery;
+    updateDatasetQuery: (datasetQuery: DatasetQuery) => void;
 }
 
 class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
@@ -24,24 +15,25 @@ class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
 
     getFilterChipEntries() {
         let chips = [];
+        const datasetQuery = this.props.datasetQuery;
 
-        if (this.props.wavelengthValue !== "all") {
-            const label = 'wavelength: ' + this.props.wavelengthValue;
+        if (datasetQuery.wavelengthsMode && datasetQuery.wavelengthsMode  !== "all") {
+            const label = 'wavelength: ' + datasetQuery.wavelengthsMode;
             chips.push({key: 'wavelength', label: label});
         }
-
-        if (this.props.waterDepthValue[0] !== 0 && this.props.waterDepthValue[1] !== 1000) {
-            const label = 'water depth: ' + this.props.waterDepthValue.join(' ');
+        // Use !== null to distinguish between null and 0 as zero is a valid entry.
+        if (datasetQuery.wdepth[0] !== null && datasetQuery.wdepth[1] !== null) {
+            const label = 'water depth: ' + datasetQuery.wdepth.join(' ');
             chips.push({key: 'waterdepth', label: label});
         }
 
-        if (this.props.productsValue.length > 0) {
-            const label = 'products: ' + this.props.productsValue.join(', ');
+        if (datasetQuery.productNames.length > 0) {
+            const label = 'products: ' + datasetQuery.productNames.join(', ');
             chips.push({key: 'products', label: label});
         }
 
-        if (this.props.optShallowValue) {
-            const label = 'opt shallow:' + this.props.optShallowValue;
+        if (datasetQuery.shallow) {
+            const label = 'opt shallow:' + datasetQuery.shallow;
             chips.push({key: 'optshallow', label: label});
         }
 
@@ -49,18 +41,27 @@ class AdvancedSearchLog extends React.PureComponent<AdvancedSearchLogProps> {
     }
 
     handleFilterDelete = (key: string) => {
+        let datasetQuery = this.props.datasetQuery;
         switch (key) {
             case 'wavelength': {
-                return this.props.onWavelengthChange("all");
+                datasetQuery = {...this.props.datasetQuery, wavelengthsMode: 'all'}
+                this.props.updateDatasetQuery(datasetQuery);
+                break;
             }
             case 'waterdepth': {
-                return this.props.onWaterDepthChange([0, 1000]);
+                datasetQuery = {...this.props.datasetQuery, wdepth: [null, null]}
+                this.props.updateDatasetQuery(datasetQuery);
+                break;
             }
             case 'products': {
-                return this.props.onProductsChange([]);
+                datasetQuery = {...this.props.datasetQuery, productNames: []}
+                this.props.updateDatasetQuery(datasetQuery);
+                break;
             }
             case 'optshallow': {
-                return this.props.onOptShallowChange('');
+                datasetQuery = {...this.props.datasetQuery, shallow: null}
+                this.props.updateDatasetQuery(datasetQuery);
+                break;
             }
         }
     };

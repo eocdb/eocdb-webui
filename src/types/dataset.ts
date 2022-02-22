@@ -1,8 +1,7 @@
 /**
  * Dataset reference.
  */
-
-import {DatasetQuery} from "../api/findDatasets";
+import { DatasetQuery } from "../model";
 
 export type DatasetStatus = "OK" | "WARNING" | "ERROR";
 export type DatasetIssueType = "WARNING" | "ERROR";

@@ -7,13 +7,11 @@ import {
     UpdateOptShallow,
     UpdateProducts,
     UPDATE_PRODUCTS,
-    UpdateProductValue,
-    UPDATE_PRODUCT_VALUE,
     UpdateBBox,
     UPDATE_BBOX
 } from "../actions/advancedFindActions";
 import { advancedSearchReducer } from "./advancedSearchReducer";
-import { SELECTED_BOUNDS_DEFAULT } from "../states/advancedSearchState";
+import { SELECTED_BOUNDS_DEFAULT } from "../model/DatasetQuery";
 
 
 
@@ -26,7 +24,7 @@ describe('advancedSearchReducer', () => {
         };
 
         const result = advancedSearchReducer(undefined, action);
-        expect(result.selectedBBox).toEqual(SELECTED_BOUNDS_DEFAULT);
+        expect(result.datasetQuery.selectedBBox).toEqual(SELECTED_BOUNDS_DEFAULT);
     });
 
     it('submissionReducer to update BBOX', () => {
@@ -36,7 +34,7 @@ describe('advancedSearchReducer', () => {
         };
 
         const result = advancedSearchReducer(undefined, action);
-        expect(result.selectedBBox).toEqual(SELECTED_BOUNDS_DEFAULT);
+        expect(result.datasetQuery.selectedBBox).toEqual(SELECTED_BOUNDS_DEFAULT);
     });
 
 
@@ -47,7 +45,7 @@ describe('advancedSearchReducer', () => {
         };
 
         const result = advancedSearchReducer(undefined, action);
-        expect(result.selectedWavelength).toEqual('');
+        expect(result.datasetQuery.wavelengthsMode).toEqual('');
     });
 
     it('submissionReducer to UpdateWaterDepth', () => {
@@ -57,7 +55,7 @@ describe('advancedSearchReducer', () => {
         };
 
         const result = advancedSearchReducer(undefined, action);
-        expect(result.waterDepth).toEqual([0, 1000]);
+        expect(result.datasetQuery.wdepth).toEqual([0, 1000]);
     });
 
     it('submissionReducer to UpdateSelectedOptShallow', () => {
@@ -67,7 +65,7 @@ describe('advancedSearchReducer', () => {
         };
 
         const result = advancedSearchReducer(undefined, action);
-        expect(result.selectedOptShallow).toEqual('');
+        expect(result.datasetQuery.shallow).toEqual('');
     });
 
     it('submissionReducer to UpdateProducts', () => {
@@ -77,17 +75,8 @@ describe('advancedSearchReducer', () => {
         };
 
         const result = advancedSearchReducer(undefined, action);
-        expect(result.selectedProducts).toEqual([]);
+        expect(result.datasetQuery.productNames).toEqual([]);
     });
 
-    it('submissionReducer to UpdateProductInputValue', () => {
-        const action: UpdateProductValue = {
-            type: UPDATE_PRODUCT_VALUE ,
-            productInputValue: '',
-        };
-
-        const result = advancedSearchReducer(undefined, action);
-        expect(result.productInputValue).toEqual('');
-    });
 });
 

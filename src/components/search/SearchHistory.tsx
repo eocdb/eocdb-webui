@@ -1,21 +1,11 @@
 import * as React from "react";
 import { SearchHistoryItem } from "../../types/dataset";
 import APICodeDialog from "./ApiCodeDialog";
-import { collectComponents, DatasetQuery } from "../../api/findDatasets";
+import { collectComponents } from "../../api";
 import { QueryComponent } from "../../api/callApi";
 import { Button, List, ListItem, ListItemText, Tooltip } from "@mui/material";
 import { Code, Delete } from "@mui/icons-material";
-
-
-// noinspection JSUnusedLocalSymbols
-// const styles = (theme: Theme) => createStyles({
-//     root: {
-//         display: 'flex',
-//     },
-//     rightIcon: {
-//         width: "10pt"
-//     }
-// });
+import { DatasetQuery } from "../../model";
 
 
 export function makeFunctionCall(url: string, queryComponents?: QueryComponent[]) {
@@ -52,8 +42,8 @@ class SearchHistory extends React.PureComponent<SearchHistoryProps, SearchHistor
         }
     }
 
-    handleApiCodeOpen = (dq: DatasetQuery) => {
-        const comps = collectComponents(dq);
+    handleApiCodeOpen = (datasetQuery: DatasetQuery) => {
+        const comps = collectComponents(datasetQuery);
         const query = makeFunctionCall('', comps);
         this.setState({apiCodeDialogOpen: true, query: query});
     };

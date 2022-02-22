@@ -3,7 +3,7 @@ import * as React from 'react';
 import { MatchupFiles } from "../../model/MatchupFiles";
 import TermsDialog from "../search/TermsDialog";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 
 
 interface MatchupPanelProps {
@@ -57,10 +57,6 @@ export default function MatchupPanel(props: MatchupPanelProps) {
 
     const columns: GridColDef[] = [
         {
-           field: 'id',
-           headerName: 'ID',
-        },
-        {
             field: 'filename',
             headerName: 'Filename',
             width: 300
@@ -73,7 +69,9 @@ export default function MatchupPanel(props: MatchupPanelProps) {
         {
             field: 'actions',
             headerName: 'Actions',
-            width: 100,
+            minWidth: 100,
+            sortable: false,
+            filterable: false,
             renderCell: (params => {
                 return (<Button onClick={() => handleRowClick(params)}>
                     Download

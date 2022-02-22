@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import { blue, green, orange, red } from "@mui/material/colors";
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
+import { CloudUpload } from "@mui/icons-material";
 
 
 
@@ -244,6 +245,13 @@ export default function SubmissionTable(props: SubmissionTableProps) {
 
     return (
         <div style={{ height: 600, width: '100%' }}>
+            <Button variant="contained"
+                    color="secondary"
+                    onClick={props.onSubmissionDialogOpen}
+            >
+                New Submission
+                <CloudUpload/>
+            </Button>
             <DataGrid
                 rows={rows}
                 columns={columns}

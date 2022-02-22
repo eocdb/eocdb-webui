@@ -1,21 +1,54 @@
-import { ProductMode } from "../api/findDatasets";
+import { MeasurementType, ProductMode } from "../api/findDatasets";
+import { SliderRange } from "../types/advancedSearchDialog";
+import { BBoxValue } from "../components/search/BBoxInput";
 
+export const SELECTED_BOUNDS_DEFAULT: BBoxValue = ['', '', '', ''];
 
 export interface DatasetQuery {
-    expr?: string;
-    mtype: string;
+    selectedBBox: BBoxValue,
+    searchExpr?: string;
     startDate?: string;
     endDate?: string;
-    time?: string[];
     region?: string;
-    pmode?: ProductMode;
-    pname?: string[];
-    pgroup?: string[];
-    shallow: string;
+    submission_id?: string;
+    status?: string;
+    user_id?: number;
+    productMode?: ProductMode;
+    productNames: string[];
+    productGroupNames: string[];
+    measurementType?: MeasurementType;
+    mtype?: string,
+    wavelengthsMode?: string;
+    wdepth?: SliderRange;
+    hasWdepth: boolean;
+    shallow?: string;
     datasetIds?: string[];
-    wdepth: string;
     offset?: number;
     count?: number;
     geojson?: boolean;
 }
 
+
+export const DefaultDatasetQuery: DatasetQuery = {
+    selectedBBox: SELECTED_BOUNDS_DEFAULT,
+    searchExpr: null,
+    startDate: null,
+    endDate: null,
+    region: null,
+    submission_id: null,
+    status: null,
+    user_id: null,
+    productMode: null,
+    productNames: [],
+    productGroupNames: [],
+    measurementType: null,
+    mtype: null,
+    wavelengthsMode: null,
+    wdepth: [null, null],
+    hasWdepth: false,
+    shallow: null,
+    datasetIds: [],
+    offset: 0,
+    count: 0,
+    geojson: true
+}
