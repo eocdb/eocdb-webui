@@ -15,24 +15,6 @@ import {
 import { Folder } from "@mui/icons-material";
 
 
-// const styles = createStyles({
-//     root: {},
-//     appBar: {
-//         position: 'relative',
-//     },
-//     dropzone: {
-//         textAlign: 'center',
-//         //borderRadius: '25px',
-//         border: '4px solid #C8C8C8',
-//         borderStyle: 'dashed',
-//         padding: '2em',
-//         width: '100%',
-//         height: '10%',
-//         backgroundColor: "#F0F0F0",
-//     }
-// });
-
-
 interface SingleFileUploadProps<T> {
     label: string;
     open: boolean;
