@@ -6,7 +6,7 @@ import { DatasetValidationResult, UploadData, Submission, SubmissionFile } from 
 import { StopLoading, UpdateSearchHistory } from "./findActions";
 import { SingleUpload } from "../model/UploadData";
 import { MessageLogEntry } from "../states/messageLogState";
-import { SubmissionQuery } from "../model/Submission";
+import { SubmissionQuery, SubmissionResult } from "../model/Submission";
 
 
 /**
@@ -461,8 +461,8 @@ export function sendSubmission() {
             })
             .then(() => {
                 api.getSubmissionsForUser(apiServerUrl)
-                    .then((submissions: Submission[]) => {
-                        dispatch(updateSubmissionsForUser(submissions));
+                    .then((submissionResult: SubmissionResult) => {
+                        dispatch(updateSubmissionsForUser(submissionResult));
                     })
             })
             .catch((error: string) => {
@@ -500,14 +500,14 @@ export type UPDATE_SUBMISSIONS_FOR_USER = typeof UPDATE_SUBMISSIONS_FOR_USER;
 
 export interface UpdateSubmissionsForUser {
     type: UPDATE_SUBMISSIONS_FOR_USER;
-    submissions: Submission[];
+    submissionResult: SubmissionResult;
 }
 
 
-export function updateSubmissionsForUser(submissions: Submission[]): UpdateSubmissionsForUser {
+export function updateSubmissionsForUser(submissionResult: SubmissionResult): UpdateSubmissionsForUser {
     return {
         type: UPDATE_SUBMISSIONS_FOR_USER,
-        submissions
+        submissionResult
     }
 }
 
@@ -520,8 +520,8 @@ export function getSubmissionsForUser() {
         const submissionQuery = state.submissionState.submissionQuery;
 
         return api.getSubmissionsForUser(apiServerUrl, submissionQuery)
-            .then((submissions: Submission[]) => {
-                dispatch(updateSubmissionsForUser(submissions));
+            .then((submissionResult: SubmissionResult) => {
+                dispatch(updateSubmissionsForUser(submissionResult));
             })
             .then(() => {
                 dispatch(postMessage("success", 'Submissions Loaded'));
@@ -529,7 +529,7 @@ export function getSubmissionsForUser() {
             })
             .catch((error: string) => {
                 dispatch(postMessage('error', error + ''));
-                dispatch(updateSubmissionsForUser([]));
+                dispatch(updateSubmissionsForUser({submissions: [], tot_count: 0}));
             });
     };
 }
@@ -615,8 +615,8 @@ export function updateSubmissionFile(submissionFile: SubmissionFile, uploadData:
             })
             .then(() => {
                 return api.getSubmissionsForUser(apiServerUrl)
-                    .then((submissions: Submission[]) => {
-                        dispatch(updateSubmissionsForUser(submissions));
+                    .then((submissionResult: SubmissionResult) => {
+                        dispatch(updateSubmissionsForUser(submissionResult));
                         dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
                     })
             })
@@ -668,8 +668,8 @@ export function getSubmission(submissionId: string) {
             })
             .then(() => {
                 return api.getSubmissionsForUser(apiServerUrl, userid)
-                    .then((submissions: Submission[]) => {
-                        dispatch(updateSubmissionsForUser(submissions));
+                    .then((submissionResult: SubmissionResult) => {
+                        dispatch(updateSubmissionsForUser(submissionResult));
                         dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
                     })
             })
@@ -695,8 +695,8 @@ export function deleteSubmission(submissionId: string) {
         return api.deleteSubmission(apiServerUrl, submissionId)
             .then(() => {
                 api.getSubmissionsForUser(apiServerUrl)
-                    .then((submissions: Submission[]) => {
-                        dispatch(updateSubmissionsForUser(submissions));
+                    .then((submissionResult: SubmissionResult) => {
+                        dispatch(updateSubmissionsForUser(submissionResult));
                         dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
                     })
             })
@@ -745,8 +745,8 @@ export function setSubmissionStatus(submissionId: string, status: string, appDat
             })
             .then(() => {
                 return api.getSubmissionsForUser(apiServerUrl)
-                    .then((submissions: Submission[]) => {
-                        dispatch(updateSubmissionsForUser(submissions));
+                    .then((submissionResult: SubmissionResult) => {
+                        dispatch(updateSubmissionsForUser(submissionResult));
                         dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
                     })
             })
@@ -781,8 +781,8 @@ export function updateSubmissionMeta() {
             })
             .then(() => {
                 return api.getSubmissionsForUser(apiServerUrl)
-                    .then((submissions: Submission[]) => {
-                        dispatch(updateSubmissionsForUser(submissions));
+                    .then((submissionResult: SubmissionResult) => {
+                        dispatch(updateSubmissionsForUser(submissionResult));
                         dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
                     })
             })

@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 
 import { Menu, AccountCircle, Help, ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { SubmissionQuery } from "../model/Submission";
 
 
 const drawerWidth = 240;
@@ -88,7 +89,8 @@ interface DashboardProps {
     apiServerUrlChange: (url: string) => void;
 
     user?: User | null;
-    updateSubmissions: () => void;
+    updateSubmissionQuery: (submissionQuery: SubmissionQuery) => void;
+    getSubmissionsForUser: () => void;
     getMatchupFiles: () => void;
 
     searchHistory: SearchHistoryItem[];
@@ -195,7 +197,8 @@ export default function Dashboard(props: DashboardProps) {
                 <Divider />
                 <List>
                     <DrawerItems
-                        updateSubmissions={props.updateSubmissions}
+                        updateSubmissionQuery={props.updateSubmissionQuery}
+                        getSubmissionsForUser={props.getSubmissionsForUser}
                         getMatchupFiles={props.getMatchupFiles}
                         user={props.user}
                         handleClick={handleDrawerChanged}

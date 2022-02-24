@@ -42,7 +42,7 @@ export function logoutUser() {
             })
             .then(() => {
                 dispatch(postMessage('success', 'Logout successful'));
-                dispatch(updateSubmissionsForUser([]));
+                dispatch(updateSubmissionsForUser({submissions: [], tot_count: 0}));
                 dispatch(clearSubmissionForm());
                 dispatch(closeSubmitSteps());
             })

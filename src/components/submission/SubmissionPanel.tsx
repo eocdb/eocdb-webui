@@ -10,7 +10,7 @@ import SingleFileUpload from "./SingleFileUpload";
 import { SingleUpload } from "../../model/UploadData";
 import { MessageLogEntry, MessageType } from "../../states/messageLogState";
 import SubmissionMetaDialog from "./SubmissionMetaDialog";
-import { SubmissionQuery } from "../../model/Submission";
+import { SubmissionQuery, SubmissionResult } from "../../model/Submission";
 
 
 interface SubmissionPanelProps {
@@ -51,7 +51,7 @@ interface SubmissionPanelProps {
     submissionQuery: SubmissionQuery;
     updateSubmissionQuery: (submissionQuery: SubmissionQuery) => void;
 
-    submissionsForUser: Submission[];
+    submissionsForUser: SubmissionResult;
     updateSubmissionsForUser: () => void;
 
     selectedSubmission: Submission;
@@ -340,7 +340,8 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     submissionQuery={this.props.submissionQuery}
                     updateSubmissionQuery={this.props.updateSubmissionQuery}
 
-                    submissions={this.props.submissionsForUser}
+                    submissionResult={this.props.submissionsForUser}
+                    updateSubmissionsForUser={this.props.updateSubmissionsForUser }
 
                     user={this.props.user}
                 />

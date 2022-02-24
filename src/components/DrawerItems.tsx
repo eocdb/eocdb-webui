@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { User } from "../model";
 import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import { AttachFile, CloudUpload, Link, Search, SettingsApplications } from "@mui/icons-material";
+import { AttachFile, CloudUpload, Link, Search } from "@mui/icons-material";
+import { SubmissionQuery } from "../model/Submission";
 
 // noinspection JSUnusedLocalSymbols
 
 interface DrawerItemsProps {
     handleClick: (currentDrawer: string) => void;
-    updateSubmissions: () => void;
+    updateSubmissionQuery: (submissionQuery: SubmissionQuery) => void;
+    getSubmissionsForUser: () => void;
     getMatchupFiles: () => void;
     user?: User | null;
 }
@@ -19,7 +21,18 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
 
     handleSubmissionClick = () => {
         this.props.handleClick('Submit');
-        this.props.updateSubmissions();
+        const {user} = this.props;
+        const submissionQuery: SubmissionQuery =
+        {
+            user_id: (user) ? user.name : undefined,
+            loading: true,
+            offset: 0,
+            count: 10,
+            page: 0
+        };
+
+        this.props.updateSubmissionQuery(submissionQuery);
+        this.props.getSubmissionsForUser();
     };
 
     handleMatchupClick = () => {

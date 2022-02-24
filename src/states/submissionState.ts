@@ -1,6 +1,6 @@
 import { Submission, SubmissionFile, DatasetValidationResult } from "../model";
 import { MessageLogEntry } from "./messageLogState";
-import { SubmissionQuery } from "../model/Submission";
+import { SubmissionQuery, SubmissionResult } from "../model/Submission";
 
 export interface SubmissionState {
     submissionDialogOpen: boolean;
@@ -27,7 +27,7 @@ export interface SubmissionState {
     currentSubmissionId: string;
 
     submissionQuery: SubmissionQuery;
-    foundSubmissions: Submission[];
+    submissionResult: SubmissionResult;
 
     helpDialogOpen: boolean;
 
@@ -40,8 +40,8 @@ export interface SubmissionState {
 
 export function newSubmissionState() {
     return {
-        submissionQuery: {loading: false},
-        foundSubmissions: [],
+        submissionQuery: {loading: false, count: 10, offset: 0},
+        submissionResult: {submissions: [], tot_count: 0},
 
         submissionDialogOpen: false,
         submissionFilesDialogOpen: false,

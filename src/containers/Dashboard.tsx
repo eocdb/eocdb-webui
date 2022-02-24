@@ -13,7 +13,7 @@ import {
 import { configServer, getMatchupFiles } from '../actions/configActions'
 import Dashboard from '../components/Dashboard';
 import { changeLoginUser, loginUser, logoutUser } from '../actions/userActions';
-import { getSubmissionsForUser } from "../actions/submissionActions";
+import { getSubmissionsForUser, updateSubmissionQuery } from "../actions/submissionActions";
 import { searchDatasets, updateDatasetQuery, updateSearchHistory } from "../actions/findActions";
 
 
@@ -48,7 +48,8 @@ const mapDispatchToProps = {
     loginUser,
     logoutUser,
 
-    updateSubmissions: getSubmissionsForUser,
+    getSubmissionsForUser: getSubmissionsForUser,
+    updateSubmissionQuery: updateSubmissionQuery,
     getMatchupFiles: getMatchupFiles,
     updateDatasetQuery,
     updateSearchHistory,

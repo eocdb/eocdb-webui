@@ -57,7 +57,7 @@ const mapStateToProps = (state: AppState) => {
         setSubmissionPublicationDialogOpen: state.submissionState.setSubmissionPublicationDateDialogOpen,
 
         submissionQuery: state.submissionState.submissionQuery,
-        submissionsForUser: state.submissionState.foundSubmissions,
+        submissionsForUser: state.submissionState.submissionResult,
 
         selectedSubmission: state.submissionState.selectedSubmission,
         selectedSubmissionFile: state.submissionState.selectedSubmissionFile,

@@ -8,8 +8,25 @@ export interface SubmissionQuery {
     user_id?: string;
     offset?: number;
     count?: number;
+    page?: number;
     sortModel?: GridSortModel;
     filterModel?: GridFilterModel;
+}
+
+export const DEFAULT_SUBMISSION_QUERY: SubmissionQuery = {
+    loading: false,
+    user_id: undefined,
+    offset: 0,
+    count: 10,
+    page: 0,
+    sortModel: undefined,
+    filterModel: undefined,
+}
+
+
+export interface SubmissionResult {
+    submissions: Submission[];
+    tot_count: number;
 }
 
 export interface Submission {

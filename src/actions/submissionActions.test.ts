@@ -86,7 +86,7 @@ describe("submissionActions", () => {
             submissions: [],
         };
 
-        expect(updateSubmissionsForUser([])).toEqual(expectedAction);
+        expect(updateSubmissionsForUser({submissions: [], tot_count: 0})).toEqual(expectedAction);
     });
 
     it("_updateSubmission", () => {

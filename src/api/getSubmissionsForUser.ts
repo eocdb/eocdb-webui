@@ -1,6 +1,10 @@
 import { callJsonApi, QueryComponent } from './callApi';
-import {Submission} from "../model";
-import { SubmissionQuery } from "../model/Submission";
+import { SubmissionQuery, SubmissionResult } from "../model/Submission";
+
+
+function _sanitize_param(value: string) {
+    return value.replace('"', '')
+}
 
 export function collectComponents(query?: SubmissionQuery) {
     const queryComponents: QueryComponent[] = [];
@@ -10,7 +14,7 @@ export function collectComponents(query?: SubmissionQuery) {
     if (query.user_id) {
         queryComponents.push(['user-id', JSON.stringify(query.user_id)]);
     }
-    if (query.offset) {
+    if (query.offset || query.offset === 0) {
         queryComponents.push(['offset', JSON.stringify(query.offset)]);
     }
     if (query.count) {
@@ -23,8 +27,8 @@ export function collectComponents(query?: SubmissionQuery) {
         let column = filterModel.items[0].columnField;
         column = column == 'id'? 'submission_id' : column;
 
-        queryComponents.push(['query-column', JSON.stringify(column)]);
-        queryComponents.push(['query-value', JSON.stringify(value)]);
+        queryComponents.push(['query-column', column]);
+        queryComponents.push(['query-value', value]);
     }
 
     if (query.sortModel) {
@@ -32,8 +36,8 @@ export function collectComponents(query?: SubmissionQuery) {
         const sortColumn = sortModel[0].field;
         const sortOrder = sortModel[0].sort;
 
-        queryComponents.push(['sort-column', JSON.stringify(sortColumn)]);
-        queryComponents.push(['sort-order', JSON.stringify(sortOrder)]);
+        queryComponents.push(['sort-column', sortColumn]);
+        queryComponents.push(['sort-order', sortOrder]);
     }
 
     return queryComponents;
@@ -45,9 +49,9 @@ export function collectComponents(query?: SubmissionQuery) {
  * @param apiServerUrl: URL of the OCDB API
  * @param query: query/filter for Submissions
  */
-export function getSubmissionsForUser(apiServerUrl: string, query?: SubmissionQuery): Promise<Submission[]> {
+export function getSubmissionsForUser(apiServerUrl: string, query?: SubmissionQuery): Promise<SubmissionResult> {
     const queryComponents = collectComponents(query)
-    return callJsonApi<Submission[]>(
+    return callJsonApi<SubmissionResult>(
         apiServerUrl + '/store/upload/user', queryComponents,
         {
             method: 'GET',

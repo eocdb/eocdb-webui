@@ -105,7 +105,7 @@ export function submissionReducer(state: SubmissionState = initialState, action:
         case UPDATE_SUBMISSION_QUERY:
             return {...state, submissionQuery: action.submissionQuery}
         case UPDATE_SUBMISSIONS_FOR_USER:
-            return {...state, foundSubmissions: action.submissions};
+            return {...state, submissionResult: action.submissionResult};
         case UPDATE_SELECTED_SUBMISSIONFILE:
             return {...state, selectedSubmissionFile: action.selectedSubmissionFile};
         case UPDATE_CURRENT_SUBMISSIONFILE_INDEX:
