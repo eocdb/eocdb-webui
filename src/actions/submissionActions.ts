@@ -6,6 +6,7 @@ import { DatasetValidationResult, UploadData, Submission, SubmissionFile } from 
 import { StopLoading, UpdateSearchHistory } from "./findActions";
 import { SingleUpload } from "../model/UploadData";
 import { MessageLogEntry } from "../states/messageLogState";
+import { SubmissionQuery } from "../model/Submission";
 
 
 /**
@@ -459,7 +460,7 @@ export function sendSubmission() {
                 dispatch(closeSubmitSteps());
             })
             .then(() => {
-                api.getSubmissionsForUser(apiServerUrl, userid)
+                api.getSubmissionsForUser(apiServerUrl)
                     .then((submissions: Submission[]) => {
                         dispatch(updateSubmissionsForUser(submissions));
                     })
@@ -469,6 +470,28 @@ export function sendSubmission() {
             });
     };
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+export const UPDATE_SUBMISSION_QUERY = 'UPDATE_SUBMISSION_QUERY';
+export type UPDATE_SUBMISSION_QUERY = typeof UPDATE_SUBMISSION_QUERY;
+
+
+export interface UpdateSubmissionQuery {
+    type: UPDATE_SUBMISSION_QUERY;
+    submissionQuery: SubmissionQuery;
+}
+
+
+export function updateSubmissionQuery(query: SubmissionQuery): UpdateSubmissionQuery {
+    return {
+        type: UPDATE_SUBMISSION_QUERY,
+        submissionQuery: query
+    }
+}
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -490,20 +513,19 @@ export function updateSubmissionsForUser(submissions: Submission[]): UpdateSubmi
 
 
 export function getSubmissionsForUser() {
-    return (dispatch: Dispatch<UpdateSubmissionsForUser | MessageLogAction>, getState: ()
+    return (dispatch: Dispatch<UpdateSubmissionsForUser | UpdateSubmissionQuery| MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
-        const user = state.sessionState.user;
+        const submissionQuery = state.submissionState.submissionQuery;
 
-        const userid = user ? user.id : null;
-
-        return api.getSubmissionsForUser(apiServerUrl, userid, 10, 5)
+        return api.getSubmissionsForUser(apiServerUrl, submissionQuery)
             .then((submissions: Submission[]) => {
                 dispatch(updateSubmissionsForUser(submissions));
             })
             .then(() => {
                 dispatch(postMessage("success", 'Submissions Loaded'));
+                dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
             })
             .catch((error: string) => {
                 dispatch(postMessage('error', error + ''));
@@ -577,14 +599,12 @@ export function getSubmissionFile(submissionId: string, submissionFileIndex: num
 
 
 export function updateSubmissionFile(submissionFile: SubmissionFile, uploadData: SingleUpload) {
-    return (dispatch: Dispatch<UpdateSubmission | UpdateSubmissionsForUser | MessageLogAction>, getState: ()
+    return (dispatch: Dispatch<UpdateSubmission  | UpdateSubmissionQuery | UpdateSubmissionsForUser | MessageLogAction>,
+            getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
-
-        const user = state.sessionState.user;
-
-        const userid = user ? user.id : null;
+        const submissionQuery = state.submissionState.submissionQuery;
 
         return api.updateSubmissionFile(apiServerUrl, submissionFile, uploadData)
             .then(() => {
@@ -594,9 +614,10 @@ export function updateSubmissionFile(submissionFile: SubmissionFile, uploadData:
                     })
             })
             .then(() => {
-                return api.getSubmissionsForUser(apiServerUrl, userid)
+                return api.getSubmissionsForUser(apiServerUrl)
                     .then((submissions: Submission[]) => {
                         dispatch(updateSubmissionsForUser(submissions));
+                        dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
                     })
             })
             .then(() => {
@@ -627,10 +648,12 @@ export function updateSubmission(submission: Submission): UpdateSubmission {
 }
 
 export function getSubmission(submissionId: string) {
-    return (dispatch: Dispatch<UpdateSubmission | UpdateSubmissionsForUser | MessageLogAction>, getState: ()
+    return (dispatch: Dispatch<UpdateSubmission | UpdateSubmissionQuery | UpdateSubmissionsForUser | MessageLogAction>,
+            getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
+        const submissionQuery = state.submissionState.submissionQuery;
 
         const user = state.sessionState.user;
 
@@ -647,6 +670,7 @@ export function getSubmission(submissionId: string) {
                 return api.getSubmissionsForUser(apiServerUrl, userid)
                     .then((submissions: Submission[]) => {
                         dispatch(updateSubmissionsForUser(submissions));
+                        dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
                     })
             })
             .then(() => {
@@ -662,20 +686,18 @@ export function getSubmission(submissionId: string) {
 
 
 export function deleteSubmission(submissionId: string) {
-    return (dispatch: Dispatch<UpdateSubmissionsForUser | MessageLogAction>, getState: ()
+    return (dispatch: Dispatch<UpdateSubmissionsForUser | UpdateSubmissionQuery | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
-
-        const user = state.sessionState.user;
-
-        const userid = user ? user.id : null;
+        const submissionQuery = state.submissionState.submissionQuery;
 
         return api.deleteSubmission(apiServerUrl, submissionId)
             .then(() => {
-                api.getSubmissionsForUser(apiServerUrl, userid)
+                api.getSubmissionsForUser(apiServerUrl)
                     .then((submissions: Submission[]) => {
                         dispatch(updateSubmissionsForUser(submissions));
+                        dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
                     })
             })
             .then(() => {
@@ -710,23 +732,22 @@ export function _setSubmissionStatus(submissionId: string, status: string): SetS
 }
 
 export function setSubmissionStatus(submissionId: string, status: string, appDate?: string | null) {
-    return (dispatch: Dispatch<SetSubmissionStatus | UpdateSubmissionsForUser | MessageLogAction>, getState: ()
+    return (dispatch: Dispatch<SetSubmissionStatus | UpdateSubmissionQuery | UpdateSubmissionsForUser |
+        MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
-
-        const user = state.sessionState.user;
-
-        const userid = user ? user.id : null;
+        const submissionQuery = state.submissionState.submissionQuery;
 
         return api.setSubmissionStatus(apiServerUrl, submissionId, status, appDate)
             .then(() => {
                 dispatch(postMessage("success", 'Status set to ' + status));
             })
             .then(() => {
-                return api.getSubmissionsForUser(apiServerUrl, userid)
+                return api.getSubmissionsForUser(apiServerUrl)
                     .then((submissions: Submission[]) => {
                         dispatch(updateSubmissionsForUser(submissions));
+                        dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
                     })
             })
             .catch((error: string) => {
@@ -737,14 +758,12 @@ export function setSubmissionStatus(submissionId: string, status: string, appDat
 
 
 export function updateSubmissionMeta() {
-    return (dispatch: Dispatch<SetSubmissionStatus | UpdateSubmissionsForUser | MessageLogAction>, getState: ()
+    return (dispatch: Dispatch<SetSubmissionStatus | UpdateSubmissionQuery | UpdateSubmissionsForUser | MessageLogAction>,
+            getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
-
-        const user = state.sessionState.user;
-
-        const userid = user ? user.id : null;
+        const submissionQuery = state.submissionState.submissionQuery;
 
         const submissionId = state.submissionState.selectedSubmission.submission_id;
 
@@ -761,9 +780,10 @@ export function updateSubmissionMeta() {
                 return dispatch(postMessage("success", 'Submission' + submissionId + ' updated.'));
             })
             .then(() => {
-                return api.getSubmissionsForUser(apiServerUrl, userid)
+                return api.getSubmissionsForUser(apiServerUrl)
                     .then((submissions: Submission[]) => {
                         dispatch(updateSubmissionsForUser(submissions));
+                        dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
                     })
             })
             .catch((error: string) => {
@@ -927,4 +947,5 @@ export type SubmitAction = OpenSubmitSteps
     | CloseHelpDialog
     | UpdateSubmissionSucceeded
     | UpdateSubmissionMessages
-    | HideSubmissionMessages;
+    | HideSubmissionMessages
+    | UpdateSubmissionQuery;

@@ -6,10 +6,9 @@ import {
     Icon, Chip
 } from "@mui/material";
 import { blue, green, orange, red } from "@mui/material/colors";
-import { DataGrid, GridColDef, GridFilterModel, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridFilterModel, GridSortModel, GridToolbar } from '@mui/x-data-grid';
 import { CloudUpload } from "@mui/icons-material";
-import { SERVER_CONFIG } from "../../api/config";
-import { getSubmissionsForUser } from "../../api";
+import { SubmissionQuery } from "../../model/Submission";
 
 
 
@@ -32,6 +31,11 @@ interface SubmissionTableProps {
 
     onSubmissionReady: (selectedSubmissionId: string) => void;
     onSubmissionPublish: (selectedSubmissionId: string) => void;
+
+    submissionQuery: SubmissionQuery;
+    updateSubmissionQuery: (submissionQuery: SubmissionQuery) => void;
+
+    submissions: Submission[];
 
     user: User | null;
 }
@@ -176,34 +180,49 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     if (!props.show) {
         return null;
     }
+
+    const rows = makeRows(props.submissions)
     // const rows = makeRows(submissionsValue);
-    const [page, setPage] = React.useState(0);
-    const [rows, setRows] = React.useState([]);
-    const [filterValue, setFilterValue] = React.useState<string | undefined>();
-    const [loading, setLoading] = React.useState(false);
+    // const [page, setPage] = React.useState(0);
+    // const [rows, setRows] = React.useState([]);
+    // const [filter, setFilter] = React.useState<GridFilterModel | undefined>();
+    // const [loading, setLoading] = React.useState(false);
+    // const [sortModel, setSortModel] = React.useState<GridSortModel>([
+    //     { field: 'rating', sort: 'asc' },
+    // ]);
 
-    React.useEffect(() => {
-        let active = true;
-
-        (async () => {
-            setLoading(true);
-            const offset = (page * 5) + 1;
-            const newSubmissions = await getSubmissionsForUser(SERVER_CONFIG, 'olaf', offset, 10);
-
-            const newRows = makeRows(newSubmissions);
-
-            if (!active) {
-                return;
-            }
-
-            setRows(newRows);
-            setLoading(false);
-        })();
-
-        return () => {
-            active = false;
-        };
-    }, [page]);
+    // React.useEffect(() => {
+    //     let active = true;
+    //
+    //     (async () => {
+    //         setLoading(true);
+    //         const submissionQuery: SubmissionQuery = (filter && filter.items[0].value) ?
+    //             {
+    //                 user_id: (user) ? user.name : undefined,
+    //                 offset: (page * 5) + 1,
+    //                 count: 10,
+    //                 value: filter.items[0].value,
+    //                 column: filter.items[0].columnField,
+    //                 sortColumn: sortModel[0].field,
+    //                 sortOrder: sortModel[0].sort,
+    //             } : undefined;
+    //
+    //         const newSubmissions = await getSubmissionsForUser(SERVER_CONFIG, submissionQuery);
+    //
+    //         const newRows = makeRows(newSubmissions);
+    //
+    //         if (!active) {
+    //             return;
+    //         }
+    //
+    //         setRows(newRows);
+    //         setLoading(false);
+    //     })();
+    //
+    //     return () => {
+    //         active = false;
+    //     };
+    // }, [page, filter, sortModel]);
 
     const user = props.user === null ? undefined : props.user;
 
@@ -265,10 +284,39 @@ export default function SubmissionTable(props: SubmissionTableProps) {
         }
     ];
 
-    const onFilterChange = React.useCallback((filterModel: GridFilterModel) => {
-        setFilterValue(filterModel.items[0].value);
-    }, []);
+    const handleFilterChange = (filterModel: GridFilterModel) => {
+        const submissionQuery: SubmissionQuery = (filterModel && filterModel.items[0].value) ?
+            {
+                ...this.props.submissionQuery,
+                user_id: (user) ? user.name : undefined,
+                loading: true,
+                filterModel: filterModel,
+            } : undefined;
 
+        this.props.updateSubmissionQuery(submissionQuery);
+    };
+
+    const handleSortModelChange = (newModel: GridSortModel) => {
+        const submissionQuery: SubmissionQuery = (newModel) ?
+            {
+                ...this.props.submissionQuery,
+                loading: true,
+                sortModel: newModel
+            } : undefined;
+
+        this.props.updateSubmissionQuery(submissionQuery);
+    };
+
+    const handlePageChange = (newPage) => {
+        const submissionQuery: SubmissionQuery = {
+                ...this.props.submissionQuery,
+                loading: true,
+                offset: (newPage * 5) + 1,
+                count: 10,
+            };
+
+        this.props.updateSubmissionQuery(submissionQuery);
+    };
 
     return (
         <div style={{ height: 700, width: '100%' }}>
@@ -286,15 +334,17 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                 rowsPerPageOptions={[10]}
                 rowCount={450}
                 paginationMode={"server"}
-                // onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                // rowsPerPageOptions={[5, 10]}
                 pagination
-                loading={loading}
-                onPageChange={(newPage) => setPage(newPage)}
+                loading={props.submissionQuery.loading}
+                onPageChange={handlePageChange}
                 // disableSelectionOnClick
                 components={{ Toolbar: GridToolbar }}
                 filterMode="server"
-                onFilterModelChange={onFilterChange}
+                filterModel={props.submissionQuery.filterModel}
+                onFilterModelChange={handleFilterChange}
+                sortingMode="server"
+                sortModel={props.submissionQuery.sortModel}
+                onSortModelChange={handleSortModelChange}
             />
         </div>
     );

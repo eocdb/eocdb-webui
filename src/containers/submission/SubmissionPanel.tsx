@@ -37,7 +37,7 @@ import {
     updateSubmissionMessages,
     hideSubmissionMessages,
     openSubmissionMetaDialog,
-    closeSubmissionMetaDialog, updateSubmissionMeta
+    closeSubmissionMetaDialog, updateSubmissionMeta, updateSubmissionQuery
 } from "../../actions/submissionActions";
 import SubmissionPanel from "../../components/submission/SubmissionPanel";
 import { openHelpDialog } from "../../actions/searchMapActions";
@@ -56,6 +56,7 @@ const mapStateToProps = (state: AppState) => {
 
         setSubmissionPublicationDialogOpen: state.submissionState.setSubmissionPublicationDateDialogOpen,
 
+        submissionQuery: state.submissionState.submissionQuery,
         submissionsForUser: state.submissionState.foundSubmissions,
 
         selectedSubmission: state.submissionState.selectedSubmission,
@@ -109,6 +110,7 @@ const mapDispatchToProps = {
     openUploadSubmissionFileDialog,
     closeUploadSubmissionFileDialog,
 
+    updateSubmissionQuery: updateSubmissionQuery,
     updateSubmissionsForUser: getSubmissionsForUser,
 
     updateSelectedSubmission:  getSubmission,

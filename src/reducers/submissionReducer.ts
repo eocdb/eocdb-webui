@@ -32,7 +32,7 @@ import {
     OPEN_HELP_DIALOG,
     UPDATE_SUBMISSION_SUCCEEDED,
     UPDATE_SUBMISSION_MESSAGES,
-    HIDE_SUBMISSION_MESSAGES, OPEN_SUBMISSION_META_DIALOG, CLOSE_SUBMISSION_META_DIALOG
+    HIDE_SUBMISSION_MESSAGES, OPEN_SUBMISSION_META_DIALOG, CLOSE_SUBMISSION_META_DIALOG, UPDATE_SUBMISSION_QUERY
 } from "../actions/submissionActions";
 
 
@@ -102,6 +102,8 @@ export function submissionReducer(state: SubmissionState = initialState, action:
                 publicationDate: null,
                 allowPublication: false
             };
+        case UPDATE_SUBMISSION_QUERY:
+            return {...state, submissionQuery: action.submissionQuery}
         case UPDATE_SUBMISSIONS_FOR_USER:
             return {...state, foundSubmissions: action.submissions};
         case UPDATE_SELECTED_SUBMISSIONFILE:
