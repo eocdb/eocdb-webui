@@ -6,10 +6,11 @@ import {
     Icon, Chip
 } from "@mui/material";
 import { blue, green, orange, red } from "@mui/material/colors";
-import { DataGrid, GridColDef, GridFilterModel, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridFilterModel, GridSortModel, GridToolbar } from '@mui/x-data-grid';
 import { CloudUpload } from "@mui/icons-material";
 import { SERVER_CONFIG } from "../../api/config";
 import { getSubmissionsForUser } from "../../api";
+import { SubmissionQuery } from "../../model/Submission";
 
 
 
@@ -179,17 +180,28 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     // const rows = makeRows(submissionsValue);
     const [page, setPage] = React.useState(0);
     const [rows, setRows] = React.useState([]);
-    const [totRows, setTotRows] = React.useState<number | undefined>(0);
-    const [filterValue, setFilterValue] = React.useState<string | undefined>();
+    const [totRows, setTotRows] = React.useState(0);
+    const [filterModel, setFilterModel] = React.useState<GridFilterModel | undefined>();
     const [loading, setLoading] = React.useState(false);
+    const [sortModel, setSortModel] = React.useState<GridSortModel>([
+        { field: 'rating', sort: 'asc' },
+    ]);
 
     React.useEffect(() => {
         let active = true;
 
         (async () => {
             setLoading(true);
-            const offset = (page * 5) + 1;
-            const submissionResult = await getSubmissionsForUser(SERVER_CONFIG, 'olaf', offset, 10);
+            const submissionQuery: SubmissionQuery = (filterModel && filterModel.items[0].value) ?
+                {
+                    user_id: (user) ? user.name : undefined,
+                    offset: (page * 5) + 1,
+                    count: 10,
+                    filterModel: filterModel,
+                    sortModel: sortModel,
+                } : undefined;
+
+            const submissionResult = await getSubmissionsForUser(SERVER_CONFIG, submissionQuery);
 
             const newRows = makeRows(submissionResult.submissions);
 
@@ -198,14 +210,14 @@ export default function SubmissionTable(props: SubmissionTableProps) {
             }
 
             setRows(newRows);
-            setTotRows(submissionResult.tot_count)
+            setTotRows(submissionResult.tot_count);
             setLoading(false);
         })();
 
         return () => {
             active = false;
         };
-    }, [page]);
+    }, [page, filterModel, sortModel]);
 
     const user = props.user === null ? undefined : props.user;
 
@@ -268,7 +280,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     ];
 
     const onFilterChange = React.useCallback((filterModel: GridFilterModel) => {
-        setFilterValue(filterModel.items[0].value);
+        setFilterModel(filterModel.items[0].value);
     }, []);
 
 

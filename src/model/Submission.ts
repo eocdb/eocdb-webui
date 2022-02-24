@@ -1,4 +1,15 @@
 import { SubmissionFile } from "./SubmissionFile";
+import { GridFilterModel, GridSortModel } from "@mui/x-data-grid";
+
+
+export interface SubmissionQuery {
+    user_id: string;
+    offset: number;
+    count: number;
+    sortModel: GridSortModel;
+    filterModel: GridFilterModel;
+}
+
 
 export interface SubmissionResult {
     submissions: Submission[];
