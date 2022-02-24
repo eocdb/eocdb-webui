@@ -1,5 +1,5 @@
 import { callJsonApi, QueryComponent } from './callApi';
-import { SubmissionResult } from "../model/Submission";
+import { SubmissionQuery, SubmissionResult } from "../model/Submission";
 
 export function collectComponents(offset: number, count: number) {
     const queryComponents: QueryComponent[] = [];
@@ -20,7 +20,7 @@ export function collectComponents(offset: number, count: number) {
  * @param offset: offset for pagination
  * @param count: count for pagination
  */
-export function getSubmissionsForUser(apiServerUrl: string, user?: string, offset?: number, count?: number): Promise<SubmissionResult> {
+export function getSubmissionsForUser(apiServerUrl: string, submissionQuery: SubmissionQuery): Promise<SubmissionResult> {
     const queryComponents = collectComponents(offset, count)
     return callJsonApi<SubmissionResult>(
         apiServerUrl + '/store/upload/user', queryComponents,

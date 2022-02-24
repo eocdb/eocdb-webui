@@ -192,14 +192,14 @@ export default function SubmissionTable(props: SubmissionTableProps) {
 
         (async () => {
             setLoading(true);
-            const submissionQuery: SubmissionQuery = (filterModel && filterModel.items[0].value) ?
+            const submissionQuery: SubmissionQuery =
                 {
                     user_id: (user) ? user.name : undefined,
                     offset: (page * 5) + 1,
                     count: 10,
                     filterModel: filterModel,
                     sortModel: sortModel,
-                } : undefined;
+                };
 
             const submissionResult = await getSubmissionsForUser(SERVER_CONFIG, submissionQuery);
 
@@ -309,6 +309,10 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                 components={{ Toolbar: GridToolbar }}
                 filterMode="server"
                 onFilterModelChange={onFilterChange}
+                // Sort change
+                sortingMode="server"
+                sortModel={sortModel}
+                onSortModelChange={handleSortModelChange}
             />
         </div>
     );
