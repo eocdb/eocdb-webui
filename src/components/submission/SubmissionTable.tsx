@@ -179,6 +179,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     // const rows = makeRows(submissionsValue);
     const [page, setPage] = React.useState(0);
     const [rows, setRows] = React.useState([]);
+    const [totRows, setTotRows] = React.useState<number | undefined>(0);
     const [filterValue, setFilterValue] = React.useState<string | undefined>();
     const [loading, setLoading] = React.useState(false);
 
@@ -188,15 +189,16 @@ export default function SubmissionTable(props: SubmissionTableProps) {
         (async () => {
             setLoading(true);
             const offset = (page * 5) + 1;
-            const newSubmissions = await getSubmissionsForUser(SERVER_CONFIG, 'olaf', offset, 10);
+            const submissionResult = await getSubmissionsForUser(SERVER_CONFIG, 'olaf', offset, 10);
 
-            const newRows = makeRows(newSubmissions);
+            const newRows = makeRows(submissionResult.submissions);
 
             if (!active) {
                 return;
             }
 
             setRows(newRows);
+            setTotRows(submissionResult.tot_count)
             setLoading(false);
         })();
 
@@ -284,7 +286,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                 columns={columns}
                 pageSize={10}
                 rowsPerPageOptions={[10]}
-                rowCount={450}
+                rowCount={totRows}
                 paginationMode={"server"}
                 // onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
                 // rowsPerPageOptions={[5, 10]}
