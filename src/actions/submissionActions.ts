@@ -435,6 +435,7 @@ export function sendSubmission() {
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
+        const submissionQuery = state.submissionState.submissionQuery;
 
         const user = state.sessionState.user;
 
@@ -460,7 +461,7 @@ export function sendSubmission() {
                 dispatch(closeSubmitSteps());
             })
             .then(() => {
-                api.getSubmissionsForUser(apiServerUrl)
+                api.getSubmissionsForUser(apiServerUrl, submissionQuery)
                     .then((submissionResult: SubmissionResult) => {
                         dispatch(updateSubmissionsForUser(submissionResult));
                     })
@@ -599,7 +600,7 @@ export function getSubmissionFile(submissionId: string, submissionFileIndex: num
 
 
 export function updateSubmissionFile(submissionFile: SubmissionFile, uploadData: SingleUpload) {
-    return (dispatch: Dispatch<UpdateSubmission  | UpdateSubmissionQuery | UpdateSubmissionsForUser | MessageLogAction>,
+    return (dispatch: Dispatch<UpdateSelectedSubmission  | UpdateSubmissionQuery | UpdateSubmissionsForUser | MessageLogAction>,
             getState: ()
         => AppState) => {
         const state = getState();
@@ -610,11 +611,11 @@ export function updateSubmissionFile(submissionFile: SubmissionFile, uploadData:
             .then(() => {
                 api.getSubmission(apiServerUrl, submissionFile.submission_id)
                     .then((submission: Submission) => {
-                        dispatch(updateSubmission(submission));
+                        dispatch(updateSelectedSubmission(submission));
                     })
             })
             .then(() => {
-                return api.getSubmissionsForUser(apiServerUrl)
+                return api.getSubmissionsForUser(apiServerUrl, submissionQuery)
                     .then((submissionResult: SubmissionResult) => {
                         dispatch(updateSubmissionsForUser(submissionResult));
                         dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
@@ -632,46 +633,31 @@ export function updateSubmissionFile(submissionFile: SubmissionFile, uploadData:
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const UPDATE_SUBMISSION = 'UPDATE_SUBMISSION';
-export type UPDATE_SUBMISSION = typeof UPDATE_SUBMISSION;
+export const UPDATE_SELECTED_SUBMISSION = 'UPDATE_SELECTED_SUBMISSION';
+export type UPDATE_SELECTED_SUBMISSION = typeof UPDATE_SELECTED_SUBMISSION;
 
-export interface UpdateSubmission {
-    type: UPDATE_SUBMISSION;
+export interface UpdateSelectedSubmission {
+    type: UPDATE_SELECTED_SUBMISSION;
     submission: Submission;
 }
 
-export function updateSubmission(submission: Submission): UpdateSubmission {
+export function updateSelectedSubmission(submission: Submission): UpdateSelectedSubmission {
     return {
-        type: UPDATE_SUBMISSION,
+        type: UPDATE_SELECTED_SUBMISSION,
         submission: submission,
     }
 }
 
 export function getSubmission(submissionId: string) {
-    return (dispatch: Dispatch<UpdateSubmission | UpdateSubmissionQuery | UpdateSubmissionsForUser | MessageLogAction>,
+    return (dispatch: Dispatch<UpdateSelectedSubmission | UpdateSubmissionQuery | UpdateSubmissionsForUser | MessageLogAction>,
             getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
-        const submissionQuery = state.submissionState.submissionQuery;
-
-        const user = state.sessionState.user;
-
-        let userid = null;
-        if (user) {
-            userid = user.id;
-        }
 
         return api.getSubmission(apiServerUrl, submissionId)
             .then((submission: Submission) => {
-                dispatch(updateSubmission(submission));
-            })
-            .then(() => {
-                return api.getSubmissionsForUser(apiServerUrl, userid)
-                    .then((submissionResult: SubmissionResult) => {
-                        dispatch(updateSubmissionsForUser(submissionResult));
-                        dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
-                    })
+                dispatch(updateSelectedSubmission(submission));
             })
             .then(() => {
                 dispatch(postMessage('success', 'Submission Loaded'))
@@ -694,7 +680,7 @@ export function deleteSubmission(submissionId: string) {
 
         return api.deleteSubmission(apiServerUrl, submissionId)
             .then(() => {
-                api.getSubmissionsForUser(apiServerUrl)
+                api.getSubmissionsForUser(apiServerUrl, submissionQuery)
                     .then((submissionResult: SubmissionResult) => {
                         dispatch(updateSubmissionsForUser(submissionResult));
                         dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
@@ -744,7 +730,7 @@ export function setSubmissionStatus(submissionId: string, status: string, appDat
                 dispatch(postMessage("success", 'Status set to ' + status));
             })
             .then(() => {
-                return api.getSubmissionsForUser(apiServerUrl)
+                return api.getSubmissionsForUser(apiServerUrl, submissionQuery)
                     .then((submissionResult: SubmissionResult) => {
                         dispatch(updateSubmissionsForUser(submissionResult));
                         dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
@@ -780,7 +766,7 @@ export function updateSubmissionMeta() {
                 return dispatch(postMessage("success", 'Submission' + submissionId + ' updated.'));
             })
             .then(() => {
-                return api.getSubmissionsForUser(apiServerUrl)
+                return api.getSubmissionsForUser(apiServerUrl, submissionQuery)
                     .then((submissionResult: SubmissionResult) => {
                         dispatch(updateSubmissionsForUser(submissionResult));
                         dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
@@ -797,7 +783,7 @@ export function updateSubmissionMeta() {
 
 
 export function deleteSubmissionFile(submissionId: string, submissionFileIndex: number) {
-    return (dispatch: Dispatch<UpdateSubmission | UpdateSubmissionsForUser | UpdateSelectedSubmissionFile | MessageLogAction>, getState: ()
+    return (dispatch: Dispatch<UpdateSelectedSubmission | UpdateSubmissionsForUser | UpdateSelectedSubmissionFile | MessageLogAction>, getState: ()
         => AppState) => {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
@@ -806,7 +792,7 @@ export function deleteSubmissionFile(submissionId: string, submissionFileIndex: 
             .then(() => {
                 api.getSubmission(apiServerUrl, submissionId)
                     .then((submission: Submission) => {
-                        dispatch(updateSubmission(submission));
+                        dispatch(updateSelectedSubmission(submission));
                     })
             })
             .then(() => {
@@ -938,7 +924,7 @@ export type SubmitAction = OpenSubmitSteps
     | UpdateDocFiles
     | ClearSubmissionForm
     | UpdateSubmissionsForUser
-    | UpdateSubmission
+    | UpdateSelectedSubmission
     | SendSubmission
     | UpdateSubmissionPublicationDate
     | UpdateSelectedSubmissionFile

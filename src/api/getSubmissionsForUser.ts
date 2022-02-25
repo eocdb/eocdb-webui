@@ -50,9 +50,11 @@ export function collectComponents(query?: SubmissionQuery) {
  * @param query: query/filter for Submissions
  */
 export function getSubmissionsForUser(apiServerUrl: string, query?: SubmissionQuery): Promise<SubmissionResult> {
-    const queryComponents = collectComponents(query)
+    const queryComponents = collectComponents(query);
+    const path = '/store/upload/user';
+
     return callJsonApi<SubmissionResult>(
-        apiServerUrl + '/store/upload/user', queryComponents,
+        apiServerUrl + path, queryComponents,
         {
             method: 'GET',
             headers: {

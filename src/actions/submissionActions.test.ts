@@ -14,8 +14,8 @@ import {
     UPDATE_SUBMISSIONS_FOR_USER,
     updateSubmissionsForUser,
     CLEAR_SUBMISSION_FORM,
-    clearSubmissionForm, UPDATE_SUBMISSION,
-    updateSubmission,
+    clearSubmissionForm, UPDATE_SELECTED_SUBMISSION,
+    updateSelectedSubmission,
 }
     from "./submissionActions";
 
@@ -104,11 +104,11 @@ describe("submissionActions", () => {
 
 
         const expectedAction = {
-            type: UPDATE_SUBMISSION,
+            type: UPDATE_SELECTED_SUBMISSION,
             submission,
         };
 
-        expect(updateSubmission(submission)).toEqual(expectedAction);
+        expect(updateSelectedSubmission(submission)).toEqual(expectedAction);
     });
 
 });

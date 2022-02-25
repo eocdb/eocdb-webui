@@ -5,10 +5,10 @@ import {
     SEND_SUBMISSION,
     SendSubmission,
     UPDATE_DATA_FILES,
-    UPDATE_DOC_FILES, UPDATE_SUBMISSION,
+    UPDATE_DOC_FILES, UPDATE_SELECTED_SUBMISSION,
     UPDATE_SUBMISSION_ID,
     UpdateDataFiles,
-    UpdateDocFiles, UpdateSubmission,
+    UpdateDocFiles, UpdateSelectedSubmission,
     UpdateSubmissionId
 } from "../actions/submissionActions";
 
@@ -64,8 +64,8 @@ describe('submitStepsReducer', () => {
                 allow_publication: false,
             };
 
-        const action: UpdateSubmission = {
-            type: UPDATE_SUBMISSION,
+        const action: UpdateSelectedSubmission = {
+            type: UPDATE_SELECTED_SUBMISSION,
             submission,
         };
         const result = submissionReducer(undefined, action);
