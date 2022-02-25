@@ -6,9 +6,15 @@ import {
     Icon, Chip
 } from "@mui/material";
 import { blue, green, orange, red } from "@mui/material/colors";
-import { DataGrid, GridColDef, GridFilterModel, GridSortModel, GridToolbar } from '@mui/x-data-grid';
+import {
+    DataGrid,
+    GridColDef,
+    GridFilterModel,
+    GridSortModel,
+    GridToolbar,
+} from '@mui/x-data-grid';
 import { CloudUpload } from "@mui/icons-material";
-import { DEFAULT_SUBMISSION_QUERY, SubmissionQuery, SubmissionResult } from "../../model/Submission";
+import { SubmissionQuery, SubmissionResult } from "../../model/Submission";
 
 
 
@@ -199,13 +205,11 @@ export default function SubmissionTable(props: SubmissionTableProps) {
             field: 'user_id',
             headerName: 'Submitter',
             width: 150,
-            editable: true
         },
         {
             field: 'submission_date',
             headerName: 'Submission Date',
             width: 150,
-            editable: true
         },
         {
             field: 'publication_date',
@@ -245,17 +249,24 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     ];
 
     const handleFilterChange = (filterModel: GridFilterModel) => {
-        const submissionQuery: SubmissionQuery = (filterModel && filterModel.items[0].value) ?
+        const currentFilterModel = props.submissionQuery.filterModel;
+
+        const isClearEvent = (currentFilterModel) ? currentFilterModel.items[0].operatorValue === filterModel.items[0].operatorValue
+            &&  filterModel.items[0].value === undefined
+        : false;
+
+        if (isClearEvent) {
+            filterModel.items[0].operatorValue = 'contains';
+        }
+
+        const submissionQuery: SubmissionQuery =
             {
                 ...props.submissionQuery,
                 user_id: (user) ? user.name : undefined,
                 loading: true,
                 filterModel: filterModel,
-                page: 0
-            } :
-            {
-                ...DEFAULT_SUBMISSION_QUERY,
-                user_id: props.submissionQuery.user_id
+                page: 0,
+                offset: 0
             };
 
         props.updateSubmissionQuery(submissionQuery);

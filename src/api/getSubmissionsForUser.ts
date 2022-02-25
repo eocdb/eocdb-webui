@@ -2,10 +2,6 @@ import { callJsonApi, QueryComponent } from './callApi';
 import { SubmissionQuery, SubmissionResult } from "../model/Submission";
 
 
-function _sanitize_param(value: string) {
-    return value.replace('"', '')
-}
-
 export function collectComponents(query?: SubmissionQuery) {
     const queryComponents: QueryComponent[] = [];
     if (!query) {
@@ -23,11 +19,13 @@ export function collectComponents(query?: SubmissionQuery) {
 
     if (query.filterModel) {
         const {filterModel} = query;
-        const value = filterModel.items[0].value;
+        const operator = filterModel.items[0].operatorValue;
+        const value = (filterModel.items[0].value)? filterModel.items[0].value : '';
         let column = filterModel.items[0].columnField;
         column = column == 'id'? 'submission_id' : column;
 
         queryComponents.push(['query-column', column]);
+        queryComponents.push(['query-operator', operator]);
         queryComponents.push(['query-value', value]);
     }
 
