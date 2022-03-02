@@ -46,11 +46,12 @@ export function collectComponents(query?: SubmissionQuery) {
 /**
  *
  * @param apiServerUrl: URL of the OCDB API
+ * @param user_name: User name of logged in user
  * @param query: query/filter for Submissions
  */
-export function getSubmissionsForUser(apiServerUrl: string, query?: SubmissionQuery): Promise<SubmissionResult> {
+export function getSubmissionsForUser(apiServerUrl: string, user_name: string, query?: SubmissionQuery): Promise<SubmissionResult> {
     const queryComponents = collectComponents(query);
-    const path = '/store/upload/user';
+    const path = '/store/upload/user/' + user_name;
 
     return callJsonApi<SubmissionResult>(
         apiServerUrl + path, queryComponents,

@@ -1,6 +1,6 @@
 {
   "name": "ocdb-webui",
-  "version": "0.2.2.dev0",
+  "version": "0.2.2.dev1",
   "homepage": ".",
   "private": true,
   "scripts": {

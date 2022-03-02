@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { User } from "../model";
 import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import { AttachFile, CloudUpload, Link, Search } from "@mui/icons-material";
+import { AttachFile, CloudUpload, Link, Search, SettingsApplications } from "@mui/icons-material";
 import { SubmissionQuery } from "../model/Submission";
 
 // noinspection JSUnusedLocalSymbols
@@ -21,10 +21,9 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
 
     handleSubmissionClick = () => {
         this.props.handleClick('Submit');
-        const {user} = this.props;
         const submissionQuery: SubmissionQuery =
         {
-            user_id: (user) ? user.name : undefined,
+            user_id: null,
             loading: true,
             offset: 0,
             count: 10,
@@ -78,19 +77,18 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
                     </ListItemIcon>
                     <ListItemText primary="Matchup"/>
                 </ListItem>
-                {/*<ListItem disabled={!submitAllowed} key={'Submit'} onClick={this.handleSubmissionClick} button>*/}
-                <ListItem key={'Submit'} onClick={this.handleSubmissionClick} button>
+                <ListItem disabled={!submitAllowed} key={'Submit'} onClick={this.handleSubmissionClick} button>
                     <ListItemIcon>
                         <CloudUpload/>
                     </ListItemIcon>
                     <ListItemText primary="Submit"/>
                 </ListItem>
-                {/*<ListItem disabled={!adminAllowed}  key={'Admin'} onClick={() => this.props.handleClick('Admin')} button>*/}
-                {/*    <ListItemIcon>*/}
-                {/*        <SettingsApplications/>*/}
-                {/*    </ListItemIcon>*/}
-                {/*    <ListItemText primary="Admin"/>*/}
-                {/*</ListItem>*/}
+                <ListItem disabled={!adminAllowed}  key={'Admin'} onClick={() => this.props.handleClick('Admin')} button>
+                    <ListItemIcon>
+                        <SettingsApplications/>
+                    </ListItemIcon>
+                    <ListItemText primary="Admin"/>
+                </ListItem>
             </List>
         );
     }

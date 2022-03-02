@@ -88,13 +88,15 @@ export default function MatchupPanel(props: MatchupPanelProps) {
                 onAgree={handleTermsDialogAgreeClick}
                 downloadTerms={'OM'}
             />
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={5}
-                pagination
-                components={{ Toolbar: GridToolbar }}
-            />
+            <Paper sx={{'height': 700}}>
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    pageSize={5}
+                    pagination
+                    components={{ Toolbar: GridToolbar }}
+                />
+            </Paper>
         </div>
     );
 }

@@ -461,7 +461,7 @@ export function sendSubmission() {
                 dispatch(closeSubmitSteps());
             })
             .then(() => {
-                api.getSubmissionsForUser(apiServerUrl, submissionQuery)
+                api.getSubmissionsForUser(apiServerUrl, username, submissionQuery)
                     .then((submissionResult: SubmissionResult) => {
                         dispatch(updateSubmissionsForUser(submissionResult));
                     })
@@ -519,8 +519,10 @@ export function getSubmissionsForUser() {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
         const submissionQuery = state.submissionState.submissionQuery;
+        const user = state.sessionState.user;
+        const username = (user)? user.name: '';
 
-        return api.getSubmissionsForUser(apiServerUrl, submissionQuery)
+        return api.getSubmissionsForUser(apiServerUrl, username, submissionQuery)
             .then((submissionResult: SubmissionResult) => {
                 dispatch(updateSubmissionsForUser(submissionResult));
             })
@@ -606,6 +608,8 @@ export function updateSubmissionFile(submissionFile: SubmissionFile, uploadData:
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
         const submissionQuery = state.submissionState.submissionQuery;
+        const user = state.sessionState.user;
+        const username = (user)? user.name: '';
 
         return api.updateSubmissionFile(apiServerUrl, submissionFile, uploadData)
             .then(() => {
@@ -615,7 +619,7 @@ export function updateSubmissionFile(submissionFile: SubmissionFile, uploadData:
                     })
             })
             .then(() => {
-                return api.getSubmissionsForUser(apiServerUrl, submissionQuery)
+                return api.getSubmissionsForUser(apiServerUrl, username, submissionQuery)
                     .then((submissionResult: SubmissionResult) => {
                         dispatch(updateSubmissionsForUser(submissionResult));
                         dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
@@ -677,10 +681,12 @@ export function deleteSubmission(submissionId: string) {
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
         const submissionQuery = state.submissionState.submissionQuery;
+        const user = state.sessionState.user;
+        const username = (user)? user.name: '';
 
         return api.deleteSubmission(apiServerUrl, submissionId)
             .then(() => {
-                api.getSubmissionsForUser(apiServerUrl, submissionQuery)
+                api.getSubmissionsForUser(apiServerUrl, username, submissionQuery)
                     .then((submissionResult: SubmissionResult) => {
                         dispatch(updateSubmissionsForUser(submissionResult));
                         dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
@@ -724,13 +730,15 @@ export function setSubmissionStatus(submissionId: string, status: string, appDat
         const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
         const submissionQuery = state.submissionState.submissionQuery;
+        const user = state.sessionState.user;
+        const username = (user)? user.name: '';
 
         return api.setSubmissionStatus(apiServerUrl, submissionId, status, appDate)
             .then(() => {
                 dispatch(postMessage("success", 'Status set to ' + status));
             })
             .then(() => {
-                return api.getSubmissionsForUser(apiServerUrl, submissionQuery)
+                return api.getSubmissionsForUser(apiServerUrl, username, submissionQuery)
                     .then((submissionResult: SubmissionResult) => {
                         dispatch(updateSubmissionsForUser(submissionResult));
                         dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
@@ -751,6 +759,8 @@ export function updateSubmissionMeta() {
         const apiServerUrl = state.configState.apiServerUrl;
         const submissionQuery = state.submissionState.submissionQuery;
 
+        const user = state.sessionState.user;
+        const username = (user)? user.name: '';
         const submissionId = state.submissionState.selectedSubmission.submission_id;
 
         const uploadData = {
@@ -766,7 +776,7 @@ export function updateSubmissionMeta() {
                 return dispatch(postMessage("success", 'Submission' + submissionId + ' updated.'));
             })
             .then(() => {
-                return api.getSubmissionsForUser(apiServerUrl, submissionQuery)
+                return api.getSubmissionsForUser(apiServerUrl, username, submissionQuery)
                     .then((submissionResult: SubmissionResult) => {
                         dispatch(updateSubmissionsForUser(submissionResult));
                         dispatch(updateSubmissionQuery({...submissionQuery, loading: false}));
