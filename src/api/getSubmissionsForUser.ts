@@ -8,7 +8,7 @@ export function collectComponents(query?: SubmissionQuery) {
         return queryComponents;
     }
     if (query.user_id) {
-        queryComponents.push(['user-id', JSON.stringify(query.user_id)]);
+        queryComponents.push(['user-id', query.user_id]);
     }
     if (query.offset || query.offset === 0) {
         queryComponents.push(['offset', JSON.stringify(query.offset)]);
