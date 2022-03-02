@@ -3,7 +3,7 @@ import { User, Submission } from "../../model";
 import {
     Tooltip,
     Button,
-    Icon, Chip
+    Icon, Chip, Paper
 } from "@mui/material";
 import { blue, green, orange, red } from "@mui/material/colors";
 import {
@@ -209,12 +209,13 @@ export default function SubmissionTable(props: SubmissionTableProps) {
         {
             field: 'submission_date',
             headerName: 'Submission Date',
+            type: 'dateTime',
             width: 150,
         },
         {
             field: 'publication_date',
             headerName: 'Publication Date',
-            type: 'date',
+            type: 'dateTime',
             width: 160,
             sortable: false
         },
@@ -257,6 +258,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
 
         if (isClearEvent) {
             filterModel.items[0].operatorValue = 'contains';
+            filterModel.items[0].columnField = 'id';
         }
 
         const submissionQuery: SubmissionQuery =
@@ -300,7 +302,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     };
 
     return (
-        <div style={{ height: 700, width: '100%' }}>
+        <Paper sx={{'height': 700}}>
             <Button variant="contained"
                     color="secondary"
                     onClick={props.onSubmissionDialogOpen}
@@ -327,7 +329,8 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                 sortingMode="server"
                 sortModel={props.submissionQuery.sortModel}
                 onSortModelChange={handleSortModelChange}
+                sx={{backgroundColor: "white"}}
             />
-        </div>
+        </Paper>
     );
 }

@@ -49,45 +49,44 @@ export default function MinMaxInputSlider(props: MinMaxInputSliderProps) {
     }
 
     return (
-        <div>
-            <Box sx={{ width: 300 }}>
-                <Slider
-                    getAriaLabel={() => 'Temperature range'}
-                    value={value}
-                    onChange={handleChange}
-                    valueLabelDisplay="auto"
-                    getAriaValueText={valuetext}
-                    max={1000}
-                    disabled={props.disabled}
-                />
-                <Input
-                    value={getNumberInputValue(value[0])}
-                    size="small"
-                    disabled={props.disabled}
-                    onChange={handleMinInputChange}
-                    inputProps={{
-                        step: 10,
-                        min: 0,
-                        max: 1000,
-                        type: 'number',
-                        'aria-labelledby': 'input-slider',
-                    }}
-                />
-                <Input
-                    value={getNumberInputValue(value[1])}
-                    size="small"
-                    disabled={props.disabled}
-                    onChange={handleMaxInputChange}
-                    inputProps={{
-                        step: 10,
-                        min: 0,
-                        max: 1000,
-                        type: 'number',
-                        'aria-labelledby': 'input-slider',
-                    }}
-                />
-            </Box>
-        </div>
+        <Box>
+            <Slider
+                getAriaLabel={() => 'Temperature range'}
+                value={value}
+                onChange={handleChange}
+                valueLabelDisplay="auto"
+                getAriaValueText={valuetext}
+                max={1000}
+                disabled={props.disabled}
+            />
+            <Input
+                value={getNumberInputValue(value[0])}
+                size="small"
+                disabled={props.disabled}
+                onChange={handleMinInputChange}
+                inputProps={{
+                    step: 10,
+                    min: 0,
+                    max: 1000,
+                    type: 'number',
+                    'aria-labelledby': 'input-slider',
+                }}
+            />
+            <span>&nbsp; &nbsp; &nbsp; </span>
+            <Input
+                value={getNumberInputValue(value[1])}
+                size="small"
+                disabled={props.disabled}
+                onChange={handleMaxInputChange}
+                inputProps={{
+                    step: 10,
+                    min: 0,
+                    max: 1000,
+                    type: 'number',
+                    'aria-labelledby': 'input-slider',
+                }}
+            />
+        </Box>
         );
 }
 

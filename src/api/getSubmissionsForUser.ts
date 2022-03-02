@@ -23,6 +23,7 @@ export function collectComponents(query?: SubmissionQuery) {
         const value = (filterModel.items[0].value)? filterModel.items[0].value : '';
         let column = filterModel.items[0].columnField;
         column = column == 'id'? 'submission_id' : column;
+        column = column == 'submission_date'? 'date' : column;
 
         queryComponents.push(['query-column', column]);
         queryComponents.push(['query-operator', operator]);
