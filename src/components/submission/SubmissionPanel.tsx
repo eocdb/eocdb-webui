@@ -140,10 +140,15 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
 
     handleRestartSubmission = (selectedSubmission: Submission) => {
         let ok = true;
-        for (let file of selectedSubmission.file_refs) {
-            if (file.status === "ERROR") {
-                ok = false;
+        if (selectedSubmission.file_refs) {
+            for (let file of selectedSubmission.file_refs) {
+                if (file.status === "ERROR") {
+                    ok = false;
+                }
             }
+        }
+        else {
+            ok = false;
         }
 
         if (ok) {

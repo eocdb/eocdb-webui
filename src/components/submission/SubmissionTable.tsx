@@ -77,7 +77,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                     <Tooltip title="Restart Submission" placement={"top"}>
                         <Button
                             onClick={() => props.onSubmissionRestart(
-                                params.row.id
+                                {...params.row, submission_id: params.row.id }
                             )}
                         >
                             <Icon>play_arrow</Icon>
