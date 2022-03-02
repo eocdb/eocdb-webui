@@ -373,15 +373,15 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                 >
                     Do you really want to delete the Submission File: {this.props.selectedSubmissionFile.filename}?
                 </YesNoAlert>
-                {/*<YesNoAlert*/}
-                {/*    open={this.props.deleteSubmissionAlertOpen}*/}
-                {/*    onClose={this.handleDeleteSubmissionAlertCancel}*/}
-                {/*    onAgree={this.handleDeleteSubmissionAlertAgree}*/}
+                <YesNoAlert
+                    open={this.props.deleteSubmissionAlertOpen}
+                    onClose={this.handleDeleteSubmissionAlertCancel}
+                    onAgree={this.handleDeleteSubmissionAlertAgree}
 
-                {/*    value={this.props.selectedSubmission}*/}
-                {/*>*/}
-                {/*    Do you really want to delete the Submission: {this.props.selectedSubmission.submission_id}?*/}
-                {/*</YesNoAlert>*/}
+                    value={this.props.selectedSubmission}
+                >
+                    Do you really want to delete the Submission: {this.props.selectedSubmission.submission_id}?
+                </YesNoAlert>
                 <SingleFileUpload
                     label={'Upload'}
                     onCancel={this.handleOploadSubmissionFileDialogOnCancel}

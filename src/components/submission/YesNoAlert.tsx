@@ -10,20 +10,20 @@ import {
 
 
 
-interface YesNoAlertProperties<T>{
+interface YesNoAlertProperties{
     open: boolean;
     onClose: () => void;
-    onAgree: (value: T) => void;
+    onAgree: (value: any) => void;
 
-    value: T;
+    value: any;
 }
 
-class YesNoAlert<T> extends React.Component<YesNoAlertProperties<T>> {
-    constructor(props: YesNoAlertProperties<T>) {
+class YesNoAlert extends React.Component<YesNoAlertProperties> {
+    constructor(props: YesNoAlertProperties) {
         super(props);
     }
 
-    handleAgree = (value: T) => {
+    handleAgree = (value: any) => {
         this.props.onAgree(value)
     };
 
