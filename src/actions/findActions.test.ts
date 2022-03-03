@@ -1,13 +1,12 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from "redux-thunk";
-import * as fetchMock from 'fetch-mock'
+
 
 import {
     START_LOADING,
     STOP_LOADING,
     UPDATE_DATASET_QUERY,
     UPDATE_FOUND_DATASETS,
-    UPDATE_SEARCH_HISTORY,
     startLoading,
     searchDatasets,
     stopLoading,
@@ -17,6 +16,8 @@ import {
 import { SERVER_CONFIG } from "../api/config";
 import { LatLng } from "leaflet";
 import { DefaultDatasetQuery } from "../model/DatasetQuery";
+import fetchMock from "fetch-mock";
+import { POST_MESSAGE } from "./messageLogActions";
 
 
 
@@ -26,6 +27,13 @@ const mockStore = configureMockStore(middlewares);
 const EUMETSAT_LAT_LNG = new LatLng(49.858996564, 8.622830842);
 
 const initState = {
+    sessionState: {
+        user: null,
+        userLoginError: null,
+        userLoginInProgress: false,
+        legalAgreementAccepted: false,
+        userLoggedIn: false,
+    },
     configState: {apiServerUrl: SERVER_CONFIG},
     searchFormState: {
         datasetQuery: {
@@ -148,16 +156,38 @@ describe('searchFormActions', () => {
         });
 
         const expectedActions = [
-            {foundDatasets: {}, type: UPDATE_FOUND_DATASETS},
-            {searchHistory: [], type: UPDATE_SEARCH_HISTORY},
-            {loading: false, type: STOP_LOADING},
-            {messageText: "Data Loaded", messageType: "success", type: "POST_MESSAGE"}
+            {
+                type: UPDATE_FOUND_DATASETS,
+                foundDatasets: {}
+            },
+            {
+                type: POST_MESSAGE,
+                messageType: "success",
+                messageText: "undefined Datasets Found"
+            },
+            {
+                type: UPDATE_DATASET_QUERY,
+                datasetQuery: {
+                    startDate: "1980-01-01",
+                    endDate: "2020-01-01",
+                    geojson: true,
+                    productGroupNames: [],
+                    status: "PUBLISHED",
+                    count: 5,
+                    offset: 1
+                }
+            },
+            {
+                type: STOP_LOADING,
+                loading: false
+            }
         ];
 
         const store = mockStore(initState);
 
         return store.dispatch(searchDatasets() as any).then(() => {
-            expect(store.getActions()).toEqual(expectedActions);
+            const actions = store.getActions();
+            expect(actions).toEqual(expectedActions);
         })
     });
 });

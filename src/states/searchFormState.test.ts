@@ -1,28 +1,25 @@
 import { newSearchFormState } from "./searchFormState";
+import { DefaultDatasetQuery } from "../model/DatasetQuery";
 
 describe('searchFormState', () => {
     it('newSearchFormState', () => {
         const expected = {
-            datasetQuery: {
-                geojson: true,
-                productGroupNames: [],
-                startDate: null,
-                endDate: null,
-                searchExpr: '',
-            },
-            searchHistory: [],
+            datasetQuery: DefaultDatasetQuery,
+            searchHistory: [
+                {
+                    key: '',
+                    query: DefaultDatasetQuery
+                }
+            ],
+            saveSearchTitle: '',
             foundDatasets: {
                 locations: new Map(),
                 datasets: [],
-                query: {
-                    mtype: '',
-                    shallow: '',
-                    wdepth: '',
-                },
+                query: DefaultDatasetQuery,
                 total_count: 0,
             },
-            loading: false,
-        };
+            loading: false
+        }
 
         expect(newSearchFormState()).toEqual(expected);
     });

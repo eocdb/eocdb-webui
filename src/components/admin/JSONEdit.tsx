@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-const jsoneditorReact = require('jsoneditor-react');
+// const jsoneditorReact = require('jsoneditor-react');
 import 'jsoneditor-react/es/editor.min.css';
 import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
-const JsonEditor = jsoneditorReact.JsonEditor;
+// const JsonEditor = jsoneditorReact.JsonEditor;
 
 // noinspection JSUnusedLocalSymbols
 // const styles = (theme: Theme) => createStyles({
@@ -78,11 +78,11 @@ class EditJSON extends React.Component<EditJSONProps, EditJSONPropsState> {
                 >
                     <DialogTitle id="form-dialog-title">Edit Links</DialogTitle>
                     <DialogContent>
-                        <JsonEditor
-                            view={"dual"}
-                            value={this.state.value}
-                            onChange={this.handleValueChange}
-                        />
+                        {/*<JsonEditor*/}
+                        {/*    view={"dual"}*/}
+                        {/*    value={this.state.value}*/}
+                        {/*    onChange={this.handleValueChange}*/}
+                        {/*/>*/}
                     </DialogContent>
                     <DialogActions>
                         {/*<Button onClick={this.props.onClose} color="primary">*/}

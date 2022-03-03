@@ -83,7 +83,10 @@ describe("submissionActions", () => {
     it("_updateSubmissionsForUser", () => {
         const expectedAction = {
             type: UPDATE_SUBMISSIONS_FOR_USER,
-            submissions: [],
+            submissionResult: {
+                submissions: [],
+                tot_count: 0,
+            }
         };
 
         expect(updateSubmissionsForUser({submissions: [], tot_count: 0})).toEqual(expectedAction);

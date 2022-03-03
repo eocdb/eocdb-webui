@@ -45,7 +45,7 @@ describe('advancedSearchReducer', () => {
         };
 
         const result = advancedSearchReducer(undefined, action);
-        expect(result.datasetQuery.wavelengthsMode).toEqual('');
+        expect(result.datasetQuery.wavelengthsMode).toEqual(null);
     });
 
     it('submissionReducer to UpdateWaterDepth', () => {
@@ -55,7 +55,7 @@ describe('advancedSearchReducer', () => {
         };
 
         const result = advancedSearchReducer(undefined, action);
-        expect(result.datasetQuery.wdepth).toEqual([0, 1000]);
+        expect(result.datasetQuery.wdepth).toEqual([null, null]);
     });
 
     it('submissionReducer to UpdateSelectedOptShallow', () => {
@@ -65,7 +65,7 @@ describe('advancedSearchReducer', () => {
         };
 
         const result = advancedSearchReducer(undefined, action);
-        expect(result.datasetQuery.shallow).toEqual('');
+        expect(result.datasetQuery.shallow).toEqual(null);
     });
 
     it('submissionReducer to UpdateProducts', () => {
