@@ -29,7 +29,6 @@ const theme = createTheme(
 class App extends React.Component {
     public render() {
         return (
-            // <ReactKeycloakProvider authClient={keycloak}>
                 <ThemeProvider theme={theme}>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <div className="App">
@@ -40,7 +39,6 @@ class App extends React.Component {
                         </div>
                     </LocalizationProvider>
                 </ThemeProvider>
-            // </ReactKeycloakProvider>
         );
     }
 }
