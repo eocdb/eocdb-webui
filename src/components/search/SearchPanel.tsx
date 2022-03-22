@@ -15,7 +15,7 @@ import InputDialog from "./InputDialog";
 import { ProductGroupsInfo } from "../messages/Help/productgroups";
 import { GeoJsonObject } from "geojson";
 import { LatLng, LatLngBounds } from "leaflet";
-import { BBoxValue } from "./BBoxInput";
+import { BBoxValue } from "./BBoxInputDialog";
 import { PlotRecord, PlotState } from "../../states/dataTableState";
 import {
     Button,
@@ -27,6 +27,7 @@ import {
 } from "@mui/material";
 import { DatePicker } from "@mui/lab";
 import { DefaultDatasetQuery } from "../../model/DatasetQuery";
+
 
 
 interface SearchPanelProps {
@@ -292,7 +293,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         return (
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                    <Stack direction={'row'}>
+                    <Stack spacing={2} direction={'row'}>
                         <DatePicker
                             label="From Date"
                             value={this.props.datasetQuery.startDate}
@@ -327,6 +328,14 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                 </Grid>
                 <Grid item xs={4}>
                     <Stack direction={'row'} alignItems="center">
+                        <Button variant="contained"
+                                color="secondary"
+                                onClick={this.handleSearchDatasets}>
+                            Search
+                            {this.props.loading && <CircularProgress size={24}/>}
+                            <Icon>search</Icon>
+                        </Button>
+
                         <IconButton
                             onClick={this.props.openHelpDialog}
                         >
@@ -334,6 +343,9 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                                 help
                             </Icon>
                         </IconButton>
+                        <Button onClick={this.props.openAdvancedSearchDialog} size={'small'}>
+                            Advanced Options
+                        </Button>
                         <Button onClick={this.handleClear} size={'small'}>
                             Clear
                         </Button>
@@ -343,18 +355,6 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                     </Stack>
                 </Grid>
                 <Grid item xs={2}>
-                    <Stack direction={'row'} alignItems="center">
-                        <Button onClick={this.props.openAdvancedSearchDialog} size={'small'}>
-                            Advanced Options
-                        </Button>
-                        <Button variant="contained"
-                                color="secondary"
-                                onClick={this.handleSearchDatasets}>
-                            Search
-                            {this.props.loading && <CircularProgress size={24}/>}
-                            <Icon>search</Icon>
-                        </Button>
-                    </Stack>
                     <HelpDialog
                         open={this.props.productGroupsHelpDialogOpen}
                         onClose={this.props.closeProductGroupsHelpDialog}

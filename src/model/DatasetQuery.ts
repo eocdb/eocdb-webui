@@ -1,6 +1,6 @@
 import { MeasurementType, ProductMode } from "../api/findDatasets";
 import { SliderRange } from "../types/advancedSearchDialog";
-import { BBoxValue } from "../components/search/BBoxInput";
+import { BBoxValue } from "../components/search/BBoxInputDialog";
 
 export const SELECTED_BOUNDS_DEFAULT: BBoxValue = ['', '', '', ''];
 
