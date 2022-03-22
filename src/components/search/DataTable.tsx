@@ -150,52 +150,48 @@ export interface DataTableProps {
 }
 
 
-class DataTable extends React.Component<DataTableProps> {
-    constructor(props: DataTableProps) {
-        super(props);
-    }
-
-    handleChangePage = (event: React.MouseEvent<HTMLButtonElement>, page: number) => {
-        this.props.updateDataPage(page);
-        this.props.searchDatasets();
-        this.props.startLoading();
+export default function DataTable(props: DataTableProps) {
+    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement>, page: number) => {
+        props.updateDataPage(page);
+        props.searchDatasets();
+        props.startLoading();
     };
 
-    handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = parseInt(event.target.value);
-        this.props.updateDataRowsPerPage(value);
-        this.props.startLoading();
-        this.props.searchDatasets();
+        props.updateDataRowsPerPage(value);
+        props.startLoading();
+        props.searchDatasets();
     };
 
-    handleMetaInfoOpen = (id: string) => {
-        this.props.openMetaInfoDialog();
-        this.props.updateDataset(id);
+    const handleMetaInfoOpen = (id: string) => {
+        props.openMetaInfoDialog();
+        props.updateDataset(id);
     };
 
-    handleMetaInfoClose = () => {
-        this.props.closeMetaInfoDialog();
+    const handleMetaInfoClose = () => {
+        props.closeMetaInfoDialog();
     };
 
-    handlePlotOpen = (id: string) => {
-        this.props.updateDataset(id);
-        this.props.openPlotDialog();
+    const handlePlotOpen = (id: string) => {
+        props.updateDataset(id);
+        props.openPlotDialog();
     };
 
-    handlePlotClose = () => {
-        this.props.closePlotDialog();
+    const handlePlotClose = () => {
+        props.closePlotDialog();
     };
 
-    handleDownloadSingleClick = (id: string) => {
-        this.props.updateDataset(id);
-        this.props.openTermsSingleDialog();
+    const handleDownloadSingleClick = (id: string) => {
+        props.updateDataset(id);
+        props.openTermsSingleDialog();
     };
 
-    getBoundsFromSelectedDatasets = (selectedDatasets: string[]) => {
+    const getBoundsFromSelectedDatasets = (selectedDatasets: string[]) => {
         let bounds = new LatLngBounds(new LatLng(0, 0), new LatLng(0, 0));
 
         for (let feat of selectedDatasets) {
-            let feat_str = this.props.data.locations[feat];
+            let feat_str = props.data.locations[feat];
             feat_str = feat_str.replace(new RegExp("'", 'g'), '"');
 
             bounds.extend(geoJSON(JSON.parse(feat_str)).getBounds());
@@ -204,29 +200,29 @@ class DataTable extends React.Component<DataTableProps> {
         return bounds;
     };
 
-    handleOnSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleOnSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         let selectedDatasets: string[] = [];
 
         if (event.target.checked) {
-            selectedDatasets = this.props.data.datasets.map((row: DatasetRef) => {
+            selectedDatasets = props.data.datasets.map((row: DatasetRef) => {
                 return row.id;
             });
 
-            const bounds = this.getBoundsFromSelectedDatasets(selectedDatasets);
+            const bounds = getBoundsFromSelectedDatasets(selectedDatasets);
 
-            this.props.updateSelectedDatasets(selectedDatasets, bounds);
+            props.updateSelectedDatasets(selectedDatasets, bounds);
         } else {
-            this.props.updateSelectedDatasets([], undefined);
+            props.updateSelectedDatasets([], undefined);
         }
     };
 
-    handleUpdateDownloadDocs = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleUpdateDownloadDocs = (event: React.ChangeEvent<HTMLInputElement>) => {
         let checked = event.target.checked;
-        this.props.updateDownloadDocs(checked);
+        props.updateDownloadDocs(checked);
     };
 
 
-    handleClick = (id: string, selected: string[]) => {
+    const handleClick = (id: string, selected: string[]) => {
         const selectedIndex = selected.indexOf(id);
         let newSelected: string[] = [];
 
@@ -243,178 +239,175 @@ class DataTable extends React.Component<DataTableProps> {
             );
         }
 
-        this.props.updateSelectedDatasets(newSelected,
+        props.updateSelectedDatasets(newSelected,
             new LatLngBounds(new LatLng(0, 0), new LatLng(0, 0))
         );
     };
 
-    isSelected = (id: string) => {
-        return this.props.selectedDatasets.indexOf(id) !== -1;
+    const isSelected = (id: string) => {
+        return props.selectedDatasets.indexOf(id) !== -1;
     };
 
-    handleDownloadClick = () => {
-        this.props.startDownloading();
-        this.props.downloadDatasets();
-        this.props.closeTermsDialog();
+    const handleDownloadClick = () => {
+        props.startDownloading();
+        props.downloadDatasets();
+        props.closeTermsDialog();
     };
 
-    handleTermsDialogAgreeClick = () => {
-        this.props.downloadDataset(this.props.dataset.id);
-        this.props.closeTermsSingleDialog();
+    const handleTermsDialogAgreeClick = () => {
+        props.downloadDataset(props.dataset.id);
+        props.closeTermsSingleDialog();
     };
 
-    render() {
-        const {data, rowsPerPage, page, selectedDatasets} = this.props;
-        const {datasets, total_count} = data;
-        const numSelected = selectedDatasets.length;
 
-        return (
-            <Paper>
-                <MetaInfoDialog
-                    open={this.props.metaInfoDialogOpen}
-                    handleClose={this.handleMetaInfoClose}
-                    dataset={this.props.dataset}
+    const {data, rowsPerPage, page, selectedDatasets} = props;
+    const {datasets, total_count} = data;
+    const numSelected = selectedDatasets.length;
 
-                    helpDialogOpen={this.props.helpMetaInfoDialogOpen}
-                    closeHelpDialog={this.props.closeHelpMetaInfoDialog}
-                    openHelpDialog={this.props.openHelpMetaInfoDialog}
-                    helpMetaInfoKey={this.props.helpMetaInfoKey}
-                />
-                <PlotDialog
-                    open={this.props.plotDialogOpen}
-                    onClose={this.handlePlotClose}
-                    dataset={this.props.dataset}
-                    plotState={this.props.plotState}
-                    updatePlotState={this.props.updatePlotState}
-                    plotData={this.props.plotData}
-                    updatePlotData={this.props.updatePlotData}
-                />
-                <TermsDialog
-                    title={'OCDB Download Terms and Conditions'}
-                    open={this.props.termsDialogOpen}
-                    onDisagree={this.props.closeTermsDialog}
-                    onAgree={this.handleDownloadClick}
-                />
-                <TermsDialog
-                    title={'OCDB Download Terms and Conditions'}
-                    open={this.props.termsSingleDialogOpen}
-                    onDisagree={this.props.closeTermsSingleDialog}
-                    onAgree={this.handleTermsDialogAgreeClick}
-                />
-                <Stack spacing={2} direction={'row'}>
-                    <Button variant={"contained"}
-                            color={"primary"}
-                            key={"btn_download33"}
+    return (
+        <Paper>
+            <MetaInfoDialog
+                open={props.metaInfoDialogOpen}
+                handleClose={handleMetaInfoClose}
+                dataset={props.dataset}
+
+                helpDialogOpen={props.helpMetaInfoDialogOpen}
+                closeHelpDialog={props.closeHelpMetaInfoDialog}
+                openHelpDialog={props.openHelpMetaInfoDialog}
+                helpMetaInfoKey={props.helpMetaInfoKey}
+            />
+            <PlotDialog
+                open={props.plotDialogOpen}
+                onClose={handlePlotClose}
+                dataset={props.dataset}
+                plotState={props.plotState}
+                updatePlotState={props.updatePlotState}
+                plotData={props.plotData}
+                updatePlotData={props.updatePlotData}
+            />
+            <TermsDialog
+                title={'OCDB Download Terms and Conditions'}
+                open={props.termsDialogOpen}
+                onDisagree={props.closeTermsDialog}
+                onAgree={handleDownloadClick}
+            />
+            <TermsDialog
+                title={'OCDB Download Terms and Conditions'}
+                open={props.termsSingleDialogOpen}
+                onDisagree={props.closeTermsSingleDialog}
+                onAgree={handleTermsDialogAgreeClick}
+            />
+            <Stack spacing={2} direction={'row'}>
+                <Button variant={"contained"}
+                        color={"primary"}
+                        key={"btn_download33"}
+                        disabled={numSelected == 0}
+                        onClick={() => props.openTermsDialog()}
+                >
+                    Download
+                    <Icon>archive</Icon>
+                    {props.downloading && <CircularProgress size={24}/>}
+                </Button>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            value={'docs'}
                             disabled={numSelected == 0}
-                            onClick={() => this.props.openTermsDialog()}
-                    >
-                        Download
-                        <Icon>archive</Icon>
-                        {this.props.downloading && <CircularProgress size={24}/>}
-                    </Button>
-                    <FormControlLabel
-                        control={
+                        />
+                    }
+                    label="Include Documents"
+                    onChange={handleUpdateDownloadDocs}
+                />
+            </Stack>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell padding="checkbox">
                             <Checkbox
-                                value={'docs'}
-                                disabled={numSelected == 0}
+                                indeterminate={numSelected > 0 && numSelected < rowsPerPage}
+                                checked={numSelected === rowsPerPage}
+                                onChange={handleOnSelectAllClick}
                             />
-                        }
-                        label="Include Documents"
-                        onChange={this.handleUpdateDownloadDocs}
-                    />
-                </Stack>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell padding="checkbox">
-                                <Checkbox
-                                    indeterminate={numSelected > 0 && numSelected < rowsPerPage}
-                                    checked={numSelected === rowsPerPage}
-                                    onChange={this.handleOnSelectAllClick}
-                                />
-                            </TableCell>
-                            <TableCell>File</TableCell>
-                            <TableCell>Meta/Plots</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {datasets.map(row => {
-                            const fileName = row.filename;
-                            const dirName = row.path;
+                        </TableCell>
+                        <TableCell>File</TableCell>
+                        <TableCell>Meta/Plots</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {datasets.map(row => {
+                        const fileName = row.filename;
+                        const dirName = row.path;
 
-                            return (
-                                <TableRow
-                                    hover
-                                    role="checkbox"
-                                    key={row.id}
-                                    aria-checked={this.isSelected(row.id)}
-                                    tabIndex={-1}
-                                    selected={this.isSelected(row.id)}
-                                >
-                                    <TableCell padding="checkbox">
-                                        <Checkbox
-                                            checked={this.isSelected(row.id)}
-                                            value={row.id}
-                                            onClick={() => this.handleClick(row.id, selectedDatasets)}
-                                        />
-                                    </TableCell>
-                                    <TableCell style={{cursor: 'pointer'}}
-                                               onClick={() => this.handleDownloadSingleClick(row.id)}
-                                               component="th"
-                                               scope="row">
-                                        <Typography variant="button" gutterBottom>
-                                            {fileName}
-                                        </Typography>
-                                        <Typography>
-                                            {dirName}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <IconButton
-                                            color="inherit"
-                                            onClick={() => this.handleMetaInfoOpen(row.id)}
-                                        >
-                                            <Icon>list</Icon>
-                                        </IconButton>
-                                        <Button
-                                            color={"inherit"}
-                                            onClick={() => this.handlePlotOpen(row.id)}
-                                        >
-                                            <Icon>bar_chart</Icon>
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                    <TableFooter>
-                        <TableRow>
-
-                            {datasets.length > 0 ? (
-                                <TableCell colSpan={3}>
-                                    <TablePagination
-                                        rowsPerPageOptions={[5, 10, 25, 100, 200, 500]}
-                                        component="div"
-                                        count={total_count}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        onPageChange={this.handleChangePage}
-                                        onRowsPerPageChange={this.handleChangeRowsPerPage}
-                                        sx={{'width': '100%'}}
-                                        ActionsComponent={TablePaginationActions}
+                        return (
+                            <TableRow
+                                hover
+                                role="checkbox"
+                                key={row.id}
+                                aria-checked={isSelected(row.id)}
+                                tabIndex={-1}
+                                selected={isSelected(row.id)}
+                            >
+                                <TableCell padding="checkbox">
+                                    <Checkbox
+                                        checked={isSelected(row.id)}
+                                        value={row.id}
+                                        onClick={() => handleClick(row.id, selectedDatasets)}
                                     />
                                 </TableCell>
-                                ) :
-                                <TableCell colSpan={3}>
-                                    No Files
+                                <TableCell style={{cursor: 'pointer'}}
+                                           onClick={() => handleDownloadSingleClick(row.id)}
+                                           component="th"
+                                           scope="row">
+                                    <Typography variant="button" gutterBottom>
+                                        {fileName}
+                                    </Typography>
+                                    <Typography>
+                                        {dirName}
+                                    </Typography>
                                 </TableCell>
-                            }
-                        </TableRow>
-                    </TableFooter>
-                </Table>
-            </Paper>
-        );
-    }
-}
+                                <TableCell>
+                                    <IconButton
+                                        color="inherit"
+                                        onClick={() => handleMetaInfoOpen(row.id)}
+                                    >
+                                        <Icon>list</Icon>
+                                    </IconButton>
+                                    <Button
+                                        color={"inherit"}
+                                        onClick={() => handlePlotOpen(row.id)}
+                                    >
+                                        <Icon>bar_chart</Icon>
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        );
+                    })}
+                </TableBody>
+                <TableFooter>
+                    <TableRow>
 
-export default DataTable;
+                        {datasets.length > 0 ? (
+                            <TableCell colSpan={3}>
+                                <TablePagination
+                                    rowsPerPageOptions={[5, 10, 25, 100, 200, 500]}
+                                    component="div"
+                                    count={total_count}
+                                    rowsPerPage={rowsPerPage}
+                                    page={page}
+                                    onPageChange={handleChangePage}
+                                    onRowsPerPageChange={handleChangeRowsPerPage}
+                                    sx={{'width': '100%'}}
+                                    ActionsComponent={TablePaginationActions}
+                                />
+                            </TableCell>
+                            ) :
+                            <TableCell colSpan={3}>
+                                No Files
+                            </TableCell>
+                        }
+                    </TableRow>
+                </TableFooter>
+            </Table>
+        </Paper>
+    );
+}
