@@ -1,3 +1,14 @@
+# Changes for Version 0.2.2 (in development)
+
+- Library Material UI (MUI) has been upgraded from major version 3 to 5.
+  The major version 5 includes a substantial refactoring. The code has been adopted accordingly.
+  Closing #72. 
+- Library react-leaflet has been upgraded to version 3.2.5. The major version 3 includes
+  a substantial refactoring. The code has been adopted accordingly. Closing #72.  
+- Fixing search products not working when advanced filtering (closing #29)
+- Fixed submission ID duplication (closing #38)
+- Fixed created date issue on Submission Files (closing #91) 
+
 # Changes for Version 0.2.1
 
 - Set a better default zoom for the search map avoiding the gray strip at the top when entering the site. Closing #31.
