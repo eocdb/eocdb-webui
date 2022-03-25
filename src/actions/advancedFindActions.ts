@@ -1,4 +1,4 @@
-import { BBoxValue } from "../components/search/BBoxInput";
+import { BBoxValue } from "../components/search/BBoxInputDialog";
 import { SliderRange } from "../types/advancedSearchDialog";
 
 

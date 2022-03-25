@@ -3,27 +3,19 @@ import * as React from "react";
 
 
 import { LatLng, LatLngBounds } from "leaflet";
-import { TextField, DialogTitle, Dialog, Grid, DialogActions, Button } from "@mui/material";
+import { TextField, DialogTitle, Dialog, DialogActions, Button, Stack, styled, Paper } from "@mui/material";
 
 
-// // noinspection JSUnusedLocalSymbols
-// const styles = (theme: Theme) => createStyles({
-//     searchField: {
-//         width: 200,
-//         marginRight: theme.spacing.unit / 2,
-//         marginTop: theme.spacing.unit / 2,
-//     },
-//     dialogContent: {
-//         marginLeft: theme.spacing.unit * 4,
-//         marginRight: theme.spacing.unit * 4,
-//         marginTop: theme.spacing.unit * 4,
-//         marginBottom: theme.spacing.unit * 4,
-//     },
-//     textField: {},
-//     button: {},
-//     rightIcon: {},
-//     tableContainer: {},
-// });
+export type BBoxValue = [number | string, number | string, number | string, number | string];
+
+
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}));
 
 interface BBoxInputProps {
     open: boolean;
@@ -44,11 +36,8 @@ interface BBoxInputProps {
     onBBoxSave: (selectedBounds: LatLngBounds) => void;
 }
 
-/*function Transition(props: SlideProps) {
-    return <Slide direction="up" {...props} />;
-}*/
 
-const BBoxInput = class extends PureComponent<BBoxInputProps> {
+const BBoxInputDialog = class extends PureComponent<BBoxInputProps> {
     constructor(props: BBoxInputProps) {
         super(props);
     }
@@ -86,56 +75,51 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
                 onClose={this.props.onClose}
                 //TransitionComponent={Transition}
             >
-                {/*<div className={classes.dialogContent}>*/}
                 <div>
                     <DialogTitle id="form-dialog-title">Coordinates</DialogTitle>
 
-                    <Grid spacing={32} container>
-                        <Grid item xs={12}>
+                    <Stack direction={'column'} spacing={5}>
+                        <Item>
                             <TextField
                                 id={'bbox_bottom'}
                                 label={'South'}
                                 variant={'outlined'}
                                 type={"number"}
-                                // className={classes.searchField}
-                                // onBlur={this.handleSouthChange}
+                                onChange={this.handleSouthChange}
                                 defaultValue={this.props.south}
                             />
-                        </Grid>
-                        <Grid item xs={12}>
+                        </Item>
+                        <Item>
                             <TextField
                                 id={'bbox_left'}
                                 label={'West'}
                                 variant={'outlined'}
                                 type={"number"}
-                                // className={classes.searchField}
                                 onChange={this.handleWestChange}
                                 defaultValue={this.props.west}
                             />
-                        </Grid>
-                        <Grid item xs={12}>
+                        </Item>
+                        <Item>
                             <TextField
                                 id={'bbox_top'}
                                 label={'North'}
                                 variant={'outlined'}
                                 type={"number"}
-                                // className={classes.searchField}
                                 onChange={this.handleNorthChange}
                                 defaultValue={this.props.north}
                             />
-                        </Grid>
-                        <Grid item xs={12}>
+                        </Item>
+                        <Item>
                             <TextField
                                 id={'bbox_right'}
                                 label={'East'}
                                 variant={'outlined'}
                                 type={"number"}
-                                // className={classes.searchField}
                                 onChange={this.handleEastChange}
                                 defaultValue={this.props.east}
                             />
-                        </Grid>
-                    </Grid>
+                        </Item>
+                    </Stack>
                     <DialogActions>
                         <Button
                             onClick={() => this.handleOnChange()}
@@ -160,4 +144,4 @@ const BBoxInput = class extends PureComponent<BBoxInputProps> {
     }
 };
 
-export default BBoxInput;
+export default BBoxInputDialog;

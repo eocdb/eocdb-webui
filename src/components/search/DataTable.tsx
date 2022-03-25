@@ -8,7 +8,6 @@ import { TermsDialog } from "./TermsDialog";
 import {
     IconButton,
     Paper,
-    Grid,
     Button,
     Icon,
     CircularProgress,
@@ -21,7 +20,7 @@ import {
     TableBody,
     Typography,
     TableFooter,
-    TablePagination, useTheme, Box
+    TablePagination, useTheme, Box, Stack
 } from '@mui/material';
 import { FirstPage, KeyboardArrowLeft, KeyboardArrowRight, LastPage } from "@mui/icons-material";
 
@@ -302,7 +301,7 @@ class DataTable extends React.Component<DataTableProps> {
                     onDisagree={this.props.closeTermsSingleDialog}
                     onAgree={this.handleTermsDialogAgreeClick}
                 />
-                <Grid container>
+                <Stack spacing={2} direction={'row'}>
                     <Button variant={"contained"}
                             color={"primary"}
                             key={"btn_download33"}
@@ -323,7 +322,7 @@ class DataTable extends React.Component<DataTableProps> {
                         label="Include Documents"
                         onChange={this.handleUpdateDownloadDocs}
                     />
-                </Grid>
+                </Stack>
                 <Table>
                     <TableHead>
                         <TableRow>

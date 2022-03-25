@@ -1,5 +1,4 @@
 import * as React from 'react'
-// import { Button } from '@mui/material';
 import { FeatureGroup, MapContainer, Marker, Popup, Rectangle, TileLayer } from 'react-leaflet'
 import { geoJSON, Icon, LatLng, LatLngBounds } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
@@ -9,16 +8,10 @@ import { DatasetRef, QueryResult } from "../../model";
 
 import markerInv from './marker_inv.png';
 import marker from './marker.png';
-import { BBoxValue } from "./BBoxInput";
-import { createRef } from "react";
-import BBoxInput from "./BBoxInputDialog";
-// import Control from "./Control";
-
-
-// FIXME: forman did not find any typedefs for 'react-leaflet-draw', 2018.11.xx
-// import EditControl from "react-leaflet-draw";
-const reactLeafletDraw = require('react-leaflet-draw');
-const EditControl = reactLeafletDraw.EditControl;
+import { BBoxValue } from "./BBoxInputDialog";
+import BBoxInputDialog from "./BBoxInputDialog";
+import { Button } from "@mui/material";
+import { EditControl } from "react-leaflet-draw";
 
 
 
@@ -62,13 +55,41 @@ interface SearchMapProps {
 
 
 const DRAW_OPTIONS = {
-    circle: true,
+    circle: false,
     rectangle: true,
-    polygon: true,
+    polygon: false,
     polyline: false,
     marker: false,
     circlemarker: false
 };
+
+interface MapBBoxComponentProps {
+    position: string;
+    handleManualBBoxInputOpen: () => void;
+}
+
+const POSITION_CLASSES = {
+    bottomleft: 'leaflet-bottom leaflet-left',
+    bottomright: 'leaflet-bottom leaflet-right',
+    topleft: 'leaflet-top leaflet-left',
+    topright: 'leaflet-top leaflet-right',
+}
+
+function MapBBoxComponent(props: MapBBoxComponentProps) {
+    const positionClass =
+        (props.position && POSITION_CLASSES[props.position]) || POSITION_CLASSES.topright
+
+    return (
+        <div className={positionClass}>
+            <Button
+                className={"leaflet-control leaflet-bar"}
+                onClick={props.handleManualBBoxInputOpen}
+            >
+                Manually enter coordinates
+            </Button>
+        </div>
+    );
+}
 
 //const average = (arr: number[]) => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
 
@@ -76,8 +97,6 @@ const DRAW_OPTIONS = {
 
 class SearchMap extends React.PureComponent<SearchMapProps> {
     private editableFeatureGroupRef: any = null;
-    //private myEditControl: any = null;
-    private mapRef = createRef<typeof MapContainer>();
     private layers: any = [];
 
     constructor(props: SearchMapProps) {
@@ -207,9 +226,10 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                 {this.renderMeasurementPointCluster()}
             </MarkerClusterGroup>
         );
+
         return (
-            <div style={{zIndex: 1}}>
-                <BBoxInput
+            <div>
+                <BBoxInputDialog
                     open={this.props.manualBBoxInputOpen}
                     onClose={this.props.closeManualBBoxDialog}
                     onBBoxSave={this.handleBBoxSave}
@@ -226,22 +246,12 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     east={this.props.selectedBBoxEast}
                     onEastChange={this.props.updateManualBBoxEast}
                 />
-
-                <MapContainer style={{zIndex: 1}} ref={this.mapRef} bounds={bounds} center={this.props.position}
+                <MapContainer style={{zIndex: 1}} bounds={bounds} center={this.props.position}
                      zoom={this.props.zoom} maxZoom={24}>
-                    {/*<Control position="topright">*/}
-                    {/*    <MapConsumer>*/}
-                    {/*        {(map) => {*/}
-                    {/*            console.log("leaflet.map:", map);*/}
-                    {/*            return (*/}
-                    {/*                <Button style={{backgroundColor: 'rgba(200, 200, 200, 0.5)'}}*/}
-                    {/*                        onClick={this.handleManualBBoxInputOpen}>*/}
-                    {/*                    Manually enter coordinates*/}
-                    {/*                </Button>*/}
-                    {/*            );*/}
-                    {/*        }}*/}
-                    {/*    </MapConsumer>*/}
-                    {/*</Control>*/}
+                    <MapBBoxComponent
+                        position="topright"
+                        handleManualBBoxInputOpen={this.handleManualBBoxInputOpen}
+                    />
 
                     <TileLayer
                         url="https://api.mapbox.com/styles/v1/dzelge/cku402gu215vz17nxgd3zakof/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHplbGdlIiwiYSI6ImNqb2lkbnhncjA4M3IzcW9qc3plMHh1cnEifQ.HnxI3KKlVliIX_J-YQvhTw"
@@ -252,7 +262,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     {this.props.selectedBounds && this.props.drawBounds ?
                         <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
                             <EditControl
-                                position='topright'
+                                position='bottomright'
                                 draw={DRAW_OPTIONS}
                                 onEdited={this.handleGeometryEdited}
                                 onCreated={this.handleGeometryCreated}
@@ -267,7 +277,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                         </FeatureGroup>
                         : <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
                             <EditControl
-                                position='topright'
+                                position='bottomright'
                                 draw={DRAW_OPTIONS}
                                 onEdited={this.handleGeometryEdited}
                                 onCreated={this.handleGeometryCreated}
@@ -286,40 +296,21 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     }
 
     private handleFeatureGroupReady = (featureGroupRef: any) => {
-        // // populate the leaflet FeatureGroup with the geoJson layers
-        // let leafletGeoJSON = new GeoJSON(getGeoJson());
-        // let leafletFeatureGroup = featureGroupRef.leafletElement;
-        // leafletGeoJSON.eachLayer((layer: Layer) => {
-        //     leafletFeatureGroup.addLayer(layer);
-        // });
-
         // store the ref for future access to content
         this.editableFeatureGroupRef = featureGroupRef;
     };
 
     private updateSelectedRegions = (e: any) => {
         // this.editableFeatureGroupRef contains the edited geometry, which can be manipulated through the leaflet API
-        const featureGroupRef = this.editableFeatureGroupRef;
-        if (featureGroupRef && this.props.updateSelectedRegions) {
-            const selectedRegion = featureGroupRef.leafletElement.toGeoJSON();
-
-            const bounds = featureGroupRef.leafletElement.getBounds();
-            if (e.layer) {
-                this.layers.push(e.layer);
-            }
-            this.props.updateSelectedRegions(selectedRegion, bounds, this.props.drawBounds);
-        }
+        const layer = e.layer;
+        const selectedRegion = layer.toGeoJSON();
+        const bounds = layer.getBounds();
+        this.props.updateSelectedRegions(selectedRegion, bounds, this.props.drawBounds);
     };
 
     // noinspection JSUnusedLocalSymbols
     private deleteSelectedRegions = (e: any) => {
-        // this.editableFeatureGroupRef contains the edited geometry, which can be manipulated through the leaflet API
-        const featureGroupRef = this.editableFeatureGroupRef;
-        if (featureGroupRef && this.props.updateSelectedRegions) {
-            const selectedRegion = featureGroupRef.leafletElement.toGeoJSON();
-
-            this.props.updateSelectedRegions(selectedRegion);
-        }
+        this.props.updateSelectedRegions(null, null, this.props.drawBounds);
     };
 
     private handleGeometryEdited = (e: any) => {
@@ -331,13 +322,6 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     };
 
     private handleGeometryDeleted = (e: any) => {
-        /*
-        let numDeleted = 0;
-        e.layers.eachLayer((layer: Layer) => {
-            numDeleted += 1;
-        });
-        console.log(`handleGeometryDeleted: removed ${numDeleted} layers`, e);
-        */
         this.props.updateManualBBoxSouth('');
         this.props.updateManualBBoxWest('');
         this.props.updateManualBBoxNorth('');
