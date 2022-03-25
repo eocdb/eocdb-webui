@@ -18,6 +18,7 @@ import {
 
 import { Menu, AccountCircle, Help, ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { SubmissionQuery } from "../model/Submission";
+import SearchHistory from "./search/SearchHistory";
 
 
 const drawerWidth = 240;
@@ -133,6 +134,21 @@ export default function Dashboard(props: DashboardProps) {
         props.changeDrawer(currentDrawer);
     };
 
+    const handleUpdateDatasetQuery = (selectedHistoryItem: SearchHistoryItem) => {
+        props.updateDatasetQuery(selectedHistoryItem.query);
+        props.searchDatasets();
+    };
+
+    const handleDeleteHistoryItem = (searchHistoryItem: SearchHistoryItem) => {
+        const history = Object.assign(props.searchHistory).filter((item: SearchHistoryItem) => {
+            return item.key != (searchHistoryItem.key);
+        });
+
+        localStorage.removeItem(searchHistoryItem.key);
+        props.updateSearchHistory(history);
+    };
+
+
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
@@ -205,6 +221,11 @@ export default function Dashboard(props: DashboardProps) {
                     />
                 </List>
                 <Divider />
+                <SearchHistory
+                    searchHistory={props.searchHistory}
+                    onSearchHistoryItemClick={handleUpdateDatasetQuery}
+                    onSearchHistoryItemDelete={handleDeleteHistoryItem}
+                />
             </Drawer>
             <Main open={open} sx={{'backgroundColor': '#fafafafa'}}>
                 <DrawerHeader />

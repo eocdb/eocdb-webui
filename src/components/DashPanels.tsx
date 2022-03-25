@@ -7,6 +7,7 @@ import MatchupPanel from '../containers/matchup/MatchupPanel';
 import AdminPanel from "../containers/admin/AdminPanel";
 import ErrorBoundary from "./ErrorBoundary";
 import SubmissionPanel from "../containers/submission/SubmissionPanel";
+import LinksPanel from "../containers/links/LinksPanel";
 
 
 interface DashPanelsProps {
@@ -28,8 +29,7 @@ class DashPanels extends React.PureComponent<DashPanelsProps> {
                              searchHistory={this.props.searchHistory}
                              show={this.props.currentDrawer == 'Search'}/>
                 <SubmissionPanel show={this.props.currentDrawer == 'Submit'}/>
-                {/*<BrowsePanel show={this.props.currentDrawer == 'Browse'}/>*/}
-                {/*<LinksPanel show={this.props.currentDrawer == "Links"}/>*/}
+                <LinksPanel show={this.props.currentDrawer == "Links"}/>
 
                 <MatchupPanel show={this.props.currentDrawer == 'Matchup'}/>
 

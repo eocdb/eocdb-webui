@@ -1,3 +1,5 @@
+// noinspection RequiredAttributes
+
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import SearchMap from './SearchMap';
@@ -27,6 +29,7 @@ import {
 } from "@mui/material";
 import { DatePicker } from "@mui/lab";
 import { DefaultDatasetQuery } from "../../model/DatasetQuery";
+import { SEARCH_HISTORY_PREFIX } from "../../default";
 
 
 
@@ -185,20 +188,16 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
     };
 
     handleSaveFilter = () => {
-        let key = 'flt_';
-        if (this.props.user) {
-            key = this.props.user.name + '_';
-        }
-
+        const key = SEARCH_HISTORY_PREFIX + this.props.saveSearchTitle
         const newItem: SearchHistoryItem = {
-            key: this.props.saveSearchTitle,
+            key: key,
             query: Object.assign(this.props.datasetQuery)
         };
 
         let newItemAdded = false;
 
         let history = this.props.searchHistory.map((item: SearchHistoryItem) => {
-            if(item.key != this.props.saveSearchTitle) {
+            if(item.key != key) {
                 return item;
             }
             else{
@@ -213,7 +212,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
         this.props.updateSearchHistory(history);
 
-        localStorage.setItem(key + this.props.saveSearchTitle, JSON.stringify(newItem.query));
+        localStorage.setItem(key, JSON.stringify(newItem.query));
 
         this.props.closeSaveSearchDialog();
     };
@@ -373,7 +372,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         open={this.props.saveSearchDialogOpen}
                         onClose={this.props.closeSaveSearchDialog}
                         label={'Title'}
-                        title={'Title of Saved Search'}
+                        title={'Title of Search to be Saved'}
                         value={this.props.saveSearchTitle}
                         onSave={this.handleSaveFilter}
                         onChange={this.handleUpdateSaveSearchTitle}
