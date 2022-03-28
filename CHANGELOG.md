@@ -13,6 +13,7 @@
   is now calculated from the drawerWidth. 
 - Removed stage Dockerfile and config. The endpoint URL is now taken either from the URL the browser uses or a .env 
   file.
+- Added localhost to getEndpointUrl() in order to run the service on a localhost for dev purposes.
 
 # Changes for Version 0.2.1
 
