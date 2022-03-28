@@ -5,6 +5,7 @@ const DEFAULT_API_ENDPOINT_PRODUCTION = 'https://ocdb.eumetsat.int';
 const DEFAULT_API_ENDPOINT_STAGE = 'https://ocdb-stage.eumetsat.int';
 // NOT used at this stage
 const DEFAULT_API_ENDPOINT_DEV = 'https://ocdb-dev.eumetsat.int';
+const DEFAULT_API_ENDPOINT_LOCAL = 'http://localhost:3001';
 
 function getEndpointUrl(): string {
     let url = process.env.REACT_APP_CATEHUB_ENDPOINT;
@@ -13,6 +14,8 @@ function getEndpointUrl(): string {
             url = DEFAULT_API_ENDPOINT_STAGE;
         } else if (window.location.host.indexOf('dev') >= 0) {
             url = DEFAULT_API_ENDPOINT_DEV;
+        } else if (window.location.host.indexOf('localhost') >= 0) {
+            url = DEFAULT_API_ENDPOINT_LOCAL;
         } else {
             url = DEFAULT_API_ENDPOINT_PRODUCTION;
         }
