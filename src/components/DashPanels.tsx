@@ -5,7 +5,6 @@ import { SearchHistoryItem } from "../types/dataset";
 import { User } from "../model";
 import MatchupPanel from '../containers/matchup/MatchupPanel';
 import AdminPanel from "../containers/admin/AdminPanel";
-import ErrorBoundary from "./ErrorBoundary";
 import SubmissionPanel from "../containers/submission/SubmissionPanel";
 import LinksPanel from "../containers/links/LinksPanel";
 
@@ -23,7 +22,6 @@ class DashPanels extends React.PureComponent<DashPanelsProps> {
 
     render() {
         return (
-            <ErrorBoundary>
             <div>
                 <SearchPanel user={this.props.user}
                              searchHistory={this.props.searchHistory}
@@ -35,7 +33,6 @@ class DashPanels extends React.PureComponent<DashPanelsProps> {
 
                 <AdminPanel show={this.props.currentDrawer == 'Admin'}/>
             </div>
-            </ErrorBoundary>
         );
     }
 }

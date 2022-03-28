@@ -3,7 +3,7 @@ import { FeatureGroup, MapContainer, Marker, Popup, Rectangle, TileLayer } from 
 import { geoJSON, Icon, LatLng, LatLngBounds } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 import MarkerClusterGroup from "react-leaflet-markercluster";
-import 'react-leaflet-markercluster/dist/styles.min.css';
+// import 'react-leaflet-markercluster/dist/styles.min.css';
 import { DatasetRef, QueryResult } from "../../model";
 
 import markerInv from './marker_inv.png';
@@ -91,9 +91,6 @@ function MapBBoxComponent(props: MapBBoxComponentProps) {
     );
 }
 
-//const average = (arr: number[]) => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
-
-//let MARKERS: React.ReactNode[] | null = null;
 
 class SearchMap extends React.PureComponent<SearchMapProps> {
     private editableFeatureGroupRef: any = null;
@@ -228,7 +225,8 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         );
 
         return (
-            <div>
+            <MapContainer bounds={bounds} center={this.props.position}
+                 zoom={this.props.zoom} maxZoom={24}>
                 <BBoxInputDialog
                     open={this.props.manualBBoxInputOpen}
                     onClose={this.props.closeManualBBoxDialog}
@@ -246,52 +244,49 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     east={this.props.selectedBBoxEast}
                     onEastChange={this.props.updateManualBBoxEast}
                 />
-                <MapContainer style={{zIndex: 1}} bounds={bounds} center={this.props.position}
-                     zoom={this.props.zoom} maxZoom={24}>
-                    <MapBBoxComponent
-                        position="topright"
-                        handleManualBBoxInputOpen={this.handleManualBBoxInputOpen}
-                    />
+                <MapBBoxComponent
+                    position="topright"
+                    handleManualBBoxInputOpen={this.handleManualBBoxInputOpen}
+                />
 
-                    <TileLayer
-                        url="https://api.mapbox.com/styles/v1/dzelge/cku402gu215vz17nxgd3zakof/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHplbGdlIiwiYSI6ImNqb2lkbnhncjA4M3IzcW9qc3plMHh1cnEifQ.HnxI3KKlVliIX_J-YQvhTw"
-                        attribution="&copy; <a href=&quot;https://www.mapbox.com/about/maps/&quot;>Mapbox</a> © <a href=&quot;http://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> <strong><a href=&quot;https://www.mapbox.com/map-feedback/&quot; target=&quot;_blank&quot;>Improve this map</a></strong>"
-                    />
+                <TileLayer
+                    url="https://api.mapbox.com/styles/v1/dzelge/cku402gu215vz17nxgd3zakof/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZHplbGdlIiwiYSI6ImNqb2lkbnhncjA4M3IzcW9qc3plMHh1cnEifQ.HnxI3KKlVliIX_J-YQvhTw"
+                    attribution="&copy; <a href=&quot;https://www.mapbox.com/about/maps/&quot;>Mapbox</a> © <a href=&quot;http://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> <strong><a href=&quot;https://www.mapbox.com/map-feedback/&quot; target=&quot;_blank&quot;>Improve this map</a></strong>"
+                />
 
-                    {markerClusterGroup}
-                    {this.props.selectedBounds && this.props.drawBounds ?
-                        <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
-                            <EditControl
-                                position='bottomright'
-                                draw={DRAW_OPTIONS}
-                                onEdited={this.handleGeometryEdited}
-                                onCreated={this.handleGeometryCreated}
-                                onDeleted={this.handleGeometryDeleted}
-                                onMounted={this.handleDrawControlMounted}
-                                onEditStart={this.handleGeometryEditStart}
-                                onEditStop={this.handleGeometryEditStop}
-                                onDeleteStart={this.handleGeometryDeleteStart}
-                                onDeleteStop={this.handleGeometryDeleteStop}
-                            />
-                            <Rectangle bounds={this.props.selectedBounds}/>
-                        </FeatureGroup>
-                        : <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
-                            <EditControl
-                                position='bottomright'
-                                draw={DRAW_OPTIONS}
-                                onEdited={this.handleGeometryEdited}
-                                onCreated={this.handleGeometryCreated}
-                                onDeleted={this.handleGeometryDeleted}
-                                onMounted={this.handleDrawControlMounted}
-                                onEditStart={this.handleGeometryEditStart}
-                                onEditStop={this.handleGeometryEditStop}
-                                onDeleteStart={this.handleGeometryDeleteStart}
-                                onDeleteStop={this.handleGeometryDeleteStop}
-                            />
-                        </FeatureGroup>
-                    }
-                </MapContainer>
-            </div>
+                {markerClusterGroup}
+                {this.props.selectedBounds && this.props.drawBounds ?
+                    <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
+                        <EditControl
+                            position='bottomright'
+                            draw={DRAW_OPTIONS}
+                            onEdited={this.handleGeometryEdited}
+                            onCreated={this.handleGeometryCreated}
+                            onDeleted={this.handleGeometryDeleted}
+                            onMounted={this.handleDrawControlMounted}
+                            onEditStart={this.handleGeometryEditStart}
+                            onEditStop={this.handleGeometryEditStop}
+                            onDeleteStart={this.handleGeometryDeleteStart}
+                            onDeleteStop={this.handleGeometryDeleteStop}
+                        />
+                        <Rectangle bounds={this.props.selectedBounds}/>
+                    </FeatureGroup>
+                    : <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
+                        <EditControl
+                            position='bottomright'
+                            draw={DRAW_OPTIONS}
+                            onEdited={this.handleGeometryEdited}
+                            onCreated={this.handleGeometryCreated}
+                            onDeleted={this.handleGeometryDeleted}
+                            onMounted={this.handleDrawControlMounted}
+                            onEditStart={this.handleGeometryEditStart}
+                            onEditStop={this.handleGeometryEditStop}
+                            onDeleteStart={this.handleGeometryDeleteStart}
+                            onDeleteStop={this.handleGeometryDeleteStop}
+                        />
+                    </FeatureGroup>
+                }
+            </MapContainer>
         );
     }
 

@@ -9,6 +9,8 @@
 - Fixed submission ID duplication (closing #38)
 - Fixed created date issue on Submission Files (closing #91) 
 - The AppBar is now open as default. This was suggested by users.
+- Fixed styling of SearchPanel. It was creating a scrollbar when the AppBar was expanded due to a wrong width. The width 
+  is now calculated from the drawerWidth. 
 
 # Changes for Version 0.2.1
 
