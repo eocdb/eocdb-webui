@@ -1,7 +1,26 @@
 export const API_SERVER_VERSION='0.1.9';
 export const API_SERVER_VERSION_TAG='latest';
 
-let baseUrl = process.env.REACT_APP_API_SERVER_URL;
+const DEFAULT_API_ENDPOINT_PRODUCTION = 'https://ocdb.eumetsat.int';
+const DEFAULT_API_ENDPOINT_STAGE = 'https://ocdb-stage.eumetsat.int';
+// NOT used at this stage
+const DEFAULT_API_ENDPOINT_DEV = 'https://ocdb-dev.eumetsat.int';
+
+function getEndpointUrl(): string {
+    let url = process.env.REACT_APP_CATEHUB_ENDPOINT;
+    if (!url) {
+        if (window.location.host.indexOf('stage') >= 0) {
+            url = DEFAULT_API_ENDPOINT_STAGE;
+        } else if (window.location.host.indexOf('dev') >= 0) {
+            url = DEFAULT_API_ENDPOINT_DEV;
+        } else {
+            url = DEFAULT_API_ENDPOINT_PRODUCTION;
+        }
+    }
+    return url.endsWith('/') ? url.substr(0, url.length - 1) : url;
+}
+
+const baseUrl = getEndpointUrl();
 
 
 console.log(baseUrl);
