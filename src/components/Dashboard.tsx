@@ -120,7 +120,7 @@ interface DashboardProps {
 
 export default function Dashboard(props: DashboardProps) {
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
 
     const handleDrawerOpen = () => {
         setOpen(true);

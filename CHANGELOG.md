@@ -8,6 +8,7 @@
 - Fixing search products not working when advanced filtering (closing #29)
 - Fixed submission ID duplication (closing #38)
 - Fixed created date issue on Submission Files (closing #91) 
+- The AppBar is now open as default. This was suggested by users.
 
 # Changes for Version 0.2.1
 
