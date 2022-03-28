@@ -11,6 +11,8 @@
 - The AppBar is now open as default. This was suggested by users.
 - Fixed styling of SearchPanel. It was creating a scrollbar when the AppBar was expanded due to a wrong width. The width 
   is now calculated from the drawerWidth. 
+- Removed stage Dockerfile and config. The endpoint URL is now taken either from the URL the browser uses or a .env 
+  file.
 
 # Changes for Version 0.2.1
 
