@@ -3,16 +3,15 @@ import { FeatureGroup, MapContainer, Marker, Popup, Rectangle, TileLayer } from 
 import { geoJSON, Icon, LatLng, LatLngBounds } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 import MarkerClusterGroup from "react-leaflet-markercluster";
-// import 'react-leaflet-markercluster/dist/styles.min.css';
 import { DatasetRef, QueryResult } from "../../model";
 
 import markerInv from './marker_inv.png';
 import marker from './marker.png';
 import { BBoxValue } from "./BBoxInputDialog";
 import BBoxInputDialog from "./BBoxInputDialog";
-import { Button } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import { EditControl } from "react-leaflet-draw";
-
+import InputIcon from '@mui/icons-material/Input';
 
 
 interface SearchMapProps {
@@ -81,12 +80,15 @@ function MapBBoxComponent(props: MapBBoxComponentProps) {
 
     return (
         <div className={positionClass}>
-            <Button
-                className={"leaflet-control leaflet-bar"}
-                onClick={props.handleManualBBoxInputOpen}
-            >
-                Manually enter coordinates
-            </Button>
+            <Tooltip title="Enter BBox manually">
+                <Button
+                    className={"leaflet-control leaflet-bar"}
+                    onClick={props.handleManualBBoxInputOpen}
+                    sx={{backgroundColor: 'white'}}
+                >
+                    <InputIcon />
+                </Button>
+            </Tooltip>
         </div>
     );
 }
@@ -209,10 +211,6 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         this.props.openManualBBoxDialog();
     };
 
-    handleManualBBoxInputSouthChange = (south: number | string) => {
-        this.props.updateManualBBoxSouth(south);
-    };
-
     render() {
         const bounds = this.getBoundsFromDatasets();
 
@@ -233,7 +231,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     onBBoxSave={this.handleBBoxSave}
 
                     south={this.props.selectedBBoxSouth}
-                    onSouthChange={this.handleManualBBoxInputSouthChange}
+                    onSouthChange={this.props.updateManualBBoxSouth}
 
                     west={this.props.selectedBBoxWest}
                     onWestChange={this.props.updateManualBBoxWest}

@@ -2,8 +2,6 @@ import * as React from "react";
 
 import { DatasetIssue, SubmissionFile } from "../../model";
 import {
-    SlideProps,
-    Slide,
     Dialog,
     DialogTitle,
     DialogContent,
@@ -12,28 +10,6 @@ import {
     Button
 } from "@mui/material";
 
-
-// noinspection JSUnusedLocalSymbols
-// const styles = (theme: Theme) => createStyles({
-//     appBar: {
-//         position: 'relative',
-//     },
-//     flex: {
-//         flex: 1,
-//     },
-//     searchField: {
-//         width: 300,
-//     },
-//     textField: {},
-//     button: {},
-//     rightIcon: {},
-//     tableContainer: {},
-// });
-
-
-// function Transition(props: SlideProps) {
-//     return <Slide direction="up" {...props} />;
-// }
 
 
 export interface SubmissionIssueDialogProps {

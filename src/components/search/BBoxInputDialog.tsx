@@ -73,10 +73,9 @@ const BBoxInputDialog = class extends PureComponent<BBoxInputProps> {
             <Dialog
                 open={this.props.open}
                 onClose={this.props.onClose}
-                //TransitionComponent={Transition}
             >
                 <div>
-                    <DialogTitle id="form-dialog-title">Coordinates</DialogTitle>
+                    <DialogTitle id="form-dialog-title">Enter BBox Boundaries</DialogTitle>
 
                     <Stack direction={'column'} spacing={5}>
                         <Item>
