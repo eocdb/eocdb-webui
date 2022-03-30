@@ -84,15 +84,6 @@ export default function FileUpload(props: FileUploadProps) {
                     </Container>
                 </section>
             )}
-        </Dropzone>        // <DropzoneArea
-        //     onDropRejected={this.handleOnDropRejected}
-        //     onChange={this.handleOnchange}
-        //     filesLimit={500}
-        //     maxFileSize={1000000000}
-        //     showFileNamesInPreview={true}
-        //     acceptedFiles={this.props.acceptedFiles}
-        //     clearOnUnmount={true}
-        //     dropzoneText={this.props.label}
-        // />
+        </Dropzone>
     );
 }

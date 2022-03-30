@@ -3,7 +3,7 @@ import { User, Submission } from "../../model";
 import {
     Tooltip,
     Button,
-    Icon, Chip, Paper
+    Icon, Chip, Paper, Stack, styled
 } from "@mui/material";
 import { blue, green, orange, red } from "@mui/material/colors";
 import {
@@ -16,6 +16,13 @@ import {
 import { CloudUpload } from "@mui/icons-material";
 import { SubmissionQuery, SubmissionResult } from "../../model/Submission";
 
+
+const Item = styled (Button) (({theme}) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    padding: theme.spacing (1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}));
 
 
 interface SubmissionTableProps {
@@ -303,13 +310,17 @@ export default function SubmissionTable(props: SubmissionTableProps) {
 
     return (
         <Paper sx={{'height': 700}}>
-            <Button variant="contained"
-                    color="secondary"
-                    onClick={props.onSubmissionDialogOpen}
-            >
-                New Submission
-                <CloudUpload/>
-            </Button>
+            <Stack direction={"row"} justifyContent={"start"}>
+                <Item>
+                    <Button variant="contained"
+                            color="secondary"
+                            onClick={props.onSubmissionDialogOpen}
+                    >
+                        New Submission
+                        <CloudUpload/>
+                    </Button>
+                </Item>
+            </Stack>
             <DataGrid
                 rows={rows}
                 columns={columns}

@@ -20,7 +20,7 @@ import {
     TableBody,
     Typography,
     TableFooter,
-    TablePagination, useTheme, Box, Stack
+    TablePagination, useTheme, Box, Stack, styled
 } from '@mui/material';
 import { FirstPage, KeyboardArrowLeft, KeyboardArrowRight, LastPage } from "@mui/icons-material";
 
@@ -37,29 +37,29 @@ interface TablePaginationActionsProps {
 
 
 function TablePaginationActions(props: TablePaginationActionsProps) {
-    const theme = useTheme();
+    const theme = useTheme ();
 
     const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        props.onPageChange(event, 0);
+        props.onPageChange (event, 0);
     };
 
     const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        props.onPageChange(event, props.page - 1);
+        props.onPageChange (event, props.page - 1);
     };
 
     const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        props.onPageChange(event, props.page + 1);
+        props.onPageChange (event, props.page + 1);
     };
 
     const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        const last = Math.max(0, Math.ceil(props.count / props.rowsPerPage) - 1);
-        props.onPageChange(event, last);
+        const last = Math.max (0, Math.ceil (props.count / props.rowsPerPage) - 1);
+        props.onPageChange (event, last);
     };
 
     const {count, page, rowsPerPage} = props;
 
     return (
-        <Box sx={{ flexShrink: 0, ml: 2.5 }}>
+        <Box sx={{flexShrink: 0, ml: 2.5}}>
             <IconButton
                 onClick={handleFirstPageButtonClick}
                 disabled={page === 0}
@@ -76,14 +76,14 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
             </IconButton>
             <IconButton
                 onClick={handleNextButtonClick}
-                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                disabled={page >= Math.ceil (count / rowsPerPage) - 1}
                 aria-label="Next Page"
             >
                 {theme.direction === 'rtl' ? <KeyboardArrowLeft/> : <KeyboardArrowRight/>}
             </IconButton>
             <IconButton
                 onClick={handleLastPageButtonClick}
-                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                disabled={page >= Math.ceil (count / rowsPerPage) - 1}
                 aria-label="Last Page"
             >
                 {theme.direction === 'rtl' ? <FirstPage/> : <LastPage/>}
@@ -93,6 +93,12 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 
+const Item = styled (Button) (({theme}) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    padding: theme.spacing (1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}));
 
 
 export interface DataTableProps {
@@ -152,53 +158,53 @@ export interface DataTableProps {
 
 class DataTable extends React.Component<DataTableProps> {
     constructor(props: DataTableProps) {
-        super(props);
+        super (props);
     }
 
     handleChangePage = (event: React.MouseEvent<HTMLButtonElement>, page: number) => {
-        this.props.updateDataPage(page);
-        this.props.searchDatasets();
-        this.props.startLoading();
+        this.props.updateDataPage (page);
+        this.props.searchDatasets ();
+        this.props.startLoading ();
     };
 
     handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = parseInt(event.target.value);
-        this.props.updateDataRowsPerPage(value);
-        this.props.startLoading();
-        this.props.searchDatasets();
+        const value = parseInt (event.target.value);
+        this.props.updateDataRowsPerPage (value);
+        this.props.startLoading ();
+        this.props.searchDatasets ();
     };
 
     handleMetaInfoOpen = (id: string) => {
-        this.props.openMetaInfoDialog();
-        this.props.updateDataset(id);
+        this.props.openMetaInfoDialog ();
+        this.props.updateDataset (id);
     };
 
     handleMetaInfoClose = () => {
-        this.props.closeMetaInfoDialog();
+        this.props.closeMetaInfoDialog ();
     };
 
     handlePlotOpen = (id: string) => {
-        this.props.updateDataset(id);
-        this.props.openPlotDialog();
+        this.props.updateDataset (id);
+        this.props.openPlotDialog ();
     };
 
     handlePlotClose = () => {
-        this.props.closePlotDialog();
+        this.props.closePlotDialog ();
     };
 
     handleDownloadSingleClick = (id: string) => {
-        this.props.updateDataset(id);
-        this.props.openTermsSingleDialog();
+        this.props.updateDataset (id);
+        this.props.openTermsSingleDialog ();
     };
 
     getBoundsFromSelectedDatasets = (selectedDatasets: string[]) => {
-        let bounds = new LatLngBounds(new LatLng(0, 0), new LatLng(0, 0));
+        let bounds = new LatLngBounds (new LatLng (0, 0), new LatLng (0, 0));
 
         for (let feat of selectedDatasets) {
             let feat_str = this.props.data.locations[feat];
-            feat_str = feat_str.replace(new RegExp("'", 'g'), '"');
+            feat_str = feat_str.replace (new RegExp ("'", 'g'), '"');
 
-            bounds.extend(geoJSON(JSON.parse(feat_str)).getBounds());
+            bounds.extend (geoJSON (JSON.parse (feat_str)).getBounds ());
         }
 
         return bounds;
@@ -208,59 +214,59 @@ class DataTable extends React.Component<DataTableProps> {
         let selectedDatasets: string[] = [];
 
         if (event.target.checked) {
-            selectedDatasets = this.props.data.datasets.map((row: DatasetRef) => {
+            selectedDatasets = this.props.data.datasets.map ((row: DatasetRef) => {
                 return row.id;
             });
 
-            const bounds = this.getBoundsFromSelectedDatasets(selectedDatasets);
+            const bounds = this.getBoundsFromSelectedDatasets (selectedDatasets);
 
-            this.props.updateSelectedDatasets(selectedDatasets, bounds);
+            this.props.updateSelectedDatasets (selectedDatasets, bounds);
         } else {
-            this.props.updateSelectedDatasets([], undefined);
+            this.props.updateSelectedDatasets ([], undefined);
         }
     };
 
     handleUpdateDownloadDocs = (event: React.ChangeEvent<HTMLInputElement>) => {
         let checked = event.target.checked;
-        this.props.updateDownloadDocs(checked);
+        this.props.updateDownloadDocs (checked);
     };
 
 
     handleClick = (id: string, selected: string[]) => {
-        const selectedIndex = selected.indexOf(id);
+        const selectedIndex = selected.indexOf (id);
         let newSelected: string[] = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, id);
+            newSelected = newSelected.concat (selected, id);
         } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
+            newSelected = newSelected.concat (selected.slice (1));
         } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
+            newSelected = newSelected.concat (selected.slice (0, -1));
         } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
+            newSelected = newSelected.concat (
+                selected.slice (0, selectedIndex),
+                selected.slice (selectedIndex + 1),
             );
         }
 
-        this.props.updateSelectedDatasets(newSelected,
-            new LatLngBounds(new LatLng(0, 0), new LatLng(0, 0))
+        this.props.updateSelectedDatasets (newSelected,
+            new LatLngBounds (new LatLng (0, 0), new LatLng (0, 0))
         );
     };
 
     isSelected = (id: string) => {
-        return this.props.selectedDatasets.indexOf(id) !== -1;
+        return this.props.selectedDatasets.indexOf (id) !== -1;
     };
 
     handleDownloadClick = () => {
-        this.props.startDownloading();
-        this.props.downloadDatasets();
-        this.props.closeTermsDialog();
+        this.props.startDownloading ();
+        this.props.downloadDatasets ();
+        this.props.closeTermsDialog ();
     };
 
     handleTermsDialogAgreeClick = () => {
-        this.props.downloadDataset(this.props.dataset.id);
-        this.props.closeTermsSingleDialog();
+        this.props.downloadDataset (this.props.dataset.id);
+        this.props.closeTermsSingleDialog ();
     };
 
     render() {
@@ -301,27 +307,31 @@ class DataTable extends React.Component<DataTableProps> {
                     onDisagree={this.props.closeTermsSingleDialog}
                     onAgree={this.handleTermsDialogAgreeClick}
                 />
-                <Stack spacing={2} direction={'row'}>
-                    <Button variant={"contained"}
-                            color={"primary"}
-                            key={"btn_download33"}
-                            disabled={numSelected == 0}
-                            onClick={() => this.props.openTermsDialog()}
-                    >
-                        Download
-                        <Icon>archive</Icon>
-                        {this.props.downloading && <CircularProgress size={24}/>}
-                    </Button>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                value={'docs'}
+                <Stack justifyContent={'flex-end'} direction={'row'}>
+                    <Item>
+                        <Button variant={"contained"}
+                                color={"primary"}
+                                key={"btn_download33"}
                                 disabled={numSelected == 0}
-                            />
-                        }
-                        label="Include Documents"
-                        onChange={this.handleUpdateDownloadDocs}
-                    />
+                                onClick={() => this.props.openTermsDialog ()}
+                        >
+                            Download
+                            <Icon>archive</Icon>
+                            {this.props.downloading && <CircularProgress size={24}/>}
+                        </Button>
+                    </Item>
+                    <Item>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    value={'docs'}
+                                    disabled={numSelected == 0}
+                                />
+                            }
+                            label="Include Documents"
+                            onChange={this.handleUpdateDownloadDocs}
+                        />
+                    </Item>
                 </Stack>
                 <Table>
                     <TableHead>
@@ -338,7 +348,7 @@ class DataTable extends React.Component<DataTableProps> {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {datasets.map(row => {
+                        {datasets.map (row => {
                             const fileName = row.filename;
                             const dirName = row.path;
 
@@ -347,19 +357,19 @@ class DataTable extends React.Component<DataTableProps> {
                                     hover
                                     role="checkbox"
                                     key={row.id}
-                                    aria-checked={this.isSelected(row.id)}
+                                    aria-checked={this.isSelected (row.id)}
                                     tabIndex={-1}
-                                    selected={this.isSelected(row.id)}
+                                    selected={this.isSelected (row.id)}
                                 >
                                     <TableCell padding="checkbox">
                                         <Checkbox
-                                            checked={this.isSelected(row.id)}
+                                            checked={this.isSelected (row.id)}
                                             value={row.id}
-                                            onClick={() => this.handleClick(row.id, selectedDatasets)}
+                                            onClick={() => this.handleClick (row.id, selectedDatasets)}
                                         />
                                     </TableCell>
                                     <TableCell style={{cursor: 'pointer'}}
-                                               onClick={() => this.handleDownloadSingleClick(row.id)}
+                                               onClick={() => this.handleDownloadSingleClick (row.id)}
                                                component="th"
                                                scope="row">
                                         <Typography variant="button" gutterBottom>
@@ -372,13 +382,13 @@ class DataTable extends React.Component<DataTableProps> {
                                     <TableCell>
                                         <IconButton
                                             color="inherit"
-                                            onClick={() => this.handleMetaInfoOpen(row.id)}
+                                            onClick={() => this.handleMetaInfoOpen (row.id)}
                                         >
                                             <Icon>list</Icon>
                                         </IconButton>
                                         <Button
                                             color={"inherit"}
-                                            onClick={() => this.handlePlotOpen(row.id)}
+                                            onClick={() => this.handlePlotOpen (row.id)}
                                         >
                                             <Icon>bar_chart</Icon>
                                         </Button>
@@ -391,19 +401,19 @@ class DataTable extends React.Component<DataTableProps> {
                         <TableRow>
 
                             {datasets.length > 0 ? (
-                                <TableCell colSpan={3}>
-                                    <TablePagination
-                                        rowsPerPageOptions={[5, 10, 25, 100]}
-                                        component="div"
-                                        count={total_count}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        onPageChange={this.handleChangePage}
-                                        onRowsPerPageChange={this.handleChangeRowsPerPage}
-                                        sx={{'width': '100%'}}
-                                        ActionsComponent={TablePaginationActions}
-                                    />
-                                </TableCell>
+                                    <TableCell colSpan={3}>
+                                        <TablePagination
+                                            rowsPerPageOptions={[5, 10, 25, 100]}
+                                            component="div"
+                                            count={total_count}
+                                            rowsPerPage={rowsPerPage}
+                                            page={page}
+                                            onPageChange={this.handleChangePage}
+                                            onRowsPerPageChange={this.handleChangeRowsPerPage}
+                                            sx={{'width': '100%'}}
+                                            ActionsComponent={TablePaginationActions}
+                                        />
+                                    </TableCell>
                                 ) :
                                 <TableCell colSpan={3}>
                                     No Files

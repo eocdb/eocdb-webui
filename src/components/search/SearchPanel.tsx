@@ -292,7 +292,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         return (
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                    <Stack spacing={2} direction={'row'}>
+                    <Stack spacing={0.2} direction={'row'}>
                         <DatePicker
                             label="From Date"
                             value={this.props.datasetQuery.startDate}
