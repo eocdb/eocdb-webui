@@ -7,27 +7,10 @@ import {
     DialogContent,
     DialogContentText,
     TextField,
-    FormControl, InputLabel, Input, InputAdornment, IconButton, Button, DialogActions
+    FormControl, InputLabel, InputAdornment, IconButton, Button, DialogActions, OutlinedInput
 } from '@mui/material';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-// const styles = (theme: Theme) => createStyles(
-//     {
-//         root: {
-//             display: 'flex',
-//             flexWrap: 'wrap',
-//         },
-//         margin: {
-//             margin: theme.spacing.unit,
-//         },
-//         withoutLabel: {
-//             marginTop: theme.spacing.unit * 3,
-//         },
-//         textField: {
-//             flexBasis: 200,
-//         },
-//     });
-//
 
 interface LoginDialogProps {
     open: boolean;
@@ -142,10 +125,9 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
                     <DialogContentText>
                         {this.props.userName?'Hello ' + this.props.userName + '. Here you can logout ' +
                             'or change your password.':'Please enter your login details here or register for a new account.'}
-
                     </DialogContentText>
+                    <br/>
                     <TextField
-                        // className={classNames(classes.margin, classes.textField)}
                         autoFocus
                         id="name"
                         label="User Name or E-mail Address"
@@ -155,11 +137,15 @@ class LoginDialog extends React.Component<LoginDialogProps, LoginDialogState> {
                         disabled={this.props.userName !== ''}
                         onChange={this.handleUserNameChange}
                     />
-                    <FormControl fullWidth>
-                        <InputLabel htmlFor="adornment-password">Password</InputLabel>
-                        <Input
-                            id="adornment-password"
+                    <br/>
+                    <br/>
+                    <FormControl fullWidth variant="outlined">
+                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                        <OutlinedInput
+                            id={"outlined-adornment-password"}
+                            label={"Password"}
                             type={showPassword ? 'text' : 'password'}
+                            autoComplete={"current-password"}
                             value={password}
                             onChange={this.handlePasswordChange}
                             onKeyPress={this.handlePasswordKeyPressed}
