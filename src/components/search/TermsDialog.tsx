@@ -12,12 +12,6 @@ import {
 import ReactMarkdown from "markdown-to-jsx";
 
 
-
-// function Transition(props: SlideProps) {
-//     return <Slide direction="up" {...props} />;
-// }
-
-
 export type DownloadTerms = 'SB' | 'OA' | 'OM'
 
 interface TermsDialogProps<T> {

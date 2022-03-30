@@ -1,7 +1,8 @@
 import { MatchupState, newMatchupState } from "../states/matchupState";
 import {
+    CLOSE_MESSAGE_DIALOG,
     CLOSE_TERMS_DIALOG,
-    MatchupActions,
+    MatchupActions, OPEN_MESSAGE_DIALOG,
     OPEN_TERMS_DIALOG,
     UPDATE_SELECTED_ROW_DATA
 } from "../actions/matchupActions";
@@ -21,6 +22,12 @@ export function matchupReducer(state: MatchupState, action: MatchupActions): Mat
         }
         case CLOSE_TERMS_DIALOG: {
             return {...state, termsDialogOpen: false};
+        }
+        case OPEN_MESSAGE_DIALOG: {
+            return {...state, messageDialogOpen: true};
+        }
+        case CLOSE_MESSAGE_DIALOG: {
+            return {...state, messageDialogOpen: false};
         }
     }
     return state;

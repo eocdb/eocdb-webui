@@ -4,6 +4,7 @@ import { MatchupFiles } from "../../model/MatchupFiles";
 import TermsDialog from "../search/TermsDialog";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { Button, Paper } from "@mui/material";
+import MessageDialog from "./MessageDialog";
 
 
 interface MatchupPanelProps {
@@ -14,26 +15,24 @@ interface MatchupPanelProps {
     openTermsDialog: () => void;
     closeTermsDialog: () => void;
 
+    messageDialogOpen: boolean;
+    openMessageDialog: () => void;
+    closeMessageDialog: () => void;
+
     updateSelectedRowData: (rowData: string[]) => void;
     selectedRowData: string[];
 }
 
 
 export default function MatchupPanel(props: MatchupPanelProps) {
-    // noinspection JSUnusedLocalSymbols
-    const handleDownload = (rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => {
-        window.open('ftp://ftp.eumetsat.int' + rowData[1] + '/' + rowData[0]);
-    };
-
-    // noinspection JSUnusedLocalSymbols
     const handleRowClick = (params: any) => {
         props.updateSelectedRowData([params.row.filename, params.row.dirname]);
         props.openTermsDialog();
     };
 
     const handleTermsDialogAgreeClick = () => {
-        handleDownload(props.selectedRowData, {dataIndex: 0, rowIndex: 0});
         props.closeTermsDialog();
+        props.openMessageDialog();
     };
 
     const handleTermsDialogDisAgreeClick = () => {
@@ -87,6 +86,12 @@ export default function MatchupPanel(props: MatchupPanelProps) {
                 onDisagree={handleTermsDialogDisAgreeClick}
                 onAgree={handleTermsDialogAgreeClick}
                 downloadTerms={'OM'}
+            />
+            <MessageDialog open={props.messageDialogOpen}
+                           title={"Download Matchup Files"}
+                           msg={'To Download the matchup file please use an FTP client using the URL:\n\n' +
+                               'ftp://ftp.eumetsat.int' + props.selectedRowData[1] + '/' + props.selectedRowData[0]}
+                           onClose={props.closeMessageDialog}
             />
             <Paper sx={{'height': 700}}>
                 <DataGrid
