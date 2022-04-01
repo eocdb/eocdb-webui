@@ -1,20 +1,22 @@
-# Changes for Version 0.2.2 (in development)
+# Changes for Version 0.2.2
 
 - Library Material UI (MUI) has been upgraded from major version 3 to 5.
-  The major version 5 includes a substantial refactoring. The code has been adopted accordingly.
+  The major version 5 includes a substantial refactoring. The code has been adopted accordingly
   Closing #72. 
 - Library react-leaflet has been upgraded to version 3.2.5. The major version 3 includes
   a substantial refactoring. The code has been adopted accordingly. Closing #72.  
-- Fixing search products not working when advanced filtering (closing #29)
-- Fixed submission ID duplication (closing #38)
-- Fixed created date issue on Submission Files (closing #91) 
-- The AppBar is now open as default. This was suggested by users.
+- Fixing search products not working when advanced filtering (closing #29).
+- Fixed submission ID duplication (closing #38).
+- Fixed created date issue on Submission Files (closing #91).
+- The AppBar is now open as default. This was suggested by users (appeared during Issue #72 dependency updates).
 - Fixed styling of SearchPanel. It was creating a scrollbar when the AppBar was expanded due to a wrong width. The width 
-  is now calculated from the drawerWidth. 
+  is now calculated from the drawerWidth (appeared during Issue #72 dependency updates). 
 - Removed stage Dockerfile and config. The endpoint URL is now taken either from the URL the browser uses or a .env 
-  file.
-- Added localhost to getEndpointUrl() in order to run the service on a localhost for dev purposes.
+  file (appeared during Issue #72 dependency updates).
 - Fixed SubmissionTable. Total number of rows was out by one (is returned number of rows - 1).
+- Fixed creation date on Submission files. Shows now the correct date (Issue #91).
+- Data Table has now options 200 and 500 for the number of items on a page (Issue #71).
+- Fixed search by products (Issue #29).
 
 # Changes for Version 0.2.1
 
