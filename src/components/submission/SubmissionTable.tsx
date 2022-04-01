@@ -326,7 +326,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                 columns={columns}
                 pageSize={10}
                 rowsPerPageOptions={[10]}
-                rowCount={submissionResult.tot_count}
+                rowCount={submissionResult.tot_count-1}
                 paginationMode={"server"}
                 pagination
                 page={props.submissionQuery.page}

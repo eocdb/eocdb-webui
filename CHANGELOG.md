@@ -14,6 +14,7 @@
 - Removed stage Dockerfile and config. The endpoint URL is now taken either from the URL the browser uses or a .env 
   file.
 - Added localhost to getEndpointUrl() in order to run the service on a localhost for dev purposes.
+- Fixed SubmissionTable. Total number of rows was out by one (is returned number of rows - 1).
 
 # Changes for Version 0.2.1
 
