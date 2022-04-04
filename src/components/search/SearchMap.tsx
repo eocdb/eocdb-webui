@@ -12,7 +12,6 @@ import BBoxInputDialog from "./BBoxInputDialog";
 import { Button, Tooltip } from "@mui/material";
 import { EditControl } from "react-leaflet-draw";
 import InputIcon from '@mui/icons-material/Input';
-const L = require('leaflet');
 const centroid = require('polygon-centroid');
 
 interface SearchMapProps {
