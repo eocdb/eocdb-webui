@@ -3,6 +3,7 @@
 - Fixed Data table for search results. The select/unselect all checkbox's behaviour was incorrect when the actual number
   of rows on a page was less than the selected number of rows per page. This occurred e.g. on the last page when the
   total number of items in a search result was not divisible by the selected rows per page. 
+- The markers now represent the centroid of all measurement locations.  
 
 # Changes for Version 0.2.2
 
