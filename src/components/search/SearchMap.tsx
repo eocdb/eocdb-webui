@@ -12,7 +12,8 @@ import BBoxInputDialog from "./BBoxInputDialog";
 import { Button, Tooltip } from "@mui/material";
 import { EditControl } from "react-leaflet-draw";
 import InputIcon from '@mui/icons-material/Input';
-
+const L = require('leaflet');
+const centroid = require('polygon-centroid');
 
 interface SearchMapProps {
     position: LatLng;
@@ -153,15 +154,14 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
             feat_str = feat_str.replace(new RegExp("'", 'g'), '"');
             const feats = JSON.parse(feat_str)['features'];
-            let last_coords = [];
+            const coords = []
             for (let feat = 0; feat < feats.length; feat++) {
-                const coords = feats[0]['geometry']['coordinates'];
-                if (last_coords != coords) {
-                    const marker = this.createMarker(coords[1], coords[0], dr ? dr.path : 'unknown', f);
-                    markers.push(marker);
-                }
-                last_coords = coords;
+                const point = feats[0]['geometry']['coordinates'];
+                coords.push({x: point[1], y: point[0]});
             }
+            const center = centroid(coords);
+            const marker = this.createMarker(center.x, center.y, dr ? dr.path : 'unknown', f);
+            markers.push(marker);
         }
         return markers;
     }

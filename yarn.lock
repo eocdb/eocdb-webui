@@ -10131,6 +10131,11 @@ plur@^1.0.0:
   resolved "https://registry.yarnpkg.com/plur/-/plur-1.0.0.tgz#db85c6814f5e5e5a3b49efc28d604fec62975156"
   integrity sha1-24XGgU9eXlo7Se/CjWBP7GKXUVY=
 
+polygon-centroid@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/polygon-centroid/-/polygon-centroid-1.1.0.tgz#f6e2551595d8cd0dea72709db1712ae1e7a230da"
+  integrity sha512-2KsL3/mMlNamhb+PRY/IXUWWD0lYjvnXXFHXeVoVS06LbuaPpBEfCPawVXJQXOodFeX2wMkskHeihExqNDby/Q==
+
 popper.js@^1.14.1:
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.1.tgz#2a223cb3dc7b6213d740e40372be40de43e65b1b"

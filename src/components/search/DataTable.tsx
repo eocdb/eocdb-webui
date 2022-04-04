@@ -274,6 +274,14 @@ class DataTable extends React.Component<DataTableProps> {
         const {datasets, total_count} = data;
         const numSelected = selectedDatasets.length;
 
+        let indeterminate = numSelected > 0 && numSelected < rowsPerPage;
+        let checked = numSelected === rowsPerPage
+
+        if (total_count < rowsPerPage) {
+            indeterminate = numSelected > 0 && numSelected < total_count;
+            checked = numSelected === total_count;
+        }
+
         return (
             <Paper>
                 <MetaInfoDialog
@@ -338,8 +346,8 @@ class DataTable extends React.Component<DataTableProps> {
                         <TableRow>
                             <TableCell padding="checkbox">
                                 <Checkbox
-                                    indeterminate={numSelected > 0 && numSelected < rowsPerPage}
-                                    checked={numSelected === rowsPerPage}
+                                    indeterminate={indeterminate}
+                                    checked={checked}
                                     onChange={this.handleOnSelectAllClick}
                                 />
                             </TableCell>

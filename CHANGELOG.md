@@ -1,3 +1,9 @@
+# Changes for Version 0.2.3
+
+- Fixed Data table for search results. The select/unselect all checkbox's behaviour was incorrect when the actual number
+  of rows on a page was less than the selected number of rows per page. This occurred e.g. on the last page when the
+  total number of items in a search result was not divisible by the selected rows per page. 
+
 # Changes for Version 0.2.2
 
 - Library Material UI (MUI) has been upgraded from major version 3 to 5.
@@ -14,7 +20,7 @@
 - Removed stage Dockerfile and config. The endpoint URL is now taken either from the URL the browser uses or a .env
   file (appeared during issue #72 dependency updates).
 - Fixed SubmissionTable. Total number of rows was out by one (is returned number of rows - 1).
-- Fixed creation date on Submission files. Shows now the correct date (Isissuesue #91).
+- Fixed creation date on Submission files. Shows now the correct date (issue #91).
 - Data Table has now options 200 and 500 for the number of items on a page (issue #71).
 - Fixed search by products (issue #29).
  
