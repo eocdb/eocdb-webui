@@ -93,7 +93,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 
-const Item = styled (Button) (({theme}) => ({
+const Item = styled (Typography) (({theme}) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     padding: theme.spacing (1),
     textAlign: 'center',
