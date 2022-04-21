@@ -56,21 +56,21 @@ interface SubmissionTableProps {
 
 
 export default function SubmissionTable(props: SubmissionTableProps) {
-    const makeActionRow = (params, isAdmin, isSubmitter) => {
+    const makeActionRow = (params, isAdmin) => {
         return (
             <div>
-                <Tooltip title="Update Submission" placement={"top"}>
-                    <span>
-                        <Button
-                            onClick={() => props.onSubmissionDialogMetaOpen(
-                                params.row.id
-                            )}
-                            disabled={!isAdmin && !isSubmitter}
-                        >
-                            <Icon>edit</Icon>
-                        </Button>
-                    </span>
-                </Tooltip>
+                {/*<Tooltip title="Update Submission" placement={"top"}>*/}
+                {/*    <span>*/}
+                {/*        <Button*/}
+                {/*            onClick={() => props.onSubmissionDialogMetaOpen(*/}
+                {/*                params.row.id*/}
+                {/*            )}*/}
+                {/*            disabled={!isAdmin && !isSubmitter}*/}
+                {/*        >*/}
+                {/*            <Icon>edit</Icon>*/}
+                {/*        </Button>*/}
+                {/*    </span>*/}
+                {/*</Tooltip>*/}
                 <Tooltip title="List Files" placement={"top"}>
                     <Button
                         onClick={() => props.onSubmissionSelect(
@@ -249,7 +249,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
         {
             field: 'actions',
             headerName: 'Actions',
-            width: 400,
+            width: 700,
             renderCell: (params => {
                 return makeActionRow(params, isAdmin, isSubmitter);
             })

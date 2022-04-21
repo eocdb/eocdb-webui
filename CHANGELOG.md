@@ -1,3 +1,7 @@
+# Changes for Version 0.2.4
+
+- Removed edit submission button as backend throws exceptions. The button will be reintroduced in version 0.2.5.
+
 # Changes for Version 0.2.3
 
 - Fixed Data table for search results. The select/unselect all checkbox's behaviour was incorrect when the actual number
