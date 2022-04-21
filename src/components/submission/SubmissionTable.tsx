@@ -56,7 +56,7 @@ interface SubmissionTableProps {
 
 
 export default function SubmissionTable(props: SubmissionTableProps) {
-    const makeActionRow = (params, isAdmin) => {
+    const makeActionRow = (params, isAdmin, isSubmitter) => {
         return (
             <div>
                 {/*<Tooltip title="Update Submission" placement={"top"}>*/}
@@ -138,7 +138,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                         </Button>
                     </span>
                 </Tooltip>
-                <Tooltip title="Process into DB and Publish Submission"
+                <Tooltip title="Process into database and Publish Submission"
                          placement={"top"}>
                     <span>
                         <Button
