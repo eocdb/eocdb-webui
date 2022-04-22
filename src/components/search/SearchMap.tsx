@@ -228,10 +228,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                 // chunkedLoading={true}
                 iconCreateFunction={this.createClusterCustomIcon}
             >
-                <Marker position={[49.8397, 24.0297]} />
-                <Marker position={[52.2297, 21.0122]} />
-                <Marker position={[51.5074, -0.0901]} />
-                {/*{this.renderMeasurementPointCluster()}*/}
+                {this.renderMeasurementPointCluster()}
             </MarkerClusterGroup>
         );
 
