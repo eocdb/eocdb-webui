@@ -7,11 +7,13 @@ import { DatasetRef, QueryResult } from "../../model";
 
 import markerInv from './marker_inv.png';
 import marker from './marker.png';
+import './markercluster.css'
 import { BBoxValue } from "./BBoxInputDialog";
 import BBoxInputDialog from "./BBoxInputDialog";
 import { Button, Tooltip } from "@mui/material";
 import { EditControl } from "react-leaflet-draw";
 import InputIcon from '@mui/icons-material/Input';
+import L from 'leaflet';
 const centroid = require('polygon-centroid');
 
 interface SearchMapProps {
@@ -210,20 +212,32 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         this.props.openManualBBoxDialog();
     };
 
+    createClusterCustomIcon = (cluster) => {
+        return L.divIcon({
+            html: `<span>${cluster.getChildCount()}</span>`,
+            className: 'marker-cluster-custom',
+            iconSize: L.point(40, 40, true),
+      });
+    };
+
     render() {
         const bounds = this.getBoundsFromDatasets();
 
         const markerClusterGroup = (
             <MarkerClusterGroup
-                chunkedLoading={true}
+                // chunkedLoading={true}
+                iconCreateFunction={this.createClusterCustomIcon}
             >
-                {this.renderMeasurementPointCluster()}
+                <Marker position={[49.8397, 24.0297]} />
+                <Marker position={[52.2297, 21.0122]} />
+                <Marker position={[51.5074, -0.0901]} />
+                {/*{this.renderMeasurementPointCluster()}*/}
             </MarkerClusterGroup>
         );
 
         return (
             <MapContainer bounds={bounds} center={this.props.position}
-                 zoom={this.props.zoom} maxZoom={24}>
+                 zoom={this.props.zoom} maxZoom={24} className="markercluster-map">
                 <BBoxInputDialog
                     open={this.props.manualBBoxInputOpen}
                     onClose={this.props.closeManualBBoxDialog}
@@ -251,7 +265,6 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     attribution="&copy; <a href=&quot;https://www.mapbox.com/about/maps/&quot;>Mapbox</a> © <a href=&quot;http://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> <strong><a href=&quot;https://www.mapbox.com/map-feedback/&quot; target=&quot;_blank&quot;>Improve this map</a></strong>"
                 />
 
-                {markerClusterGroup}
                 {this.props.selectedBounds && this.props.drawBounds ?
                     <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
                         <EditControl
@@ -283,6 +296,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                         />
                     </FeatureGroup>
                 }
+                {markerClusterGroup}
             </MapContainer>
         );
     }

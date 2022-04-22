@@ -1,6 +1,7 @@
-# Changes for Version 0.2.4
+# Changes for Version 0.2.4 (in development)
 
 - Removed edit submission button as backend throws exceptions. The button will be reintroduced in version 0.2.5.
+- Fixed marker cluster issue. The cluster did not have any associated styling. Related to #74.
 
 # Changes for Version 0.2.3
 
