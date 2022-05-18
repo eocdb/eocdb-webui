@@ -5,9 +5,8 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
-    "startssl": "HTTPS=true  react-scripts start",
+    "startssl": "HTTPS=true react-scripts start",
     "build": "react-scripts build",
-    "build:stage": "env-cmd -f .env.staging react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "compile": "tsc"

@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/bcdev/eocdb-webui.svg?branch=master)](https://travis-ci.org/bcdev/eocdb-webui)
 [![Docker Repository on Quay](https://quay.io/repository/bcdev/eocdb-webui/status "Docker Repository on Quay")](https://quay.io/repository/bcdev/eocdb-webui)
 [![Documentation Status](https://readthedocs.org/projects/eocdb/badge/?version=latest)](https://eocdb.readthedocs.io/en/latest/?badge=latest)
 

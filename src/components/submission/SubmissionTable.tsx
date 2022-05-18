@@ -59,18 +59,18 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     const makeActionRow = (params, isAdmin, isSubmitter) => {
         return (
             <div>
-                {/*<Tooltip title="Update Submission" placement={"top"}>*/}
-                {/*    <span>*/}
-                {/*        <Button*/}
-                {/*            onClick={() => props.onSubmissionDialogMetaOpen(*/}
-                {/*                params.row.id*/}
-                {/*            )}*/}
-                {/*            disabled={!isAdmin && !isSubmitter}*/}
-                {/*        >*/}
-                {/*            <Icon>edit</Icon>*/}
-                {/*        </Button>*/}
-                {/*    </span>*/}
-                {/*</Tooltip>*/}
+                <Tooltip title="Update Submission" placement={"top"}>
+                    <span>
+                        <Button
+                            onClick={() => props.onSubmissionDialogMetaOpen(
+                                params.row.id
+                            )}
+                            disabled={!isAdmin && !isSubmitter}
+                        >
+                            <Icon>edit</Icon>
+                        </Button>
+                    </span>
+                </Tooltip>
                 <Tooltip title="List Files" placement={"top"}>
                     <Button
                         onClick={() => props.onSubmissionSelect(
