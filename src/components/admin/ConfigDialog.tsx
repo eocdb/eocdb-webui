@@ -3,6 +3,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 
 interface ConfigDialogProps {
     open: boolean;
+    currentURL: string;
     handleClose: () => void;
 
     apiServerUrlChange: (url: string) => void;
@@ -37,7 +38,11 @@ class ConfigDialog extends React.Component<ConfigDialogProps, ConfigDialogState>
                     <DialogTitle id="form-dialog-title">Settings</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Configure backend server address.
+                            Configure backend server address.<br/>
+                            {/*<span style={{fontSize: 11}}>*/}
+                                Current: {this.props.currentURL}
+                            {/*</span>*/}
+
                         </DialogContentText>
                         <TextField
                             autoFocus

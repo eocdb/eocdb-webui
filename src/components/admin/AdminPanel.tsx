@@ -87,6 +87,7 @@ class AdminPanel extends React.PureComponent<AdminPanelProps> {
                     content={this.props.linksContent}
                 />
                 <ConfigDialog open={this.props.configDialogOpen}
+                              currentURL={this.props.apiServerUrl}
                               handleClose={this.handleConfigClose}
                               apiServerUrlChange={this.handleApiServerUrlChange}
                 />
