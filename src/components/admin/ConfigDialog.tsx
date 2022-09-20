@@ -39,10 +39,9 @@ class ConfigDialog extends React.Component<ConfigDialogProps, ConfigDialogState>
                     <DialogContent>
                         <DialogContentText>
                             Configure backend server address.<br/>
-                            {/*<span style={{fontSize: 11}}>*/}
+                            <span style={{fontSize: "smaller"}}>
                                 Current: {this.props.currentURL}
-                            {/*</span>*/}
-
+                            </span>
                         </DialogContentText>
                         <TextField
                             autoFocus
