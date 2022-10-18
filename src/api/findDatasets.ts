@@ -124,8 +124,7 @@ function collectWaterDepthComponents(queryParameters: DatasetQuery, queryCompone
         && queryParameters.wdepth[1] !== undefined
         && Number.isSafeInteger(queryParameters.wdepth[0])
         && Number.isSafeInteger(queryParameters.wdepth[1])) {
-        queryComponents.push(['wdepth', '' + queryParameters.wdepth[0]]);
-        queryComponents.push(['wdepth', '' + queryParameters.wdepth[1]]);
+        queryComponents.push(['wdepth', '' + queryParameters.wdepth]);
     }
 }
 
