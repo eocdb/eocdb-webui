@@ -133,7 +133,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                             />
                         </Item>
                         <Item>
-                            <Typography gutterBottom={true} variant={'h6'}>Water Depth</Typography>
+                            <Typography gutterBottom={true} variant={'h6'}>Water Depth [m]</Typography>
                             <MinMaxInputSlider
                                 value={this.props.datasetQuery.wdepth}
                                 onChange={this.handleWaterDepthChange}
