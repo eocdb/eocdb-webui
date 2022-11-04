@@ -1,12 +1,13 @@
 import * as React from 'react';
+import dayjs, { Dayjs } from 'dayjs';
 import Dashboard from './containers/Dashboard';
 import MessageLog from "./containers/MessageLog";
 
 import LegalAgreementDialog from "./containers/LegalAgreementDialog";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
-import { LocalizationProvider  } from "@mui/lab";
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const theme = createTheme(
     {
@@ -30,7 +31,7 @@ class App extends React.Component {
     public render() {
         return (
                 <ThemeProvider theme={theme}>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <div className="App">
                             <CssBaseline/>
                             <Dashboard/>

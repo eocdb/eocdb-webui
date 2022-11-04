@@ -27,7 +27,7 @@ import {
     Stack,
     TextField
 } from "@mui/material";
-import { DatePicker } from "@mui/lab";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DefaultDatasetQuery } from "../../model/DatasetQuery";
 import { SEARCH_HISTORY_PREFIX } from "../../default";
 

@@ -29,6 +29,8 @@ interface SubmissionTableProps {
     show: boolean;
 
     onSubmissionDialogOpen: () => void;
+    onCalibrationSubmissionDialogOpen: () => void;
+
     onSubmissionDialogMetaOpen: (submissionId: string) => void;
 
     onSubmissionSelect: (selectedSubmissionId: string) => void;
@@ -206,7 +208,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
         {
             field: 'id',
             headerName: 'Submission ID',
-            width: 160
+            width: 260
         },
         {
             field: 'user_id',
@@ -217,7 +219,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
             field: 'submission_date',
             headerName: 'Submission Date',
             type: 'dateTime',
-            width: 150,
+            width: 170,
         },
         {
             field: 'publication_date',
@@ -316,7 +318,16 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                             color="secondary"
                             onClick={props.onSubmissionDialogOpen}
                     >
-                        New Submission
+                        New Submission &nbsp;
+                        <CloudUpload/>
+                    </Button>
+                </Item>
+                <Item>
+                    <Button variant="contained"
+                            color="secondary"
+                            onClick={props.onCalibrationSubmissionDialogOpen}
+                    >
+                        New Calibration Submission &nbsp;
                         <CloudUpload/>
                     </Button>
                 </Item>

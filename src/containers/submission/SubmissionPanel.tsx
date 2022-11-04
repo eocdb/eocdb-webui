@@ -20,6 +20,7 @@ import {
     updateDataFiles,
     updateDocFiles,
     updatePath,
+    updateCalibrationPath,
     updateSubmissionId,
     getSubmissionFile,
     getSubmission,
@@ -37,7 +38,11 @@ import {
     updateSubmissionMessages,
     hideSubmissionMessages,
     openSubmissionMetaDialog,
-    closeSubmissionMetaDialog, updateSubmissionMeta, updateSubmissionQuery
+    closeSubmissionMetaDialog,
+    updateSubmissionMeta,
+    updateSubmissionQuery,
+    closeCalibrationSubmitSteps,
+    openCalibrationSubmitSteps
 } from "../../actions/submissionActions";
 import SubmissionPanel from "../../components/submission/SubmissionPanel";
 import { openHelpDialog } from "../../actions/searchMapActions";
@@ -47,6 +52,7 @@ import { closeHelpDialog } from "../../actions/dashboardActions";
 const mapStateToProps = (state: AppState) => {
     return {
         submissionDialogOpen: state.submissionState.submissionDialogOpen,
+        calibrationSubmissionDialogOpen: state.submissionState.calibrationSubmissionDialogOpen,
         submissionFilesTableOpen: state.submissionState.submissionFilesDialogOpen,
         submissionMetaDialogOpen: state.submissionState.submissionMetaDialogOpen,
         submissionFileIssueDialogOpen: state.submissionState.submissionFileIssueDialogOpen,
@@ -68,6 +74,7 @@ const mapStateToProps = (state: AppState) => {
 
         selectedSubmissionId: state.submissionState.submissionId,
         selectedPath: state.submissionState.path,
+        selectedCalibrationPath: state.submissionState.calibrationPath,
         selectedPublicationDate: state.submissionState.publicationDate,
         selectedDataFiles: state.submissionState.dataFiles,
         selectedDocFiles: state.submissionState.docFiles,
@@ -86,6 +93,9 @@ const mapStateToProps = (state: AppState) => {
 const mapDispatchToProps = {
     closeSubmissionDialog: closeSubmitSteps,
     openSubmissionDialog: openSubmitSteps,
+
+    closeCalibrationSubmissionDialog: closeCalibrationSubmitSteps,
+    openCalibrationSubmissionDialog: openCalibrationSubmitSteps,
 
     openSubmissionFilesTable: openSubmissionFilesDialog,
     closeSubmissionFilesTable: closeSubmissionFilesDialog,
@@ -126,6 +136,7 @@ const mapDispatchToProps = {
 
     updateSubmissionId,
     updatePath,
+    updateCalibrationPath,
     updatePublicationDate,
     updateAllowPublication,
     updateDataFiles,

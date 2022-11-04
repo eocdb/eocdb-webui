@@ -8,7 +8,7 @@ import {
     IconButton,
     Button,
     Grid,
-    Stack, styled, Paper, Dialog, DialogTitle, DialogContent, DialogActions
+    Stack, styled, Paper, Dialog, DialogTitle, DialogContent, DialogActions, Select, InputLabel, MenuItem, FormControl
 } from "@mui/material";
 import * as React from "react";
 import FileUpload from "./FileUpload";
@@ -20,33 +20,32 @@ import { MessageLogEntry } from "../../states/messageLogState";
 import MessageLog from "../messages/MessageLog";
 
 
-interface SubmissionDialogProps {
+interface CalibrationSubmissionDialogProps {
     show: boolean;
     onClose: () => void;
 
-    onSubmissionIdChange: (submissionId: string) => void;
-    submissionIdValue: string;
+    // onSubmissionIdChange: (submissionId: string) => void;
+    // submissionIdValue: string;
 
-    onPathChange: (path: string) => void;
-    pathValue: string;
+    onCalibrationPathChange: (path: string) => void;
+    calibrationPathValue: string;
 
-    onAllowPublicationChange: (allowPublication: boolean) => void;
-    allowPublication: boolean;
+    // onAllowPublicationChange: (allowPublication: boolean) => void;
+    // allowPublication: boolean;
 
-    onDatafilesChange: (acceptedFiles: File[]) => void;
-    dataFilesValue: File[];
+    // onDatafilesChange: (acceptedFiles: File[]) => void;
+    // dataFilesValue: File[];
 
-    onDocfilesChange: (acceptedFiles: File[]) => void;
-    docFilesValue: File[];
+    // onDocfilesChange: (acceptedFiles: File[]) => void;
+    // docFilesValue: File[];
 
-    onPublicationDateChange: (publicationDate: string | null) => void;
-    publicationDate: string | null;
+    // onCalibrationDateChange: (publicationDate: string | null) => void;
 
-    onFileSubmit: () => void;
+    // onFileSubmit: () => void;
 
-    onClearForm: () => void;
+    // onClearForm: () => void;
 
-    onDropRejected: (files: File[]) => void;
+    // onDropRejected: (files: File[]) => void;
 
     helpDialogOpen: boolean;
     openHelpDialog: () => void;
@@ -66,80 +65,100 @@ const Item = styled(Paper)(({theme}) => ({
 }));
 
 
-class SubmissionDialog extends React.Component<SubmissionDialogProps> {
-    _affiliation: string;
-    _experiment: string;
-    _cruise: string;
+class CalibrationSubmissionDialog extends React.Component<CalibrationSubmissionDialogProps> {
+    _radiometerSystem: string;
+    _laboratory: string;
+    _path: string;
+    _submissionId: string;
+    _calibrationDate: string | null;
+    _dataFiles: File[];
+    _docFiles: File[];
 
-    constructor(props: SubmissionDialogProps) {
+    constructor(props: CalibrationSubmissionDialogProps) {
         super(props);
-        this._affiliation = "";
-        this._experiment = "";
-        this._cruise = "";
+        this._radiometerSystem = "";
+        this._laboratory = "";
+        this._path = "";
+        this._submissionId = "";
+        this._calibrationDate = null;
+        this._dataFiles = [];
+        this._docFiles = [];
     }
 
     handleSubmissionIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
-
-        this.props.onSubmissionIdChange(value);
+        // const value = event.target.value;
+        // this.props.onSubmissionIdChange(value);
     };
 
     handleOnPathChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const path = event.target.value;
-
+        // const path = event.target.value;
         // this.props.onPathChange(path);
     };
 
     handlePublicationDateChange = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-        this.props.onAllowPublicationChange(checked);
+        // this.props.onAllowPublicationChange(checked);
     };
 
     handleOndropDatafiles = (acceptedFiles: File[]) => {
-        this.props.onDatafilesChange(acceptedFiles);
+        // this.props.onDatafilesChange(acceptedFiles);
+        this._dataFiles = acceptedFiles;
     };
 
+    handleDataDropRejected = (rejectedFiles: File[]) => {
+        console.log("Rejected data files:");
+        console.log(rejectedFiles);
+    }
+
+    handleDocDropRejected = (rejectedFiles: File[]) => {
+        console.log("Rejected document files:");
+        console.log(rejectedFiles);
+    }
+
     handleOndropDocfiles = (acceptedFiles: File[]) => {
-        this.props.onDocfilesChange(acceptedFiles);
+        // this.props.onDocfilesChange(acceptedFiles);
     };
 
     handleFileSubmit = () => {
-        this.props.onFileSubmit();
-        if (this.props.submissionSucceeded) {
-            this.props.onClearForm();
-            this.props.onClose();
-        }
+        // this.props.onFileSubmit();
+        // if (this.props.submissionSucceeded) {
+        //     this.props.onClearForm();
+        //     this.props.onClose();
+        // }
     };
 
-    onInputAffiliation = (evt) => {
+    onChangeRadiometerSystem = (evt) => {
         const val = evt.target.value;
-        this._affiliation = val;
-        this.assembleSubmissionPathAndId();
+        this._radiometerSystem = val;
+        this.assembleCalibrationPathAndId();
     }
 
-    onInputExperiment = (evt) => {
+    onInputLaboratory = (evt) => {
         const val = evt.target.value;
-        this._experiment = val;
-        this.assembleSubmissionPathAndId();
-    }
-
-    onInputCruise = (evt) => {
-        const val = evt.target.value;
-        this._cruise = val;
-        this.assembleSubmissionPathAndId();
+        this._laboratory = val;
+        this.assembleCalibrationPathAndId();
     }
 
     onClearButtonClick = () => {
-        this._affiliation = "";
-        this._experiment = "";
-        this._cruise = "";
-        this.assembleSubmissionPathAndId();
-        this.props.onClearForm();
+        this._radiometerSystem = "";
+        this._laboratory = "";
+        this._path = "";
+        this._submissionId = "";
+        this._calibrationDate = null;
+        this.assembleCalibrationPathAndId();
     }
 
-    assembleSubmissionPathAndId = () => {
-        this.props.onPathChange(this._affiliation + "/" + this._experiment + "/" + this._cruise);
-        this.props.onSubmissionIdChange(this._affiliation + "_" + this._experiment + "_" + this._cruise);
+    assembleCalibrationPathAndId = () => {
+        this.props.onCalibrationPathChange(this._radiometerSystem + "/" + this._laboratory);
+        this._submissionId = this._radiometerSystem + "_" + this._laboratory;
     };
+
+    onDateChange = (date) => {
+        let value = date;
+        this._calibrationDate = value;
+        let currentValue = this.props.calibrationPathValue;
+        // this.props.onCalibrationPathChange("__");
+        this.props.onCalibrationPathChange(currentValue);
+    }
 
     render() {
         if (!this.props.show) {
@@ -148,11 +167,11 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
 
         return (
             <Dialog
-                maxWidth={'md'}
+                maxWidth={'sm'}
                 open={this.props.show}
                 onClose={this.props.onClose}
             >
-                <DialogTitle>Create new Submission</DialogTitle>
+                <DialogTitle>Create new Calibration Submission</DialogTitle>
                 <DialogContent>
                     <Paper>
                         <Grid container>
@@ -163,111 +182,91 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                             >
                                 {SubmissionHelpText}
                             </HelpDialog>
-                            <Grid item xs={6}>
+                            <Grid item xs={12}>
                                 <Stack direction={'column'}>
                                     <Item>
-                                        <TextField
-                                            required
-                                            id="affiliation"
-                                            label="Affiliation"
-                                            margin="dense"
-                                            variant="outlined"
-                                            onInput={evt => this.onInputAffiliation(evt)}
-                                            value={this._affiliation}
-                                            size={"small"}
-                                            sx={{width: '40ch'}}
-                                        />
+                                        <FormControl>
+                                            <InputLabel id="rad-sys">Radiometer System</InputLabel>
+                                            <Select
+                                                labelId="rad-sys"
+                                                id="radiometer-sys"
+                                                value={this._radiometerSystem}
+                                                label="Radiometer System"
+                                                onChange={evt => this.onChangeRadiometerSystem(evt)}
+                                                // required
+                                                // margin="dense"
+                                                variant="outlined"
+                                                // size={"small"}
+                                                sx={{width: '350px'}}
+                                            >
+                                                <MenuItem value={"TriOS"}>TriOS-RAMSES</MenuItem>
+                                                <MenuItem value={"Sea-Bird"}>Sea-Bird HyperOCR</MenuItem>
+                                            </Select>
+                                        </FormControl>
                                     </Item>
                                     <Item>
                                         <TextField
                                             required
-                                            id="experiment"
-                                            label="Experiment"
+                                            id="laboratory"
+                                            label="Laboratory"
                                             margin="dense"
                                             variant="outlined"
-                                            onInput={evt => this.onInputExperiment(evt)}
-                                            value={this._experiment}
+                                            onInput={evt => this.onInputLaboratory(evt)}
+                                            value={this._laboratory}
                                             size={"small"}
-                                            sx={{width: '40ch'}}
+                                            sx={{width: '350px'}}
                                         />
                                     </Item>
                                     <Item>
                                         <TextField
-                                            required
-                                            id="cruise"
-                                            label="Cruise"
-                                            margin="dense"
-                                            variant="outlined"
-                                            onInput={evt => this.onInputCruise(evt)}
-                                            value={this._cruise}
-                                            size={"small"}
-                                            sx={{width: '40ch'}}
-                                        />
-                                    </Item>
-                                </Stack>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Stack direction={"column"}>
-                                    <Item>
-                                        <TextField
-                                            id="submission-path"
-                                            label="Submission Path"
+                                            id="calibration-path"
+                                            label="Calibration Path (read only)"
                                             margin="dense"
                                             variant="outlined"
                                             onChange={this.handleOnPathChange}
-                                            value={this.props.pathValue}
+                                            value={this.props.calibrationPathValue}
                                             disabled={true}
                                             size={"small"}
-                                            sx={{width: '40ch'}}
+                                            sx={{width: '350px'}}
+                                            // inputProps={{readOnly: "readOnly"}}
                                         />
                                     </Item>
                                     <Item>
                                         <TextField
                                             required
-                                            id="outlined-dense"
-                                            label="Submission Label"
+                                            id="calibration-id"
+                                            label="Calibration ID"
                                             margin="dense"
                                             variant="outlined"
                                             onChange={this.handleSubmissionIdChange}
-                                            value={this.props.submissionIdValue}
+                                            value={this._submissionId}
                                             size={"small"}
-                                            sx={{width: '40ch'}}
+                                            sx={{width: '350px'}}
                                         />
                                     </Item>
                                     <Item>
                                         <DatePicker
-                                            value={this.props.publicationDate}
-                                            label="Publication Date"
-                                            onChange={this.props.onPublicationDateChange}
+                                            value={this._calibrationDate}
+                                            // value={this.props.calibrationDate}
+                                            label="Calibration Date"
+                                            onChange={this.onDateChange}
+                                            // onChange={this.props.onCalibrationDateChange}
                                             renderInput={(params) => <TextField
                                                 required
                                                 margin={"dense"}
-                                                sx={{width: '40ch'}}
+                                                sx={{width: '350px'}}
                                                 size={"small"} {...params} helperText={null}/>}
-                                        />
-                                    </Item>
-                                </Stack>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Stack direction={"column"}>
-                                    <Item>
-                                        <FormControlLabel
-                                            control={<Checkbox
-                                                value={'publish'}
-                                                checked={this.props.allowPublication}
-                                                onChange={this.handlePublicationDateChange}
-                                            />
-                                            }
-                                            label={'By agreeing to the publication of the submitted in-situ data, you accept the general public being able to access these data. If you do not agree to the publication of your data then the data will be only visible to you and the OCDB administrators. Please refer to the Data Policy section of the User Manual for more information.'}
                                         />
                                     </Item>
                                     <Item>
                                         <FileUpload
                                             key={'drop-datafiles'}
-                                            label={'Drag and drop DATA files here or click to select files'}
+                                            label={'Drag and drop SEABASS data files here or click to select files'}
+                                            files={this._dataFiles}
+                                            // files={this.props.dataFilesValue}
                                             onChange={this.handleOndropDatafiles}
-                                            files={this.props.dataFilesValue}
-                                            onDropRejected={this.props.onDropRejected}
+                                            onDropRejected={this.handleDataDropRejected}
+                                            // onDropRejected={this.props.onDropRejected}
                                             acceptedFiles={['text/plain', 'text/csv', 'text/x-csv', 'application/vnd.ms-excel',
                                                 'application/csv', 'application/x-csv', 'text/comma-separated-values',
                                                 'text/x-comma-separated-values', 'text/tab-separated-values']}
@@ -276,10 +275,10 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                                     <Item>
                                         <FileUpload
                                             key={'drop-docfiles'}
-                                            onDropRejected={this.props.onDropRejected}
                                             label={'Drag and drop DOCUMENT files here or click to select files'}
+                                            files={this._docFiles}
                                             onChange={this.handleOndropDocfiles}
-                                            files={this.props.docFilesValue}
+                                            onDropRejected={this.handleDocDropRejected}
                                             acceptedFiles={undefined}
                                         />
                                     </Item>
@@ -293,20 +292,20 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                     </Paper>
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="contained"
+                    <Button disabled={true}
+                            variant="contained"
                             color="secondary"
                         // className={classes.button}
                             onClick={this.handleFileSubmit}
                             sx={{'marginRight': 2}}
                     >
-                        Submit&nbsp;
+                        Submit
                         <CloudUpload/>
                     </Button>
                     <Button variant="contained"
                             color="secondary"
                         // className={classes.button}
                             onClick={this.onClearButtonClick}
-                        // onClick={this.props.onClearForm}
                             sx={{'marginRight': 2}}
                     >
                         Clear
@@ -332,4 +331,4 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
 }
 
 
-export default SubmissionDialog;
+export default CalibrationSubmissionDialog;

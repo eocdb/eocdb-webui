@@ -67,7 +67,7 @@ export const FindHelpText = (
             To query range (e.g. data ranges) use the brackets and the operator 'TO':
         </Typography>
         <SyntaxHighlighter language='javascript'>
-            received: [2002-01-01 TO 2015-01-01]
+            received: ["20020101" TO "20150101"]
         </SyntaxHighlighter>
 
 

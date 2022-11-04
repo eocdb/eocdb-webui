@@ -21,7 +21,8 @@ describe('submitState', () => {
             path: '',
             publicationDate: null,
             allowPublication: false,
-
+            calibrationPath: "",
+            calibrationSubmissionDialogOpen: false,
             currentDatasetValidationResults: [],
             currentSubmissionFiles: [],
             currentSubmissionId: '',

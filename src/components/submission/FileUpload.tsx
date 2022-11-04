@@ -64,7 +64,7 @@ export default function FileUpload(props: FileUploadProps) {
                         <input {...getInputProps()} />
                         {
                            isDragActive ? <p>Drop files here...</p> :
-                               <p>Drag 'n' drop some files here, or click to select files</p>
+                               <p>{props.label}</p>
                         }
                         accepted:
                         {

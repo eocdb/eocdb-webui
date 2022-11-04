@@ -11,6 +11,7 @@ import { SingleUpload } from "../../model/UploadData";
 import { MessageLogEntry, MessageType } from "../../states/messageLogState";
 import SubmissionMetaDialog from "./SubmissionMetaDialog";
 import { SubmissionQuery, SubmissionResult } from "../../model/Submission";
+import CalibrationSubmissionDialog from "./CalibrationSubmissionDialog";
 
 
 interface SubmissionPanelProps {
@@ -19,6 +20,10 @@ interface SubmissionPanelProps {
     submissionDialogOpen: boolean;
     openSubmissionDialog: () => void,
     closeSubmissionDialog: () => void,
+
+    calibrationSubmissionDialogOpen: boolean
+    openCalibrationSubmissionDialog: () => void
+    closeCalibrationSubmissionDialog: () => void
 
     submissionMetaDialogOpen: boolean;
     openSubmissionMetaDialog: () => void,
@@ -83,6 +88,9 @@ interface SubmissionPanelProps {
     updatePath: (path: string) => void;
     selectedPath: string;
 
+    updateCalibrationPath: (path: string) => void;
+    selectedCalibrationPath: string;
+
     updateDataFiles: (acceptedFiles: File[]) => void;
     selectedDataFiles: File[];
 
@@ -119,6 +127,10 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
 
     handleOpenSubmissionDialog = () => {
         this.props.openSubmissionDialog();
+    };
+
+    handleOpenCalibrationSubmissionDialog = () => {
+        this.props.openCalibrationSubmissionDialog();
     };
 
     handleOpenSubmissionMetaDialog = (submissionId: string) => {
@@ -322,6 +334,41 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     closeHelpDialog={this.props.closeHelpDialog}
                     submissionSucceeded={this.props.submissionSucceeded}
                 />
+                <CalibrationSubmissionDialog
+                    show={this.props.calibrationSubmissionDialogOpen}
+                    onClose={this.props.closeCalibrationSubmissionDialog}
+
+                    // onSubmissionIdChange={this.props.updateSubmissionId}
+                    // submissionIdValue={this.props.selectedSubmissionId}
+
+                    onCalibrationPathChange={this.props.updateCalibrationPath}
+                    calibrationPathValue={this.props.selectedCalibrationPath}
+
+                    // onAllowPublicationChange={this.props.updateAllowPublication}
+                    // allowPublication={this.props.allowPublication}
+
+                    // onDatafilesChange={this.props.updateDataFiles}
+                    // dataFilesValue={this.props.selectedDataFiles}
+
+                    // onDocfilesChange={this.props.updateDocFiles}
+                    // docFilesValue={this.props.selectedDocFiles}
+
+                    // onCalibrationDateChange={this.props.updatePublicationDate}
+                    // calibrationDate={this.props.selectedPublicationDate}
+
+                    // onFileSubmit={this.handleSendSubmission}
+
+                    // onClearForm={this.props.clearSubmissionForm}
+
+                    // onDropRejected={this.handleSubmissionDialogOnDropRejected}
+                    submissionMessages={this.props.submissionMessages}
+                    onHideSubmissionMessages={this.props.hideSubmissionMessages}
+
+                    helpDialogOpen={this.props.helpDialogOpen}
+                    openHelpDialog={this.props.openHelpDialog}
+                    closeHelpDialog={this.props.closeHelpDialog}
+                    submissionSucceeded={this.props.submissionSucceeded}
+                />
                 <SubmissionTable
                     show={!this.props.submissionDialogOpen}
 
@@ -340,6 +387,8 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     onSubmissionPublish={this.handlePublishSubmission}
 
                     onSubmissionDialogOpen={this.handleOpenSubmissionDialog}
+                    onCalibrationSubmissionDialogOpen={this.handleOpenCalibrationSubmissionDialog}
+
                     onSubmissionDialogMetaOpen={this.handleOpenSubmissionMetaDialog}
 
                     submissionQuery={this.props.submissionQuery}

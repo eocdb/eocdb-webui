@@ -273,6 +273,41 @@ export function openSubmitSteps(): OpenSubmitSteps {
     return {type: OPEN_SUBMIT_STEPS};
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const CLOSE_CALIBRATION_SUBMIT_STEPS = 'CLOSE_CALIBRATION_SUBMIT_STEPS';
+export type CLOSE_CALIBRATION_SUBMIT_STEPS = typeof CLOSE_CALIBRATION_SUBMIT_STEPS;
+
+
+export interface CloseCalibrationSubmitSteps {
+    type: CLOSE_CALIBRATION_SUBMIT_STEPS;
+}
+
+
+/**
+ * Close/cancel the file submit process
+ */
+export function closeCalibrationSubmitSteps(): CloseCalibrationSubmitSteps {
+    return {type: CLOSE_CALIBRATION_SUBMIT_STEPS};
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const OPEN_CALIBRATION_SUBMIT_STEPS = 'OPEN_CALIBRATION_SUBMIT_STEPS';
+export type OPEN_CALIBRATION_SUBMIT_STEPS = typeof OPEN_CALIBRATION_SUBMIT_STEPS;
+
+export interface OpenCalibrationSubmitSteps {
+    type: OPEN_CALIBRATION_SUBMIT_STEPS;
+}
+
+/**
+ * Open the file submit process
+ */
+export function openCalibrationSubmitSteps(): OpenCalibrationSubmitSteps {
+    return {type: OPEN_CALIBRATION_SUBMIT_STEPS};
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -305,6 +340,22 @@ export function updatePath(path: string): UpdatePath {
     return {
         type: UPDATE_PATH,
         path
+    }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const UPDATE_CALIBRATION_PATH = 'UPDATE_UPDATE_CALIBRATION_PATH';
+export type UPDATE_CALIBRATION_PATH = typeof UPDATE_CALIBRATION_PATH;
+
+export interface UpdateCalibrationPath {
+    type: UPDATE_CALIBRATION_PATH;
+    calibrationPath: string;
+}
+
+export function updateCalibrationPath(calibrationPath: string): UpdateCalibrationPath {
+    return {
+        type: UPDATE_CALIBRATION_PATH,
+        calibrationPath
     }
 }
 
@@ -912,6 +963,8 @@ export function hideSubmissionMessages(messageId: number): HideSubmissionMessage
 
 export type SubmitAction = OpenSubmitSteps
     | CloseSubmitSteps
+    | OpenCalibrationSubmitSteps
+    | CloseCalibrationSubmitSteps
     | OpenSubmissionFilesDialog
     | CloseSubmissionFilesDialog
     | OpenSubmissionMetaDialog
@@ -928,6 +981,7 @@ export type SubmitAction = OpenSubmitSteps
     | CloseSubmissionPublicationDateDialog
     | UpdateSubmissionId
     | UpdatePath
+    | UpdateCalibrationPath
     | UpdatePublicationDate
     | UpdateAllowPublication
     | UpdateDataFiles
