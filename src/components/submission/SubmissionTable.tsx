@@ -1,10 +1,6 @@
 import * as React from "react";
-import { User, Submission } from "../../model";
-import {
-    Tooltip,
-    Button,
-    Icon, Chip, Paper, Stack, styled
-} from "@mui/material";
+import { Submission, User } from "../../model";
+import { Button, Chip, Icon, Paper, Stack, styled, Tooltip } from "@mui/material";
 import { blue, green, orange, red } from "@mui/material/colors";
 import {
     DataGrid,
@@ -17,9 +13,9 @@ import { CloudUpload } from "@mui/icons-material";
 import { SubmissionQuery, SubmissionResult } from "../../model/Submission";
 
 
-const Item = styled (Button) (({theme}) => ({
+const Item = styled(Button)(({theme}) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    padding: theme.spacing (1),
+    padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary,
 }));
@@ -65,7 +61,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                     <span>
                         <Button
                             onClick={() => props.onSubmissionDialogMetaOpen(
-                                params.row.id
+                                params.row.submission_id
                             )}
                             disabled={!isAdmin && !isSubmitter}
                         >
@@ -76,7 +72,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                 <Tooltip title="List Files" placement={"top"}>
                     <Button
                         onClick={() => props.onSubmissionSelect(
-                            params.row.id
+                            params.row.submission_id
                         )}
                     >
                         <Icon>list</Icon>
@@ -86,18 +82,18 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                     <Tooltip title="Restart Submission" placement={"top"}>
                         <Button
                             onClick={() => props.onSubmissionRestart(
-                                {...params.row, submission_id: params.row.id }
+                                {...params.row, submission_id: params.row.submission_id}
                             )}
                         >
                             <Icon>play_arrow</Icon>
 
                         </Button>
                     </Tooltip>
-                :
+                    :
                     <Tooltip title="Pause Submission" placement={"top"}>
                         <Button
                             onClick={() => props.onSubmissionHalt(
-                                params.row.id
+                                params.row.submission_id
                             )}
                         >
                             <Icon>pause</Icon>
@@ -108,7 +104,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                     <span>
                         <Button
                             onClick={() => props.onSubmissionReject(
-                                params.row.id
+                                params.row.submission_id
                             )}
                             disabled={!isAdmin}
                         >
@@ -120,7 +116,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                     <span>
                         <Button
                             onClick={() => props.onSubmissionDelete(
-                                params.row.id
+                                params.row.submission_id
                             )}
                             disabled={!isAdmin}
                         >
@@ -132,7 +128,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                     <span>
                         <Button
                             onClick={() => props.onSubmissionProcess(
-                                params.row.id
+                                params.row.submission_id
                             )}
                             disabled={!isAdmin}
                         >
@@ -145,7 +141,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                     <span>
                         <Button
                             onClick={() => props.onSubmissionPublish(
-                                params.row.id
+                                params.row.submission_id
                             )}
                             disabled={!isAdmin}
                         >
@@ -182,8 +178,8 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     const makeRows = (submissions: Submission[]) => {
         return submissions.map((submission: Submission) => {
             return {
-                id: submission.submission_id,
-                submission_date: submission.date,
+                submission_id: submission.submission_id,
+                date: submission.date,
                 user_id: submission.user_id,
                 publication_date: submission.publication_date,
                 allow_publication: submission.allow_publication,
@@ -206,7 +202,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
 
     const columns: GridColDef[] = [
         {
-            field: 'id',
+            field: 'submission_id',
             headerName: 'Submission ID',
             width: 260
         },
@@ -216,7 +212,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
             width: 150,
         },
         {
-            field: 'submission_date',
+            field: 'date',
             headerName: 'Submission Date',
             type: 'dateTime',
             width: 170,
@@ -262,8 +258,8 @@ export default function SubmissionTable(props: SubmissionTableProps) {
         const currentFilterModel = props.submissionQuery.filterModel;
 
         const isClearEvent = (currentFilterModel) ? currentFilterModel.items[0].operatorValue === filterModel.items[0].operatorValue
-            &&  filterModel.items[0].value === undefined
-        : false;
+            && filterModel.items[0].value === undefined
+            : false;
 
         if (isClearEvent) {
             filterModel.items[0].operatorValue = 'contains';
@@ -285,26 +281,27 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     };
 
     const handleSortModelChange = (newModel: GridSortModel) => {
-        const submissionQuery: SubmissionQuery = (newModel) ?
-            {
-                ...props.submissionQuery,
-                loading: true,
-                sortModel: newModel,
-                page: 0
-            } : undefined;
+        const submissionQuery: SubmissionQuery = {
+            ...props.submissionQuery,
+            loading: true,
+            sortModel: newModel,
+            page: 0
+        };
 
         props.updateSubmissionQuery(submissionQuery);
         props.updateSubmissionsForUser();
     };
 
+    let pageSize = 10;
+
     const handlePageChange = (newPage) => {
         const submissionQuery: SubmissionQuery = {
-                ...props.submissionQuery,
-                loading: true,
-                offset: (newPage * 10) + 1,
-                count: 10,
-                page: newPage,
-            };
+            ...props.submissionQuery,
+            loading: true,
+            offset: (newPage * pageSize),
+            count: pageSize,
+            page: newPage,
+        };
 
         props.updateSubmissionQuery(submissionQuery);
         props.updateSubmissionsForUser();
@@ -334,17 +331,20 @@ export default function SubmissionTable(props: SubmissionTableProps) {
             </Stack>
             <DataGrid
                 rows={rows}
+                // A unique field with name 'id' is required by MUI-X DataGrid. If such a field
+                // does not exist in a row, the function getRowId must be implemented.
+                getRowId={(row) => row.submission_id}
                 columns={columns}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                rowCount={submissionResult.tot_count-1}
+                pageSize={pageSize}
+                rowsPerPageOptions={[pageSize]}
+                rowCount={submissionResult.tot_count}
                 paginationMode={"server"}
                 pagination
                 page={props.submissionQuery.page}
                 loading={props.submissionQuery.loading}
                 onPageChange={handlePageChange}
                 // disableSelectionOnClick
-                components={{ Toolbar: GridToolbar }}
+                components={{Toolbar: GridToolbar}}
                 filterMode="server"
                 filterModel={props.submissionQuery.filterModel}
                 onFilterModelChange={handleFilterChange}
