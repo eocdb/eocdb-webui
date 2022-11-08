@@ -257,13 +257,24 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     const handleFilterChange = (filterModel: GridFilterModel) => {
         const currentFilterModel = props.submissionQuery.filterModel;
 
-        const isClearEvent = (currentFilterModel) ? currentFilterModel.items[0].operatorValue === filterModel.items[0].operatorValue
-            && filterModel.items[0].value === undefined
-            : false;
+        let isClearEvent: boolean;
+        if (currentFilterModel && filterModel) {
+            if (filterModel.items.length == 0) {
+                isClearEvent = true;
+            } else {
+                let currItem = currentFilterModel.items[0];
+                let newItem = filterModel.items[0];
+                isClearEvent = currItem.operatorValue === newItem.operatorValue
+                    && currItem.columnField === newItem.columnField
+                    && filterModel.items[0].value === undefined;
+            }
+        } else {
+            isClearEvent = false;
+        }
 
         if (isClearEvent) {
             filterModel.items[0].operatorValue = 'contains';
-            filterModel.items[0].columnField = 'id';
+            filterModel.items[0].columnField = 'submission_id';
         }
 
         const submissionQuery: SubmissionQuery =
