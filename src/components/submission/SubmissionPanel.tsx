@@ -11,7 +11,7 @@ import { SingleUpload } from "../../model/UploadData";
 import { MessageLogEntry, MessageType } from "../../states/messageLogState";
 import SubmissionMetaDialog from "./SubmissionMetaDialog";
 import { SubmissionQuery, SubmissionResult } from "../../model/Submission";
-import CalibrationSubmissionDialog from "./CalibrationSubmissionDialog";
+import { CalibrationSubmissionDialog, CalibrationContextProvider, SharedCalibrationContext } from "./CalibrationSubmissionComponents";
 
 
 interface SubmissionPanelProps {
@@ -20,10 +20,6 @@ interface SubmissionPanelProps {
     submissionDialogOpen: boolean;
     openSubmissionDialog: () => void,
     closeSubmissionDialog: () => void,
-
-    calibrationSubmissionDialogOpen: boolean
-    openCalibrationSubmissionDialog: () => void
-    closeCalibrationSubmissionDialog: () => void
 
     submissionMetaDialogOpen: boolean;
     openSubmissionMetaDialog: () => void,
@@ -88,9 +84,6 @@ interface SubmissionPanelProps {
     updatePath: (path: string) => void;
     selectedPath: string;
 
-    updateCalibrationPath: (path: string) => void;
-    selectedCalibrationPath: string;
-
     updateDataFiles: (acceptedFiles: File[]) => void;
     selectedDataFiles: File[];
 
@@ -129,10 +122,6 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
         this.props.openSubmissionDialog();
     };
 
-    handleOpenCalibrationSubmissionDialog = () => {
-        this.props.openCalibrationSubmissionDialog();
-    };
-
     handleOpenSubmissionMetaDialog = (submissionId: string) => {
         this.props.updateSelectedSubmission(submissionId);
         this.props.openSubmissionMetaDialog();
@@ -158,8 +147,7 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     ok = false;
                 }
             }
-        }
-        else {
+        } else {
             ok = false;
         }
 
@@ -299,41 +287,50 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
         }
         return (
             <div>
-                <SubmissionDialog
-                    show={this.props.submissionDialogOpen}
-                    onClose={this.props.closeSubmissionDialog}
+                <CalibrationContextProvider>
+                    <SubmissionDialog
+                        show={this.props.submissionDialogOpen}
+                        onClose={this.props.closeSubmissionDialog}
 
-                    onSubmissionIdChange={this.props.updateSubmissionId}
-                    submissionIdValue={this.props.selectedSubmissionId}
+                        onSubmissionIdChange={this.props.updateSubmissionId}
+                        submissionIdValue={this.props.selectedSubmissionId}
 
-                    onPathChange={this.props.updatePath}
-                    pathValue={this.props.selectedPath}
+                        onPathChange={this.props.updatePath}
+                        pathValue={this.props.selectedPath}
 
-                    onAllowPublicationChange={this.props.updateAllowPublication}
-                    allowPublication={this.props.allowPublication}
+                        onAllowPublicationChange={this.props.updateAllowPublication}
+                        allowPublication={this.props.allowPublication}
 
-                    onDatafilesChange={this.props.updateDataFiles}
-                    dataFilesValue={this.props.selectedDataFiles}
+                        onDatafilesChange={this.props.updateDataFiles}
+                        dataFilesValue={this.props.selectedDataFiles}
 
-                    onDocfilesChange={this.props.updateDocFiles}
-                    docFilesValue={this.props.selectedDocFiles}
+                        onDocfilesChange={this.props.updateDocFiles}
+                        docFilesValue={this.props.selectedDocFiles}
 
-                    onPublicationDateChange={this.props.updatePublicationDate}
-                    publicationDate={this.props.selectedPublicationDate}
+                        onPublicationDateChange={this.props.updatePublicationDate}
+                        publicationDate={this.props.selectedPublicationDate}
 
-                    onFileSubmit={this.handleSendSubmission}
+                        onFileSubmit={this.handleSendSubmission}
 
-                    onClearForm={this.props.clearSubmissionForm}
+                        onClearForm={this.props.clearSubmissionForm}
 
-                    onDropRejected={this.handleSubmissionDialogOnDropRejected}
-                    submissionMessages={this.props.submissionMessages}
-                    onHideSubmissionMessages={this.props.hideSubmissionMessages}
+                        onDropRejected={this.handleSubmissionDialogOnDropRejected}
+                        submissionMessages={this.props.submissionMessages}
+                        onHideSubmissionMessages={this.props.hideSubmissionMessages}
 
-                    helpDialogOpen={this.props.helpDialogOpen}
-                    openHelpDialog={this.props.openHelpDialog}
-                    closeHelpDialog={this.props.closeHelpDialog}
-                    submissionSucceeded={this.props.submissionSucceeded}
-                />
+                        helpDialogOpen={this.props.helpDialogOpen}
+                        openHelpDialog={this.props.openHelpDialog}
+                        closeHelpDialog={this.props.closeHelpDialog}
+                        submissionSucceeded={this.props.submissionSucceeded}
+                    />
+                    <CalibrationSubmissionDialog
+                        submissionMessages={this.props.submissionMessages}
+                        onHideSubmissionMessages={this.props.hideSubmissionMessages}
+                        // helpDialogOpen={this.props.helpDialogOpen}
+                        // openHelpDialog={this.props.openHelpDialog}
+                        // closeHelpDialog={this.props.closeHelpDialog}
+                    ></CalibrationSubmissionDialog>
+                    {/*
                 <CalibrationSubmissionDialog
                     show={this.props.calibrationSubmissionDialogOpen}
                     onClose={this.props.closeCalibrationSubmissionDialog}
@@ -369,109 +366,116 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     closeHelpDialog={this.props.closeHelpDialog}
                     submissionSucceeded={this.props.submissionSucceeded}
                 />
-                <SubmissionTable
-                    show={!this.props.submissionDialogOpen}
+*/}
+                    <SharedCalibrationContext.Consumer>
+                        {calibrationCtx => (
+                        <SubmissionTable
+                            show={!(this.props.submissionDialogOpen || calibrationCtx.showDialog)}
 
-                    onSubmissionSelect={this.handleUpdateSubmission}
+                            // calibrationState={this.props.calibrationState}
 
-                    onSubmissionApprove={this.handleApproveSubmission}
-                    onSubmissionProcess={this.handleProcessSubmission}
-                    onSubmissionReject={this.handleCancelSubmission}
-                    onSubmissionHalt={this.handleHaltSubmission}
-                    onSubmissionUpdate={this.handleSendSubmission}
-                    onSubmissionRestart={this.handleRestartSubmission}
-                    onSubmissionSubmit={this.handleSubmitSubmission}
-                    onSubmissionDelete={this.handleDeleteSubmissionClick}
+                            onSubmissionSelect={this.handleUpdateSubmission}
 
-                    onSubmissionReady={this.handleSubmissionPublicationDateClick}
-                    onSubmissionPublish={this.handlePublishSubmission}
+                            onSubmissionApprove={this.handleApproveSubmission}
+                            onSubmissionProcess={this.handleProcessSubmission}
+                            onSubmissionReject={this.handleCancelSubmission}
+                            onSubmissionHalt={this.handleHaltSubmission}
+                            onSubmissionUpdate={this.handleSendSubmission}
+                            onSubmissionRestart={this.handleRestartSubmission}
+                            onSubmissionSubmit={this.handleSubmitSubmission}
+                            onSubmissionDelete={this.handleDeleteSubmissionClick}
 
-                    onSubmissionDialogOpen={this.handleOpenSubmissionDialog}
-                    onCalibrationSubmissionDialogOpen={this.handleOpenCalibrationSubmissionDialog}
+                            onSubmissionReady={this.handleSubmissionPublicationDateClick}
+                            onSubmissionPublish={this.handlePublishSubmission}
 
-                    onSubmissionDialogMetaOpen={this.handleOpenSubmissionMetaDialog}
+                            onSubmissionDialogOpen={this.handleOpenSubmissionDialog}
 
-                    submissionQuery={this.props.submissionQuery}
-                    updateSubmissionQuery={this.props.updateSubmissionQuery}
+                            onSubmissionDialogMetaOpen={this.handleOpenSubmissionMetaDialog}
 
-                    submissionResult={this.props.submissionsForUser}
-                    updateSubmissionsForUser={this.props.updateSubmissionsForUser }
+                            submissionQuery={this.props.submissionQuery}
+                            updateSubmissionQuery={this.props.updateSubmissionQuery}
 
-                    user={this.props.user}
-                />
-                <SubmissionFilesTable
-                    onClose={this.props.closeSubmissionFilesTable}
-                    open={this.props.submissionFilesTableOpen}
+                            submissionResult={this.props.submissionsForUser}
+                            updateSubmissionsForUser={this.props.updateSubmissionsForUser}
 
-                    submissionValue={this.props.selectedSubmission}
+                            user={this.props.user}
+                        />
+                        )}
+                    </SharedCalibrationContext.Consumer>
+                    <SubmissionFilesTable
+                        onClose={this.props.closeSubmissionFilesTable}
+                        open={this.props.submissionFilesTableOpen}
 
-                    onSubmissionFileDeleteClick={this.handleDeleteSubmissionFileClick}
-                    onSubmissionFileSelectClick={this.handleSubmissionFileSelect}
-                    onSubmissionFileUploadClick={this.handleUploadSubmissionFileClick}
-                    onSubmissionFileDownloadClick={this.handleDownloadSubmissionFile}
+                        submissionValue={this.props.selectedSubmission}
 
-                    user={this.props.user}
-                />
-                <SubmissionIssueDialog
-                    onClose={this.props.closeSubmissionFileIssueDialog}
-                    open={this.props.submissionFileIssueDialogOpen}
+                        onSubmissionFileDeleteClick={this.handleDeleteSubmissionFileClick}
+                        onSubmissionFileSelectClick={this.handleSubmissionFileSelect}
+                        onSubmissionFileUploadClick={this.handleUploadSubmissionFileClick}
+                        onSubmissionFileDownloadClick={this.handleDownloadSubmissionFile}
 
-                    submissionFileValue={this.props.selectedSubmissionFile}
-                />
-                <YesNoAlert
-                    open={this.props.deleteSubmissionFileAlertOpen}
-                    onClose={this.handleDeleteSubmissionFileAlertCancel}
-                    onAgree={this.handleDeleteSubmissionFileAlertAgree}
+                        user={this.props.user}
+                    />
+                    <SubmissionIssueDialog
+                        onClose={this.props.closeSubmissionFileIssueDialog}
+                        open={this.props.submissionFileIssueDialogOpen}
 
-                    value={this.props.selectedSubmissionFile}
-                >
-                    Do you really want to delete the Submission File: {this.props.selectedSubmissionFile.filename}?
-                </YesNoAlert>
-                <YesNoAlert
-                    open={this.props.deleteSubmissionAlertOpen}
-                    onClose={this.handleDeleteSubmissionAlertCancel}
-                    onAgree={this.handleDeleteSubmissionAlertAgree}
+                        submissionFileValue={this.props.selectedSubmissionFile}
+                    />
+                    <YesNoAlert
+                        open={this.props.deleteSubmissionFileAlertOpen}
+                        onClose={this.handleDeleteSubmissionFileAlertCancel}
+                        onAgree={this.handleDeleteSubmissionFileAlertAgree}
 
-                    value={this.props.selectedSubmission}
-                >
-                    Do you really want to delete the Submission: {this.props.selectedSubmission.submission_id}?
-                </YesNoAlert>
-                <SingleFileUpload
-                    label={'Upload'}
-                    onCancel={this.handleOploadSubmissionFileDialogOnCancel}
-                    onSave={this.handleUploadSubmissionFileDialogOnSave}
-                    open={this.props.uploadSubmissionFileDialogOpen}
+                        value={this.props.selectedSubmissionFile}
+                    >
+                        Do you really want to delete the Submission File: {this.props.selectedSubmissionFile.filename}?
+                    </YesNoAlert>
+                    <YesNoAlert
+                        open={this.props.deleteSubmissionAlertOpen}
+                        onClose={this.handleDeleteSubmissionAlertCancel}
+                        onAgree={this.handleDeleteSubmissionAlertAgree}
 
-                    value={this.props.selectedSubmissionFile}
-                    accept={this.props.selectedSubmissionFile.filetype === 'MEASUREMENT' ? '.sb, .dat, .txt, .csv' : undefined}
+                        value={this.props.selectedSubmission}
+                    >
+                        Do you really want to delete the Submission: {this.props.selectedSubmission.submission_id}?
+                    </YesNoAlert>
+                    <SingleFileUpload
+                        label={'Upload'}
+                        onCancel={this.handleOploadSubmissionFileDialogOnCancel}
+                        onSave={this.handleUploadSubmissionFileDialogOnSave}
+                        open={this.props.uploadSubmissionFileDialogOpen}
 
-                />
-                <SubmissionMetaDialog
-                    submissionId={this.props.selectedSubmission.submission_id}
-                    show={this.props.submissionMetaDialogOpen}
-                    onClose={this.props.closeSubmissionMetaDialog}
+                        value={this.props.selectedSubmissionFile}
+                        accept={this.props.selectedSubmissionFile.filetype === 'MEASUREMENT' ? {'plain/text': ['.sb', '.dat', '.txt', '.csv']} : undefined}
 
-                    onSubmissionIdChange={this.props.updateSubmissionId}
-                    submissionIdValue={this.props.selectedSubmissionId}
+                    />
+                    <SubmissionMetaDialog
+                        submissionId={this.props.selectedSubmission.submission_id}
+                        show={this.props.submissionMetaDialogOpen}
+                        onClose={this.props.closeSubmissionMetaDialog}
 
-                    onPathChange={this.props.updatePath}
-                    pathValue={this.props.selectedPath}
+                        onSubmissionIdChange={this.props.updateSubmissionId}
+                        submissionIdValue={this.props.selectedSubmissionId}
 
-                    onAllowPublicationChange={this.props.updateAllowPublication}
-                    allowPublication={this.props.allowPublication}
+                        onPathChange={this.props.updatePath}
+                        pathValue={this.props.selectedPath}
 
-                    onPublicationDateChange={this.props.updatePublicationDate}
-                    publicationDate={this.props.selectedPublicationDate}
+                        onAllowPublicationChange={this.props.updateAllowPublication}
+                        allowPublication={this.props.allowPublication}
 
-                    onSubmit={this.handleUpdateSubmissionMetaDialog}
+                        onPublicationDateChange={this.props.updatePublicationDate}
+                        publicationDate={this.props.selectedPublicationDate}
 
-                    onClearForm={this.props.clearSubmissionForm}
+                        onSubmit={this.handleUpdateSubmissionMetaDialog}
 
-                    helpDialogOpen={this.props.helpDialogOpen}
-                    openHelpDialog={this.props.openHelpDialog}
-                    closeHelpDialog={this.props.closeHelpDialog}
-                    submissionSucceeded={this.props.submissionSucceeded}
-                />
+                        onClearForm={this.props.clearSubmissionForm}
+
+                        helpDialogOpen={this.props.helpDialogOpen}
+                        openHelpDialog={this.props.openHelpDialog}
+                        closeHelpDialog={this.props.closeHelpDialog}
+                        submissionSucceeded={this.props.submissionSucceeded}
+                    />
+                </CalibrationContextProvider>
             </div>
         );
     }

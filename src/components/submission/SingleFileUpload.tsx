@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import Dropzone, { DropzoneState } from "react-dropzone";
+import Dropzone, { Accept, DropzoneState } from "react-dropzone";
 import {
     Button,
     Icon,
@@ -22,7 +22,7 @@ interface SingleFileUploadProps<T> {
     onSave: (value: T, file: File[]) => void;
 
     value: T;
-    accept?: string;
+    accept?: Accept;
 }
 
 

@@ -9,7 +9,6 @@ import {
     CLOSE_SUBMISSION_META_DIALOG,
     CLOSE_SUBMISSION_PUBLICATION_DATE_DIALOG,
     CLOSE_SUBMIT_STEPS,
-    CLOSE_CALIBRATION_SUBMIT_STEPS,
     CLOSE_UPLOAD_SUBMISSION_FILE_DIALOG,
     HIDE_SUBMISSION_MESSAGES,
     OPEN_DELETE_SUBMISSION_ALERT,
@@ -20,7 +19,6 @@ import {
     OPEN_SUBMISSION_META_DIALOG,
     OPEN_SUBMISSION_PUBLICATION_DATE_DIALOG,
     OPEN_SUBMIT_STEPS,
-    OPEN_CALIBRATION_SUBMIT_STEPS,
     OPEN_UPLOAD_SUBMISSION_FILE_DIALOG,
     SEND_SUBMISSION,
     SubmitAction,
@@ -29,7 +27,6 @@ import {
     UPDATE_DATA_FILES,
     UPDATE_DOC_FILES,
     UPDATE_PATH,
-    UPDATE_CALIBRATION_PATH,
     UPDATE_PUBLICATION_DATE, UPDATE_SELECTED_SUBMISSION,
     UPDATE_SELECTED_SUBMISSIONFILE,
     UPDATE_SUBMISSION_ID,
@@ -49,10 +46,6 @@ export function submissionReducer(state: SubmissionState = initialState, action:
             return {...state, submissionDialogOpen: true, submissionFilesDialogOpen: false};
         case CLOSE_SUBMIT_STEPS:
             return {...state, submissionDialogOpen: false};
-        case OPEN_CALIBRATION_SUBMIT_STEPS:
-            return {...state, calibrationSubmissionDialogOpen: true, submissionFilesDialogOpen: false};
-        case CLOSE_CALIBRATION_SUBMIT_STEPS:
-            return {...state, calibrationSubmissionDialogOpen: false};
         case OPEN_SUBMISSION_FILES_DIALOG:
             return {...state, submissionSucceeded: false, submissionFilesDialogOpen: true};
         case CLOSE_SUBMISSION_FILES_DIALOG:
@@ -93,8 +86,6 @@ export function submissionReducer(state: SubmissionState = initialState, action:
             };
         case UPDATE_PATH:
             return {...state, path: action.path};
-        case UPDATE_CALIBRATION_PATH:
-            return {...state, calibrationPath: action.calibrationPath};
         case UPDATE_ALLOW_PUBLICATION:
             return {...state, allowPublication: action.allowPublication};
         case UPDATE_PUBLICATION_DATE:

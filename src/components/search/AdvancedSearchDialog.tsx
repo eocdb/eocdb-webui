@@ -126,10 +126,11 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                 <DialogContent>
                     <Stack direction={'column'} spacing={5}>
                         <Item>
-                            <Typography gutterBottom={true} variant={'h6'}>Wavelength options</Typography>
+                            <Typography gutterBottom={true} variant={"h6"}>Wavelength options</Typography>
                             <RadioSelect items={wavelengthItems}
                                          selectedValue={this.props.datasetQuery.wavelengthsMode}
                                          onChange={this.handleWaveLengthSelect}
+                                         size={'small'}
                             />
                         </Item>
                         <Item>
@@ -139,6 +140,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                                 onChange={this.handleWaterDepthChange}
                                 disabled={!this.props.datasetQuery.hasWdepth}
                                 label={'Water Depth'}
+                                size={'small'}
                             />
                             <FormControlLabel
                                 control={
@@ -146,6 +148,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                                         onChange={this.handleUpdateHasWdepth}
                                         checked={this.props.datasetQuery.hasWdepth}
                                         {...hasWdepthLabel}
+                                        size={"small"}
                                     />
                                 }
                                 label={"Enable Water depth"}/>
@@ -155,6 +158,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                             <RadioSelect items={items}
                                          selectedValue={this.props.datasetQuery.shallow}
                                          onChange={this.handleShallowChange}
+                                         size={"small"}
                             />
                         </Item>
                         <Item>
@@ -165,6 +169,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                                 selectedItems={this.props.datasetQuery.productNames}
                                 isMulti={true}
                                 closeMenuOnSelect={false}
+                                size={"small"}
                             />
                         </Item>
                     </Stack>
@@ -174,6 +179,7 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                             aria-label="Close"
                             variant="contained"
                             color="secondary"
+                            size={'small'}
                     >
                         Close
                     </Button>

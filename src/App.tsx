@@ -1,5 +1,4 @@
 import * as React from 'react';
-import dayjs, { Dayjs } from 'dayjs';
 import Dashboard from './containers/Dashboard';
 import MessageLog from "./containers/MessageLog";
 
@@ -31,7 +30,7 @@ class App extends React.Component {
     public render() {
         return (
                 <ThemeProvider theme={theme}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs} >
                         <div className="App">
                             <CssBaseline/>
                             <Dashboard/>

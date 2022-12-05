@@ -49,11 +49,13 @@ class SubmissionFilesTable extends React.Component<SubmissionFilesTableProps> {
     getColourForStatus = (status: string) => {
         switch (status) {
             case 'VALIDATED':
-                return green.A400;
+            case 'VALID':
+            case 'OK':
+                return green["200"];
             case 'WARNING':
-                return orange.A400;
+                return orange["300"];
             case 'ERROR':
-                return red.A400;
+                return red["700"];
             case 'SUBMITTED':
                 return blue.A400;
         }

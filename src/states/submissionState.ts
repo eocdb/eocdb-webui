@@ -3,8 +3,8 @@ import { MessageLogEntry } from "./messageLogState";
 import { SubmissionQuery, SubmissionResult } from "../model/Submission";
 
 export interface SubmissionState {
+
     submissionDialogOpen: boolean;
-    calibrationSubmissionDialogOpen: boolean;
     submissionFilesDialogOpen: boolean;
     submissionMetaDialogOpen: boolean;
     submissionFileIssueDialogOpen: boolean;
@@ -20,7 +20,6 @@ export interface SubmissionState {
     dataFiles: File[];
     docFiles: File[];
     path: string;
-    calibrationPath: string;
     publicationDate: string | null;
     allowPublication: boolean;
 
@@ -46,7 +45,6 @@ export function newSubmissionState() {
         submissionResult: {submissions: [], tot_count: 0},
 
         submissionDialogOpen: false,
-        calibrationSubmissionDialogOpen: false,
         submissionFilesDialogOpen: false,
         submissionMetaDialogOpen: false,
         submissionFileIssueDialogOpen: false,
@@ -59,7 +57,6 @@ export function newSubmissionState() {
         dataFiles: [],
         docFiles: [],
         path: '',
-        calibrationPath: '',
         publicationDate: null,
         allowPublication: false,
 
@@ -98,6 +95,6 @@ export function newSubmissionState() {
         submissionSucceeded: false,
         submissionMessages: [],
         newEntries: [],
-        oldEntries: [],
+        oldEntries: []
     }
 }

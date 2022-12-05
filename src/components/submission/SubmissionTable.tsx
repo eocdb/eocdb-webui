@@ -11,6 +11,7 @@ import {
 } from '@mui/x-data-grid';
 import { CloudUpload } from "@mui/icons-material";
 import { SubmissionQuery, SubmissionResult } from "../../model/Submission";
+import { OpenNewCalibrationDialogButton } from "./CalibrationSubmissionComponents";
 
 
 const Item = styled(Button)(({theme}) => ({
@@ -25,7 +26,6 @@ interface SubmissionTableProps {
     show: boolean;
 
     onSubmissionDialogOpen: () => void;
-    onCalibrationSubmissionDialogOpen: () => void;
 
     onSubmissionDialogMetaOpen: (submissionId: string) => void;
 
@@ -100,6 +100,18 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                         </Button>
                     </Tooltip>
                 }
+                <Tooltip title="Delete Entire Submission" placement={"top"}>
+                    <span>
+                        <Button
+                            onClick={() => props.onSubmissionDelete(
+                                params.row.submission_id
+                            )}
+                            // disabled={!isSubmitter}
+                        >
+                            <Icon>delete</Icon>
+                        </Button>
+                    </span>
+                </Tooltip>
                 <Tooltip title="Cancel Submission" placement={"top"}>
                     <span>
                         <Button
@@ -109,18 +121,6 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                             disabled={!isAdmin}
                         >
                             <Icon>power_settings_new</Icon>
-                        </Button>
-                    </span>
-                </Tooltip>
-                <Tooltip title="Delete Entire Submission" placement={"top"}>
-                    <span>
-                        <Button
-                            onClick={() => props.onSubmissionDelete(
-                                params.row.submission_id
-                            )}
-                            disabled={!isAdmin}
-                        >
-                            <Icon>delete</Icon>
                         </Button>
                     </span>
                 </Tooltip>
@@ -156,21 +156,21 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     const getColourForStatus = (status: string) => {
         switch (status) {
             case 'SUBMITTED':
-                return blue.A100;
+                return red.A700;
             case 'VALIDATED':
-                return green.A100;
-            case 'APPROVED':
-                return green.A400;
-            case 'READY':
-                return red.A200;
-            case 'CANCELED':
-                return orange.A400;
-            case 'PAUSED':
-                return orange.A100;
-            case 'PUBLISHED':
-                return red.A400;
+                return green["200"];
             case 'PROCESSED':
-                return red.A100;
+                return green["400"];
+            case 'PUBLISHED':
+                return green["800"];
+            case 'CANCELED':
+                return orange["300"];
+            case 'PAUSED':
+                return orange["800"];
+            case 'APPROVED':
+                return blue.A100;
+            case 'READY':
+                return blue.A400;
         }
         return "yellow"
     };
@@ -331,13 +331,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                     </Button>
                 </Item>
                 <Item>
-                    <Button variant="contained"
-                            color="secondary"
-                            onClick={props.onCalibrationSubmissionDialogOpen}
-                    >
-                        New Calibration Submission &nbsp;
-                        <CloudUpload/>
-                    </Button>
+                    <OpenNewCalibrationDialogButton/>
                 </Item>
             </Stack>
             <DataGrid

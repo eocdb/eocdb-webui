@@ -28,8 +28,11 @@ class MessageLog extends React.Component<MessageLogProps> {
                 {
                     messages.map((messageLogEntry: MessageLogEntry) => {
                         const message = messageLogEntry.text;
+                        const messageType = messageLogEntry.type;
+                        const autoHideDuration = messageType == 'info' || messageType == 'success'? 6000 : null;
+
                         return (
-                            <Snackbar key={messageLogEntry.id} open={true} autoHideDuration={6000}
+                            <Snackbar key={messageLogEntry.id} open={true} autoHideDuration={autoHideDuration}
                                           onClose={() => hideMessage (messageLogEntry.id)}>
                                 <Alert onClose={() => hideMessage (messageLogEntry.id)} severity={messageLogEntry.type}
                                        sx={{width: '100%'}}>

@@ -10,6 +10,7 @@ interface MinMaxInputSliderProps {
     label: string;
 
     disabled: boolean;
+    size?: null | 'small' | 'medium';
 }
 
 
@@ -58,6 +59,7 @@ export default function MinMaxInputSlider(props: MinMaxInputSliderProps) {
                 getAriaValueText={valuetext}
                 max={1000}
                 disabled={props.disabled}
+                size={props.size? props.size: 'medium'}
             />
             <Input
                 value={getNumberInputValue(value[0])}

@@ -32,7 +32,6 @@ import { DefaultDatasetQuery } from "../../model/DatasetQuery";
 import { SEARCH_HISTORY_PREFIX } from "../../default";
 
 
-
 interface SearchPanelProps {
     show: boolean;
 
@@ -197,16 +196,15 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         let newItemAdded = false;
 
         let history = this.props.searchHistory.map((item: SearchHistoryItem) => {
-            if(item.key != key) {
+            if (item.key != key) {
                 return item;
-            }
-            else{
+            } else {
                 newItemAdded = true;
                 return newItem;
             }
         });
 
-        if(!newItemAdded){
+        if (!newItemAdded) {
             history.push(newItem);
         }
 
@@ -237,25 +235,25 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
     convertDate = (dateString?: string) => {
         if (dateString) {
-            const dtt = Date.parse (dateString);
-            const newDate = new Date (dtt);
-            return newDate.toISOString ().split ('T')[0];
-        }
-        else {
+            const idxGMT = dateString.indexOf('GMT');
+            if (idxGMT == -1) return null
+            const dateStrToParse = dateString.substr(0, idxGMT + 3);
+            const dtt = Date.parse(dateStrToParse);
+            const newDate = new Date(dtt);
+            return newDate.toISOString().split('T')[0];
+        } else {
             return null;
         }
     };
 
-    handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const startDate = this.convertDate(event ? event.toString() : null);
-
-        this.props.updateDatasetQuery({...this.props.datasetQuery, startDate});
+    handleStartDateChange = (date) => {
+        const convDate = this.convertDate(date ? date.$d.toString() : null);
+        this.props.updateDatasetQuery({...this.props.datasetQuery, startDate: convDate});
     };
 
-    handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const endDate = this.convertDate(event ? event.toString() : null);
-
-        this.props.updateDatasetQuery({...this.props.datasetQuery, endDate});
+    handleEndDateChange = (date) => {
+        const convDate = this.convertDate(date ? date.$d.toString() : null);
+        this.props.updateDatasetQuery({...this.props.datasetQuery, endDate: convDate});
     };
 
     handleProductGroupsChange = (productGroups: string[]) => {
@@ -294,24 +292,24 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                 <Grid item xs={6}>
                     <Stack spacing={0.2} direction={'row'}>
                         <DatePicker
-                            label="From Date"
+                            label="From Date (GMT)"
                             value={this.props.datasetQuery.startDate}
                             onChange={this.handleStartDateChange}
-                            renderInput={(params) => <TextField sx={{'width': 400}} {...params} helperText={null} />}
+                            renderInput={(params) => <TextField
+                                size={'small'}
+                                sx={{'minWidth': '175px', 'maxWidth': '175px'}} {...params} helperText={null}/>}
+                            ignoreInvalidInputs={true}
+
                         />
                         <DatePicker
-                            label="To Date"
+                            label="To Date (GMT)"
                             value={this.props.datasetQuery.endDate}
                             onChange={this.handleEndDateChange}
-                            renderInput={(params) => <TextField sx={{'width': 400}} {...params} helperText={null} />}
-                        />
-                        <MultipleSelectTextField
-                            suggestions={this.getProductGroups()}
-                            onChange={this.handleProductGroupsChange}
-                            selectedItems={this.getSelectedProducts()}
-                            isMulti={true}
-                            closeMenuOnSelect={true}
-                            placeholder={'Product Groups'}
+                            renderInput={(params) => <TextField
+                                size={'small'}
+                                sx={{'minWidth': '155px', 'maxWidth': '155px'}} {...params} helperText={null}/>}
+                            ignoreInvalidInputs={true}
+
                         />
                         <TextField
                             id={'lucene-search'}
@@ -322,11 +320,22 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             onChange={this.handleSearchExprChange}
                             onKeyPress={this.handleSearchExpKeyPressed}
                             sx={{'width': 800}}
+                            size={'small'}
                         />
                     </Stack>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={6}>
                     <Stack direction={'row'} alignItems="center">
+                        <MultipleSelectTextField
+                            suggestions={this.getProductGroups()}
+                            onChange={this.handleProductGroupsChange}
+                            selectedItems={this.getSelectedProducts()}
+                            isMulti={true}
+                            closeMenuOnSelect={true}
+                            placeholder={'Product Groups'}
+                            width={'160px'}
+                            size={'small'}
+                        />
                         <Button variant="contained"
                                 color="secondary"
                                 onClick={this.handleSearchDatasets}>
@@ -334,7 +343,6 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             {this.props.loading && <CircularProgress size={24}/>}
                             <Icon>search</Icon>
                         </Button>
-
                         <IconButton
                             onClick={this.props.openHelpDialog}
                         >
@@ -351,39 +359,37 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         <Button onClick={this.props.openSaveSearchDialog} size={'small'}>
                             Save Search
                         </Button>
+                        <HelpDialog
+                            open={this.props.productGroupsHelpDialogOpen}
+                            onClose={this.props.closeProductGroupsHelpDialog}
+                            title={'Product Groups'}
+                        >
+                            {ProductGroupsInfo}
+                        </HelpDialog>
+                        <HelpDialog
+                            open={this.props.helpDialogOpen}
+                            onClose={this.props.closeHelpDialog}
+                            title={'Search Help'}
+                        >
+                            {FindHelpText}
+                        </HelpDialog>
+                        <InputDialog
+                            open={this.props.saveSearchDialogOpen}
+                            onClose={this.props.closeSaveSearchDialog}
+                            label={'Title'}
+                            title={'Title of Search to be Saved'}
+                            value={this.props.saveSearchTitle}
+                            onSave={this.handleSaveFilter}
+                            onChange={this.handleUpdateSaveSearchTitle}
+                        />
+                        <AdvancedSearchDialog
+                            open={this.props.advancedSearchDialogOpen}
+                            onClose={this.props.closeAdvancedSearchDialog}
+                            productItems={this.props.serverInfo['products']}
+                            datasetQuery={this.props.datasetQuery}
+                            updateDatasetQuery={this.props.updateDatasetQuery}
+                        />
                     </Stack>
-                </Grid>
-                <Grid item xs={2}>
-                    <HelpDialog
-                        open={this.props.productGroupsHelpDialogOpen}
-                        onClose={this.props.closeProductGroupsHelpDialog}
-                        title={'Product Groups'}
-                    >
-                        {ProductGroupsInfo}
-                    </HelpDialog>
-                    <HelpDialog
-                        open={this.props.helpDialogOpen}
-                        onClose={this.props.closeHelpDialog}
-                        title={'Search Help'}
-                    >
-                        {FindHelpText}
-                    </HelpDialog>
-                    <InputDialog
-                        open={this.props.saveSearchDialogOpen}
-                        onClose={this.props.closeSaveSearchDialog}
-                        label={'Title'}
-                        title={'Title of Search to be Saved'}
-                        value={this.props.saveSearchTitle}
-                        onSave={this.handleSaveFilter}
-                        onChange={this.handleUpdateSaveSearchTitle}
-                    />
-                    <AdvancedSearchDialog
-                        open={this.props.advancedSearchDialogOpen}
-                        onClose={this.props.closeAdvancedSearchDialog}
-                        productItems={this.props.serverInfo['products']}
-                        datasetQuery={this.props.datasetQuery}
-                        updateDatasetQuery={this.props.updateDatasetQuery}
-                    />
                 </Grid>
                 <Grid item xs={6}>
                     <AdvancedSearchLog

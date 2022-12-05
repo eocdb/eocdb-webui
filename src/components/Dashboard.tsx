@@ -19,6 +19,7 @@ import {
 import { Menu, AccountCircle, Help, ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { SubmissionQuery } from "../model/Submission";
 import SearchHistory from "./search/SearchHistory";
+import UserRegistrationDialog from "./user/UserRegistrationDialog";
 
 
 const drawerWidth = 240;
@@ -163,6 +164,10 @@ export default function Dashboard(props: DashboardProps) {
                 logoutUser={props.logoutUser}
 
                 openChangeUserLoginDialog={props.openChangeUserLoginDialog}
+            />
+            <UserRegistrationDialog
+                open={props.userRegistrationDialogOpen}
+                onClose={props.closeUserRegistrationDialog}
             />
             <AppBar position="fixed" open={open}>
                 <Toolbar>

@@ -12,6 +12,8 @@ interface RadioSelectProps {
 
     onChange: (selectedValue: string) => void;
     selectedValue: string;
+
+    size?: null | 'small' | 'medium'
 }
 
 class RadioSelect extends React.Component<RadioSelectProps> {
@@ -40,6 +42,7 @@ class RadioSelect extends React.Component<RadioSelectProps> {
                                     value={item.value}
                                     aria-label={item.label}
                                     onChange={this.handleChange}
+                                    size={this.props.size? this.props.size: 'medium'}
                                 />
                             }
                         />
