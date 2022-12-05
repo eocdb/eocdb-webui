@@ -157,7 +157,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
             const feats = JSON.parse(feat_str)['features'];
             const coords = []
             for (let feat = 0; feat < feats.length; feat++) {
-                const point = feats[0]['geometry']['coordinates'];
+                const point = feats[feat]['geometry']['coordinates'];
                 coords.push({x: point[1], y: point[0]});
             }
             const center = centroid(coords);

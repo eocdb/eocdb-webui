@@ -7,14 +7,14 @@ import { SessionState } from './sessionState';
 import { DataState } from "./dataState";
 import { DataTableState } from "./dataTableState";
 import { SubmissionState } from "./submissionState";
-import {LinksPageState} from "./linksPageState";
-import {AdminState} from "./adminState";
+import { LinksPageState } from "./linksPageState";
+import { AdminState } from "./adminState";
 import { MatchupState } from "./matchupState";
 import { UserState } from "./userState";
 
 export interface AppState {
-    configState:  ConfigState;
-    dashboardState:  DashboardState;
+    configState: ConfigState;
+    dashboardState: DashboardState;
     searchFormState: SearchFormState;
     searchMapState: SearchMapState;
     messageLogState: MessageLogState;

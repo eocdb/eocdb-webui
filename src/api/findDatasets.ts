@@ -17,6 +17,7 @@ type QueryComponent = [string, string];
  */
 export function findDatasets(apiServerUrl: string, datasetQuery: DatasetQuery, userId: string): Promise<QueryResult> {
 
+    datasetQuery.user_id = userId;
     const queryComponents = collectComponents(datasetQuery);
 
     return callJsonApi<QueryResult>(apiServerUrl + '/datasets', queryComponents);
@@ -42,6 +43,7 @@ export function collectComponents(datasetQuery: DatasetQuery) {
     collectGeoJsonComponent(datasetQuery, queryComponents);
     collectDatasetIds(datasetQuery, queryComponents);
     collectShallow(datasetQuery, queryComponents);
+    collectUserIdComponent(datasetQuery, queryComponents);
     return queryComponents;
 }
 
@@ -91,11 +93,11 @@ function collectSubmissionIdComponent(queryParameters: DatasetQuery, queryCompon
 //     }
 // }
 
-// function collectUserIdComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
-//     if (queryParameters.user_id) {
-//         queryComponents.push(['user_id', `${queryParameters.user_id}`]);
-//     }
-// }
+function collectUserIdComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
+    if (queryParameters.user_id) {
+        queryComponents.push(['user_id', `${queryParameters.user_id}`]);
+    }
+}
 
 function collectTimeComponent(queryParameters: DatasetQuery, queryComponents: QueryComponent[]) {
     if (queryParameters.startDate) {
@@ -124,8 +126,7 @@ function collectWaterDepthComponents(queryParameters: DatasetQuery, queryCompone
         && queryParameters.wdepth[1] !== undefined
         && Number.isSafeInteger(queryParameters.wdepth[0])
         && Number.isSafeInteger(queryParameters.wdepth[1])) {
-        queryComponents.push(['wdepth', '' + queryParameters.wdepth[0]]);
-        queryComponents.push(['wdepth', '' + queryParameters.wdepth[1]]);
+        queryComponents.push(['wdepth', '' + queryParameters.wdepth]);
     }
 }
 

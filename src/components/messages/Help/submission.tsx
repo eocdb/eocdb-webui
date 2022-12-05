@@ -14,28 +14,28 @@ import { Typography } from "@mui/material";
 const SubmissionHelpText = (
     <div>
         <Typography variant={"h5"} gutterBottom>
-            Submission Label
+            Unique submission ID
         </Typography>
         <Typography variant={"body1"} gutterBottom>
-            Submission Label is a unique identifier for your submission. Please don't use white spaces.
+            Submission ID is a unique identifier for your submission. Please don't use white spaces.
         </Typography>
 
+        {/*<Typography variant={"h5"} gutterBottom>*/}
+        {/*    Submission path*/}
+        {/*</Typography>*/}
+        {/*<Typography variant={"body1"} gutterBottom>*/}
+        {/*    The submission path helps you organising your data. Please use the following structure:*/}
+        {/*    <SyntaxHighlighter language='javascript'>*/}
+        {/*        AFFILIATION (acronym)/EXPERIMENT/CRUISE*/}
+        {/*    </SyntaxHighlighter>*/}
+        {/*</Typography>*/}
         <Typography variant={"h5"} gutterBottom>
-            Submission Path
+            Publication date
         </Typography>
         <Typography variant={"body1"} gutterBottom>
-            The submission path helps you organising your data. Please user the following stricture:
-            <SyntaxHighlighter language='javascript'>
-                AFFILIATION (acronym)/EXPERIMENT/CRUISE
-            </SyntaxHighlighter>
-        </Typography>
-        <Typography variant={"h5"} gutterBottom>
-            Publication Date
-        </Typography>
-        <Typography variant={"body1"} gutterBottom>
-            The aim of this database is to provide your data to teh public. However, you can control the publication.
-            If leave 'publish data' unticked, the admins won't publish your data without further communication
-            with you. You can also delay the publication by ticking publish data, but set a specific date.
+            The aim of this database is to provide your data to the public. However, you can control the publication.
+            If the "Publish data" option is not checked, data will not be published. You can also delay the
+            publication by checking publish data, but set a specific date.
         </Typography>
     </div>
 );

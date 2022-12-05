@@ -22,13 +22,13 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
     handleSubmissionClick = () => {
         this.props.handleClick('Submit');
         const submissionQuery: SubmissionQuery =
-        {
-            user_id: null,
-            loading: true,
-            offset: 0,
-            count: 10,
-            page: 0
-        };
+            {
+                user_id: null,
+                loading: true,
+                offset: 0,
+                count: 10,
+                page: 0
+            };
 
         this.props.updateSubmissionQuery(submissionQuery);
         this.props.getSubmissionsForUser();
@@ -41,17 +41,13 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
 
     render() {
         let submitAllowed = false;
-
-        if(this.props.user){
-            if(this.props.user.roles.indexOf('submit') > -1){
-                submitAllowed = true;
-            }
-        }
-
         let adminAllowed = false;
 
-        if(this.props.user){
-            if(this.props.user.roles.indexOf('admin') > -1){
+        if (this.props.user) {
+            if (this.props.user.roles.indexOf('submit') > -1) {
+                submitAllowed = true;
+            }
+            if (this.props.user.roles.indexOf('admin') > -1) {
                 adminAllowed = true;
                 submitAllowed = true;
             }
@@ -83,7 +79,7 @@ class DrawerItems extends React.PureComponent<DrawerItemsProps> {
                     </ListItemIcon>
                     <ListItemText primary="Submit"/>
                 </ListItem>
-                <ListItem disabled={!adminAllowed}  key={'Admin'} onClick={() => this.props.handleClick('Admin')} button>
+                <ListItem disabled={!adminAllowed} key={'Admin'} onClick={() => this.props.handleClick('Admin')} button>
                     <ListItemIcon>
                         <SettingsApplications/>
                     </ListItemIcon>

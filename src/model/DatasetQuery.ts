@@ -12,7 +12,7 @@ export interface DatasetQuery {
     region?: string;
     submission_id?: string;
     status?: string;
-    user_id?: number;
+    user_id?: string;
     productMode?: ProductMode;
     productNames: string[];
     productGroupNames: string[];

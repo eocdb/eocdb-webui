@@ -273,7 +273,6 @@ export function openSubmitSteps(): OpenSubmitSteps {
     return {type: OPEN_SUBMIT_STEPS};
 }
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const UPDATE_SUBMISSION_ID = 'UPDATE_SUBMISSION_ID';
@@ -307,7 +306,6 @@ export function updatePath(path: string): UpdatePath {
         path
     }
 }
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const UPDATE_PUBLICATION_DATE = 'UPDATE_PUBLICATION_DATE';

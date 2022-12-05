@@ -37,7 +37,9 @@ import {
     updateSubmissionMessages,
     hideSubmissionMessages,
     openSubmissionMetaDialog,
-    closeSubmissionMetaDialog, updateSubmissionMeta, updateSubmissionQuery
+    closeSubmissionMetaDialog,
+    updateSubmissionMeta,
+    updateSubmissionQuery
 } from "../../actions/submissionActions";
 import SubmissionPanel from "../../components/submission/SubmissionPanel";
 import { openHelpDialog } from "../../actions/searchMapActions";
