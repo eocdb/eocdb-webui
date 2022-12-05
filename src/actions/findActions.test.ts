@@ -173,6 +173,7 @@ describe('searchFormActions', () => {
                     geojson: true,
                     productGroupNames: [],
                     status: "PUBLISHED",
+                    user_id: null,
                     count: 5,
                     offset: 1
                 }

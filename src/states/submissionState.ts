@@ -3,6 +3,7 @@ import { MessageLogEntry } from "./messageLogState";
 import { SubmissionQuery, SubmissionResult } from "../model/Submission";
 
 export interface SubmissionState {
+
     submissionDialogOpen: boolean;
     submissionFilesDialogOpen: boolean;
     submissionMetaDialogOpen: boolean;
@@ -94,6 +95,6 @@ export function newSubmissionState() {
         submissionSucceeded: false,
         submissionMessages: [],
         newEntries: [],
-        oldEntries: [],
+        oldEntries: []
     }
 }

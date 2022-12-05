@@ -45,6 +45,8 @@ interface MultipleSelectTextFieldProps {
     inputLabelWidth?: number;
 
     className?: string;
+    width?: string;
+    size?: null | 'small' | 'medium';
 }
 
 
@@ -57,8 +59,10 @@ export default function MultipleSelectTextField(props: MultipleSelectTextFieldPr
         props.onChange(newValue);
     };
 
+    const width = props.width? props.width:"100%";
+
     return (
-        <FormControl sx={{ width: "100%" }}>
+        <FormControl sx={{ width: {width}, marginRight: '10px' }} size={props.size? props.size: 'medium'}>
             <InputLabel id="multiple-select-label">{props.placeholder}</InputLabel>
             <Select
                 labelId="multiple-select-label"

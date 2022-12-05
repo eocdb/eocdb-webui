@@ -21,7 +21,6 @@ describe('submitState', () => {
             path: '',
             publicationDate: null,
             allowPublication: false,
-
             currentDatasetValidationResults: [],
             currentSubmissionFiles: [],
             currentSubmissionId: '',

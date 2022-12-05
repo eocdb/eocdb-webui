@@ -20,19 +20,18 @@ export function collectComponents(query?: SubmissionQuery) {
     if (query.filterModel) {
         const {filterModel} = query;
         const operator = filterModel.items[0].operatorValue;
-        const value = (filterModel.items[0].value)? filterModel.items[0].value : '';
+        const value = (filterModel.items[0].value) ? filterModel.items[0].value : '';
         let column = filterModel.items[0].columnField;
-        column = column == 'id'? 'submission_id' : column;
-        column = column == 'submission_date'? 'date' : column;
 
         queryComponents.push(['query-column', column]);
         queryComponents.push(['query-operator', operator]);
         queryComponents.push(['query-value', value]);
     }
 
-    if (query.sortModel) {
+    if (query.sortModel && query.sortModel[0]) {
         const {sortModel} = query;
-        const sortColumn = sortModel[0].field;
+        let fieldName = sortModel[0].field;
+        const sortColumn = fieldName;
         const sortOrder = sortModel[0].sort;
 
         queryComponents.push(['sort-column', sortColumn]);

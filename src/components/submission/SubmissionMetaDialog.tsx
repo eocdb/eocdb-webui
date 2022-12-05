@@ -13,7 +13,7 @@ import {
     Button, styled, Paper, Stack, DialogContent
 } from "@mui/material";
 import { CloudUpload } from "@mui/icons-material";
-import { DatePicker } from "@mui/lab";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 
 interface SubmissionMetaDialogProps {

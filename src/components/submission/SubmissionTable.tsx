@@ -1,10 +1,6 @@
 import * as React from "react";
-import { User, Submission } from "../../model";
-import {
-    Tooltip,
-    Button,
-    Icon, Chip, Paper, Stack, styled
-} from "@mui/material";
+import { Submission, User } from "../../model";
+import { Button, Chip, Icon, Paper, Stack, styled, Tooltip } from "@mui/material";
 import { blue, green, orange, red } from "@mui/material/colors";
 import {
     DataGrid,
@@ -15,11 +11,12 @@ import {
 } from '@mui/x-data-grid';
 import { CloudUpload } from "@mui/icons-material";
 import { SubmissionQuery, SubmissionResult } from "../../model/Submission";
+import { OpenNewCalibrationDialogButton } from "./CalibrationSubmissionComponents";
 
 
-const Item = styled (Button) (({theme}) => ({
+const Item = styled(Button)(({theme}) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    padding: theme.spacing (1),
+    padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary,
 }));
@@ -29,6 +26,7 @@ interface SubmissionTableProps {
     show: boolean;
 
     onSubmissionDialogOpen: () => void;
+
     onSubmissionDialogMetaOpen: (submissionId: string) => void;
 
     onSubmissionSelect: (selectedSubmissionId: string) => void;
@@ -63,7 +61,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                     <span>
                         <Button
                             onClick={() => props.onSubmissionDialogMetaOpen(
-                                params.row.id
+                                params.row.submission_id
                             )}
                             disabled={!isAdmin && !isSubmitter}
                         >
@@ -74,7 +72,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                 <Tooltip title="List Files" placement={"top"}>
                     <Button
                         onClick={() => props.onSubmissionSelect(
-                            params.row.id
+                            params.row.submission_id
                         )}
                     >
                         <Icon>list</Icon>
@@ -84,29 +82,41 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                     <Tooltip title="Restart Submission" placement={"top"}>
                         <Button
                             onClick={() => props.onSubmissionRestart(
-                                {...params.row, submission_id: params.row.id }
+                                {...params.row, submission_id: params.row.submission_id}
                             )}
                         >
                             <Icon>play_arrow</Icon>
 
                         </Button>
                     </Tooltip>
-                :
+                    :
                     <Tooltip title="Pause Submission" placement={"top"}>
                         <Button
                             onClick={() => props.onSubmissionHalt(
-                                params.row.id
+                                params.row.submission_id
                             )}
                         >
                             <Icon>pause</Icon>
                         </Button>
                     </Tooltip>
                 }
+                <Tooltip title="Delete Entire Submission" placement={"top"}>
+                    <span>
+                        <Button
+                            onClick={() => props.onSubmissionDelete(
+                                params.row.submission_id
+                            )}
+                            // disabled={!isSubmitter}
+                        >
+                            <Icon>delete</Icon>
+                        </Button>
+                    </span>
+                </Tooltip>
                 <Tooltip title="Cancel Submission" placement={"top"}>
                     <span>
                         <Button
                             onClick={() => props.onSubmissionReject(
-                                params.row.id
+                                params.row.submission_id
                             )}
                             disabled={!isAdmin}
                         >
@@ -114,23 +124,11 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                         </Button>
                     </span>
                 </Tooltip>
-                <Tooltip title="Delete Entire Submission" placement={"top"}>
-                    <span>
-                        <Button
-                            onClick={() => props.onSubmissionDelete(
-                                params.row.id
-                            )}
-                            disabled={!isAdmin}
-                        >
-                            <Icon>delete</Icon>
-                        </Button>
-                    </span>
-                </Tooltip>
                 <Tooltip title="Process Submission into DB" aria-label="ProcessSubmission">
                     <span>
                         <Button
                             onClick={() => props.onSubmissionProcess(
-                                params.row.id
+                                params.row.submission_id
                             )}
                             disabled={!isAdmin}
                         >
@@ -143,7 +141,7 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                     <span>
                         <Button
                             onClick={() => props.onSubmissionPublish(
-                                params.row.id
+                                params.row.submission_id
                             )}
                             disabled={!isAdmin}
                         >
@@ -158,21 +156,21 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     const getColourForStatus = (status: string) => {
         switch (status) {
             case 'SUBMITTED':
-                return blue.A100;
+                return red.A700;
             case 'VALIDATED':
-                return green.A100;
-            case 'APPROVED':
-                return green.A400;
-            case 'READY':
-                return red.A200;
-            case 'CANCELED':
-                return orange.A400;
-            case 'PAUSED':
-                return orange.A100;
-            case 'PUBLISHED':
-                return red.A400;
+                return green["200"];
             case 'PROCESSED':
-                return red.A100;
+                return green["400"];
+            case 'PUBLISHED':
+                return green["800"];
+            case 'CANCELED':
+                return orange["300"];
+            case 'PAUSED':
+                return orange["800"];
+            case 'APPROVED':
+                return blue.A100;
+            case 'READY':
+                return blue.A400;
         }
         return "yellow"
     };
@@ -180,8 +178,8 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     const makeRows = (submissions: Submission[]) => {
         return submissions.map((submission: Submission) => {
             return {
-                id: submission.submission_id,
-                submission_date: submission.date,
+                submission_id: submission.submission_id,
+                date: submission.date,
                 user_id: submission.user_id,
                 publication_date: submission.publication_date,
                 allow_publication: submission.allow_publication,
@@ -204,9 +202,9 @@ export default function SubmissionTable(props: SubmissionTableProps) {
 
     const columns: GridColDef[] = [
         {
-            field: 'id',
+            field: 'submission_id',
             headerName: 'Submission ID',
-            width: 160
+            width: 260
         },
         {
             field: 'user_id',
@@ -214,10 +212,10 @@ export default function SubmissionTable(props: SubmissionTableProps) {
             width: 150,
         },
         {
-            field: 'submission_date',
+            field: 'date',
             headerName: 'Submission Date',
             type: 'dateTime',
-            width: 150,
+            width: 170,
         },
         {
             field: 'publication_date',
@@ -259,13 +257,24 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     const handleFilterChange = (filterModel: GridFilterModel) => {
         const currentFilterModel = props.submissionQuery.filterModel;
 
-        const isClearEvent = (currentFilterModel) ? currentFilterModel.items[0].operatorValue === filterModel.items[0].operatorValue
-            &&  filterModel.items[0].value === undefined
-        : false;
+        let isClearEvent: boolean;
+        if (currentFilterModel && filterModel) {
+            if (filterModel.items.length == 0) {
+                isClearEvent = true;
+            } else {
+                let currItem = currentFilterModel.items[0];
+                let newItem = filterModel.items[0];
+                isClearEvent = currItem.operatorValue === newItem.operatorValue
+                    && currItem.columnField === newItem.columnField
+                    && filterModel.items[0].value === undefined;
+            }
+        } else {
+            isClearEvent = false;
+        }
 
         if (isClearEvent) {
             filterModel.items[0].operatorValue = 'contains';
-            filterModel.items[0].columnField = 'id';
+            filterModel.items[0].columnField = 'submission_id';
         }
 
         const submissionQuery: SubmissionQuery =
@@ -283,26 +292,27 @@ export default function SubmissionTable(props: SubmissionTableProps) {
     };
 
     const handleSortModelChange = (newModel: GridSortModel) => {
-        const submissionQuery: SubmissionQuery = (newModel) ?
-            {
-                ...props.submissionQuery,
-                loading: true,
-                sortModel: newModel,
-                page: 0
-            } : undefined;
+        const submissionQuery: SubmissionQuery = {
+            ...props.submissionQuery,
+            loading: true,
+            sortModel: newModel,
+            page: 0
+        };
 
         props.updateSubmissionQuery(submissionQuery);
         props.updateSubmissionsForUser();
     };
 
+    let pageSize = 10;
+
     const handlePageChange = (newPage) => {
         const submissionQuery: SubmissionQuery = {
-                ...props.submissionQuery,
-                loading: true,
-                offset: (newPage * 10) + 1,
-                count: 10,
-                page: newPage,
-            };
+            ...props.submissionQuery,
+            loading: true,
+            offset: (newPage * pageSize),
+            count: pageSize,
+            page: newPage,
+        };
 
         props.updateSubmissionQuery(submissionQuery);
         props.updateSubmissionsForUser();
@@ -316,24 +326,30 @@ export default function SubmissionTable(props: SubmissionTableProps) {
                             color="secondary"
                             onClick={props.onSubmissionDialogOpen}
                     >
-                        New Submission
+                        New Submission &nbsp;
                         <CloudUpload/>
                     </Button>
+                </Item>
+                <Item>
+                    <OpenNewCalibrationDialogButton/>
                 </Item>
             </Stack>
             <DataGrid
                 rows={rows}
+                // A unique field with name 'id' is required by MUI-X DataGrid. If such a field
+                // does not exist in a row, the function getRowId must be implemented.
+                getRowId={(row) => row.submission_id}
                 columns={columns}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                rowCount={submissionResult.tot_count-1}
+                pageSize={pageSize}
+                rowsPerPageOptions={[pageSize]}
+                rowCount={submissionResult.tot_count}
                 paginationMode={"server"}
                 pagination
                 page={props.submissionQuery.page}
                 loading={props.submissionQuery.loading}
                 onPageChange={handlePageChange}
                 // disableSelectionOnClick
-                components={{ Toolbar: GridToolbar }}
+                components={{Toolbar: GridToolbar}}
                 filterMode="server"
                 filterModel={props.submissionQuery.filterModel}
                 onFilterModelChange={handleFilterChange}

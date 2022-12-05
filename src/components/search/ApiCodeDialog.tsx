@@ -24,7 +24,7 @@ class APICodeDialog extends React.Component<APICodeDialogProps> {
                 onClose={this.props.onClose}
                 aria-labelledby="form-dialog-title"
             >
-                <DialogTitle id="form-dialog-title">Settings</DialogTitle>
+                <DialogTitle id="form-dialog-title">Python API</DialogTitle>
                 <DialogContent>
                     <SyntaxHighlighter language='python'>
                         {`from ocdb.OCDBApi import new_api\n\napi = new_api()\n\napi.find_datasets(${this.props.query})`}

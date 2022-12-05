@@ -89,7 +89,10 @@ export function submissionReducer(state: SubmissionState = initialState, action:
         case UPDATE_ALLOW_PUBLICATION:
             return {...state, allowPublication: action.allowPublication};
         case UPDATE_PUBLICATION_DATE:
-            return {...state, publicationDate: action.publicationDate};
+            return {
+                ...state,
+                publicationDate: action.publicationDate
+            };
         case UPDATE_DATA_FILES:
             return {...state, dataFiles: action.dataFiles};
         case UPDATE_DOC_FILES:

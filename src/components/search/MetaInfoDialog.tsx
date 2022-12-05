@@ -30,7 +30,8 @@ class MetaInfoDialog extends React.Component<MetaInfoDialogProps> {
         for (let key in metadata) {
             if(metadata.hasOwnProperty(key)) {
                 let value = 'Type of content not known.';
-                if (typeof metadata[key] === "string") {
+                let varType = typeof metadata[key];
+                if (varType === "string" || varType === "number") {
                     value = metadata[key];
                 } else if (metadata[key] instanceof Array) {
                     value = metadata[key].join(',');
