@@ -1,8 +1,23 @@
 # Changes for Version 0.2.4 (in development)
-
-- Messages, in the lower left corner, will disappear automatically after 6 seconds only if they are relatively
-  unimportant messages. E.g. "You are logged in". Warnings and error messages will no longer disappear automatically. 
-  From now on, users have to click them away on their own. This way we try to prevent that warnings or error messages
+- SubmissionHeplText updated
+- APICodeDialod ... Title updated from "Settings" to "Python API"
+- Fixed ... SubmissionTable paging
+- Fixed ... SubmissionTable filtering
+- Dashboard.tsx ... Display of UserRegistrationDialog enabled
+- SubmissionTable.tsx ... Colors changed for Submitted, Validated, Processed, Published, Canceled, Paused, Approved and Ready
+- SubmissionTable.tsx ... Enable "delete submission" also for submit user
+- SubmissionTable.tsx ... Swap buttons delete and cancel submission
+- SubissionFilesTable.tsx ... Colors changed for Validated, Valid, Ok, Warnig, Error and Submitted
+- New Submission Dialog ... Unnecessary paper shadows removed
+- New Submission Dialog ... Clear field elements on close button click and other dialog close events
+- New Submission Dialog ... Fields added (Affiliation, Experiment, Cruise)
+- Drop boxes for file upload now allow files to be added one by one.
+- package.json ... react-dropzone updated to ^14.2.3
+- "new Calibration Submission" Dialog added.
+  Submit is not implemented now. Displays a "Currently not implemented warning!" instead.
+- Search input elements in the upper search line at the first page appear now in small size
+- Warning and error messages, in the lower left corner, will no longer disappear automatically after 6 seconds.
+  Users have to click them away on their own. This way we try to prevent that warnings or error messages
   are overlooked.
 - Removed edit submission button as backend throws exceptions. The button will be reintroduced in version 0.2.5.
 - Fixed marker cluster issue. The cluster did not have any associated styling. Related to #74.
