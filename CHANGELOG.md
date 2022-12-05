@@ -19,6 +19,11 @@
 - Warning and error messages, in the lower left corner, will no longer disappear automatically after 6 seconds.
   Users have to click them away on their own. This way we try to prevent that warnings or error messages
   are overlooked.
+- Fix: enable display of number values in MetaInfoDialog.tsx
+- Fix: Unit added to "Water Depth" input element. (AdvancedSearchDialog.tsx)
+- Fix: Fix the point picking from index position 0 only. So a valid centroid can be created.
+- Fix: The query URL for search of measurement data contained the key "wdepth" twice. 
+- Current Backend URL added in Admin Panel
 - Removed edit submission button as backend throws exceptions. The button will be reintroduced in version 0.2.5.
 - Fixed marker cluster issue. The cluster did not have any associated styling. Related to #74.
 
