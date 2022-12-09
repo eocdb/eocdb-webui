@@ -45,7 +45,11 @@ export function submissionReducer(state: SubmissionState = initialState, action:
         case OPEN_SUBMIT_STEPS:
             return {...state, submissionDialogOpen: true, submissionFilesDialogOpen: false};
         case CLOSE_SUBMIT_STEPS:
-            return {...state, submissionDialogOpen: false};
+            return {...state,
+                submissionDialogOpen: false,
+                docFiles: [],
+                dataFiles: []
+            };
         case OPEN_SUBMISSION_FILES_DIALOG:
             return {...state, submissionSucceeded: false, submissionFilesDialogOpen: true};
         case CLOSE_SUBMISSION_FILES_DIALOG:
