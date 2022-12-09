@@ -326,53 +326,11 @@ class SubmissionPanel extends React.PureComponent<SubmissionPanelProps> {
                     <CalibrationSubmissionDialog
                         submissionMessages={this.props.submissionMessages}
                         onHideSubmissionMessages={this.props.hideSubmissionMessages}
-                        // helpDialogOpen={this.props.helpDialogOpen}
-                        // openHelpDialog={this.props.openHelpDialog}
-                        // closeHelpDialog={this.props.closeHelpDialog}
                     ></CalibrationSubmissionDialog>
-                    {/*
-                <CalibrationSubmissionDialog
-                    show={this.props.calibrationSubmissionDialogOpen}
-                    onClose={this.props.closeCalibrationSubmissionDialog}
-
-                    // onSubmissionIdChange={this.props.updateSubmissionId}
-                    // submissionIdValue={this.props.selectedSubmissionId}
-
-                    onCalibrationPathChange={this.props.updateCalibrationPath}
-                    calibrationPathValue={this.props.selectedCalibrationPath}
-
-                    // onAllowPublicationChange={this.props.updateAllowPublication}
-                    // allowPublication={this.props.allowPublication}
-
-                    // onDatafilesChange={this.props.updateDataFiles}
-                    // dataFilesValue={this.props.selectedDataFiles}
-
-                    // onDocfilesChange={this.props.updateDocFiles}
-                    // docFilesValue={this.props.selectedDocFiles}
-
-                    // onCalibrationDateChange={this.props.updatePublicationDate}
-                    // calibrationDate={this.props.selectedPublicationDate}
-
-                    // onFileSubmit={this.handleSendSubmission}
-
-                    // onClearForm={this.props.clearSubmissionForm}
-
-                    // onDropRejected={this.handleSubmissionDialogOnDropRejected}
-                    submissionMessages={this.props.submissionMessages}
-                    onHideSubmissionMessages={this.props.hideSubmissionMessages}
-
-                    helpDialogOpen={this.props.helpDialogOpen}
-                    openHelpDialog={this.props.openHelpDialog}
-                    closeHelpDialog={this.props.closeHelpDialog}
-                    submissionSucceeded={this.props.submissionSucceeded}
-                />
-*/}
                     <SharedCalibrationContext.Consumer>
                         {calibrationCtx => (
                         <SubmissionTable
                             show={!(this.props.submissionDialogOpen || calibrationCtx.showDialog)}
-
-                            // calibrationState={this.props.calibrationState}
 
                             onSubmissionSelect={this.handleUpdateSubmission}
 
