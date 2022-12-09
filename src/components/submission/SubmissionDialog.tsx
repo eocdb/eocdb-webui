@@ -174,7 +174,7 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                                         <TextField
                                             required
                                             id="affiliation"
-                                            label="Affiliation"
+                                            label="Affiliation (or userName)"
                                             margin="dense"
                                             variant="outlined"
                                             onInput={evt => this.onInputAffiliation(evt)}
@@ -187,7 +187,7 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                                         <TextField
                                             required
                                             id="experiment"
-                                            label="Experiment"
+                                            label="Experiment (or project)"
                                             margin="dense"
                                             variant="outlined"
                                             onInput={evt => this.onInputExperiment(evt)}
@@ -200,7 +200,7 @@ class SubmissionDialog extends React.Component<SubmissionDialogProps> {
                                         <TextField
                                             required
                                             id="cruise"
-                                            label="Cruise"
+                                            label="Cruise (or platform)"
                                             margin="dense"
                                             variant="outlined"
                                             onInput={evt => this.onInputCruise(evt)}

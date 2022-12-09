@@ -29,6 +29,28 @@ const SubmissionHelpText = (
         {/*        AFFILIATION (acronym)/EXPERIMENT/CRUISE*/}
         {/*    </SyntaxHighlighter>*/}
         {/*</Typography>*/}
+
+        <Typography variant={"h5"} gutterBottom>
+            Affiliation (or userName)
+        </Typography>
+        <Typography variant={"body1"} gutterBottom>
+            Affiliation or userName if submitting without associated affiliation.
+        </Typography>
+
+        <Typography variant={"h5"} gutterBottom>
+            Experiment (or project)
+        </Typography>
+        <Typography variant={"body1"} gutterBottom>
+            Experiment or project if lacking experiment name.
+        </Typography>
+
+        <Typography variant={"h5"} gutterBottom>
+            Cruise (or platform)
+        </Typography>
+        <Typography variant={"body1"} gutterBottom>
+            Cruise or platform.
+        </Typography>
+
         <Typography variant={"h5"} gutterBottom>
             Publication date
         </Typography>
