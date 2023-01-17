@@ -1,13 +1,14 @@
 import { callJsonApi } from './callApi';
 import { User } from '../model';
 import { encrypt } from "../tools/encrypt";
+import { WEBUI_VERSION } from "../version";
 
 export function loginUser(apiServerUrl: string, name: string, password: string): Promise<User> {
     password = encrypt(password)
     return callJsonApi<User>(apiServerUrl + '/users/login', undefined, {
         method: 'post',
         credentials: "same-origin",
-        body: JSON.stringify({username: name, password: password, client_version: "0.2.1", client: "webui"})
+        body: JSON.stringify({username: name, password: password, client_version: WEBUI_VERSION, client: "webui"})
     })
         .then((obj: any) => ({
             id: obj.id,

@@ -1,7 +1,7 @@
 # Stage 1 - the build process
 FROM node:latest as build-deps
 
-MAINTAINER helge.dzierzon@brockmann-consult.de
+MAINTAINER sabine.embacher@brockmann-consult.de
 
 LABEL software=OCDB
 LABEL version=0.1.0

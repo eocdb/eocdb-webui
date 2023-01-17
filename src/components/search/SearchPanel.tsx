@@ -339,7 +339,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         <Button variant="contained"
                                 color="secondary"
                                 onClick={this.handleSearchDatasets}>
-                            Search
+                            Search&nbsp;
                             {this.props.loading && <CircularProgress size={24}/>}
                             <Icon>search</Icon>
                         </Button>

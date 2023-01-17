@@ -1,4 +1,4 @@
-# Changes for Version 0.2.4 (in development)
+# Changes for Version 0.2.4
 - favicon ... The web apps react favicon was replaced with a small FRM4SOC icon.  
 - submissionReducer.ts ... Each time the SubmissionDialog is closed, dataFiles and docFiles are emptied.
 - SubmissionDialog.tsx ... Lables of "Affiliation", "Experiment" and "Cruise" updated to "Affiliation (or userName)", 
