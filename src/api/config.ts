@@ -17,8 +17,10 @@ function getEndpointUrl(): string {
             url = DEFAULT_API_ENDPOINT_DEV;
         } else if (window.location.host.indexOf('localhost') >= 0) {
             url = DEFAULT_API_ENDPOINT_LOCAL;
-        } else {
+        } else if (window.location.host.indexOf('ocdb') >= 0) {
             url = DEFAULT_API_ENDPOINT_PRODUCTION;
+        } else {
+            url = window.location.origin;
         }
     }
     return url.endsWith('/') ? url.substr(0, url.length - 1) : url;
