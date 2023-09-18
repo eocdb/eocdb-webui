@@ -298,7 +298,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             renderInput={(params) => <TextField
                                 size={'small'}
                                 sx={{'minWidth': '175px', 'maxWidth': '175px'}} {...params} helperText={null}/>}
-                            ignoreInvalidInputs={true}
+                            
 
                         />
                         <DatePicker
@@ -308,7 +308,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             renderInput={(params) => <TextField
                                 size={'small'}
                                 sx={{'minWidth': '155px', 'maxWidth': '155px'}} {...params} helperText={null}/>}
-                            ignoreInvalidInputs={true}
+                            
 
                         />
                         <TextField
