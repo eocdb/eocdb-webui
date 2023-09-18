@@ -298,9 +298,10 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             renderInput={(params) => <TextField
                                 size={'small'}
                                 sx={{'minWidth': '175px', 'maxWidth': '175px'}} {...params} helperText={null}/>}
-                            ignoreInvalidInputs={true}
+                            
 
                         />
+                        {/* ignoreInvalidInputs={true} */}
                         <DatePicker
                             label="To Date (GMT)"
                             value={this.props.datasetQuery.endDate}
@@ -308,9 +309,10 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             renderInput={(params) => <TextField
                                 size={'small'}
                                 sx={{'minWidth': '155px', 'maxWidth': '155px'}} {...params} helperText={null}/>}
-                            ignoreInvalidInputs={true}
+                            
 
                         />
+                        {/* ignoreInvalidInputs={true} */}
                         <TextField
                             id={'lucene-search'}
                             key={'lucene-search'}
