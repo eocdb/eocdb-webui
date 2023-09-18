@@ -301,7 +301,6 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             
 
                         />
-                        {/* ignoreInvalidInputs={true} */}
                         <DatePicker
                             label="To Date (GMT)"
                             value={this.props.datasetQuery.endDate}
@@ -312,7 +311,6 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             
 
                         />
-                        {/* ignoreInvalidInputs={true} */}
                         <TextField
                             id={'lucene-search'}
                             key={'lucene-search'}
