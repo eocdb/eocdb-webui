@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
 import { MessageLogAction, postMessage } from './messageLogActions'
-import { DatasetQuery, QueryResult } from '../model';
+import { DatasetQuery, MetaInfoFields, QueryResult } from '../model';
 import { AppState } from '../states/appState';
 import * as api from '../api'
 import { SearchHistoryItem } from "../types/dataset";
@@ -111,6 +111,10 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
 
     datasetQuery = {...datasetQuery, geojson: true};
 
+    if(datasetQuery.metadatafields[0] != 'None' && datasetQuery.searchExpr != null){
+        datasetQuery.searchExpr = datasetQuery.metadatafields[0].toLowerCase() + ':' + datasetQuery.searchExpr + '*';
+    }
+
     const expression = datasetQuery.searchExpr;
 
     if (expression) {
@@ -126,6 +130,16 @@ export function searchDatasets() {
     return (dispatch: Dispatch<UpdateFoundDatasets | MessageLogAction | UpdateSearchHistory | StopLoading
         | UpdateDatasetQuery>, getState: ()
         => AppState) => {
+        let metaInfo: MetaInfoFields = {
+            fields: [ 'None',
+                'Investigators',
+                'Affiliations',
+                'Contact',
+                'Experiment',
+                'Cruise',
+                'Filename',
+                'Station',]
+        }
         const state = getState ();
         const apiServerUrl = state.configState.apiServerUrl;
         let datasetQuery = state.searchFormState.datasetQuery;
@@ -139,10 +153,18 @@ export function searchDatasets() {
                 if (foundDatasets.total_count == 0) {
                     dispatch (postMessage ('warning', 'Empty Result'));
                 } else {
-                    dispatch (postMessage ('success', foundDatasets.total_count + ' Datasets Found'));
+                    dispatch (postMessage ('success', foundDatasets.total_count + ' Datasets Found'));                    
                 }
             })
             .then (() => {
+                if(datasetQuery.searchExpr != null){
+                    let searchName;
+                    metaInfo.fields.forEach(item => {
+                        if(datasetQuery.searchExpr.includes(item.toLowerCase()))
+                         searchName= datasetQuery.searchExpr.split(':').pop();
+                    })
+                    datasetQuery.searchExpr = (searchName.split('*'))[0];
+                }
                 dispatch (updateDatasetQuery (datasetQuery));
                 dispatch (stopLoading ());
                 return 0;

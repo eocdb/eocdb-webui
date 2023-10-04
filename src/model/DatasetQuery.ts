@@ -26,6 +26,7 @@ export interface DatasetQuery {
     offset?: number;
     count?: number;
     geojson?: boolean;
+    metadatafields: string[];
 }
 
 
@@ -50,5 +51,6 @@ export const DefaultDatasetQuery: DatasetQuery = {
     datasetIds: [],
     offset: 0,
     count: 0,
-    geojson: true
+    geojson: true,
+    metadatafields: [],
 }

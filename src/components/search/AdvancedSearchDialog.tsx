@@ -32,8 +32,6 @@ export interface AdvancedSearchDialogProps {
     open: boolean;
     onClose: () => void;
 
-    productItems: Product[];
-
     datasetQuery: DatasetQuery;
     updateDatasetQuery: (datasetQuery: DatasetQuery) => void;
 }
@@ -78,14 +76,6 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
         this.props.updateDatasetQuery(datasetQuery);
     };
 
-    handleUpdateProducts = (products: string[]) => {
-        const items = products.map((item: string) => {
-            return item;
-        });
-        const datasetQuery = {...this.props.datasetQuery, productNames: items}
-        this.props.updateDatasetQuery(datasetQuery);
-    };
-
     handleUpdateHasWdepth = (event: React.ChangeEvent<HTMLInputElement>) => {
         const hasWdepth = event.target.checked;
         let wdepth: SliderRange = [null, null]
@@ -103,12 +93,6 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
     handleShallowChange = (optShallow: string) => {
         const datasetQuery = {...this.props.datasetQuery, shallow: optShallow}
         this.props.updateDatasetQuery(datasetQuery);
-    };
-
-    makeProductSuggestions = () => {
-        return this.props.productItems.map((item: Product) => {
-            return item.name;
-        })
     };
 
     render() {
@@ -159,17 +143,6 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                                          selectedValue={this.props.datasetQuery.shallow}
                                          onChange={this.handleShallowChange}
                                          size={"small"}
-                            />
-                        </Item>
-                        <Item>
-                            <Typography gutterBottom={true} variant={'h6'}>Select Products</Typography>
-                            <MultipleSelectTextField
-                                suggestions={this.makeProductSuggestions()}
-                                onChange={this.handleUpdateProducts}
-                                selectedItems={this.props.datasetQuery.productNames}
-                                isMulti={true}
-                                closeMenuOnSelect={false}
-                                size={"small"}
                             />
                         </Item>
                     </Stack>

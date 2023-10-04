@@ -12,7 +12,7 @@ import { FindHelpText } from "../messages/Help/find";
 
 import { SliderRange } from "../../types/advancedSearchDialog";
 import { SearchHistoryItem } from "../../types/dataset";
-import { ProductGroup, StoreInfo, User, QueryResult, Dataset, DatasetQuery } from "../../model";
+import { ProductGroup, StoreInfo, User, QueryResult, Dataset, DatasetQuery, Product, MetaInfoFields } from "../../model";
 import InputDialog from "./InputDialog";
 import { ProductGroupsInfo } from "../messages/Help/productgroups";
 import { GeoJsonObject } from "geojson";
@@ -175,8 +175,23 @@ interface SearchPanelProps {
 class SearchPanel extends React.PureComponent<SearchPanelProps> {
     constructor(props: SearchPanelProps) {
         super(props);
+        this.state = {
+            selectedCategory: '', // Initialize with your default value if needed
+          };
     }
 
+    metaInfo: MetaInfoFields = {
+        fields: [ 'None',
+            'Investigators',
+            'Affiliations',
+            'Contact',
+            'Experiment',
+            'Cruise',
+            'Filename',
+            'Station',]
+    }
+    
+    
     handleClear = () => {
         this.props.updateDatasetQuery(DefaultDatasetQuery);
         this.props.updateSelectedRegions({type: 'Polygon'});
@@ -269,6 +284,40 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         this.props.searchDatasets();
     };
 
+    handleUpdateProducts = (products: string[]) => {
+        const items = products.map((item: string) => {
+            return item;
+        });
+        const datasetQuery = { ...this.props.datasetQuery, productNames: items }
+        this.props.updateDatasetQuery(datasetQuery);
+    };
+
+    makeProductSuggestions = () => {
+        return this.props.serverInfo['products'].map(
+            (item: Product) => {
+                return item.name;
+            })
+
+    };
+
+    makeFieldSuggestions = () => {
+        return this.metaInfo.fields.map(
+            (item) => {
+                return item;
+            })
+
+    };
+
+    handleFieldChange = (searchcategory: string[]) => {
+        let selecteditem = '';
+        const items = searchcategory.map((item: string) => {
+            selecteditem = item;
+            return item;
+        });
+        const datasetQuery = { ...this.props.datasetQuery, metadatafields: items }
+        this.props.updateDatasetQuery(datasetQuery);
+    };
+
     getProductGroups = () => {
         return this.props.serverInfo['productGroups'].map(
             (pg: ProductGroup) => {
@@ -286,20 +335,18 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         if (!this.props.show) {
             return null;
         }
-
+        
         return (
             <Grid container spacing={2}>
-                <Grid item xs={6}>
-                    <Stack spacing={0.2} direction={'row'}>
+                <Grid item xs={8} md={12}>
+                    <Stack spacing={0.8} direction={'row'}>
                         <DatePicker
                             label="From Date (GMT)"
                             value={this.props.datasetQuery.startDate}
                             onChange={this.handleStartDateChange}
                             renderInput={(params) => <TextField
                                 size={'small'}
-                                sx={{'minWidth': '175px', 'maxWidth': '175px'}} {...params} helperText={null}/>}
-                            
-
+                                sx={{ 'minWidth': '175px', 'maxWidth': '175px' }} {...params} helperText={null} />}
                         />
                         <DatePicker
                             label="To Date (GMT)"
@@ -307,10 +354,16 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             onChange={this.handleEndDateChange}
                             renderInput={(params) => <TextField
                                 size={'small'}
-                                sx={{'minWidth': '155px', 'maxWidth': '155px'}} {...params} helperText={null}/>}
-                            
-
+                                sx={{ 'minWidth': '155px', 'maxWidth': '155px' }} {...params} helperText={null} />}
                         />
+                        <MultipleSelectTextField
+                            suggestions={this.makeFieldSuggestions()}
+                            onChange={this.handleFieldChange}
+                            isMulti={false}
+                            closeMenuOnSelect={true}
+                            placeholder={'Select Search Category'}
+                            width='300px'
+                            size={"small"} selectedItems={this.props.datasetQuery.metadatafields}  ></MultipleSelectTextField>
                         <TextField
                             id={'lucene-search'}
                             key={'lucene-search'}
@@ -319,13 +372,19 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             value={this.props.datasetQuery.searchExpr || ''}
                             onChange={this.handleSearchExprChange}
                             onKeyPress={this.handleSearchExpKeyPressed}
-                            sx={{'width': 800}}
+                            sx={{ 'width': 800 }}
                             size={'small'}
                         />
-                    </Stack>
-                </Grid>
-                <Grid item xs={6}>
-                    <Stack direction={'row'} alignItems="center">
+                        <MultipleSelectTextField
+                            suggestions={this.makeProductSuggestions()}
+                            onChange={this.handleUpdateProducts}
+                            selectedItems={this.props.datasetQuery.productNames}
+                            isMulti={true}
+                            placeholder={'Select Products'}
+                            closeMenuOnSelect={false}
+                            width={'300px'}
+                            size={"small"}
+                        />
                         <MultipleSelectTextField
                             suggestions={this.getProductGroups()}
                             onChange={this.handleProductGroupsChange}
@@ -333,14 +392,18 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             isMulti={true}
                             closeMenuOnSelect={true}
                             placeholder={'Product Groups'}
-                            width={'160px'}
+                            width={'300px'}
                             size={'small'}
                         />
+                    </Stack>
+                </Grid>
+                <Grid item xs={8} md={12}>
+                    <Stack direction={'row'} alignItems="center">
                         <Button variant="contained"
-                                color="secondary"
-                                onClick={this.handleSearchDatasets}>
+                            color="secondary"
+                            onClick={this.handleSearchDatasets}>
                             Search&nbsp;
-                            {this.props.loading && <CircularProgress size={24}/>}
+                            {this.props.loading && <CircularProgress size={24} />}
                             <Icon>search</Icon>
                         </Button>
                         <IconButton
@@ -385,7 +448,6 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         <AdvancedSearchDialog
                             open={this.props.advancedSearchDialogOpen}
                             onClose={this.props.closeAdvancedSearchDialog}
-                            productItems={this.props.serverInfo['products']}
                             datasetQuery={this.props.datasetQuery}
                             updateDatasetQuery={this.props.updateDatasetQuery}
                         />

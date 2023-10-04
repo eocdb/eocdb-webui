@@ -8,7 +8,6 @@ import AdminPanel from "../containers/admin/AdminPanel";
 import SubmissionPanel from "../containers/submission/SubmissionPanel";
 import LinksPanel from "../containers/links/LinksPanel";
 
-
 interface DashPanelsProps {
     currentDrawer: string;
     searchHistory: SearchHistoryItem[];
