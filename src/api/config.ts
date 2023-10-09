@@ -6,18 +6,23 @@ const DEFAULT_API_ENDPOINT_STAGE = 'https://ocdb-stage.eumetsat.int';
 // NOT used at this stage
 const DEFAULT_API_ENDPOINT_DEV = 'https://ocdb-dev.eumetsat.int';
 const DEFAULT_API_ENDPOINT_LOCAL = 'http://localhost:3001';
+const DEF_API_ENDPOINT_OCDB_BACK = 'http://frm4soc';
 
 function getEndpointUrl(): string {
     let url = process.env.REACT_APP_CATEHUB_ENDPOINT;
     if (!url) {
-        if (window.location.host.indexOf('stage') >= 0) {
+        const host = window.location.host;
+        if (host.indexOf('stage') >= 0) {
             url = DEFAULT_API_ENDPOINT_STAGE;
-        } else if (window.location.host.indexOf('dev') >= 0) {
+        } else if (host.indexOf('dev') >= 0) {
             url = DEFAULT_API_ENDPOINT_DEV;
-        } else if (window.location.host.indexOf('localhost') >= 0) {
+        } else if (host.indexOf('localhost') >= 0) {
             url = DEFAULT_API_ENDPOINT_LOCAL;
+        // } else if (host.indexOf('frm4soc') >= 0) {
+        //     url = window.location.origin;
         } else {
-            url = DEFAULT_API_ENDPOINT_PRODUCTION;
+            // url = DEFAULT_API_ENDPOINT_PRODUCTION;
+                url = window.location.origin;
         }
     }
     return url.endsWith('/') ? url.substr(0, url.length - 1) : url;
