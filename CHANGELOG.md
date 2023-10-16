@@ -1,3 +1,8 @@
+# Changes for Version 0.2.5
+- Product name dropdown moved to main search panel from advance search dialog.
+- Added product category dropdown on search panel for substring search and also its case insensitive
+- Fix: Fixed the cache problem in temporal search, which occurs when using the FROM date and TO date fields.
+
 # Changes for Version 0.2.4
 - favicon ... The web apps react favicon was replaced with a small FRM4SOC icon.  
 - submissionReducer.ts ... Each time the SubmissionDialog is closed, dataFiles and docFiles are emptied.

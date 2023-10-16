@@ -37,7 +37,7 @@ interface SearchPanelProps {
 
     datasetQuery: DatasetQuery;
     updateDatasetQuery: (datasetQuery: DatasetQuery) => void;
-    searchDatasets: () => void;
+    searchDatasets: (metaInfo?: MetaInfoFields) => void;
 
     serverInfo: StoreInfo;
 
@@ -281,7 +281,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
     handleSearchDatasets = () => {
         this.props.startLoading();
         this.props.updateDataPage(0);
-        this.props.searchDatasets();
+        this.props.searchDatasets(this.metaInfo);
     };
 
     handleUpdateProducts = (products: string[]) => {

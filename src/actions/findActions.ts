@@ -111,7 +111,7 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
 
     datasetQuery = {...datasetQuery, geojson: true};
 
-    if(datasetQuery.metadatafields[0] != 'None' && datasetQuery.searchExpr != null){
+    if(datasetQuery.metadatafields[0] != 'None' && datasetQuery.metadatafields[0] != undefined && datasetQuery.searchExpr != null){
         datasetQuery.searchExpr = datasetQuery.metadatafields[0].toLowerCase() + ':' + datasetQuery.searchExpr + '*';
     }
 
@@ -126,20 +126,10 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export function searchDatasets() {
+export function searchDatasets(metafield?) {
     return (dispatch: Dispatch<UpdateFoundDatasets | MessageLogAction | UpdateSearchHistory | StopLoading
         | UpdateDatasetQuery>, getState: ()
         => AppState) => {
-        let metaInfo: MetaInfoFields = {
-            fields: [ 'None',
-                'Investigators',
-                'Affiliations',
-                'Contact',
-                'Experiment',
-                'Cruise',
-                'Filename',
-                'Station',]
-        }
         const state = getState ();
         const apiServerUrl = state.configState.apiServerUrl;
         let datasetQuery = state.searchFormState.datasetQuery;
@@ -159,11 +149,13 @@ export function searchDatasets() {
             .then (() => {
                 if(datasetQuery.searchExpr != null){
                     let searchName;
-                    metaInfo.fields.forEach(item => {
+                    metafield.fields.forEach(item => {
                         if(datasetQuery.searchExpr.includes(item.toLowerCase()))
                          searchName= datasetQuery.searchExpr.split(':').pop();
+                        if(searchName != undefined)
+                         datasetQuery.searchExpr = (searchName.split('*'))[0];
                     })
-                    datasetQuery.searchExpr = (searchName.split('*'))[0];
+                   
                 }
                 dispatch (updateDatasetQuery (datasetQuery));
                 dispatch (stopLoading ());
