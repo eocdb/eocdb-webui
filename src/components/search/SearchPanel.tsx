@@ -25,12 +25,12 @@ import {
     Icon,
     IconButton,
     Stack,
-    TextField
+    TextField,
 } from "@mui/material";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DefaultDatasetQuery } from "../../model/DatasetQuery";
 import { SEARCH_HISTORY_PREFIX } from "../../default";
-
+import ShowAlertMessage from './ShowAlertMessage';
 
 interface SearchPanelProps {
     show: boolean;
@@ -176,9 +176,11 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
     constructor(props: SearchPanelProps) {
         super(props);
         this.state = {
-            selectedCategory: '', // Initialize with your default value if needed
-          };
+            alertOpen: false,
+        };
     }
+    
+    alertState: any;
 
     metaInfo: MetaInfoFields = {
         fields: [ 'None',
@@ -230,11 +232,26 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         this.props.closeSaveSearchDialog();
     };
 
+
+    showAlert = () => {
+        this.setState({ alertOpen: true });
+        this.alertState = true;
+    };
+
+    closeAlert = () => {
+        this.setState({ alertOpen: false });
+        this.alertState = false;
+    };
+
     handleSearchExpKeyPressed = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
             event.preventDefault();
             this.handleSearchDatasets();
         }
+        if (event.code === 'Space'){
+            event.preventDefault();
+            this.showAlert();
+        } 
 
     };
 
@@ -380,7 +397,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             onChange={this.handleUpdateProducts}
                             selectedItems={this.props.datasetQuery.productNames}
                             isMulti={true}
-                            placeholder={'Select Products'}
+                            placeholder={'Select Spectral Products'}
                             closeMenuOnSelect={false}
                             width={'300px'}
                             size={"small"}
@@ -551,6 +568,13 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                         selectedRectangleFromAdvancedDialog={this.props.selectedRectangleFromAdvancedDialog}
                     />
                 </Grid>
+                {this.alertState && (
+                        <ShowAlertMessage
+                            open={this.alertState}
+                            message="Space cannot be used in the search text field"
+                            onClose={this.closeAlert}
+                        />
+                    )}
             </Grid>
         );
     }
