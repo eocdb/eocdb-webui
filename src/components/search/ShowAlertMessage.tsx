@@ -12,7 +12,7 @@ const ShowAlertMessage = ({ open, message, onClose }) => {
             onClose={onClose}
         >
             <SnackbarContent style={{
-                backgroundColor: '#ff9800', fontSize:"medium"
+                backgroundColor: '#ff9800', fontSize:"small",  whiteSpace: 'nowrap',
             }}
                 message={message}
                 action={
