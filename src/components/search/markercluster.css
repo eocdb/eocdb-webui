@@ -9,3 +9,11 @@
     text-align: center;
     width: 40px;
 }
+
+.custom-rectangle-marker {
+    width: 41px;
+    height: 20px;
+    background-color: transparent;
+    border: 3px solid #aa000088;
+    transform: translate(-20px, -10px);
+  }

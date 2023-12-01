@@ -307,7 +307,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
             productNames = this.props.serverInfo['products'];
             productNames.forEach((product) => {
                 if(this.props.datasetQuery.searchExpr == product.name.toLowerCase()){
-                    this.message = 'For wavelength-dependent(spectral) product(s), please use the product search combo box on the right.';
+                    this.message = 'For '+ this.props.datasetQuery.searchExpr + ', please use the product search combo box on the right.';
                     this.props.datasetQuery.searchExpr = null;
                     this.props.searchDatasets();
                     this.showAlert();

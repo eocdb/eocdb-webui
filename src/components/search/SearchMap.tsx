@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { FeatureGroup, MapContainer, Marker, Popup, Rectangle, TileLayer } from 'react-leaflet'
-import { geoJSON, Icon, LatLng, LatLngBounds } from 'leaflet';
+import { divIcon, geoJSON, Icon, LatLng, LatLngBounds, LatLngBoundsLiteral, point, rectangle } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { DatasetRef, QueryResult } from "../../model";
@@ -76,6 +76,8 @@ const POSITION_CLASSES = {
     topright: 'leaflet-top leaflet-right',
 }
 
+const rectangleIconClass = 'custom-rectangle-marker';
+
 function MapBBoxComponent(props: MapBBoxComponentProps) {
     const positionClass =
         (props.position && POSITION_CLASSES[props.position]) || POSITION_CLASSES.topright
@@ -86,7 +88,7 @@ function MapBBoxComponent(props: MapBBoxComponentProps) {
                 <Button
                     className={"leaflet-control leaflet-bar"}
                     onClick={props.handleManualBBoxInputOpen}
-                    sx={{backgroundColor: 'white'}}
+                    sx={{ backgroundColor: 'white' }}
                 >
                     <InputIcon />
                 </Button>
@@ -107,17 +109,72 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
     createMarker(lat: number, lon: number, key: string, dsId: string) {
         if (this.props.selectedDatasets.indexOf(dsId) >= 0) {
-            const icon = new Icon({iconUrl: markerInv, iconSize: [25, 41], iconAnchor: [13, 39]});
-             return <Marker eventHandlers={{click: () => {this.handleMarkerClick(dsId)}}} key={key}
-                           icon={icon}
-                           position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
+            const icon = new Icon({ iconUrl: markerInv, iconSize: [25, 41], iconAnchor: [13, 39] });
+            return <Marker eventHandlers={{ click: () => { this.handleMarkerClick(dsId) } }} key={key}
+                icon={icon}
+                // {
+                //     L.divIcon({
+                //       className: rectangleIconClass,
+                //       iconSize: null, // We'll use CSS for sizing
+                //       iconAnchor: [13, 39], // Center the icon on the marker position
+                //     })
+                //   }
+                position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
         } else {
-            const icon = new Icon({iconUrl: marker, iconSize: [25, 41], iconAnchor: [13, 39]});
-            return <Marker eventHandlers={{click: () => {this.handleMarkerClick(dsId)}}} key={key}
-                           icon={icon}
-                           position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
+            const icon = new Icon({ iconUrl: marker, iconSize: [25, 41], iconAnchor: [13, 39] });
+            return <Marker eventHandlers={{ click: () => { this.handleMarkerClick(dsId) } }} key={key}
+                icon={icon}
+                //  {
+                //     L.divIcon({
+                //       className: rectangleIconClass,
+                //       iconSize: null, // We'll use CSS for sizing
+                //       iconAnchor: [13, 39], // Center the icon on the marker position
+                //     })
+                //   }
+                position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
         }
     }
+
+
+    createRectangle(northLat: number, southLat: number, eastLon: number, westLon: number, key: string, dsId: string, points: any) {
+        if (this.props.selectedDatasets.indexOf(dsId) >= 0) {
+            const bounds: LatLngBoundsLiteral = [
+                [southLat, westLon], // Southwest corner
+                [northLat, eastLon]  // Northeast corner
+            ];
+
+            const rectangle = L.rectangle(bounds, {
+                color: 'red',
+                weight: 5,
+                fill: true,
+                fillColor: 'red',
+                fillOpacity: 0.2,
+            });
+
+            //const center = centroid(points);
+            // const marker = <Marker eventHandlers={{ click: () => { this.handleMarkerClick(dsId) } }} key={key}
+            // icon=
+            //  {
+            //     L.divIcon({
+            //       className: rectangleIconClass,
+            //       iconSize: null, // We'll use CSS for sizing
+            //       iconAnchor: [13, 39], // Center the icon on the marker position
+            //     })
+            //   }
+            // position={new LatLng(center.x, center.y)}><Popup>Path: {key}</Popup></Marker>            
+
+            // marker.bindPopup(`Path: ${key}`);
+
+            // marker.on('click', () => {
+            //     this.handleMarkerClick(dsId);
+            // });
+
+            return { rectangle };
+        }
+
+    }
+
+
 
     handleMarkerClick(id: string) {
         const selected = this.props.selectedDatasets;
@@ -156,15 +213,55 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
             feat_str = feat_str.replace(new RegExp("'", 'g'), '"');
             const feats = JSON.parse(feat_str)['features'];
             const coords = []
+            let result;
             for (let feat = 0; feat < feats.length; feat++) {
                 const point = feats[feat]['geometry']['coordinates'];
-                coords.push({x: point[1], y: point[0]});
+                coords.push({ x: point[1], y: point[0] });
             }
-            const center = centroid(coords);
-            const marker = this.createMarker(center.x, center.y, dr ? dr.path : 'unknown', f);
-            markers.push(marker);
+
+            // Call the function with your array of points
+            result = this.findMinMaxCoordinates(coords);
+            if (result != null) {
+                this.createRectangle(result.maxLatitude, result.minLatitude, result.maxLongitude, result.minLongitude, dr ? dr.path : 'unknown', f, coords)
+            }
+            else {
+                const center = centroid(coords);
+                const marker = this.createMarker(center.x, center.y, dr ? dr.path : 'unknown', f);
+                markers.push(marker);
+            }
+
         }
         return markers;
+    }
+
+    findMinMaxCoordinates(points: any) {
+        let minLongitude = Infinity;
+        let maxLongitude = -Infinity;
+        let minLatitude = Infinity;
+        let maxLatitude = -Infinity;
+
+        points.forEach((point) => {
+            const { x: latitude, y: longitude } = point;
+            minLongitude = Math.min(minLongitude, longitude);
+            maxLongitude = Math.max(maxLongitude, longitude);
+            minLatitude = Math.min(minLatitude, latitude);
+            maxLatitude = Math.max(maxLatitude, latitude);
+        });
+
+        const allValuesDifferent =
+            minLongitude !== maxLongitude &&
+            minLatitude !== maxLatitude; 
+
+        if (allValuesDifferent) {
+            return {
+                minLongitude,
+                maxLongitude,
+                minLatitude,
+                maxLatitude,
+            };
+        } else {
+            return null;
+        }
     }
 
     getBoundsFromDatasets = (): LatLngBounds | undefined => {
@@ -184,7 +281,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     };
 
     componentDidUpdate(prevProps: Readonly<SearchMapProps>, prevState: Readonly<{}>, snapshot?: any): void {
-        if(!this.props.selectedBounds){
+        if (!this.props.selectedBounds) {
             this.handleClearLayers();
         }
     }
@@ -198,7 +295,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     handleBBoxSave = (selectedBBox: LatLngBounds) => {
         this.handleClearLayers();
 
-        this.props.updateSelectedRegions({type: 'Polygon'}, selectedBBox, true);
+        this.props.updateSelectedRegions({ type: 'Polygon' }, selectedBBox, true);
         this.props.closeManualBBoxDialog();
     };
 
@@ -217,7 +314,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
             html: `<span>${cluster.getChildCount()}</span>`,
             className: 'marker-cluster-custom',
             iconSize: L.point(40, 40, true),
-      });
+        });
     };
 
     render() {
@@ -234,7 +331,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
         return (
             <MapContainer bounds={bounds} center={this.props.position}
-                 zoom={this.props.zoom} maxZoom={24} className="markercluster-map">
+                zoom={this.props.zoom} maxZoom={24} className="markercluster-map">
                 <BBoxInputDialog
                     open={this.props.manualBBoxInputOpen}
                     onClose={this.props.closeManualBBoxDialog}
@@ -276,7 +373,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                             onDeleteStart={this.handleGeometryDeleteStart}
                             onDeleteStop={this.handleGeometryDeleteStop}
                         />
-                        <Rectangle bounds={this.props.selectedBounds}/>
+                        <Rectangle bounds={this.props.selectedBounds} />
                     </FeatureGroup>
                     : <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
                         <EditControl
