@@ -2,13 +2,13 @@ export const API_SERVER_VERSION='0.1.9';
 export const API_SERVER_VERSION_TAG='latest';
 
 const DEFAULT_API_ENDPOINT_PRODUCTION = 'https://ocdb.eumetsat.int';
-const DEFAULT_API_ENDPOINT_DEV = 'https://www.brockmann-consult.de/frm4soc-dev';
+const DEFAULT_API_ENDPOINT_DEV = 'https://frm4soc-dev.brockmann-consult.de';
 
 function getEndpointUrl(): string {
     // let url = process.env.REACT_APP_CATEHUB_ENDPOINT;
     let url = process.env.REACT_APP_API_SERVER_URL;
     if (!url) {
-        if (window.location.host.indexOf('dev') >= 0) {
+        if (window.location.host.indexOf('frm4soc-dev') >= 0) {
             url = DEFAULT_API_ENDPOINT_DEV;
         } else if (window.location.host.indexOf('ocdb') >= 0) {
             url = DEFAULT_API_ENDPOINT_PRODUCTION;
