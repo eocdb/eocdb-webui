@@ -100,7 +100,7 @@ function MapBBoxComponent(props: MapBBoxComponentProps) {
 
 class SearchMap extends React.PureComponent<SearchMapProps> {
     private editableFeatureGroupRef: any = null;
-    private layers: any = [];
+    private layers: any = [];    
 
     constructor(props: SearchMapProps) {
         super(props);
@@ -153,6 +153,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
         this.props.updateSelectedDatasets(newSelected, undefined);
     }
+   
 
     getDatasetRef = (id: string): DatasetRef | undefined => {
         return this.props.foundDatasets.datasets.find((dr: DatasetRef) => {
@@ -290,11 +291,10 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                 <Rectangle
                     key={i}
                     bounds={rectangle.bounds}
-                    color={'blue'}
-                    //   eventHandlers={{
-                    //     mouseover: () => handma(rectangle.name),
-                    //     mouseout: () => setActiveRectangle(null),
-                    //   }}
+                    //color={!this.handleRectangleClick(rectangle.datasetId) ? 'red' : 'blue'}
+                      eventHandlers={{
+                        click: () => { this.handleMarkerClick(rectangle.datasetId) } 
+                      }}
                 />
             ))
         ) : '';
