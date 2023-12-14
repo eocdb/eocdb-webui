@@ -111,35 +111,28 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         if (this.props.selectedDatasets.indexOf(dsId) >= 0) {
             const icon = new Icon({ iconUrl: markerInv, iconSize: [25, 41], iconAnchor: [13, 39] });
             return <Marker eventHandlers={{ click: () => { this.handleMarkerClick(dsId) } }} key={key}
-                icon={icon}               
+                icon={icon}
                 position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
         } else {
             const icon = new Icon({ iconUrl: marker, iconSize: [25, 41], iconAnchor: [13, 39] });
             return <Marker eventHandlers={{ click: () => { this.handleMarkerClick(dsId) } }} key={key}
-                icon={icon}                
+                icon={icon}
                 position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
         }
     }
 
 
     createRectangle(northLat: number, southLat: number, eastLon: number, westLon: number, key: string, dsId: string, points: any) {
-        if (this.props.selectedDatasets.indexOf(dsId) >= 0) {
-            const bounds: LatLngBoundsLiteral = [
-                [southLat, westLon], 
-                [northLat, eastLon]  
-            ];
+        const bounds: LatLngBoundsLiteral = [
+            [southLat, westLon],
+            [northLat, eastLon]
+        ];
 
-           rectanglebounds = bounds;
-            
-            // marker.on('click', () => {
-            //     this.handleMarkerClick(dsId);
-            // });
-
-            
-        }
-
+        // marker.on('click', () => {
+        //     this.handleMarkerClick(dsId);
+        // });
+        return bounds;
     }
-
 
     handleMarkerClick(id: string) {
         const selected = this.props.selectedDatasets;
@@ -167,66 +160,71 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         });
     };
 
-    
     renderMeasurementPointCluster() {
         let markers = [];
+        let boundsList: [{datasetId:string, bounds: LatLngBoundsLiteral}];
 
-        for (let f in this.props.foundDatasets.locations) {
-            let feat_str = this.props.foundDatasets.locations[f];
+        for (let datasetId in this.props.foundDatasets.locations) {
+            let feat_str = this.props.foundDatasets.locations[datasetId];
 
-            const dr = this.getDatasetRef(f);
+            const dr = this.getDatasetRef(datasetId);
 
             feat_str = feat_str.replace(new RegExp("'", 'g'), '"');
             const feats = JSON.parse(feat_str)['features'];
             const coords = []
-            let result;
+
             for (let feat = 0; feat < feats.length; feat++) {
                 const point = feats[feat]['geometry']['coordinates'];
-                coords.push({ x: point[1], y: point[0] });
+                coords.push({lon: point[0], lat: point[1]});
             }
-           
-            result = this.findMinMaxCoordinates(coords);
-            if (result != null) {
-                this.createRectangle(result.maxLatitude, result.minLatitude, result.maxLongitude, result.minLongitude, dr ? dr.path : 'unknown', f, coords)
-            }
-            else {
-                const center = centroid(coords);
-                const marker = this.createMarker(center.x, center.y, dr ? dr.path : 'unknown', f);
+
+            let calculated = this.calculateLatLonMinMaxAndCentroid(coords);
+
+            const rectangleCanBeCreated =
+                calculated.minLongitude !== calculated.maxLongitude
+                && calculated.minLatitude !== calculated.maxLatitude;
+
+            if (rectangleCanBeCreated) {
+                const bounds = this.createRectangle(
+                    calculated.maxLatitude, calculated.minLatitude,
+                    calculated.maxLongitude, calculated.minLongitude,
+                    dr ? dr.path : 'unknown', datasetId, coords);
+                boundsList.push({datasetId, bounds});
+            } else {
+                const marker = this.createMarker(
+                    calculated.center.lat, calculated.center.lon,
+                    dr ? dr.path : 'unknown', datasetId);
                 markers.push(marker);
             }
-
         }
-        return markers;
+        return {markers, boundsList};
     }
 
-    findMinMaxCoordinates(points: any) {
+    calculateLatLonMinMaxAndCentroid(points: any) {
         let minLongitude = Infinity;
         let maxLongitude = -Infinity;
         let minLatitude = Infinity;
         let maxLatitude = -Infinity;
+        let center = {lon: 0, lat: 0};
 
         points.forEach((point) => {
-            const { x: latitude, y: longitude } = point;
-            minLongitude = Math.min(minLongitude, longitude);
-            maxLongitude = Math.max(maxLongitude, longitude);
-            minLatitude = Math.min(minLatitude, latitude);
-            maxLatitude = Math.max(maxLatitude, latitude);
+            minLongitude = Math.min(minLongitude, point.lon);
+            maxLongitude = Math.max(maxLongitude, point.lon);
+            minLatitude = Math.min(minLatitude, point.lat);
+            maxLatitude = Math.max(maxLatitude, point.lat);
+            center.lon += point.lon;
+            center.lat += point.lat;
         });
+        center.lon = center.lon / points.length;
+        center.lat = center.lat / points.length;
 
-        const allValuesDifferent =
-            minLongitude !== maxLongitude &&
-            minLatitude !== maxLatitude; 
-
-        if (allValuesDifferent) {
-            return {
-                minLongitude,
-                maxLongitude,
-                minLatitude,
-                maxLatitude,
-            };
-        } else {
-            return null;
-        }
+        return {
+            minLongitude,
+            maxLongitude,
+            minLatitude,
+            maxLatitude,
+            center
+        };
     }
 
     getBoundsFromDatasets = (): LatLngBounds | undefined => {
@@ -284,13 +282,20 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
     render() {
         const bounds = this.getBoundsFromDatasets();
+        const retVal = this.renderMeasurementPointCluster();
 
+        retVal.boundsList.map()
+        const rectangleBounds = (
+            <Rectangle>
+                {}
+            </Rectangle>
+        );
         const markerClusterGroup = (
             <MarkerClusterGroup
                 // chunkedLoading={true}
                 iconCreateFunction={this.createClusterCustomIcon}
             >
-                {this.renderMeasurementPointCluster()}
+                {retVal.markers}
             </MarkerClusterGroup>
         );
 
@@ -356,10 +361,10 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     </FeatureGroup>
                 }
 
-                {rectanglebounds ?                 
+                {rectanglebounds ?
                  <Rectangle bounds={rectanglebounds} />
-                   : ''                  
-                } 
+                   : ''
+                }
                  {/* // rectangle = {this.createRectangle} */}
                 {markerClusterGroup}
             </MapContainer>
