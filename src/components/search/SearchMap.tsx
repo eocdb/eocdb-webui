@@ -162,7 +162,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
     renderMeasurementPointCluster() {
         let markers = [];
-        let boundsList: [{datasetId:string, bounds: LatLngBoundsLiteral}];
+        let boundsList = [];
 
         for (let datasetId in this.props.foundDatasets.locations) {
             let feat_str = this.props.foundDatasets.locations[datasetId];
@@ -283,18 +283,21 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     render() {
         const bounds = this.getBoundsFromDatasets();
         const retVal = this.renderMeasurementPointCluster();
-    
-       const rectangleGroup = (retVal.boundsList.map((rectangle, i) => (
-            <Rectangle
-              key={i}
-              bounds={rectangle.bounds}
-              color={'blue'}
-            //   eventHandlers={{
-            //     mouseover: () => handma(rectangle.name),
-            //     mouseout: () => setActiveRectangle(null),
-            //   }}
-            />
-          )));
+
+        const rectangleGroup = retVal.boundsList !== undefined ? (
+
+            retVal.boundsList.map((rectangle, i) => (
+                <Rectangle
+                    key={i}
+                    bounds={rectangle.bounds}
+                    color={'blue'}
+                    //   eventHandlers={{
+                    //     mouseover: () => handma(rectangle.name),
+                    //     mouseout: () => setActiveRectangle(null),
+                    //   }}
+                />
+            ))
+        ) : '';
         const markerClusterGroup = (
             <MarkerClusterGroup
                 // chunkedLoading={true}
