@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { FeatureGroup, MapContainer, Marker, Popup, Rectangle, TileLayer } from 'react-leaflet'
-import { divIcon, geoJSON, Icon, LatLng, LatLngBounds, LatLngBoundsLiteral, point, rectangle } from 'leaflet';
+import { geoJSON, Icon, LatLng, LatLngBounds, LatLngBoundsLiteral, map, point, rectangle } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { DatasetRef, QueryResult } from "../../model";
@@ -76,7 +76,7 @@ const POSITION_CLASSES = {
     topright: 'leaflet-top leaflet-right',
 }
 
-const rectangleIconClass = 'custom-rectangle-marker';
+let rectanglebounds:LatLngBoundsLiteral;
 
 function MapBBoxComponent(props: MapBBoxComponentProps) {
     const positionClass =
@@ -111,26 +111,12 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         if (this.props.selectedDatasets.indexOf(dsId) >= 0) {
             const icon = new Icon({ iconUrl: markerInv, iconSize: [25, 41], iconAnchor: [13, 39] });
             return <Marker eventHandlers={{ click: () => { this.handleMarkerClick(dsId) } }} key={key}
-                icon={icon}
-                // {
-                //     L.divIcon({
-                //       className: rectangleIconClass,
-                //       iconSize: null, // We'll use CSS for sizing
-                //       iconAnchor: [13, 39], // Center the icon on the marker position
-                //     })
-                //   }
+                icon={icon}               
                 position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
         } else {
             const icon = new Icon({ iconUrl: marker, iconSize: [25, 41], iconAnchor: [13, 39] });
             return <Marker eventHandlers={{ click: () => { this.handleMarkerClick(dsId) } }} key={key}
-                icon={icon}
-                //  {
-                //     L.divIcon({
-                //       className: rectangleIconClass,
-                //       iconSize: null, // We'll use CSS for sizing
-                //       iconAnchor: [13, 39], // Center the icon on the marker position
-                //     })
-                //   }
+                icon={icon}                
                 position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
         }
     }
@@ -139,41 +125,20 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     createRectangle(northLat: number, southLat: number, eastLon: number, westLon: number, key: string, dsId: string, points: any) {
         if (this.props.selectedDatasets.indexOf(dsId) >= 0) {
             const bounds: LatLngBoundsLiteral = [
-                [southLat, westLon], // Southwest corner
-                [northLat, eastLon]  // Northeast corner
+                [southLat, westLon], 
+                [northLat, eastLon]  
             ];
 
-            const rectangle = L.rectangle(bounds, {
-                color: 'red',
-                weight: 5,
-                fill: true,
-                fillColor: 'red',
-                fillOpacity: 0.2,
-            });
-
-            //const center = centroid(points);
-            // const marker = <Marker eventHandlers={{ click: () => { this.handleMarkerClick(dsId) } }} key={key}
-            // icon=
-            //  {
-            //     L.divIcon({
-            //       className: rectangleIconClass,
-            //       iconSize: null, // We'll use CSS for sizing
-            //       iconAnchor: [13, 39], // Center the icon on the marker position
-            //     })
-            //   }
-            // position={new LatLng(center.x, center.y)}><Popup>Path: {key}</Popup></Marker>            
-
-            // marker.bindPopup(`Path: ${key}`);
-
+           rectanglebounds = bounds;
+            
             // marker.on('click', () => {
             //     this.handleMarkerClick(dsId);
             // });
 
-            return { rectangle };
+            
         }
 
     }
-
 
 
     handleMarkerClick(id: string) {
@@ -202,6 +167,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         });
     };
 
+    
     renderMeasurementPointCluster() {
         let markers = [];
 
@@ -218,8 +184,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                 const point = feats[feat]['geometry']['coordinates'];
                 coords.push({ x: point[1], y: point[0] });
             }
-
-            // Call the function with your array of points
+           
             result = this.findMinMaxCoordinates(coords);
             if (result != null) {
                 this.createRectangle(result.maxLatitude, result.minLatitude, result.maxLongitude, result.minLongitude, dr ? dr.path : 'unknown', f, coords)
@@ -390,6 +355,12 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                         />
                     </FeatureGroup>
                 }
+
+                {rectanglebounds ?                 
+                 <Rectangle bounds={rectanglebounds} />
+                   : ''                  
+                } 
+                 {/* // rectangle = {this.createRectangle} */}
                 {markerClusterGroup}
             </MapContainer>
         );
