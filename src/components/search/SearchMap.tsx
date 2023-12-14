@@ -283,13 +283,18 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     render() {
         const bounds = this.getBoundsFromDatasets();
         const retVal = this.renderMeasurementPointCluster();
-
-        retVal.boundsList.map()
-        const rectangleBounds = (
-            <Rectangle>
-                {}
-            </Rectangle>
-        );
+    
+       const rectangleGroup = (retVal.boundsList.map((rectangle, i) => (
+            <Rectangle
+              key={i}
+              bounds={rectangle.bounds}
+              color={'blue'}
+            //   eventHandlers={{
+            //     mouseover: () => handma(rectangle.name),
+            //     mouseout: () => setActiveRectangle(null),
+            //   }}
+            />
+          )));
         const markerClusterGroup = (
             <MarkerClusterGroup
                 // chunkedLoading={true}
@@ -361,11 +366,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     </FeatureGroup>
                 }
 
-                {rectanglebounds ?
-                 <Rectangle bounds={rectanglebounds} />
-                   : ''
-                }
-                 {/* // rectangle = {this.createRectangle} */}
+                {rectangleGroup}                
                 {markerClusterGroup}
             </MapContainer>
         );
