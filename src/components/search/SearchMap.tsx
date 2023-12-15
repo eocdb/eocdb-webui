@@ -74,8 +74,6 @@ const POSITION_CLASSES = {
     topright: 'leaflet-top leaflet-right',
 }
 
-let rectanglebounds:LatLngBoundsLiteral;
-
 function MapBBoxComponent(props: MapBBoxComponentProps) {
     const positionClass =
         (props.position && POSITION_CLASSES[props.position]) || POSITION_CLASSES.topright
