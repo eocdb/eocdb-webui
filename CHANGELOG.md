@@ -1,3 +1,15 @@
+# Changes for Version 0.2.5
+- rectangles are sorted by size of the area to ensure that the biggest one is rendered at the lowest z-index
+  That way a small rectangle can not be hidden behind a big one and this ensures, that each rectangle
+  is clickable. 
+- rectangles are clickable and behavior is similar to point markers 
+- rectangles are rendered in different colors according to the selection state of the submission dataset 
+- rectangles which cover the measurements of a dataset are now rendered
+- alert form added to display warning messages
+- Product name dropdown moved to main search panel from advance search dialog.
+- Added product category dropdown on search panel for substring search and also its case insensitive
+- Fix: Fixed the cache problem in temporal search, which occurs when using the FROM date and TO date fields.
+
 # Changes for Version 0.2.4
 - favicon ... The web apps react favicon was replaced with a small FRM4SOC icon.  
 - submissionReducer.ts ... Each time the SubmissionDialog is closed, dataFiles and docFiles are emptied.

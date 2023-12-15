@@ -67,7 +67,7 @@ export default function MultipleSelectTextField(props: MultipleSelectTextFieldPr
             <Select
                 labelId="multiple-select-label"
                 id="multiple-seclect"
-                multiple
+                multiple = {props.isMulti}
                 value={props.selectedItems}
                 onChange={handleChange}
                 input={<OutlinedInput label={props.placeholder} />}

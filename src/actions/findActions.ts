@@ -111,6 +111,10 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
 
     datasetQuery = {...datasetQuery, geojson: true};
 
+    if(datasetQuery.metadatafields[0] != 'None' && datasetQuery.metadatafields[0] != undefined && datasetQuery.searchExpr != null){
+        datasetQuery.searchExpr = datasetQuery.metadatafields[0].toLowerCase() + ':' + datasetQuery.searchExpr + '*';
+    }
+
     const expression = datasetQuery.searchExpr;
 
     if (expression) {
@@ -122,7 +126,7 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export function searchDatasets() {
+export function searchDatasets(metafield?) {
     return (dispatch: Dispatch<UpdateFoundDatasets | MessageLogAction | UpdateSearchHistory | StopLoading
         | UpdateDatasetQuery>, getState: ()
         => AppState) => {
@@ -139,10 +143,20 @@ export function searchDatasets() {
                 if (foundDatasets.total_count == 0) {
                     dispatch (postMessage ('warning', 'Empty Result'));
                 } else {
-                    dispatch (postMessage ('success', foundDatasets.total_count + ' Datasets Found'));
+                    dispatch (postMessage ('success', foundDatasets.total_count + ' Datasets Found'));                    
                 }
             })
             .then (() => {
+                if(datasetQuery.searchExpr != null){
+                    let searchName;
+                    metafield.fields.forEach(item => {
+                        if(datasetQuery.searchExpr.includes(item.toLowerCase()))
+                         searchName= datasetQuery.searchExpr.split(':').pop();
+                        if(searchName != undefined)
+                         datasetQuery.searchExpr = (searchName.split('*'))[0];
+                    })
+                   
+                }
                 dispatch (updateDatasetQuery (datasetQuery));
                 dispatch (stopLoading ());
                 return 0;
