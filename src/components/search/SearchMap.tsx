@@ -384,7 +384,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                                          searchMap={rect.searchMap}/>
                     </Pane>
                 ))}
-                {markerClusterGroup}
+                {retVal.markers.length > 0 ? markerClusterGroup : ''}
             </MapContainer>
         );
     }
