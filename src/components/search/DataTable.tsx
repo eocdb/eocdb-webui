@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Dataset, DatasetRef, QueryResult } from "../../model";
+import { Dataset, DatasetRef, MetaInfoFields, QueryResult } from "../../model";
 import MetaInfoDialog from "./MetaInfoDialog";
 import { PlotRecord, PlotState } from "../../states/dataTableState";
 import PlotDialog from "./PlotDialog";
@@ -106,7 +106,7 @@ export interface DataTableProps {
     page: number;
     rowsPerPage: number;
 
-    searchDatasets: () => void;
+    searchDatasets: (metaInfo?: MetaInfoFields,fromAction?: boolean) => void;
     updateDataPage: (page: number) => void;
     updateDataRowsPerPage: (rowsPerPage: number) => void;
 
@@ -163,7 +163,7 @@ class DataTable extends React.Component<DataTableProps> {
 
     handleChangePage = (event: React.MouseEvent<HTMLButtonElement>, page: number) => {
         this.props.updateDataPage (page);
-        this.props.searchDatasets ();
+        this.props.searchDatasets (null, true);
         this.props.startLoading ();
     };
 
