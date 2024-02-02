@@ -302,22 +302,26 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
     handleSearchDatasets = () => {
         this.props.startLoading();
         this.props.updateDataPage(0);
+    
+        let productNames : Product[];
+        productNames = this.props.serverInfo['products'];
+        let productFound = false;
+    
         if(this.props.datasetQuery.searchExpr != null && this.props.datasetQuery.searchExpr != ''){
-            let productNames : Product[];
-            productNames = this.props.serverInfo['products'];
             productNames.forEach((product) => {
                 if(this.props.datasetQuery.searchExpr == product.name.toLowerCase()){
                     this.message = 'For '+ this.props.datasetQuery.searchExpr + ', please use the product search combo box on the right.';
                     this.props.datasetQuery.searchExpr = null;
                     this.props.searchDatasets();
                     this.showAlert();
+                    productFound = true;
                 }
-              });
+            });
         }
-        else{
+    
+        if(!productFound){
             this.props.searchDatasets(this.metaInfo);
-          }
-       
+        }
     };
 
     handleUpdateProducts = (products: string[]) => {
