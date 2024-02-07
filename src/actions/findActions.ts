@@ -97,28 +97,28 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
     const selectedBounds = state.searchMapState.selectedBounds;
 
     if (selectedBounds) {
-        datasetQuery = {...datasetQuery, region: selectedBounds.toBBoxString ()};
+        datasetQuery = { ...datasetQuery, region: selectedBounds.toBBoxString() };
     } else {
         //datasetQuery = {...datasetQuery, region: ''};
     }
 
     if (state.sessionState && !state.sessionState.user) {
-        datasetQuery = {...datasetQuery, status: 'PUBLISHED'};
+        datasetQuery = { ...datasetQuery, status: 'PUBLISHED' };
     }
 
-    datasetQuery = {...datasetQuery, count: state.dataTableState.rowsPerPage};
-    datasetQuery = {...datasetQuery, offset: ((state.dataTableState.page * state.dataTableState.rowsPerPage) + 1)};
+    datasetQuery = { ...datasetQuery, count: state.dataTableState.rowsPerPage };
+    datasetQuery = { ...datasetQuery, offset: ((state.dataTableState.page * state.dataTableState.rowsPerPage) + 1) };
 
-    datasetQuery = {...datasetQuery, geojson: true};
+    datasetQuery = { ...datasetQuery, geojson: true };
 
-    if(datasetQuery.metadatafields[0] != 'None' && datasetQuery.metadatafields[0] != undefined && datasetQuery.searchExpr != null){
+    if (datasetQuery.metadatafields[0] != 'None' && datasetQuery.metadatafields[0] != undefined && datasetQuery.searchExpr != null) {
         datasetQuery.searchExpr = datasetQuery.metadatafields[0].toLowerCase() + ':' + datasetQuery.searchExpr + '*';
     }
 
     const expression = datasetQuery.searchExpr;
 
     if (expression) {
-        datasetQuery = {...datasetQuery, searchExpr: expression};
+        datasetQuery = { ...datasetQuery, searchExpr: expression };
     }
 
     return datasetQuery;
@@ -126,44 +126,45 @@ function collectDatasetQuery(state: AppState, datasetQuery: DatasetQuery): Datas
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export function searchDatasets(metafield?) {
+export function searchDatasets(metafield?, fromAction?: boolean) {
     return (dispatch: Dispatch<UpdateFoundDatasets | MessageLogAction | UpdateSearchHistory | StopLoading
         | UpdateDatasetQuery>, getState: ()
-        => AppState) => {
-        const state = getState ();
+            => AppState) => {
+        const state = getState();
         const apiServerUrl = state.configState.apiServerUrl;
         let datasetQuery = state.searchFormState.datasetQuery;
 
-        datasetQuery = collectDatasetQuery (state, datasetQuery);
+        datasetQuery = collectDatasetQuery(state, datasetQuery);
         const userName = (state.sessionState && state.sessionState.user) ? state.sessionState.user.name : null;
 
-        return api.findDatasets (apiServerUrl, datasetQuery, userName)
-            .then ((foundDatasets: QueryResult) => {
-                dispatch (updateFoundDatasets (foundDatasets));
+        return api.findDatasets(apiServerUrl, datasetQuery, userName)
+            .then((foundDatasets: QueryResult) => {
+                dispatch(updateFoundDatasets(foundDatasets));
                 if (foundDatasets.total_count == 0) {
-                    dispatch (postMessage ('warning', 'Empty Result'));
+                    dispatch(postMessage('warning', 'Empty Result'));
                 } else {
-                    dispatch (postMessage ('success', foundDatasets.total_count + ' Datasets Found'));                    
+                    if (!fromAction)
+                        dispatch(postMessage('success', foundDatasets.total_count + ' Datasets Found'));
                 }
             })
-            .then (() => {
-                if(datasetQuery.searchExpr != null){
+            .then(() => {
+                if (datasetQuery.searchExpr != null) {
                     let searchName;
                     metafield.fields.forEach(item => {
-                        if(datasetQuery.searchExpr.includes(item.toLowerCase()))
-                         searchName= datasetQuery.searchExpr.split(':').pop();
-                        if(searchName != undefined)
-                         datasetQuery.searchExpr = (searchName.split('*'))[0];
+                        if (datasetQuery.searchExpr.includes(item.toLowerCase()))
+                            searchName = datasetQuery.searchExpr.split(':').pop();
+                        if (searchName != undefined)
+                            datasetQuery.searchExpr = (searchName.split('*'))[0];
                     })
-                   
+
                 }
-                dispatch (updateDatasetQuery (datasetQuery));
-                dispatch (stopLoading ());
+                dispatch(updateDatasetQuery(datasetQuery));
+                dispatch(stopLoading());
                 return 0;
             })
-            .catch ((error: string) => {
-                dispatch (postMessage ('error', error + ''));
-                dispatch (stopLoading ());
+            .catch((error: string) => {
+                dispatch(postMessage('error', error + ''));
+                dispatch(stopLoading());
             });
     };
 }
@@ -211,7 +212,7 @@ export interface UpdateTerms {
 }
 
 export function updateTerms(terms: string): UpdateTerms {
-    return {type: UPDATE_TERMS, terms: terms};
+    return { type: UPDATE_TERMS, terms: terms };
 }
 
 
