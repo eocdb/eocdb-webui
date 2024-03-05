@@ -129,21 +129,15 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
 
     createMarker(lat: number, lon: number, key: string, dsId: string) {
+        const icon = new Icon({iconUrl: marker, iconSize: [25, 41], iconAnchor: [13, 39]});
         if (this.props.selectedDatasets.indexOf(dsId) >= 0) {
-            const icon = new Icon({ iconUrl: markerInv, iconSize: [25, 41], iconAnchor: [13, 39] });
-            return <Marker
-                eventHandlers={{ click: () => { this.handleMarkerClick(dsId) } }}
-                key={key}
-                icon={icon}
-                position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
-        } else {
-            const icon = new Icon({ iconUrl: marker, iconSize: [25, 41], iconAnchor: [13, 39] });
-            return <Marker
-                eventHandlers={{ click: () => { this.handleMarkerClick(dsId) } }}
-                key={key}
-                icon={icon}
-                position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
+            icon.options.iconUrl = markerInv;
         }
+        return <Marker
+            eventHandlers={{ click: () => { this.handleMarkerClick(dsId) } }}
+            key={key}
+            icon={icon}
+            position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
     }
 
     handleMarkerClick(id: string) {
@@ -343,37 +337,21 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     attribution="&copy; <a href=&quot;https://www.mapbox.com/about/maps/&quot;>Mapbox</a> © <a href=&quot;http://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> <strong><a href=&quot;https://www.mapbox.com/map-feedback/&quot; target=&quot;_blank&quot;>Improve this map</a></strong>"
                 />
 
-                {this.props.selectedBounds && this.props.drawBounds ?
-                    <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
-                        <EditControl
-                            position='bottomright'
-                            draw={DRAW_OPTIONS}
-                            onEdited={this.handleGeometryEdited}
-                            onCreated={this.handleGeometryCreated}
-                            onDeleted={this.handleGeometryDeleted}
-                            onMounted={this.handleDrawControlMounted}
-                            onEditStart={this.handleGeometryEditStart}
-                            onEditStop={this.handleGeometryEditStop}
-                            onDeleteStart={this.handleGeometryDeleteStart}
-                            onDeleteStop={this.handleGeometryDeleteStop}
-                        />
-                        <Rectangle bounds={this.props.selectedBounds} />
-                    </FeatureGroup>
-                    : <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
-                        <EditControl
-                            position='bottomright'
-                            draw={DRAW_OPTIONS}
-                            onEdited={this.handleGeometryEdited}
-                            onCreated={this.handleGeometryCreated}
-                            onDeleted={this.handleGeometryDeleted}
-                            onMounted={this.handleDrawControlMounted}
-                            onEditStart={this.handleGeometryEditStart}
-                            onEditStop={this.handleGeometryEditStop}
-                            onDeleteStart={this.handleGeometryDeleteStart}
-                            onDeleteStop={this.handleGeometryDeleteStop}
-                        />
-                    </FeatureGroup>
-                }
+                <FeatureGroup ref={(featureGroupRef: any) => this.handleFeatureGroupReady(featureGroupRef)}>
+                    <EditControl
+                        position='bottomright'
+                        draw={DRAW_OPTIONS}
+                        onEdited={this.handleGeometryEdited}
+                        onCreated={this.handleGeometryCreated}
+                        onDeleted={this.handleGeometryDeleted}
+                        onMounted={this.handleDrawControlMounted}
+                        onEditStart={this.handleGeometryEditStart}
+                        onEditStop={this.handleGeometryEditStop}
+                        onDeleteStart={this.handleGeometryDeleteStart}
+                        onDeleteStop={this.handleGeometryDeleteStop}
+                    />
+                    {this.props.selectedBounds && this.props.drawBounds ? <Rectangle bounds={this.props.selectedBounds} /> : ""}
+                </FeatureGroup>
                 {retVal.rectList.map((rect, i) => (
                     <Pane name={'rect_' + i}>
                         <CreateRectangle maxLatitude={rect.maxLatitude} minLatitude={rect.minLatitude}
