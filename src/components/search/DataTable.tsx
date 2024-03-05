@@ -420,6 +420,7 @@ class DataTable extends React.Component<DataTableProps> {
                                             onRowsPerPageChange={this.handleChangeRowsPerPage}
                                             sx={{'width': '100%'}}
                                             ActionsComponent={TablePaginationActions}
+                                            labelRowsPerPage={"Results per page:"}
                                         />
                                     </TableCell>
                                 ) :
