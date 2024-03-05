@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { wavelengthItems } from "./SelectItems";
 import MinMaxInputSlider from "./MinMaxInputSlider";
 import RadioSelect, { RadioItem } from "./RadioSelect";
 import MultipleSelectTextField from "./MultipleSelectTextField";
@@ -109,14 +108,6 @@ class AdvancedSearchDialog extends React.Component<AdvancedSearchDialogProps> {
                 <Divider/>
                 <DialogContent>
                     <Stack direction={'column'} spacing={5}>
-                        <Item>
-                            <Typography gutterBottom={true} variant={"h6"}>Wavelength options</Typography>
-                            <RadioSelect items={wavelengthItems}
-                                         selectedValue={this.props.datasetQuery.wavelengthsMode}
-                                         onChange={this.handleWaveLengthSelect}
-                                         size={'small'}
-                            />
-                        </Item>
                         <Item>
                             <Typography gutterBottom={true} variant={'h6'}>Water Depth [m]</Typography>
                             <MinMaxInputSlider

@@ -5,9 +5,3 @@ export interface SelectItem{
     label: string,
 }
 
-export const wavelengthItems: Suggestion[] = [
-    {label: 'All', value: 'all'},
-    {label: 'Multispectral', value: 'multispectral'},
-    {label: 'Hyperspectral', value: 'hyperspectral'},
-];
-

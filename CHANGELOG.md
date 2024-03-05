@@ -1,4 +1,6 @@
 # Changes for Version 0.2.5
+- AdvancedSearchDialog.tsx remove the "Wavelength options" section
+- DataTable.tsx: Lable change from "Rows per page:" to "Results per page:" 
 - rectangles are sorted by size of the area to ensure that the biggest one is rendered at the lowest z-index
   That way a small rectangle can not be hidden behind a big one and this ensures, that each rectangle
   is clickable. 
