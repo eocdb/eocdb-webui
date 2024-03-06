@@ -1,7 +1,6 @@
 import * as React from 'react'
-import { useState } from 'react'
 import { FeatureGroup, MapContainer, Marker, Pane, Popup, Rectangle, TileLayer } from 'react-leaflet'
-import L, { geoJSON, Icon, LatLng, LatLngBounds, LatLngBoundsExpression, LatLngBoundsLiteral } from 'leaflet';
+import L, { geoJSON, Icon, LatLng, LatLngBounds} from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { DatasetRef, QueryResult } from "../../model";
@@ -13,6 +12,7 @@ import BBoxInputDialog, { BBoxValue } from "./BBoxInputDialog";
 import { Button, Tooltip } from "@mui/material";
 import { EditControl } from "react-leaflet-draw";
 import InputIcon from '@mui/icons-material/Input';
+import ReactiveRectangle from "./ReactiveRectangle";
 
 interface SearchMapProps {
     position: LatLng;
@@ -93,31 +93,6 @@ function MapBBoxComponent(props: MapBBoxComponentProps) {
     );
 }
 
-function CreateRectangle({maxLatitude, minLatitude, maxLongitude, minLongitude,
-                             key, datasetId,
-                             searchMap}) {
-    const [count, setCount] = useState(0);
-
-    const handleClick = () => {
-        searchMap.handleMarkerClick(datasetId);
-        setCount(count + 1);
-    };
-
-    const bounds:LatLngBoundsExpression = [
-        [minLatitude, minLongitude],
-        [maxLatitude, maxLongitude]
-    ];
-
-    return <Rectangle
-        key={key + "_" + count}
-        bounds={bounds}
-        color={searchMap.props.selectedDatasets.indexOf(datasetId) >= 0 ? 'red' : 'blue'}
-        eventHandlers={{
-            click: handleClick
-        }}
-    />;
-}
-
 
 class SearchMap extends React.PureComponent<SearchMapProps> {
     private editableFeatureGroupRef: any = null;
@@ -125,6 +100,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
     constructor(props: SearchMapProps) {
         super(props);
+        this.handleMarkerClick = this.handleMarkerClick.bind(this);
     }
 
 
@@ -140,13 +116,13 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
             position={new LatLng(lat, lon)}><Popup>Path: {key}</Popup></Marker>;
     }
 
-    handleMarkerClick(id: string) {
+    handleMarkerClick(datasetId: string) {
         const selected = this.props.selectedDatasets;
         let newSelected = [];
 
         let found = false;
         for (let s of selected) {
-            if (s !== id) {
+            if (s !== datasetId) {
                 newSelected.push(s);
             } else {
                 found = true;
@@ -154,7 +130,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         }
 
         if (!found) {
-            newSelected.push(id);
+            newSelected.push(datasetId);
         }
 
         this.props.updateSelectedDatasets(newSelected, undefined);
@@ -187,18 +163,22 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
 
             let calculated = this.calculateLatLonMinMaxAndCentroid(coords);
 
-            const rectangleCanBeCreated =
-                calculated.minLongitude !== calculated.maxLongitude
-                && calculated.minLatitude !== calculated.maxLatitude;
+            const maxLat = calculated.maxLatitude;
+            const minLat = calculated.minLatitude;
+            const maxLon = calculated.maxLongitude;
+            const minLon = calculated.minLongitude;
+
+            const rectangleCanBeCreated = minLon !== maxLon && minLat !== maxLat;
 
             if (rectangleCanBeCreated) {
                 const rect = {
-                maxLatitude: calculated.maxLatitude, minLatitude: calculated.minLatitude,
-                    maxLongitude: calculated.maxLongitude, minLongitude: calculated.minLongitude,
+                    maxLat: maxLat, minLat: minLat,
+                    maxLon: maxLon, minLon: minLon,
                     key: dr ? dr.path : 'unknown', datasetId,
-                    searchMap: this };
-                const width = rect.maxLongitude - rect.minLongitude;
-                const height = rect.maxLatitude - rect.minLatitude;
+                    searchMap: this
+                };
+                const width = maxLon - minLon;
+                const height = maxLat - minLat;
                 rect['area'] = width * height;
                 rectList.push(rect);
             } else {
@@ -295,6 +275,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
     };
 
     render() {
+        // console.log('searchMap:', this.props.selectedDatasets)
         const bounds = this.getBoundsFromDatasets();
         const retVal = this.renderMeasurementPointAndRectangles();
 
@@ -353,11 +334,11 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     {this.props.selectedBounds && this.props.drawBounds ? <Rectangle bounds={this.props.selectedBounds} /> : ""}
                 </FeatureGroup>
                 {retVal.rectList.map((rect, i) => (
-                    <Pane name={'rect_' + i}>
-                        <CreateRectangle maxLatitude={rect.maxLatitude} minLatitude={rect.minLatitude}
-                                         maxLongitude={rect.maxLongitude} minLongitude={rect.minLongitude}
-                                         key={rect.key} datasetId={rect.datasetId}
-                                         searchMap={rect.searchMap}/>
+                    <Pane key={rect.key} name={'rect_' + i}>
+                        <ReactiveRectangle maxLatitude={rect.maxLat} minLatitude={rect.minLat}
+                                           maxLongitude={rect.maxLon} minLongitude={rect.minLon}
+                                           datasetId={rect.datasetId} selectedDatasets={this.props.selectedDatasets}
+                                           onClick={this.handleMarkerClick}/>
                     </Pane>
                 ))}
                 {retVal.markers.length > 0 ? markerClusterGroup : ''}

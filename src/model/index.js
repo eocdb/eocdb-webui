@@ -10,6 +10,6 @@ export {DatasetIssue} from './DatasetIssue';
 export {Submission} from './Submission';
 export {SubmissionFile} from './SubmissionFile';
 export {UploadData} from './UploadData';
-export {User} from 'src/model/User';
+export {User} from './User';
 export {Links} from './Links';
 export {MetaInfoFields} from './MetaInfoFields';
