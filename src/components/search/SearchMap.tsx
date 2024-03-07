@@ -279,14 +279,18 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         const bounds = this.getBoundsFromDatasets();
         const retVal = this.renderMeasurementPointAndRectangles();
 
-        const markerClusterGroup = (
-            <MarkerClusterGroup
-                // chunkedLoading={true}
-                iconCreateFunction={this.createClusterCustomIcon}
-            >
-                {retVal.markers}
-            </MarkerClusterGroup>
-        );
+        let markerClusterGroup: JSX.Element;
+        if (retVal.markers.length > 0) {
+            markerClusterGroup = (
+                <MarkerClusterGroup
+                    key={'mcg_' + retVal.markers[0].key}
+                    // chunkedLoading={true}
+                    iconCreateFunction={this.createClusterCustomIcon}
+                >
+                    {retVal.markers}
+                </MarkerClusterGroup>
+            );
+        }
 
         return (
             <MapContainer bounds={bounds} center={this.props.position}
