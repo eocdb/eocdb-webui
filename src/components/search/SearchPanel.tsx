@@ -333,11 +333,31 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
     };
 
     makeProductSuggestions = () => {
-        return this.props.serverInfo['products'].map(
+        if (this.props.datasetQuery.productGroupNames.length == 0) {
+            return this.props.serverInfo['products'].map(
+                (item: Product) => {
+                    return item.name;
+                })
+        }
+        const productGroupNames = this.props.datasetQuery.productGroupNames;
+        let productNames:string[] = [];
+        for (const productGroupName of productGroupNames) {
+            for (const productGroup of this.props.serverInfo.productGroups) {
+                if (productGroup.name == productGroupName) {
+                    productNames = productNames.concat(productGroup.products);
+                }
+            }
+        }
+        const products: Product[] = [];
+        for (const product of this.props.serverInfo.products) {
+            if (productNames.includes(product.name)) {
+                products.push(product);
+            }
+        }
+        return products.map(
             (item: Product) => {
                 return item.name;
             })
-
     };
 
     makeFieldSuggestions = () => {
