@@ -385,7 +385,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
             })
     };
 
-    getSelectedProducts = () => {
+    getSelectedProducts = () => {  /* todo se 2024.03.08 --> rename? Der Kontext ist doch Produkt Gruppen und nicht Produkte */
         return this.props.datasetQuery.productGroupNames.map((pg: string) => {
             return pg;
         });
