@@ -416,24 +416,24 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             size={'small'}
                         />
                         <MultipleSelectTextField
-                            suggestions={this.makeProductSuggestions()}
-                            onChange={this.handleUpdateProducts}
-                            selectedItems={this.props.datasetQuery.productNames}
-                            isMulti={true}
-                            placeholder={'Select Spectral Products'}
-                            closeMenuOnSelect={false}
-                            width={'300px'}
-                            size={"small"}
-                        />
-                        <MultipleSelectTextField
                             suggestions={this.getProductGroups()}
                             onChange={this.handleProductGroupsChange}
                             selectedItems={this.getSelectedProducts()}
                             isMulti={true}
                             closeMenuOnSelect={true}
-                            placeholder={'Product Groups'}
+                            placeholder={'Select Product Group(s)'}
                             width={'300px'}
                             size={'small'}
+                        />
+                        <MultipleSelectTextField
+                            suggestions={this.makeProductSuggestions()}
+                            onChange={this.handleUpdateProducts}
+                            selectedItems={this.props.datasetQuery.productNames}
+                            isMulti={true}
+                            placeholder={'Select Product(s)'}
+                            closeMenuOnSelect={false}
+                            width={'300px'}
+                            size={"small"}
                         />
                     </Stack>
                 </Grid>
