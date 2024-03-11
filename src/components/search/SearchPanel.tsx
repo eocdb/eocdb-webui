@@ -12,7 +12,16 @@ import { FindHelpText } from "../messages/Help/find";
 
 import { SliderRange } from "../../types/advancedSearchDialog";
 import { SearchHistoryItem } from "../../types/dataset";
-import { ProductGroup, StoreInfo, User, QueryResult, Dataset, DatasetQuery, Product, MetaInfoFields } from "../../model";
+import {
+    ProductGroup,
+    StoreInfo,
+    User,
+    QueryResult,
+    Dataset,
+    DatasetQuery,
+    Product,
+    MetaInfoFields
+} from "../../model";
 import InputDialog from "./InputDialog";
 import { ProductGroupsInfo } from "../messages/Help/productgroups";
 import { GeoJsonObject } from "geojson";
@@ -179,13 +188,13 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
             alertOpen: false,
         };
     }
-    
+
     message: string;
 
     alertState: any;
 
     metaInfo: MetaInfoFields = {
-        fields: [ 'None',
+        fields: ['None',
             'Investigators',
             'Affiliations',
             'Contact',
@@ -194,8 +203,8 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
             'Filename',
             'Station',]
     }
-    
-    
+
+
     handleClear = () => {
         this.props.updateDatasetQuery(DefaultDatasetQuery);
         this.props.updateSelectedRegions({type: 'Polygon'});
@@ -236,12 +245,12 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
 
 
     showAlert = () => {
-        this.setState({ alertOpen: true });
+        this.setState({alertOpen: true});
         this.alertState = true;
     };
 
     closeAlert = () => {
-        this.setState({ alertOpen: false });
+        this.setState({alertOpen: false});
         this.alertState = false;
         this.message = '';
     };
@@ -251,11 +260,11 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
             event.preventDefault();
             this.handleSearchDatasets();
         }
-        if (event.code === 'Space'){
+        if (event.code === 'Space') {
             event.preventDefault();
             this.message = "Space cannot be used in the search text field";
             this.showAlert();
-        } 
+        }
 
     };
 
@@ -302,15 +311,15 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
     handleSearchDatasets = () => {
         this.props.startLoading();
         this.props.updateDataPage(0);
-    
-        let productNames : Product[];
+
+        let productNames: Product[];
         productNames = this.props.serverInfo['products'];
         let productFound = false;
-    
-        if(this.props.datasetQuery.searchExpr != null && this.props.datasetQuery.searchExpr != ''){
+
+        if (this.props.datasetQuery.searchExpr != null && this.props.datasetQuery.searchExpr != '') {
             productNames.forEach((product) => {
-                if(this.props.datasetQuery.searchExpr == product.name.toLowerCase()){
-                    this.message = 'For '+ this.props.datasetQuery.searchExpr + ', please use the product search combo box on the right.';
+                if (this.props.datasetQuery.searchExpr == product.name.toLowerCase()) {
+                    this.message = 'For ' + this.props.datasetQuery.searchExpr + ', please use the product search combo box on the right.';
                     this.props.datasetQuery.searchExpr = null;
                     this.props.searchDatasets();
                     this.showAlert();
@@ -318,8 +327,8 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                 }
             });
         }
-    
-        if(!productFound){
+
+        if (!productFound) {
             this.props.searchDatasets(this.metaInfo);
         }
     };
@@ -328,7 +337,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         const items = products.map((item: string) => {
             return item;
         });
-        const datasetQuery = { ...this.props.datasetQuery, productNames: items }
+        const datasetQuery = {...this.props.datasetQuery, productNames: items}
         this.props.updateDatasetQuery(datasetQuery);
     };
 
@@ -340,7 +349,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                 })
         }
         const productGroupNames = this.props.datasetQuery.productGroupNames;
-        let productNames:string[] = [];
+        let productNames: string[] = [];
         for (const productGroupName of productGroupNames) {
             for (const productGroup of this.props.serverInfo.productGroups) {
                 if (productGroup.name == productGroupName) {
@@ -348,6 +357,13 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                 }
             }
         }
+        /*
+                return productNames.sort((a, b) => {
+                   a = a.toLowerCase();
+                   b = b.toLowerCase();
+                   return a > b ? 1 : (a < b ? -1 : 0);
+                });
+        */
         const products: Product[] = [];
         for (const product of this.props.serverInfo.products) {
             if (productNames.includes(product.name)) {
@@ -374,7 +390,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
             selecteditem = item;
             return item;
         });
-        const datasetQuery = { ...this.props.datasetQuery, metadatafields: items }
+        const datasetQuery = {...this.props.datasetQuery, metadatafields: items}
         this.props.updateDatasetQuery(datasetQuery);
     };
 
@@ -395,7 +411,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
         if (!this.props.show) {
             return null;
         }
-        
+
         return (
             <Grid container spacing={2}>
                 <Grid item xs={8} md={12}>
@@ -406,7 +422,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             onChange={this.handleStartDateChange}
                             renderInput={(params) => <TextField
                                 size={'small'}
-                                sx={{ 'minWidth': '175px', 'maxWidth': '175px' }} {...params} helperText={null} />}
+                                sx={{'minWidth': '175px', 'maxWidth': '175px'}} {...params} helperText={null}/>}
                         />
                         <DatePicker
                             label="To Date (GMT)"
@@ -414,7 +430,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             onChange={this.handleEndDateChange}
                             renderInput={(params) => <TextField
                                 size={'small'}
-                                sx={{ 'minWidth': '155px', 'maxWidth': '155px' }} {...params} helperText={null} />}
+                                sx={{'minWidth': '155px', 'maxWidth': '155px'}} {...params} helperText={null}/>}
                         />
                         <MultipleSelectTextField
                             suggestions={this.makeFieldSuggestions()}
@@ -423,7 +439,8 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             closeMenuOnSelect={true}
                             placeholder={'Select Search Category'}
                             width='300px'
-                            size={"small"} selectedItems={this.props.datasetQuery.metadatafields}  ></MultipleSelectTextField>
+                            size={"small"}
+                            selectedItems={this.props.datasetQuery.metadatafields}></MultipleSelectTextField>
                         <TextField
                             id={'lucene-search'}
                             key={'lucene-search'}
@@ -432,7 +449,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             value={this.props.datasetQuery.searchExpr || ''}
                             onChange={this.handleSearchExprChange}
                             onKeyPress={this.handleSearchExpKeyPressed}
-                            sx={{ 'width': 800 }}
+                            sx={{'width': 800}}
                             size={'small'}
                         />
                         <MultipleSelectTextField
@@ -460,10 +477,10 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                 <Grid item xs={8} md={12}>
                     <Stack direction={'row'} alignItems="center">
                         <Button variant="contained"
-                            color="secondary"
-                            onClick={this.handleSearchDatasets}>
+                                color="secondary"
+                                onClick={this.handleSearchDatasets}>
                             Search&nbsp;
-                            {this.props.loading && <CircularProgress size={24} />}
+                            {this.props.loading && <CircularProgress size={24}/>}
                             <Icon>search</Icon>
                         </Button>
                         <IconButton
@@ -612,12 +629,12 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                     />
                 </Grid>
                 {this.alertState && (
-                        <ShowAlertMessage
-                            open={this.alertState}
-                            message= {this.message}
-                            onClose={this.closeAlert}
-                        />
-                    )}
+                    <ShowAlertMessage
+                        open={this.alertState}
+                        message={this.message}
+                        onClose={this.closeAlert}
+                    />
+                )}
             </Grid>
         );
     }
