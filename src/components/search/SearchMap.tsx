@@ -184,7 +184,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
             } else {
                 const marker = this.createMarker(
                     calculated.center.lat, calculated.center.lon,
-                    dr ? dr.path : 'unknown', datasetId);
+                    dr ? dr.id : 'unknown', datasetId);
                 markers.push(marker);
             }
         }
@@ -279,6 +279,21 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
         const bounds = this.getBoundsFromDatasets();
         const retVal = this.renderMeasurementPointAndRectangles();
 
+        let rectPane: JSX.Element;
+        const rectList = retVal.rectList;
+        if (retVal.rectList.length > 0) {
+            rectPane = (
+                <Pane key={"pane_" + rectList[0].key} name={'rect_dataset'}>
+                    {rectList.map((rect, i:number) => (
+                        <ReactiveRectangle maxLatitude={rect.maxLat} minLatitude={rect.minLat}
+                                           maxLongitude={rect.maxLon} minLongitude={rect.minLon}
+                                           datasetId={rect.datasetId} selectedDatasets={this.props.selectedDatasets}
+                                           onClick={this.handleMarkerClick}/>
+                    ))}
+                </Pane>
+            )
+        }
+
         let markerClusterGroup: JSX.Element;
         if (retVal.markers.length > 0) {
             markerClusterGroup = (
@@ -337,14 +352,7 @@ class SearchMap extends React.PureComponent<SearchMapProps> {
                     />
                     {this.props.selectedBounds && this.props.drawBounds ? <Rectangle bounds={this.props.selectedBounds} /> : ""}
                 </FeatureGroup>
-                {retVal.rectList.map((rect, i) => (
-                    <Pane key={rect.key} name={'rect_' + i}>
-                        <ReactiveRectangle maxLatitude={rect.maxLat} minLatitude={rect.minLat}
-                                           maxLongitude={rect.maxLon} minLongitude={rect.minLon}
-                                           datasetId={rect.datasetId} selectedDatasets={this.props.selectedDatasets}
-                                           onClick={this.handleMarkerClick}/>
-                    </Pane>
-                ))}
+                {rectList.length > 0 ? rectPane : ''}
                 {retVal.markers.length > 0 ? markerClusterGroup : ''}
             </MapContainer>
         );
