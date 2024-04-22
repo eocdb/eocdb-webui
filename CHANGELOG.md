@@ -1,11 +1,24 @@
 # Changes for Version 0.2.5
+
+- The config.ts has been modified so that it can also be used on ocdb-stage.
+- Recovery of the rectangular stack, sorted by size.
+- Fix problems with displaying position markers and dataset rectangles.
+- Display only those products in the "SelectProduct(s)" drop-down list that belong to the selected product groups from
+  the "Select Product Group(s)" drop-down list.
+- Comment for function renaming
+- The GUI locations of MultipleSelectTextFields for ProductGroups and Products have been swapped. The labels of these
+  elements have been renamed.
+- Fix number of Markers on map after page change
+- Dataset rectangles must be rendered in the map in the colours red and blue, depending on their selection state. If you
+  click on a rectangle, the colour of the rectangle and the selection state (checkbox in the list) must change. The same
+  applies vice versa when the checkbox is deselected or selected.
 - AdvancedSearchDialog.tsx remove the "Wavelength options" section
-- DataTable.tsx: Lable change from "Rows per page:" to "Results per page:" 
+- DataTable.tsx: Lable change from "Rows per page:" to "Results per page:"
 - rectangles are sorted by size of the area to ensure that the biggest one is rendered at the lowest z-index
   That way a small rectangle can not be hidden behind a big one and this ensures, that each rectangle
-  is clickable. 
-- rectangles are clickable and behavior is similar to point markers 
-- rectangles are rendered in different colors according to the selection state of the submission dataset 
+  is clickable.
+- rectangles are clickable and behavior is similar to point markers
+- rectangles are rendered in different colors according to the selection state of the submission dataset
 - rectangles which cover the measurements of a dataset are now rendered
 - alert form added to display warning messages
 - Product name dropdown moved to main search panel from advance search dialog.
@@ -13,17 +26,19 @@
 - Fix: Fixed the cache problem in temporal search, which occurs when using the FROM date and TO date fields.
 
 # Changes for Version 0.2.4
-- favicon ... The web apps react favicon was replaced with a small FRM4SOC icon.  
+
+- favicon ... The web apps react favicon was replaced with a small FRM4SOC icon.
 - submissionReducer.ts ... Each time the SubmissionDialog is closed, dataFiles and docFiles are emptied.
-- SubmissionDialog.tsx ... Lables of "Affiliation", "Experiment" and "Cruise" updated to "Affiliation (or userName)", 
+- SubmissionDialog.tsx ... Lables of "Affiliation", "Experiment" and "Cruise" updated to "Affiliation (or userName)",
   "Experiment (or project)" and "Cruise (or platform)"
-  The SubmissionHelpText has also been adjusted accordingly.  
+  The SubmissionHelpText has also been adjusted accordingly.
 - SubmissionHeplText updated
 - APICodeDialod ... Title updated from "Settings" to "Python API"
 - Fixed ... SubmissionTable paging
 - Fixed ... SubmissionTable filtering
 - Dashboard.tsx ... Display of UserRegistrationDialog enabled
-- SubmissionTable.tsx ... Colors changed for Submitted, Validated, Processed, Published, Canceled, Paused, Approved and Ready
+- SubmissionTable.tsx ... Colors changed for Submitted, Validated, Processed, Published, Canceled, Paused, Approved and
+  Ready
 - SubmissionTable.tsx ... Enable "delete submission" also for submit user
 - SubmissionTable.tsx ... Swap buttons delete and cancel submission
 - SubissionFilesTable.tsx ... Colors changed for Validated, Valid, Ok, Warnig, Error and Submitted
@@ -41,7 +56,7 @@
 - Fix: enable display of number values in MetaInfoDialog.tsx
 - Fix: Unit added to "Water Depth" input element. (AdvancedSearchDialog.tsx)
 - Fix: Fix the point picking from index position 0 only. So a valid centroid can be created.
-- Fix: The query URL for search of measurement data contained the key "wdepth" twice. 
+- Fix: The query URL for search of measurement data contained the key "wdepth" twice.
 - Current Backend URL added in Admin Panel
 - Removed edit submission button as backend throws exceptions. The button will be reintroduced in version 0.2.5.
 - Fixed marker cluster issue. The cluster did not have any associated styling. Related to #74.
