@@ -1,5 +1,5 @@
 export { findDatasets, collectComponents } from './findDatasets';
-export { downloadStoreFiles, downloadStoreFilesByIds } from './downloadStoreFiles';
+export { downloadStoreFiles, downloadStoreFilesByIds, directDownloadStoreFilesByIds } from './downloadStoreFiles';
 export { uploadStoreFiles } from './uploadStoreFiles';
 export { loginUser } from './loginUser';
 export { changeLoginUser } from './changeLoginUser';
