@@ -363,6 +363,7 @@ class DataTable extends React.Component<DataTableProps> {
         />
         <Stack justifyContent={"flex-end"} direction={"row"}>
           <Item>
+
             <Tooltip title="Download multiple files as single CSV" PopperProps={{
               sx: {
                 '& .MuiTooltip-tooltip': {
@@ -375,18 +376,21 @@ class DataTable extends React.Component<DataTableProps> {
               },
             }}
             >
-              <Button
-                variant={"contained"}
-                color={"primary"}
-                key={"btn_download36"}
-                disabled={numSelected <= 1}
-                onClick={() => this.props.openTermsDirectDialog()}
-              >
-                Download as MERGED file
-                <Icon>archive</Icon>
-                {this.props.downloading && <CircularProgress size={24} />}
-              </Button>
+              <span>
+                <Button
+                  variant={"contained"}
+                  color={"primary"}
+                  key={"btn_download36"}
+                  disabled={numSelected <= 1}
+                  onClick={() => this.props.openTermsDirectDialog()}
+                >
+                  Download as MERGED file
+                  <Icon>archive</Icon>
+                  {this.props.downloading && <CircularProgress size={24} />}
+                </Button>
+              </span>
             </Tooltip>
+
           </Item>
           <Item>
             <Tooltip title="Download multiple files in zip" PopperProps={{
@@ -400,18 +404,19 @@ class DataTable extends React.Component<DataTableProps> {
                 },
               },
             }}
-            >
-              <Button
-                variant={"contained"}
-                color={"primary"}
-                key={"btn_download33"}
-                disabled={numSelected == 0}
-                onClick={() => this.props.openTermsDialog()}
-              >
-                Download (multiple files)
-                <Icon>archive</Icon>
-                {this.props.downloading && <CircularProgress size={24} />}
-              </Button>
+            ><span>
+                <Button
+                  variant={"contained"}
+                  color={"primary"}
+                  key={"btn_download33"}
+                  disabled={numSelected == 0}
+                  onClick={() => this.props.openTermsDialog()}
+                >
+                  Download (multiple files)
+                  <Icon>archive</Icon>
+                  {this.props.downloading && <CircularProgress size={24} />}
+                </Button>
+              </span>
             </Tooltip>
           </Item>
           <Item>
