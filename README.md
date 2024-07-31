@@ -1,8 +1,7 @@
 [![Docker Repository on Quay](https://quay.io/repository/bcdev/eocdb-webui/status "Docker Repository on Quay")](https://quay.io/repository/bcdev/eocdb-webui)
-[![Documentation Status](https://ocdb.eumetsat.int/docs)](https://ocdb.eumetsat.int/docs)
 
-- [Copernicus OCDB Docs](http://ocdb.readthedocs.org)
-- [Copernicus OCDB](http://ocdb.eumetsat.int)
+- [Copernicus OCDB Docs](https://ocdb.eumetsat.int/docs/)
+- [Copernicus OCDB](https://ocdb.eumetsat.int)
 
 # Copernicus Ocean Colour Database / WebUI
 
