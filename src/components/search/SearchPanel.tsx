@@ -8,7 +8,7 @@ import AdvancedSearchDialog from "./AdvancedSearchDialog";
 import AdvancedSearchLog from "./AdvancedSearchLog";
 import MultipleSelectTextField from "./MultipleSelectTextField";
 import HelpDialog from "../messages/HelpDialog";
-import { FindHelpText } from "../messages/Help/find";
+import FindHelpText from "../messages/Help/find";
 
 import { SliderRange } from "../../types/advancedSearchDialog";
 import { SearchHistoryItem } from "../../types/dataset";
@@ -511,7 +511,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
                             onClose={this.props.closeHelpDialog}
                             title={'Search Help'}
                         >
-                            {FindHelpText}
+                            <FindHelpText/>
                         </HelpDialog>
                         <InputDialog
                             open={this.props.saveSearchDialogOpen}

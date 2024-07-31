@@ -27,7 +27,7 @@ will install all dependencies and start a development server on port 3000:
 
 ```bash
 
-git clone https://github.com/bcdev/eocdb-webui.git
+git clone https://github.com/eocdb/eocdb-webui.git ocdb-webui
 cd  ocdb-webui
 yarn install
 yarn start

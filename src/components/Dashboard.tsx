@@ -122,6 +122,7 @@ interface DashboardProps {
 export default function Dashboard(props: DashboardProps) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
+    const helpUrl = window.location.host.startsWith('ocdb.') ? 'https://ocdb.eumetsat.int/docs/' :'https://ocdb-stage.eumetsat.int/docs/'
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -187,7 +188,7 @@ export default function Dashboard(props: DashboardProps) {
 
                     <IconButton color="inherit"
                                 target={'_blank'}
-                                href={'https://ocdb.readthedocs.io'}
+                                href={helpUrl}
                     >
                         <Help />
                     </IconButton>
