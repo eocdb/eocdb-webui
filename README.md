@@ -1,5 +1,6 @@
 [![Docker Repository on Quay](https://quay.io/repository/bcdev/eocdb-webui/status "Docker Repository on Quay")](https://quay.io/repository/bcdev/eocdb-webui)
 [![Documentation Status](https://readthedocs.org/projects/eocdb/badge/?version=latest)](https://eocdb.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://ocdb.eumetsat.int/docs/)](https://ocdb.eumetsat.int/docs/)
 
 - [Copernicus OCDB Docs](http://ocdb.readthedocs.org)
 - [Copernicus OCDB](http://ocdb.eumetsat.int)
