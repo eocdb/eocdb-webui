@@ -8,7 +8,7 @@ import AdvancedSearchDialog from "./AdvancedSearchDialog";
 import AdvancedSearchLog from "./AdvancedSearchLog";
 import MultipleSelectTextField from "./MultipleSelectTextField";
 import HelpDialog from "../messages/HelpDialog";
-import { FindHelpText } from "../messages/Help/find";
+import FindHelpText from "../messages/Help/find";
 
 import { SliderRange } from "../../types/advancedSearchDialog";
 import { SearchHistoryItem } from "../../types/dataset";
@@ -190,6 +190,7 @@ interface SearchPanelProps {
 
   user?: User | null;
 }
+
 
 class SearchPanel extends React.PureComponent<SearchPanelProps> {
   constructor(props: SearchPanelProps) {
@@ -571,41 +572,55 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
             data={this.props.data}
             page={this.props.page}
             rowsPerPage={this.props.rowsPerPage}
+
             updateDataPage={this.props.updateDataPage}
             updateDataRowsPerPage={this.props.updateDataRowsPerPage}
+
             metaInfoDialogOpen={this.props.metaInfoDialogOpen}
             openMetaInfoDialog={this.props.openMetaInfoDialog}
             closeMetaInfoDialog={this.props.closeMetaInfoDialog}
+
             helpMetaInfoDialogOpen={this.props.helpMetaInfoDialogOpen}
             openHelpMetaInfoDialog={this.props.openHelpMetaInfoDialog}
             closeHelpMetaInfoDialog={this.props.closeHelpMetaInfoDialog}
             helpMetaInfoKey={this.props.helpMetaInfoKey}
+
             plotDialogOpen={this.props.plotDialogOpen}
             openPlotDialog={this.props.openPlotDialog}
             closePlotDialog={this.props.closePlotDialog}
+
             termsDialogOpen={this.props.termsDialogOpen}
             openTermsDialog={this.props.openTermsDialog}
             closeTermsDialog={this.props.closeTermsDialog}
+
             termsDownloadDialogOpen={this.props.termsDownloadDialogOpen}
             openTermsDirectDialog={this.props.openTermsDirectDialog}
             closeTermsDirectDialog={this.props.closeTermsDirectDialog}
+
             termsSingleDialogOpen={this.props.termsSingleDialogOpen}
             openTermsSingleDialog={this.props.openTermsSingleDialog}
-            closeTermsSingleDialog={this.props.closeTermsSingleDialog}            
+            closeTermsSingleDialog={this.props.closeTermsSingleDialog}
+
             updateDataset={this.props.updateDataset}
             dataset={this.props.dataset}
+
             apiServerUrl={this.props.apiServerUrl}
             downloadDocs={this.props.downloadDocs}
             updateDownloadDocs={this.props.updateDownloadDocs}
+
             startDownloading={this.props.startDownloading}
+
             downloadDatasets={this.props.downloadDatasets}
             downloadDataset={this.props.downloadDataset}
             directDownloadDataset={this.props.directDownloadDataset}
             downloading={this.props.downloading}
+
             updatePlotState={this.props.updatePlotState}
             plotState={this.props.plotState}
+
             updatePlotData={this.props.updatePlotData}
             plotData={this.props.plotData}
+
             searchDatasets={this.props.searchDatasets}
             selectedDatasets={this.props.selectedDatasets}
             updateSelectedDatasets={this.props.updateSelectedDatasets}
@@ -616,28 +631,38 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
           <SearchMap
             position={this.props.position}
             zoom={this.props.zoom}
+
             updateSelectedRegions={this.props.updateSelectedRegions}
             testMarkerCluster={this.props.testMarkerCluster}
+
             drawMeasurementPoints={this.props.drawMeasurementPoints}
             foundDatasets={this.props.foundDatasets}
+
             updateSelectedDatasets={this.props.updateSelectedDatasets}
             selectedDatasets={this.props.selectedDatasets}
+
             selectedBounds={this.props.selectedBounds}
             mapBounds={this.props.mapBounds}
             drawBounds={this.props.drawBounds}
+
             selectedManualBBox={this.props.selectedManualBBox}
             updateManualBBox={this.props.updateManualBBox}
             openManualBBoxDialog={this.props.openManualBBoxDialog}
             closeManualBBoxDialog={this.props.closeManualBBoxDialog}
             manualBBoxInputOpen={this.props.manualBBoxInputOpen}
+
             updateManualBBoxSouth={this.props.updateManualBBoxSouth}
             selectedBBoxSouth={this.props.selectedBBoxSouth}
+
             updateManualBBoxWest={this.props.updateManualBBoxWest}
             selectedBBoxWest={this.props.selectedBBoxWest}
+
             updateManualBBoxNorth={this.props.updateManualBBoxNorth}
             selectedBBoxNorth={this.props.selectedBBoxNorth}
+
             updateManualBBoxEast={this.props.updateManualBBoxEast}
             selectedBBoxEast={this.props.selectedBBoxEast}
+
             selectedRectangleFromAdvancedDialog={
               this.props.selectedRectangleFromAdvancedDialog
             }

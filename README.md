@@ -1,8 +1,7 @@
 [![Docker Repository on Quay](https://quay.io/repository/bcdev/eocdb-webui/status "Docker Repository on Quay")](https://quay.io/repository/bcdev/eocdb-webui)
-[![Documentation Status](https://readthedocs.org/projects/eocdb/badge/?version=latest)](https://eocdb.readthedocs.io/en/latest/?badge=latest)
 
-- [Copernicus OCDB Docs](http://ocdb.readthedocs.org)
-- [Copernicus OCDB](http://ocdb.eumetsat.int)
+- [Copernicus OCDB Docs](https://ocdb.eumetsat.int/docs/)
+- [Copernicus OCDB](https://ocdb.eumetsat.int)
 
 # Copernicus Ocean Colour Database / WebUI
 
@@ -28,7 +27,7 @@ will install all dependencies and start a development server on port 3000:
 
 ```bash
 
-git clone https://github.com/bcdev/eocdb-webui.git
+git clone https://github.com/eocdb/eocdb-webui.git ocdb-webui
 cd  ocdb-webui
 yarn install
 yarn start
