@@ -183,8 +183,8 @@ export interface DataTableProps {
 
   updatePlotData: (plotData: PlotRecord[]) => void;
   plotData: PlotRecord[];
-
 }
+
 
 class DataTable extends React.Component<DataTableProps> {
   constructor(props: DataTableProps) {
