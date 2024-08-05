@@ -544,7 +544,7 @@ class SearchPanel extends React.PureComponent<SearchPanelProps> {
               onClose={this.props.closeHelpDialog}
               title={"Search Help"}
             >
-              {FindHelpText}
+              <FindHelpText></FindHelpText>
             </HelpDialog>
             <InputDialog
               open={this.props.saveSearchDialogOpen}
